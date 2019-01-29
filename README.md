@@ -1,2 +1,2 @@
 # OBIB
-Oscar Bc Interoperability Broker)
+Oscar Bc Interoperability Broker

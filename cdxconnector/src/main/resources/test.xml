@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<s:Envelope xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+            xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Header>
+        <o:Security xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                    s:mustUnderstand="1">
+            <u:Timestamp u:Id="_0">
+                <u:Created>2019-01-26T02:21:59.291Z</u:Created>
+                <u:Expires>2019-01-26T02:26:59.291Z</u:Expires>
+            </u:Timestamp>
+            <o:UsernameToken u:Id="d0189cd9-88c0-4a65-a653-a6378161ebd3">
+                <o:Username>cdxpostprod-otca</o:Username>
+                <o:Password
+                        Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">
+                    VMK31
+                </o:Password>
+            </o:UsernameToken>
+        </o:Security>
+    </s:Header>
+    <s:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PRPM_IN406010UV01 xmlns="urn:hl7-org:v3" ITSVersion="XML_1.0">
+            <id extension="d64200b7-bfa4-4c3c-8348-d1552ab9b4dc" root="2.16.840.1.113883.3.277.100.1"></id>
+            <creationTime value="20190125182157-0800"></creationTime>
+            <versionCode code="2010Normative"></versionCode>
+            <interactionId extension="PRPM_IN306010UV" root="2.16.840.1.113883.1.6"></interactionId>
+            <processingCode code="P"></processingCode>
+            <processingModeCode code="T"></processingModeCode>
+            <acceptAckCode code="AL"></acceptAckCode>
+            <receiver>
+                <device classCode="DEV" determinerCode="INSTANCE">
+                    <id nullFlavor="NA"></id>
+                    <asAgent classCode="AGNT">
+                        <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+                            <id assigningAuthorityName="CDX Clinic ID" extension="CDX"
+                                root="2.16.840.1.113883.3.277.100.2"></id>
+                        </representedOrganization>
+                    </asAgent>
+                </device>
+            </receiver>
+            <sender>
+                <device classCode="DEV" determinerCode="INSTANCE">
+                    <id nullFlavor="NA"></id>
+                    <asAgent classCode="AGNT">
+                        <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+                            <id assigningAuthorityName="CDX Clinic ID" extension="cdxpostprod-otca"
+                                root="2.16.840.1.113883.3.277.100.2"></id>
+                        </representedOrganization>
+                    </asAgent>
+                </device>
+            </sender>
+            <controlActProcess classCode="CACT" moodCode="RQO">
+                <queryByParameterPayload>
+                    <statusCode code="new"></statusCode>
+                    <confidence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></confidence>
+                    <history xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></history>
+                    <jurisdiction xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></jurisdiction>
+                    <organizationID>
+                        <value extension="cdxpostprod-otca" root="2.16.840.1.113883.3.277.100.2"></value>
+                    </organizationID>
+                    <roleEffectiveDate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                       xsi:nil="true"></roleEffectiveDate>
+                </queryByParameterPayload>
+            </controlActProcess>
+        </PRPM_IN406010UV01>
+    </s:Body>
+</s:Envelope>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Benson Lott (INTERIOR HEALTH AUTHORITY) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:bccda" xmlns:hl7="urn:hl7-org:v3" targetNamespace="urn:bccda" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn:hl7-org:v3" schemaLocation="datatypes.xsd"/>
+	<xs:element name="statusCode" type="hl7:CS">
+		<xs:annotation>
+			<xs:documentation>This element in an extension to CDA R2 added by the BC CDA working group. The purpose is to indicate whether the report is preliminary or final</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ca.leadlab.obib</groupId>
+    <artifactId>doctr</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- message-builder -->
+        <dependency>
+            <groupId>ca.infoway.messagebuilder</groupId>
+            <artifactId>message-builder-ccda-r1_1</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ca.infoway.messagebuilder</groupId>
+            <artifactId>message-builder-core</artifactId>
+            <version>2.1.8</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>infoway-public-release</id>
+            <name>infoway-public-release</name>
+            <url>https://infoapp.infoway-inforoute.ca/repo/public-release/</url>
+        </repository>
+    </repositories>
+
+</project>

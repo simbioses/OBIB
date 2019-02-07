@@ -5,6 +5,7 @@ import ca.infoway.messagebuilder.datatype.lang.util.DateWithPattern;
 import ca.infoway.messagebuilder.datatype.lang.util.PersonNamePartType;
 import ca.infoway.messagebuilder.datatype.lang.util.PostalAddressPartType;
 import ca.infoway.messagebuilder.domainvalue.AdministrativeGender;
+import ca.infoway.messagebuilder.domainvalue.Realm;
 import ca.infoway.messagebuilder.domainvalue.basic.EntityNameUse;
 import ca.infoway.messagebuilder.domainvalue.basic.PostalAddressUse;
 import ca.infoway.messagebuilder.domainvalue.basic.TelecommunicationAddressUse;
@@ -19,7 +20,10 @@ import ca.infoway.messagebuilder.model.ccda_r1_1.merged.*;
 import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.ConsultationNote;
 import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.Component2Bean;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
+import ca.infoway.messagebuilder.xml.delta.RealmCode;
 import org.xml.sax.SAXException;
+
+import java.util.TimeZone;
 
 public class ReferralRequestCreator {
 
@@ -106,8 +110,8 @@ public class ReferralRequestCreator {
         return this;
     }
 
-    public ReferralRequestCreator effectiveTime(int year, int month, int day) {
-        doc.setEffectiveTime(new MbDate(DateUtil.getDate(year, month, day)));
+    public ReferralRequestCreator effectiveTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
+        doc.setEffectiveTime(createDateTime(year, month, day, hour, minute, timeZone));
         return this;
     }
 
@@ -229,7 +233,9 @@ public class ReferralRequestCreator {
         return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day), "yyyyMMdd"));
     }
 
-
+    private MbDate createDateTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
+        return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day, hour, minute, 0, 0, timeZone), "yyyyMMddhhmmZ"));
+    }
 
     private PersonName createName(String lastName, String firstName) {
         PersonName name = new PersonName();

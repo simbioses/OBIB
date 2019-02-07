@@ -11,6 +11,7 @@ import ca.infoway.messagebuilder.resolver.configurator.DefaultCodeResolutionConf
 import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.ConsultationNote;
 
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class ReferralRequestApp {
 
@@ -37,11 +38,11 @@ public class ReferralRequestApp {
                 .patientDOB(2019,2,1)
                 .patientID("34234324")
                 .patientAddress("5470 Old West Saanich Rd.","Victoria","BC","V9E2A7","CA","(250)721-8797")
-                .effectiveTime(2019,02,1)
-                .docId("3435465")
+                .effectiveTime(2019,2,1, 12, 30, TimeZone.getTimeZone("GMT-8"))
+                .docId(UUID.randomUUID().toString())
                 .authorID("2343242")
                 .authorAddress("3800 Finnerty Rd", "Victoria", "BC","V8P 5C3", "CA","(250) 472-8743")
-                .authorTime(2019,02,1)
+                .authorTime(2019,2,1)
                 .authorName("Price","Morgan")
                 .custodian("Ocean Spree Medical", "3234242")
                 .custodianAddress("344 West Saanich Lane", "Victoria", "BC", "V9e 2j4", "CA", "(409) 444-2933")
@@ -76,7 +77,7 @@ public class ReferralRequestApp {
         // specify a time zone when using the transformer
         // (not absolutely necessary, if not set, local timezone is used)
         // Note: a time zone can also be specified for each individual transform, overriding any provided in the constructor
-        TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+        TimeZone timeZone = TimeZone.getTimeZone("GMT-8");
         return new ClinicalDocumentTransformer(timeZone, timeZone);
     }
 

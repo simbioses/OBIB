@@ -24,7 +24,7 @@ public class ReferralRequestApp {
         System.out.println("\nDone");
     }
 
-    public final void createDocumentBeanAndConvertToXml() {
+    public final String createDocumentBeanAndConvertToXml() {
 
         // this method creates a ReferralRequest object and populates various fields
 
@@ -48,8 +48,6 @@ public class ReferralRequestApp {
                 .body("Please cure this person!")
                 .get();
 
-        @SuppressWarnings("unused")
-
         CdaModelToXmlResult result = this.createTransformer().transformToDocument(MBSpecificationVersion, referralRequest);
 
         System.out.println("\nDocument (converted to XML):\n");
@@ -57,11 +55,11 @@ public class ReferralRequestApp {
         // IMPORTANT NOTE: it is the application's responsibility to add a valid xml header to the xml output
         //                 (this feature is under consideration for a future version of MB)
 
-        String documentXml = result.getXmlDocument();
-        System.out.println(documentXml);
+        System.out.println(result.getXmlDocument());
 
         reportErrorsAndWarnings(result, true, true);
 
+        return result.getXmlDocumentWithoutFormatting();
     }
 
 

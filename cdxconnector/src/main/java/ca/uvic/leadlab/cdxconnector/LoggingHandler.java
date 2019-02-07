@@ -57,7 +57,7 @@ public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
 
             return true;
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error logging SOAP message", e);
+            LOGGER.log(Level.SEVERE, "Error logging SOAP messages", e);
             return false;
         }
     }

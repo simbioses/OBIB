@@ -1,17 +1,30 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.bccdx.*;
+import ca.interiorhealth.BizTalkServiceInstance;
+import ca.leadlab.obib.doctr.ReferralRequestApp;
+import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.SubmitDocumentBuilder;
+import org.hl7.v3.*;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
 import java.io.FileInputStream;
+import java.io.StringWriter;
+import java.net.URL;
 import java.security.*;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,35 +40,69 @@ public class WSClient {
     //private String baseUrl = "https://servicestest.bccdx.ca/";
     //private String baseUrl = "https://services.bccdx.ca/";
 
+    // Clinic credentials
     private String username = "cdxpostprod-otca";
     private String password = "VMK31";
-
     private String locationId = username;
     private String clinicName = "Oscar Test Clinic A";
 
-    private String certPath = "/home/ocosta/Projects/UVic/LEADLab/source/cdxconnector/certs/LEADlab_Keystore.jks";
+    private String certPath = "/home/ocosta/Projects/UVic/LEADLab/source/OBIB/cdxconnector/certs/LEADlab_Keystore.jks";
     private String certPass = "LEADlab";
 
     public static void main(String[] args) {
         WSClient client = new WSClient();
-        client.listProviders();
+
+        ReferralRequestApp app = new ReferralRequestApp();
+
+        String document = app.createDocumentBeanAndConvertToXml();
+
+        client.submitDocument(document);
     }
 
-    private static final WSObjectFactory factory = new WSObjectFactory();
-
-    private void listProviders() {
+    private void submitDocument(String document) {
         try {
-            PRPMIN406010UV01 request = createRequest(locationId);
-            request.setControlActProcess(createControlActProcess("2.16.840.1.113883.3.277.100.2", locationId));
+            RCMRIN000002UV01 request = new SubmitDocumentBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
+                    .receiver("CDX") // ID Of receiver
+                    .sender(locationId) // ID Of requestor
+                    .document(UUID.randomUUID().toString(), document)
+                    .build();
+
+            System.out.println("\nSubmit Document Request:\n");
+            System.out.println(parseObject(request));
 
             setupSSLContext(certPath, certPass.toCharArray());
 
-            ClinicQuery clinicQuery = new ClinicQuery();
-            clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
+            BizTalkServiceInstance documentService = new BizTalkServiceInstance(new URL("https://servicestest.bccdx.ca/CDASubmitService/CDASubmit.svc?WSDL"));
+            documentService.setHandlerResolver(handlerResolver(documentService.getServiceName()));
+            MCCIIN000002UV01 response = documentService.getCustomBindingITwoWayAsync().submitCDA(request);
 
+            System.out.println("\nSubmit Document Response:\n");
+            System.out.println(parseObject(response));
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error on submitDocument", e);
+        }
+    }
+
+    private void listClinics() {
+        try {
+            PRPMIN406010UV01 request = new ListProviderBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
+                    .sender(locationId) // ID Of requestor
+                    .queryById("2.16.840.1.113883.3.277.100.2", locationId)
+                    .build();
+
+            System.out.println("\nList Clinics Request:\n");
+            System.out.println(parseObject(request));
+
+            setupSSLContext(certPath, certPass.toCharArray());
+
+            ClinicQuery clinicQuery = new ClinicQuery(new URL("https://servicestest.bccdx.ca/RegistrySearch/ClinicQuery.svc?WSDL"));
+            clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
             PRPMIN406110UV01 response = clinicQuery.getCustomBindingPRPMAR400013UV().prpmIN406010UV01(request);
 
-            System.out.println(response);
+            System.out.println("\nList Clinics Response:\n");
+            System.out.println(parseObject(response));
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error on listProviders", e);
         }
@@ -80,7 +127,7 @@ public class WSClient {
         }
     }
 
-    public HandlerResolver handlerResolver(QName serviceName) {
+    private HandlerResolver handlerResolver(QName serviceName) {
         return new HandlerResolver() {
             @Override
             public List<Handler> getHandlerChain(PortInfo portInfo) {
@@ -93,60 +140,35 @@ public class WSClient {
         };
     }
 
-    private PRPMIN406010UV01 createRequest(String senderAgentOrganizationIdExtension) {
-        // Used by CDX to search for 1 or more providers that match a specific criteria.
-        PRPMIN406010UV01 request = factory.createPRPMIN406010UV01();
-        request.setITSVersion("XML_1.0");
+    private String parseObject(Object obj) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-        // Transmission Wrapper
-        request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", UUID.randomUUID().toString())); // Unique Message ID (GUID)
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // Time of transmission yyyyMMddHHMMss-Z (201209241316-0700)
-        request.setVersionCode(factory.createCS("2010Normative"));
-        request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "PRPM_IN306010UV"));
-        request.setProcessingCode(factory.createCS("P")); // D = Debugging P = Production T = Training
-        request.setProcessingModeCode(factory.createCS("T")); // sending T for current processing
-        request.setAcceptAckCode(factory.createCS("AL")); // AL = Always ER = Error/reject only NE = never
-        request.getReceiver().add(factory.createMCCIMT000100UV01Receiver(createDevice("CDX"))); // The receiver is always the CDX system
-        request.setSender(factory.createMCCIMT000100UV01Sender(createDevice(senderAgentOrganizationIdExtension))); // ID Of requestor
+            StringWriter writer = new StringWriter();
+            marshaller.marshal(obj, writer);
 
-        return request;
+            return writer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    private MCCIMT000100UV01Device createDevice(String agentOrganizationIdExtension) {
-        MCCIMT000100UV01Organization representedOrganization = factory.createMCCIMT000100UV01Organization();
-        representedOrganization.setClassCode(EntityClassOrganization.ORG);
-        representedOrganization.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
-        representedOrganization.getId().add(factory.createII("2.16.840.1.113883.3.277.100.2",
-                "CDX Clinic ID",
-                agentOrganizationIdExtension));
+    String validateObject(Object obj, URL schemaUrl) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(schemaUrl);
 
-        MCCIMT000100UV01Agent agent = factory.createMCCIMT000100UV01Agent();
-        agent.setClassCode(RoleClassAgent.AGNT);
-        agent.setRepresentedOrganization(representedOrganization);
-
-        MCCIMT000100UV01Device device = factory.createMCCIMT000100UV01Device();
-        device.setClassCode(EntityClassDevice.DEV);
-        device.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
-        device.getId().add(factory.createII(NullFlavor.NA));
-        device.setAsAgent(agent);
-
-        return device;
-    }
-
-    public PRPMIN406010UV01QUQIMT021001UV01ControlActProcess createControlActProcess(String root, String extension) {
-        // Control Act Wrapper - this specifies the search criteria
-        PRPMIN406010UV01QUQIMT021001UV01ControlActProcess controlActProcess = factory
-                .createPRPMIN406010UV01QUQIMT021001UV01ControlActProcess();
-        controlActProcess.setClassCode(ActClassControlAct.CACT);
-        controlActProcess.setMoodCode(XActMoodIntentEvent.RQO);
-
-        PRPMMT406010UV01QueryByParameterPayload query = factory.createPRPMMT406010UV01QueryByParameterPayload();
-        query.setStatusCode(factory.createCS("new"));
-        //TODO query.getOrganizationAddress().add(factory.createPRPMMT406010UV01OrganizationAddress(""));
-        query.getOrganizationID().add(factory.createPRPMMT406010UV01OrganizationID(root, extension));
-        //TODO query.getOrganizationName().add(factory.createPRPMMT406010UV01OrganizationName(name));
-        controlActProcess.setQueryByParameterPayload(query);
-
-        return controlActProcess;
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setSchema(schema);
+            marshaller.marshal(obj, new DefaultHandler());
+        } catch (JAXBException | SAXException e) {
+            LOGGER.log(Level.SEVERE, "Error validating object.", e);
+            return e.getMessage();
+        }
+        return null;
     }
 }

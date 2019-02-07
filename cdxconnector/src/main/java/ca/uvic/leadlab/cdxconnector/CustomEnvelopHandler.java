@@ -29,7 +29,7 @@ public class CustomEnvelopHandler implements SOAPHandler<SOAPMessageContext> {
     public boolean handleMessage(SOAPMessageContext context) {
         if ((Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
             try {
-                LOGGER.log(Level.INFO, "Handling outbound message");
+                LOGGER.log(Level.INFO, "Handling outbound messages");
 
                 SOAPMessage message = context.getMessage();
 

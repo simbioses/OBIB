@@ -1,8 +1,11 @@
 package ca.uvic.leadlab.cdxconnector.messages;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.hl7.v3.*;
 
 import java.io.*;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class SubmitDocumentBuilder extends MessageBuilder {
             attachments = new ArrayList<>();
         }
         try {
-            attachments.add(factory.createED(mediaType, content));
+            attachments.add(createAttachmentText(mediaType, content));
         } catch (NoSuchAlgorithmException e) {
             throw new MessageBuilderException("Error attaching text", e);
         }
@@ -83,6 +86,18 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         ed.setMediaType(MediaType.TEXT_XML.value());
         // TODO ed.setRepresentation(BinaryDataEncoding.TXT);
         ed.getContent().add("<![CDATA[ " + content + " ]]>"); // <!—HTML Encoded CDA document XML here --> OR <![CDATA[ CDA goes here ]]>
+        return ed;
+    }
+
+    private ED createAttachmentText(MediaType mediaType, Serializable content) throws NoSuchAlgorithmException {
+        ED ed = factory.createED();
+        // TODO ed.setRepresentation(BinaryDataEncoding.B_64);
+        ed.setIntegrityCheck(DigestUtils.digest(
+                MessageDigest.getInstance(IntegrityCheckAlgorithm.SHA_1.value()),
+                SerializationUtils.serialize(content)));
+        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1);
+        ed.setMediaType(mediaType.value());
+        ed.getContent().add(content);
         return ed;
     }
 

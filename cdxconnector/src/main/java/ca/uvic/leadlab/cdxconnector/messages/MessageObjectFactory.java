@@ -1,12 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.SerializationUtils;
 import org.hl7.v3.*;
 
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -56,18 +51,6 @@ public class MessageObjectFactory extends ObjectFactory {
         cd.setCode(code);
         cd.setCodeSystem(codeSystem);
         return cd;
-    }
-
-    public ED createED(MediaType mediaType, Serializable content) throws NoSuchAlgorithmException {
-        ED ed = createED();
-        // TODO ed.setRepresentation(BinaryDataEncoding.B_64);
-        ed.setIntegrityCheck(DigestUtils.digest(
-                MessageDigest.getInstance(IntegrityCheckAlgorithm.SHA_1.value()),
-                SerializationUtils.serialize(content)));
-        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1);
-        ed.setMediaType(mediaType.value());
-        ed.getContent().add(content);
-        return ed;
     }
 
     public MCCIMT000100UV01Receiver createMCCIMT000100UV01Receiver(MCCIMT000100UV01Device device) {

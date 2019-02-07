@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="RCMR_AR000003UV01" targetNamespace="urn:hl7-org:v3"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:tns="urn:hl7-org:v3"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:hl7-org:v3/Imports">
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDARequest1.xsd"/>
+            <xsd:import namespace="urn:bccdx.ca" schemaLocation="CDARequest0.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetMessageRequest">
+        <wsdl:part name="RCMR_IN000031UV01" element="tns:RCMR_IN000031UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SearchMessagesRequest">
+        <wsdl:part name="RCMR_IN000029UV01" element="tns:RCMR_IN000029UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ListNewMessagesRequest">
+        <wsdl:part name="MCCI_IN100001UV01" element="tns:MCCI_IN100001UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ListNewMessagesResponse">
+        <wsdl:part name="RCMR_IN000030UV01" element="tns:RCMR_IN000030UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SearchMessagesResponse">
+        <wsdl:part name="RCMR_IN000030UV01" element="tns:RCMR_IN000030UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetMessageResponse">
+        <wsdl:part name="RCMR_IN000032UV01" element="tns:RCMR_IN000032UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="RCMR_AR000003UV01">
+        <wsdl:operation name="RCMR_IN000031UV01">
+            <wsdl:input name="GetMessageRequest" message="tns:GetMessageRequest"
+                        wsaw:Action="urn:hl7-org:v3:RCMR_IN000031UV01.NE20090227">
+            </wsdl:input>
+            <wsdl:output name="GetMessageResponse" message="tns:GetMessageResponse"
+                         wsaw:Action="urn:hl7-org:v3:RCMR_IN000032UV01.NE20090227">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MCCI_IN100001UV01">
+            <wsdl:input name="ListNewMessagesRequest" message="tns:ListNewMessagesRequest"
+                        wsaw:Action="urn:hl7-org:v3:MCCI_IN100001UV01.NE20090227">
+            </wsdl:input>
+            <wsdl:output name="ListNewMessagesResponse" message="tns:ListNewMessagesResponse"
+                         wsaw:Action="urn:hl7-org:v3:MCCI_IN100001UV01.NE20090227">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RCMR_IN000029UV01">
+            <wsdl:input name="SearchMessagesRequest" message="tns:SearchMessagesRequest"
+                        wsaw:Action="urn:hl7-org:v3:RCMR_IN000029UV01.NE20090227">
+            </wsdl:input>
+            <wsdl:output name="SearchMessagesResponse" message="tns:SearchMessagesResponse"
+                         wsaw:Action="urn:hl7-org:v3:RCMR_IN000030UV01.NE20090227">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CDARequestEndpoint" type="tns:RCMR_AR000003UV01">
+        <wsp:PolicyReference URI="#CDARequestEndpoint_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RCMR_IN000031UV01">
+            <soap:operation soapAction="urn:hl7-org:v3:RCMR_IN000031UV01.NE20090227" style="document"/>
+            <wsdl:input name="GetMessageRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetMessageResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MCCI_IN100001UV01">
+            <soap:operation soapAction="urn:hl7-org:v3:MCCI_IN100001UV01.NE20090227" style="document"/>
+            <wsdl:input name="ListNewMessagesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ListNewMessagesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RCMR_IN000029UV01">
+            <soap:operation soapAction="urn:hl7-org:v3:RCMR_IN000029UV01.NE20090227" style="document"/>
+            <wsdl:input name="SearchMessagesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="SearchMessagesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RCMR_AR000003UV01">
+        <wsdl:port name="CDARequestEndpoint" binding="tns:CDARequestEndpoint">
+            <soap:address location="https://servicestest.bccdx.ca/CDARequestService/CDARequest.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsp:Policy wsu:Id="CDARequestEndpoint_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy/>
+                </sp:Wss11>
+                <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportIssuedTokens/>
+                        <sp:RequireClientEntropy/>
+                        <sp:RequireServerEntropy/>
+                    </wsp:Policy>
+                </sp:Trust10>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>

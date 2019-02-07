@@ -1,0 +1,102 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
+           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:mif="urn:hl7-org:v3/mif"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--xs:include schemaLocation="CDASubmit3.xsd"/-->
+    <xs:include schemaLocation="CDASubmit57.xsd"/>
+    <xs:include schemaLocation="CDASubmit7.xsd"/>
+    <xs:include schemaLocation="CDASubmit14.xsd"/>
+    <xs:include schemaLocation="CDASubmit52.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Source Information
+            Rendered by: RoseTree 4.2.29
+            Rendered on:
+            This document was rendered into XML using software provided to HL7 by Beeler Consulting LLC.
+            PubDB to MIF Transform: $RCSfile: PubDbXmlToMIF.xsl,v $ $Revision: 1.11 $ $Date: 2007/10/19 05:55:13 $
+            Fix names transform: $Id: FixMifNames.xsl 7634 2009-03-23 00:42:50Z wbeeler $
+            HTML to MIF Markup transform: $Id: HtmlToMIFMarkup.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Base transform: $Id: ConvertBase.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Package Id Conversion: $Id: TransformPackageIds.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Generated using schema builder version: 3.2.1 and DynamicMifToXSD.xsl version: 1.4
+            Dynamic MIF to Schema Transform: $Id: DynamicMifToXsd.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Static MIF to Schema Transform: $Id: StaticMifToXsd.xsl 7598 2009-03-16 19:52:42Z wbeeler $
+            Package Id Conversion: $Id: TransformPackageIds.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+        </xs:documentation>
+    </xs:annotation>
+    <xs:element name="RCMR_IN000002UV01">
+        <xs:annotation>
+            <xs:appinfo/>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent mixed="false">
+                <xs:extension base="RCMR_IN000002UV01.MCCI_MT000100UV01.Message">
+                    <xs:attribute fixed="XML_1.0" name="ITSVersion" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="RCMR_IN000002UV01.MCCI_MT000100UV01.Message">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="creationTime" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="securityText" type="ST"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="versionCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="interactionId" type="II"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="profileId" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="processingCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="processingModeCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="acceptAckCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="sequenceNumber" type="INT"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="attachmentText" type="ED"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="receiver" type="MCCI_MT000100UV01.Receiver"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="respondTo" nillable="true"
+                        type="MCCI_MT000100UV01.RespondTo"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="sender" type="MCCI_MT000100UV01.Sender"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="attentionLine" nillable="true"
+                        type="MCCI_MT000100UV01.AttentionLine"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="controlActProcess"
+                        type="RCMR_IN000002UV01.MCAI_MT700201UV01.ControlActProcess"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_IN000002UV01.MCAI_MT700201UV01.ControlActProcess">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CD"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="text" type="ED"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="effectiveTime" type="IVL_TS"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="priorityCode" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="reasonCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="languageCode" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="overseer" nillable="true"
+                        type="MCAI_MT700201UV01.Overseer"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="authorOrPerformer" nillable="true"
+                        type="MCAI_MT700201UV01.AuthorOrPerformer"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="dataEnterer" nillable="true"
+                        type="MCAI_MT700201UV01.DataEnterer"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="informationRecipient" nillable="true"
+                        type="MCAI_MT700201UV01.InformationRecipient"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subject" nillable="true"
+                        type="RCMR_IN000002UV01.MCAI_MT700201UV01.Subject2"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="reasonOf" nillable="true"
+                        type="MCAI_MT700201UV01.Reason"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassControlAct" use="required"/>
+        <xs:attribute name="moodCode" type="x_ActMoodIntentEvent" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_IN000002UV01.MCAI_MT700201UV01.Subject2">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="target" nillable="true"
+                        type="RCMR_MT000002UV02.ClinicalDocument"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ActRelationshipHasSubject" use="required"/>
+        <xs:attribute default="false" name="contextConductionInd" type="bl" use="optional"/>
+    </xs:complexType>
+</xs:schema>

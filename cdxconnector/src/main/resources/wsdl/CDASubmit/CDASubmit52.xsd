@@ -1,0 +1,454 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
+           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:ex="urn:hl7-org/v3-example"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--xs:include schemaLocation="CDASubmit3.xsd"/-->
+    <xs:include schemaLocation="CDASubmit57.xsd"/>
+    <xs:include schemaLocation="CDASubmit31.xsd"/>
+    <xs:include schemaLocation="CDASubmit10.xsd"/>
+    <xs:include schemaLocation="CDASubmit12.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Generated using schema builder version 3.2.1. Stylesheets:
+            HMD was rendered into XML using software provided to HL7 by Beeler Consulting LLC.
+            HMD to MIF Transform: $Id: RoseTreeHmdToMIFStaticModel.xsl 7657 2009-03-27 04:11:34Z wbeeler $
+            Base transform: $Id: ConvertBase.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Package Id Conversion: $Id: TransformPackageIds.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            HTML To MIF markup: $Id: HtmlToMIFMarkup.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Flat to Serialization Transform: $Id: MIFStaticModelFlatToSerialization.xsl 7375 2009-01-26 19:26:53Z
+            wbeeler $
+            Fix Names Transform: $Id: FixMifNames.xsl 7634 2009-03-23 00:42:50Z wbeeler $
+            Base transform: $Id: ConvertBase.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            Package Id Conversion: $Id: TransformPackageIds.xsl 7375 2009-01-26 19:26:53Z wbeeler $
+            StaticMifToXsd.xsl version 2.0
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="RCMR_MT000002UV02.AssignedAuthor">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="AD"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="telecom" type="TEL"/>
+            <xs:choice>
+                <xs:element maxOccurs="1" minOccurs="0" name="assignedPerson" nillable="true"
+                            type="RCMR_MT000002UV02.Person"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="assignedAuthoringDevice" nillable="true"
+                            type="RCMR_MT000002UV02.AuthoringDevice"/>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="representedOrganization" nillable="true"
+                        type="COCT_MT150000UV02.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="RoleClassAssignedEntity" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.AssignedCustodian">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="representedOrganization" nillable="true"
+                        type="COCT_MT150000UV02.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="RoleClassAssignedEntity" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.AssociatedEntity">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="AD"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="telecom" type="TEL"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="associatedPerson" nillable="true"
+                        type="RCMR_MT000002UV02.Person"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="scopingOrganization" nillable="true"
+                        type="COCT_MT150000UV02.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="RoleClassAssociative" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Authenticator">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="signatureCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                        type="COCT_MT090100UV01.AssignedPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationAuthenticator" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Author">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="functionCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="time" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedAuthor" nillable="true"
+                        type="RCMR_MT000002UV02.AssignedAuthor"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationAuthorOriginator" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.AuthoringDevice">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="manufacturerModelName" type="SC"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="softwareName" type="SC"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassDevice" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Authorization">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="consent" nillable="true" type="RCMR_MT000002UV02.Consent"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ActRelationshipAuthorizedBy" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.ClinicalDocument">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="title" type="ST"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="text" type="ED"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="statusCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="effectiveTime" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="availabilityTime" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="confidentialityCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="reasonCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="languageCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="setId" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="versionNumber" type="INT"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="completionCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="storageCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="copyTime" type="TS"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subject" nillable="true"
+                        type="RCMR_MT000002UV02.Subject"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="recordTarget" nillable="true"
+                        type="RCMR_MT000002UV02.RecordTarget"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="author" nillable="true"
+                        type="RCMR_MT000002UV02.Author"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="dataEnterer" nillable="true"
+                        type="RCMR_MT000002UV02.DataEnterer"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="custodian" type="RCMR_MT000002UV02.Custodian"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="informationRecipient" nillable="true"
+                        type="RCMR_MT000002UV02.InformationRecipient"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="legalAuthenticator" nillable="true"
+                        type="RCMR_MT000002UV02.LegalAuthenticator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="authenticator" nillable="true"
+                        type="RCMR_MT000002UV02.Authenticator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="participant" nillable="true"
+                        type="RCMR_MT000002UV02.Participant1"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="inFulfillmentOf" nillable="true"
+                        type="RCMR_MT000002UV02.InFulfillmentOf"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="documentationOf" nillable="true"
+                        type="RCMR_MT000002UV02.DocumentationOf"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="relatedDocument" nillable="true"
+                        type="RCMR_MT000002UV02.RelatedDocument"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="authorization" nillable="true"
+                        type="RCMR_MT000002UV02.Authorization"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="componentOf" nillable="true"
+                        type="RCMR_MT000002UV02.Component1"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassClinicalDocument" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodEventOccurrence" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Component1">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="encompassingEncounter" nillable="true"
+                        type="RCMR_MT000002UV02.EncompassingEncounter"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ActRelationshipHasComponent" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Consent">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="statusCode" type="CS"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassConsent" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodEventOccurrence" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Custodian">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedCustodian"
+                        type="RCMR_MT000002UV02.AssignedCustodian"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationCustodian" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.DataEnterer">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                        type="COCT_MT090100UV01.AssignedPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationDataEntryPerson" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.DocumentationOf">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="serviceEvent" nillable="true"
+                        type="RCMR_MT000002UV02.ServiceEvent"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ActRelationshipDocuments" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.EncompassingEncounter">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="effectiveTime" type="IVL_TS"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="dischargeDispositionCode" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="encounterParticipant" nillable="true"
+                        type="RCMR_MT000002UV02.EncounterParticipant"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="location" nillable="true" type="RCMR_MT000002UV02.Location"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassEncounter" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodEventOccurrence" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.EncounterParticipant">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="IVL_TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                        type="COCT_MT090100UV01.AssignedPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="x_EncounterParticipant" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.HealthCareFacility">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="location" nillable="true" type="RCMR_MT000002UV02.Place"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="serviceProviderOrganization" nillable="true"
+                        type="COCT_MT150000UV02.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="RoleClassServiceDeliveryLocation" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.InFulfillmentOf">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="order" nillable="true" type="RCMR_MT000002UV02.Order"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ActRelationshipFulfills" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.InformationRecipient">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="intendedRecipient" nillable="true"
+                        type="RCMR_MT000002UV02.IntendedRecipient"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="x_InformationRecipient" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.IntendedRecipient">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="AD"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="telecom" type="TEL"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="informationRecipient" nillable="true"
+                        type="RCMR_MT000002UV02.Person"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="receivedOrganization" nillable="true"
+                        type="COCT_MT150000UV02.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="x_InformationRecipientRole" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.LegalAuthenticator">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="signatureCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                        type="COCT_MT090100UV01.AssignedPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationLegalAuthenticator" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Location">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="healthCareFacility" nillable="true"
+                        type="RCMR_MT000002UV02.HealthCareFacility"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationTargetLocation" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Order">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="priorityCode" type="CE"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassRoot" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodRequest" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.ParentDocument">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CD"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="text" type="ED"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="setId" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="versionNumber" type="INT"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassClinicalDocument" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodEventOccurrence" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Participant1">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="functionCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="IVL_TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="associatedEntity" nillable="true"
+                        type="RCMR_MT000002UV02.AssociatedEntity"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Performer1">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="functionCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="IVL_TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                        type="COCT_MT090100UV01.AssignedPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="x_ServiceEventPerformer" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Person">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="name" type="PN"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassPerson" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Place">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="name" type="EN"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="addr" type="AD"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassPlace" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.RecordTarget">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="patient" nillable="true" type="COCT_MT050000UV.Patient"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationRecordTarget" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.RelatedDocument">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="target" nillable="true"
+                        type="RCMR_MT000002UV02.ParentDocument"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="x_ActRelationshipDocument" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.RelatedSubject">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="AD"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="telecom" type="TEL"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="subject" nillable="true"
+                        type="RCMR_MT000002UV02.SubjectPerson"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="x_DocumentSubject" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.ServiceEvent">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="effectiveTime" type="IVL_TS"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="performer" nillable="true"
+                        type="RCMR_MT000002UV02.Performer1"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="ActClassRoot" use="required"/>
+        <xs:attribute name="moodCode" type="ActMoodEventOccurrence" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.Subject">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="relatedSubject" nillable="true"
+                        type="RCMR_MT000002UV02.RelatedSubject"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="typeCode" type="ParticipationTargetSubject" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RCMR_MT000002UV02.SubjectPerson">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="name" type="PN"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="administrativeGenderCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="birthTime" type="TS"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassPerson" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+</xs:schema>

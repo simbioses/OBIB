@@ -1,0 +1,66 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
+           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:ex="urn:hl7-org/v3-example"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--xs:include schemaLocation="CDASubmit3.xsd"/-->
+    <xs:include schemaLocation="CDASubmit57.xsd"/>
+    <xs:include schemaLocation="CDASubmit17.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Generated using schema builder version 3.2.1. Stylesheets:
+
+            StaticMifToXsd.xsl version 2.0
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="COCT_MT090002UV01.AssignedEntity">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="AD"/>
+            <xs:choice>
+                <xs:element maxOccurs="1" minOccurs="1" name="assignedPerson" nillable="true"
+                            type="COCT_MT090002UV01.Person"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="assignedDevice" nillable="true"
+                            type="COCT_MT090002UV01.Device"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="assignedOrganization" nillable="true"
+                            type="COCT_MT090002UV01.Organization"/>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="representedOrganization" nillable="true"
+                        type="COCT_MT150002UV01.Organization"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="RoleClassAssignedEntity" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="COCT_MT090002UV01.Device">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="II"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="manufacturerModelName" type="SC"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="softwareName" type="SC"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassDevice" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="COCT_MT090002UV01.Organization">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="name" type="EN"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassOrganization" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="COCT_MT090002UV01.Person">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="name" type="EN"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute name="classCode" type="EntityClassPerson" use="required"/>
+        <xs:attribute name="determinerCode" type="EntityDeterminerSpecific" use="required"/>
+    </xs:complexType>
+</xs:schema>

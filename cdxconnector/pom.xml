@@ -7,11 +7,37 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skip.wsdl.download>none</skip.wsdl.download>
+        <!-- skip.wsdl.download>generate-sources</skip.wsdl.download --> <!-- Used to download the WSDL and XSD -->
+        <server.url>http://localhost</server.url>
     </properties>
 
     <dependencies>
+        <!-- Document Builder -->
+        <dependency>
+            <groupId>ca.leadlab.obib</groupId>
+            <artifactId>doctr</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+        </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>mvn-repo</id>
+            <url>file://${project.basedir}/../mvn-repo</url> <!-- temporary local mvn-repo -->
+        </repository>
+    </repositories>
 
     <build>
         <pluginManagement>
@@ -33,8 +59,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.dkschlos</groupId>
+                    <artifactId>wsdlget-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-codegen-plugin</artifactId>
+                    <version>3.2.7</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -126,134 +162,195 @@
                 </executions>
             </plugin>
 
-            <!-- Generate Java classes from remote WSDLs -->
+            <!-- Set the keystore into system properties -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
+                <artifactId>properties-maven-plugin</artifactId>
                 <executions>
+                    <execution>
+                        <id>set-system-properties</id>
+                        <phase>${skip.wsdl.download}</phase>
+                        <goals>
+                            <goal>set-system-properties</goal>
+                        </goals>
+                        <configuration>
+                            <properties>
+                                <property>
+                                    <name>javax.net.ssl.keyStore</name>
+                                    <value>${basedir}/certs/LEADlab_Keystore.jks</value>
+                                </property>
+                                <property>
+                                    <name>javax.net.ssl.keyStoreType</name>
+                                    <value>jks</value>
+                                </property>
+                                <property>
+                                    <name>javax.net.ssl.keyStorePassword</name>
+                                    <value>LEADlab</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Download the WSDLs and WSDs -->
+            <plugin>
+                <groupId>com.github.dkschlos</groupId>
+                <artifactId>wsdlget-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>get-wsdl</id>
+                        <phase>${skip.wsdl.download}</phase>
+                        <goals>
+                            <goal>wsdlget</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outputPath>${project.basedir}/src/main/resources/wsdl</outputPath>
+                    <wsdls>
+                        <wsdl>
+                            <serviceName>CDASubmit</serviceName>
+                            <url>https://servicestest.bccdx.ca/CDASubmitService/CDASubmit.svc?WSDL</url>
+                        </wsdl>
+                        <wsdl>
+                            <serviceName>CDARequest</serviceName>
+                            <url>https://servicestest.bccdx.ca/CDArequestService/CDARequest.svc?WSDL</url>
+                        </wsdl>
+                        <wsdl>
+                            <serviceName>DistributionStatus</serviceName>
+                            <url>https://servicestest.bccdx.ca/DistributionStatusService/DistributionStatus.svc?WSDL</url>
+                        </wsdl>
+                        <wsdl>
+                            <serviceName>ProviderQuery</serviceName>
+                            <url>https://servicestest.bccdx.ca/RegistrySearch/ProviderQuery.svc?WSDL</url>
+                        </wsdl>
+                        <wsdl>
+                            <serviceName>ClinicQuery</serviceName>
+                            <url>https://servicestest.bccdx.ca/RegistrySearch/ClinicQuery.svc?WSDL</url>
+                        </wsdl>
+                    </wsdls>
+                </configuration>
+            </plugin>
+
+            <!-- Generate Java classes from local WSDLs -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-CDASubmit-classes</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/CDASubmit/CDASubmit.wsdl</wsdl>
+                                    <wsdlLocation>${server.url}/CDASubmitService/CDASubmit.svc?WSDL</wsdlLocation>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/CDASubmit_jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>generate-CDARequest-classes</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>wsimport</goal>
+                            <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
-                            <vmArgs>
-                                <!--vmArg>-Djavax.net.ssl.trustStore=${basedir}/certs/IHA_Truststore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.trustStorePassword=LEADlab</vmArg-->>
-                                <vmArg>-Djavax.net.ssl.keyStore=${basedir}/certs/LEADlab_Keystore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.keyStorePassword=LEADlab</vmArg>
-                            </vmArgs>
-                            <wsdlUrls>
-                                <wsdlUrl>https://servicestest.bccdx.ca/CDArequestService/CDARequest.svc?WSDL</wsdlUrl>
-                            </wsdlUrls>
-                            <keep>true</keep>
-                            <packageName>ca.bccdx</packageName>
-                            <sourceDestDir>src/gen/java</sourceDestDir>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/CDARequest/CDARequest.wsdl</wsdl>
+                                    <wsdlLocation>${server.url}/CDArequestService/CDARequest.svc?WSDL</wsdlLocation>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
                         </configuration>
                     </execution>
-                    <!--execution> TODO "already defined exception"
-                        <id>generate-CDASubmit-classes</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <vmArgs>
-                                <!- -vmArg>-Djavax.net.ssl.trustStore=${basedir}/certs/IHA_Truststore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.trustStorePassword=LEADlab</vmArg- - >>
-                                <vmArg>-Djavax.net.ssl.keyStore=${basedir}/certs/LEADlab_Keystore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.keyStorePassword=LEADlab</vmArg>
-                            </vmArgs>
-                            <wsdlUrls>
-                                <wsdlUrl>https://servicestest.bccdx.ca/CDASubmitService/CDASubmit.svc?WSDL</wsdlUrl>
-                            </wsdlUrls>
-                            <keep>true</keep>
-                            <packageName>ca.bccdx</packageName>
-                            <sourceDestDir>src/gen/java</sourceDestDir>
-                        </configuration>
-                    </execution -->
-                    <execution>
+                    <!--execution>
                         <id>generate-DistributionStatus-classes</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>wsimport</goal>
+                            <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
-                            <vmArgs>
-                                <!--vmArg>-Djavax.net.ssl.trustStore=${basedir}/certs/IHA_Truststore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.trustStorePassword=LEADlab</vmArg-->>
-                                <vmArg>-Djavax.net.ssl.keyStore=${basedir}/certs/LEADlab_Keystore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.keyStorePassword=LEADlab</vmArg>
-                            </vmArgs>
-                            <wsdlUrls>
-                                <wsdlUrl>https://servicestest.bccdx.ca/DistributionStatusService/DistributionStatus.svc?WSDL</wsdlUrl>
-                            </wsdlUrls>
-                            <keep>true</keep>
-                            <packageName>ca.bccdx</packageName>
-                            <sourceDestDir>src/gen/java</sourceDestDir>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/DistributionStatus/DistributionStatus.wsdl</wsdl>
+                                    <wsdlLocation>${server.url}/DistributionStatusService/DistributionStatus.svc?WSDL</wsdlLocation>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
                         </configuration>
-                    </execution>
+                    </execution-->
                     <execution>
                         <id>generate-providerQuery-classes</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>wsimport</goal>
+                            <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
-                            <vmArgs>
-                                <!--vmArg>-Djavax.net.ssl.trustStore=${basedir}/certs/IHA_Truststore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.trustStorePassword=LEADlab</vmArg-->>
-                                <vmArg>-Djavax.net.ssl.keyStore=${basedir}/certs/LEADlab_Keystore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.keyStorePassword=LEADlab</vmArg>
-                            </vmArgs>
-                            <wsdlUrls>
-                                <wsdlUrl>https://servicestest.bccdx.ca/RegistrySearch/ProviderQuery.svc?WSDL</wsdlUrl>
-                            </wsdlUrls>
-                            <keep>true</keep>
-                            <packageName>ca.bccdx</packageName>
-                            <sourceDestDir>src/gen/java</sourceDestDir>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/ProviderQuery/ProviderQuery.wsdl</wsdl>
+                                    <wsdlLocation>${server.url}/RegistrySearch/ProviderQuery.svc?WSDL</wsdlLocation>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-clinicQuery-classes</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>wsimport</goal>
+                            <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
-                            <vmArgs>
-                                <!--vmArg>-Djavax.net.ssl.trustStore=${basedir}/certs/IHA_Truststore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.trustStorePassword=LEADlab</vmArg-->>
-                                <vmArg>-Djavax.net.ssl.keyStore=${basedir}/certs/LEADlab_Keystore.jks</vmArg>
-                                <vmArg>-Djavax.net.ssl.keyStorePassword=LEADlab</vmArg>
-                            </vmArgs>
-                            <wsdlUrls>
-                                <wsdlUrl>https://servicestest.bccdx.ca/RegistrySearch/ClinicQuery.svc?WSDL</wsdlUrl>
-                            </wsdlUrls>
-                            <keep>true</keep>
-                            <packageName>ca.bccdx</packageName>
-                            <sourceDestDir>src/gen/java</sourceDestDir>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Add generate source code into project structure -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-generate-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/gen/java</source>
-                            </sources>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/ClinicQuery/ClinicQuery.wsdl</wsdl>
+                                    <wsdlLocation>${server.url}/RegistrySearch/ClinicQuery.svc?WSDL</wsdlLocation>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
                         </configuration>
                     </execution>
                 </executions>

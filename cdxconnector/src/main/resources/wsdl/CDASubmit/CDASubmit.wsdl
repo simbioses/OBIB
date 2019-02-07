@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BizTalkServiceInstance" targetNamespace="http://interiorhealth.ca" xmlns:q1="urn:hl7-org:v3"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:tns="http://interiorhealth.ca"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+    <wsdl:documentation>
+        <CreationInfo Created="2019-02-05 11:26:42Z"/>
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://interiorhealth.ca/Imports">
+            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit0.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit2.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit1.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit3.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit4.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit5.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit6.xsd"/-->
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit7.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit8.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit9.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit10.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit11.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit12.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit13.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit14.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit15.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit16.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit17.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit18.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit19.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit20.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit21.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit22.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit23.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit24.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit25.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit26.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit27.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit28.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit29.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit30.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit34.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit36.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit35.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit37.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit39.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit38.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit40.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit33.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit43.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit42.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit45.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit46.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit47.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit48.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit49.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit44.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit50.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit41.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit51.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit32.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit31.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit52.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit53.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit54.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit56.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit55.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit57.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit58.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit59.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit60.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit61.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit62.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CDASubmit_SubmitCDA_OutputMessage">
+        <wsdl:part name="part" element="q1:MCCI_IN000002UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CDASubmit_SubmitCDA_InputMessage">
+        <wsdl:part name="part" element="q1:RCMR_IN000002UV01">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CDASubmit">
+        <wsdl:documentation/>
+        <wsdl:operation name="SubmitCDA">
+            <wsdl:documentation/>
+            <wsdl:input message="tns:CDASubmit_SubmitCDA_InputMessage">
+            </wsdl:input>
+            <wsdl:output message="tns:CDASubmit_SubmitCDA_OutputMessage">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomBinding_ITwoWayAsync" type="tns:CDASubmit">
+        <wsp:PolicyReference URI="#CustomBinding_ITwoWayAsync_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SubmitCDA">
+            <wsdl:documentation/>
+            <soap:operation soapAction="SubmitCDA" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BizTalkServiceInstance">
+        <wsdl:port name="CustomBinding_ITwoWayAsync" binding="tns:CustomBinding_ITwoWayAsync">
+            <soap:address location="https://servicestest.bccdx.ca/CDASubmitService/CDASubmit.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsp:Policy wsu:Id="CustomBinding_ITwoWayAsync_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy/>
+                </sp:Wss11>
+                <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportIssuedTokens/>
+                        <sp:RequireClientEntropy/>
+                        <sp:RequireServerEntropy/>
+                    </wsp:Policy>
+                </sp:Trust10>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>

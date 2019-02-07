@@ -1,0 +1,49 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
+           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:ex="urn:hl7-org/v3-example"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--xs:include schemaLocation="CDASubmit3.xsd"/-->
+    <xs:include schemaLocation="CDASubmit57.xsd"/>
+    <xs:include schemaLocation="CDASubmit47.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Generated using schema builder version 3.2.1. Stylesheets:
+
+            StaticMifToXsd.xsl version 2.0
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="COCT_MT590000UV.Annotation">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="code" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="text" type="ST"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="statusCode" type="CS"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="reasonCode" type="CE"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="author" type="COCT_MT590000UV.Author"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="dataEnterer" nillable="true"
+                        type="COCT_MT590000UV.DataEnterer"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute fixed="ACT" name="classCode" type="ActClassRoot" use="optional"/>
+        <xs:attribute fixed="EVN" name="moodCode" type="ActMoodEventOccurrence" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="COCT_MT590000UV.Author">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="time" type="TS"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedEntity" type="COCT_MT090000UV01.AssignedEntity"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute fixed="AUT" name="typeCode" type="ParticipationAuthorOriginator" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="COCT_MT590000UV.DataEnterer">
+        <xs:sequence>
+            <xs:group ref="InfrastructureRootElements"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="assignedEntity" nillable="true"
+                        type="COCT_MT090000UV01.AssignedEntity"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="InfrastructureRootAttributes"/>
+        <xs:attribute name="nullFlavor" type="NullFlavor" use="optional"/>
+        <xs:attribute fixed="ENT" name="typeCode" type="ParticipationDataEntryPerson" use="optional"/>
+    </xs:complexType>
+</xs:schema>

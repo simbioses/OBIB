@@ -12,7 +12,7 @@ public class Realm extends EnumPattern implements ca.infoway.messagebuilder.doma
     static final long serialVersionUID = 175862977274537669L;
 
     // Extra-normative codes
-    public static final Realm BRITISH_COLUMBIA_CANADA = new Realm("BRITISH_COLUMBIA-CANADA", "BC-CA");
+    public static final Realm BRITISH_COLUMBIA_CANADA = new Realm("BRITISH_COLUMBIA-CANADA", "CA-BC");
 
     private final String codeValue;
 

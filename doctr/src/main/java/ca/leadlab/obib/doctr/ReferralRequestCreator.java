@@ -4,7 +4,6 @@ import ca.infoway.messagebuilder.datatype.lang.*;
 import ca.infoway.messagebuilder.datatype.lang.util.DateWithPattern;
 import ca.infoway.messagebuilder.datatype.lang.util.PersonNamePartType;
 import ca.infoway.messagebuilder.datatype.lang.util.PostalAddressPartType;
-import ca.infoway.messagebuilder.domainvalue.ReferralDocumentType;
 import ca.infoway.messagebuilder.domainvalue.basic.EntityNameUse;
 import ca.infoway.messagebuilder.domainvalue.basic.PostalAddressUse;
 import ca.infoway.messagebuilder.domainvalue.basic.TelecommunicationAddressUse;
@@ -22,6 +21,7 @@ import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.ConsultDocumentType
 import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.Language;
 import ca.infoway.messagebuilder.model.ccda_r1_1.merged.*;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
+import ca.infoway.messagebuilder.resolver.configurator.DefaultCodeResolutionConfigurator;
 import org.xml.sax.SAXException;
 
 import java.util.TimeZone;
@@ -47,6 +47,9 @@ public class ReferralRequestCreator {
     private Component2Bean component;
 
     public ReferralRequestCreator() {
+        // Relaxes code vocabulary code checks and sets up some basic code resolvers
+        DefaultCodeResolutionConfigurator.configureCodeResolversWithTrivialDefault();
+
         // Document Header
         doc = new ConsultationNote(); // CONF-BC0001, TODO verify CONF-BC0502
         // CONF-BC002, CONF-BC003, CONF-BC004
@@ -54,6 +57,7 @@ public class ReferralRequestCreator {
         doc.addRealmCode(getRealmCode()); // CONF-BC0005
         doc.setConfidentialityCode(getConfidentialityCode()); // CONF-BC0027
         doc.setLanguageCode(getLanguageCode()); // CONF-BC0029
+        templateId(TemplateId.E2E_UNSTRUCTURED_REFERRAL); // TemplateId for Unstructured Referral
 
         // Record Target
         recordTarget = new RecordTargetBean(); // TODO verify CONF-BC0507
@@ -248,7 +252,7 @@ public class ReferralRequestCreator {
     }
 
     private Realm getRealmCode() {
-        //return new CodedTypeR2<>(CodeResolverRegistry.lookup(Realm.class, "BC-CA")); // CONF-BC0005
+        //return new CodedTypeR2<>(CodeResolverRegistry.lookup(Realm.class, "CA-BC")); // CONF-BC0005
         return Realm.BRITISH_COLUMBIA_CANADA; // CONF-BC0005 Todo verify
     }
 

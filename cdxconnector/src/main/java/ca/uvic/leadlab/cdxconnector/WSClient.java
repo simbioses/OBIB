@@ -1,7 +1,10 @@
 package ca.uvic.leadlab.cdxconnector;
 
+import ca.infoway.messagebuilder.model.ClinicalDocumentBean;
 import ca.interiorhealth.BizTalkServiceInstance;
-import ca.leadlab.obib.doctr.ReferralRequestApp;
+
+import ca.leadlab.obib.doctr.DocumentTransformer;
+import ca.leadlab.obib.doctr.ReferralRequestCreator;
 import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.SubmitDocumentBuilder;
 import org.hl7.v3.*;
@@ -25,8 +28,10 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.security.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,9 +57,31 @@ public class WSClient {
     public static void main(String[] args) {
         WSClient client = new WSClient();
 
-        ReferralRequestApp app = new ReferralRequestApp();
+        ClinicalDocumentBean referralRequest = new ReferralRequestCreator()
+                .loincCode("34117-2", "History &amp;Physical Note"  )
+                .patientName("Weber", "Jens")
+                .patientGender("MALE")
+                .patientDOB(2019,2,1)
+                .patientId("34234324")
+                .patientAddress("5470 Old West Saanich Rd.","Victoria","BC","V9E2A7","CA")
+                .patientTelecom("(250)721-8797")
+                .effectiveTime(2019,2,1, 12, 30, TimeZone.getTimeZone("GMT-8"))
+                .docId(UUID.randomUUID().toString())
+                .authorId("2343242")
+                .authorAddress("3800 Finnerty Rd", "Victoria", "BC","V8P 5C3", "CA")
+                .authorTelecom("(250) 472-8743")
+                .authorTime(2019,2,1)
+                .authorPersonName("Price","Morgan")
+                .custodianOrgazinationId("3234242")
+                .custodianOrgazinationName("Ocean Spree Medical")
+                .body("Please cure this person!")
+                .get();
 
-        String document = app.createDocumentBeanAndConvertToXml();
+        DocumentTransformer documentTransformer = new DocumentTransformer();
+        String document = documentTransformer.parseDocument(referralRequest);
+
+        // TODO temporary solution to remove non-necessary tags from the XML
+        document = document.replaceAll("<realmCode\\s*code=\"((?!CA-BC).)*?\"/>|<templateId((?!assigningAuthorityName).)*?/>|<(inFulfillment|componentOf).*?/>", "");
 
         client.submitDocument(document);
     }

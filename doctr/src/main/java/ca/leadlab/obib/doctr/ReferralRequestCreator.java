@@ -14,14 +14,13 @@ import ca.infoway.messagebuilder.domainvalue.x_DocumentMediaType;
 import ca.infoway.messagebuilder.j5goodies.DateUtil;
 
 import ca.infoway.messagebuilder.model.ClinicalDocumentBean;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.basemodel.*;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.basemodel.AssignedAuthorBean;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.basemodel.PatientBean;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.basemodel.PatientRoleBean;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.basemodel.RecordTargetBean;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.domainvalue.BasicConfidentialityKind;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.domainvalue.Language;
-import ca.infoway.messagebuilder.model.ccda_pcs_r1_1.merged.*;
+import ca.infoway.messagebuilder.model.ccda_r1_1.basemodel.NonXMLBodyBean;
+import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.ConsultationNote;
+import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.Component2Bean;
+import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.BasicConfidentialityKind;
+import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.ConsultDocumentType;
+import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.Language;
+import ca.infoway.messagebuilder.model.ccda_r1_1.merged.*;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
 import org.xml.sax.SAXException;
 
@@ -29,15 +28,15 @@ import java.util.TimeZone;
 
 public class ReferralRequestCreator {
 
-    private BaseModel doc;
+    private ConsultationNote doc;
 
     private RecordTargetBean recordTarget;
     private PatientRoleBean patientRole;
     private PatientBean patient;
 
-    private Author_1Bean author;
+    private Author_2Bean author;
     private AssignedAuthorBean assignedAuthor;
-    private PersonBean assignedAuthorPerson;
+    private AssignedAuthorPersonBean assignedAuthorPerson;
     private AuthoringDeviceBean assignedAuthoringDevice;
 
     private CustodianBean custodian;
@@ -49,7 +48,7 @@ public class ReferralRequestCreator {
 
     public ReferralRequestCreator() {
         // Document Header
-        doc = new BaseModel(); // CONF-BC0001, TODO verify CONF-BC0502
+        doc = new ConsultationNote(); // CONF-BC0001, TODO verify CONF-BC0502
         // CONF-BC002, CONF-BC003, CONF-BC004
         doc.setTypeId(createIdentifier("2.16.840.1.113883.1.3", "POCD_HD000040", "HL7 CDA R2"));
         doc.addRealmCode(getRealmCode()); // CONF-BC0005
@@ -65,7 +64,7 @@ public class ReferralRequestCreator {
         doc.getRecordTarget().add(recordTarget); // CONF-BC0047
 
         // Author
-        author = new Author_1Bean(); // TODO verify CONF-BC0510
+        author = new Author_2Bean(); // TODO verify CONF-BC0510
         assignedAuthor = new AssignedAuthorBean(); // TODO verify CONF-BC0511
         author.setAssignedAuthor(assignedAuthor); // CONF-BC0061
         doc.getAuthor().add(author); // CONF-BC0058
@@ -105,13 +104,11 @@ public class ReferralRequestCreator {
     // TODO Optional ClinicalDocument/relatedDocument.typeCode
 
     public ReferralRequestCreator loincCode(String code, String displayName) {
-        /*CodedTypeR2<Code> loincCode = new CodedTypeR2<>(CodeResolverRegistry.lookup(ReferralDocumentType.class, code, "2.16.840.1.113883.6.1"));
+        CodedTypeR2<ConsultDocumentType> loincCode = new CodedTypeR2<>(CodeResolverRegistry.lookup(ConsultDocumentType.class, code, "2.16.840.1.113883.6.1"));
         loincCode.setCodeSystemName("LOINC Code");
         loincCode.setDisplayName(displayName);
         doc.setCode(loincCode); // CONF-BC0021, TODO CONF-BC0022 get from vox.xml?
-        doc.setTitle(loincCode.getDisplayName()); // CONF-BC0023, CONF-BC0024*/
-        doc.setCode(CodeResolverRegistry.lookup(ReferralDocumentType.class, code, "2.16.840.1.113883.6.1")); // CONF-BC0021, TODO CONF-BC0022 get from vox.xml?
-        doc.setTitle(displayName); // CONF-BC0023, CONF-BC0024
+        doc.setTitle(loincCode.getDisplayName()); // CONF-BC0023, CONF-BC0024
         return this;
     }
 
@@ -145,7 +142,7 @@ public class ReferralRequestCreator {
 
     public ReferralRequestCreator patientGender(String gender) {
         // TODO verify CONF-BC0055
-        patient.setAdministrativeGenderCode(AdministrativeGender.valueOf(AdministrativeGender.class, gender));
+        patient.setAdministrativeGenderCode(new CodedTypeR2<>(CodeResolverRegistry.lookup(AdministrativeGender.class, gender)));
         return this;
     }
 
@@ -168,7 +165,7 @@ public class ReferralRequestCreator {
     }
 
     public ReferralRequestCreator authorPersonName(String lastName, String firstName) {
-        assignedAuthorPerson = new PersonBean();
+        assignedAuthorPerson = new AssignedAuthorPersonBean();
         assignedAuthorPerson.getName().add(createName(lastName, firstName)); // CONF-BC0068
         assignedAuthor.setAssignedAuthorChoice(assignedAuthorPerson); // CONF-BC0065 TODO verify CONF-BC0512
         return this;
@@ -255,14 +252,12 @@ public class ReferralRequestCreator {
         return Realm.BRITISH_COLUMBIA_CANADA; // CONF-BC0005 Todo verify
     }
 
-    private BasicConfidentialityKind getConfidentialityCode() {
-        //return new CodedTypeR2<>(CodeResolverRegistry.lookup(BasicConfidentialityKind.class, "N", "2.16.840.1.113883.5.25")); // CONF-BC0028, CONF-BC0503
-        return CodeResolverRegistry.lookup(BasicConfidentialityKind.class, "N", "2.16.840.1.113883.5.25"); // CONF-BC0028, CONF-BC0503
+    private CodedTypeR2<BasicConfidentialityKind> getConfidentialityCode() {
+        return new CodedTypeR2<>(CodeResolverRegistry.lookup(BasicConfidentialityKind.class, "N", "2.16.840.1.113883.5.25")); // CONF-BC0028, CONF-BC0503
     }
 
-    private Language getLanguageCode() {
-        //return new CodedTypeR2<>(CodeResolverRegistry.lookup(Language.class, "en-CA")); // CONF-BC0030
-        return CodeResolverRegistry.lookup(Language.class, "en-CA"); // CONF-BC0030
+    private CodedTypeR2<Language> getLanguageCode() {
+        return new CodedTypeR2<>(CodeResolverRegistry.lookup(Language.class, "en-CA")); // CONF-BC0030
     }
 
     private PersonName createName(String lastName, String... firstNames) {

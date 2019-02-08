@@ -11,7 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: ca.infoway.messagebuilder:message-builder-ccda-pcs-r1_1:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: ca.infoway.messagebuilder:message-builder-ccda-r1_1:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: ca.infoway.messagebuilder:message-builder-core:2.1.8" level="project" />
     <orderEntry type="library" name="Maven: ca.infoway.messagebuilder:message-builder-util:2.1.8" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:1.4" level="project" />

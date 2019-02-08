@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class ReferralRequestApp {
 
-    public static final VersionNumber MBSpecificationVersion = SpecificationVersion.CCDA_PCS_R1_1;
+    public static final VersionNumber MBSpecificationVersion = SpecificationVersion.CCDA_R1_1;
 
     public static void main(final String[] args) throws Exception {
         ReferralRequestApp app = new ReferralRequestApp();

@@ -7,15 +7,15 @@ import ca.infoway.messagebuilder.error.TransformError;
 import ca.infoway.messagebuilder.error.TransformErrors;
 import ca.infoway.messagebuilder.marshalling.CdaModelToXmlResult;
 import ca.infoway.messagebuilder.marshalling.ClinicalDocumentTransformer;
+import ca.infoway.messagebuilder.model.ClinicalDocumentBean;
 import ca.infoway.messagebuilder.resolver.configurator.DefaultCodeResolutionConfigurator;
-import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.ConsultationNote;
 
 import java.util.TimeZone;
 import java.util.UUID;
 
 public class ReferralRequestApp {
 
-    public static final VersionNumber MBSpecificationVersion = SpecificationVersion.CCDA_R1_1;
+    public static final VersionNumber MBSpecificationVersion = SpecificationVersion.CCDA_PCS_R1_1;
 
     public static void main(final String[] args) throws Exception {
         ReferralRequestApp app = new ReferralRequestApp();
@@ -32,20 +32,24 @@ public class ReferralRequestApp {
         // Relaxes code vocabulary code checks and sets up some basic code resolvers
         DefaultCodeResolutionConfigurator.configureCodeResolversWithTrivialDefault();
 
-        ConsultationNote referralRequest= new ReferralRequestCreator()
+        ClinicalDocumentBean referralRequest = new ReferralRequestCreator()
+                .templateId(TemplateId.E2E_UNSTRUCTURED_REFERRAL)
+                .loincCode("34117-2", "History &amp;Physical Note"  )
                 .patientName("Weber", "Jens")
-                .patientGender("FEMALE")
+                .patientGender("MALE")
                 .patientDOB(2019,2,1)
-                .patientID("34234324")
-                .patientAddress("5470 Old West Saanich Rd.","Victoria","BC","V9E2A7","CA","(250)721-8797")
+                .patientId("34234324")
+                .patientAddress("5470 Old West Saanich Rd.","Victoria","BC","V9E2A7","CA")
+                .patientTelecom("(250)721-8797")
                 .effectiveTime(2019,2,1, 12, 30, TimeZone.getTimeZone("GMT-8"))
                 .docId(UUID.randomUUID().toString())
-                .authorID("2343242")
-                .authorAddress("3800 Finnerty Rd", "Victoria", "BC","V8P 5C3", "CA","(250) 472-8743")
+                .authorId("2343242")
+                .authorAddress("3800 Finnerty Rd", "Victoria", "BC","V8P 5C3", "CA")
+                .authorTelecom("(250) 472-8743")
                 .authorTime(2019,2,1)
-                .authorName("Price","Morgan")
-                .custodian("Ocean Spree Medical", "3234242")
-                .custodianAddress("344 West Saanich Lane", "Victoria", "BC", "V9e 2j4", "CA", "(409) 444-2933")
+                .authorPersonName("Price","Morgan")
+                .custodianOrgazinationId("3234242")
+                .custodianOrgazinationName("Ocean Spree Medical")
                 .body("Please cure this person!")
                 .get();
 

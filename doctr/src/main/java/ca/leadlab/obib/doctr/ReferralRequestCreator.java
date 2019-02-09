@@ -1,24 +1,15 @@
 package ca.leadlab.obib.doctr;
 
 import ca.infoway.messagebuilder.datatype.lang.*;
-import ca.infoway.messagebuilder.datatype.lang.util.DateWithPattern;
-import ca.infoway.messagebuilder.datatype.lang.util.PersonNamePartType;
-import ca.infoway.messagebuilder.datatype.lang.util.PostalAddressPartType;
-import ca.infoway.messagebuilder.domainvalue.basic.EntityNameUse;
-import ca.infoway.messagebuilder.domainvalue.basic.PostalAddressUse;
 import ca.infoway.messagebuilder.domainvalue.basic.TelecommunicationAddressUse;
-import ca.infoway.messagebuilder.domainvalue.basic.URLScheme;
 import ca.infoway.messagebuilder.domainvalue.payload.AdministrativeGender;
 import ca.infoway.messagebuilder.domainvalue.x_DocumentMediaType;
-import ca.infoway.messagebuilder.j5goodies.DateUtil;
 
 import ca.infoway.messagebuilder.model.ClinicalDocumentBean;
 import ca.infoway.messagebuilder.model.ccda_r1_1.basemodel.NonXMLBodyBean;
 import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.ConsultationNote;
 import ca.infoway.messagebuilder.model.ccda_r1_1.consultationnote.Component2Bean;
-import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.BasicConfidentialityKind;
 import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.ConsultDocumentType;
-import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.Language;
 import ca.infoway.messagebuilder.model.ccda_r1_1.merged.*;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
 import ca.infoway.messagebuilder.resolver.configurator.DefaultCodeResolutionConfigurator;
@@ -34,11 +25,6 @@ public class ReferralRequestCreator {
     private PatientRoleBean patientRole;
     private PatientBean patient;
 
-    private Author_2Bean author;
-    private AssignedAuthorBean assignedAuthor;
-    private AssignedAuthorPersonBean assignedAuthorPerson;
-    private AuthoringDeviceBean assignedAuthoringDevice;
-
     private CustodianBean custodian;
     private AssignedCustodianBean assignedCustodian;
     private CustodianOrganizationBean custodianOrganization;
@@ -53,10 +39,10 @@ public class ReferralRequestCreator {
         // Document Header
         doc = new ConsultationNote(); // CONF-BC0001, TODO verify CONF-BC0502
         // CONF-BC002, CONF-BC003, CONF-BC004
-        doc.setTypeId(createIdentifier("2.16.840.1.113883.1.3", "POCD_HD000040", "HL7 CDA R2"));
-        doc.addRealmCode(getRealmCode()); // CONF-BC0005
-        doc.setConfidentialityCode(getConfidentialityCode()); // CONF-BC0027
-        doc.setLanguageCode(getLanguageCode()); // CONF-BC0029
+        doc.setTypeId(DocumentUtils.createIdentifier("2.16.840.1.113883.1.3", "POCD_HD000040", "HL7 CDA R2"));
+        doc.addRealmCode(DocumentUtils.getRealmCode()); // CONF-BC0005
+        doc.setConfidentialityCode(DocumentUtils.getConfidentialityCode()); // CONF-BC0027
+        doc.setLanguageCode(DocumentUtils.getLanguageCode()); // CONF-BC0029
         templateId(TemplateId.E2E_UNSTRUCTURED_REFERRAL); // TemplateId for Unstructured Referral
 
         // Record Target
@@ -67,12 +53,6 @@ public class ReferralRequestCreator {
         recordTarget.setPatientRole(patientRole); // CONF-BC0047
         doc.getRecordTarget().add(recordTarget); // CONF-BC0047
 
-        // Author
-        author = new Author_2Bean(); // TODO verify CONF-BC0510
-        assignedAuthor = new AssignedAuthorBean(); // TODO verify CONF-BC0511
-        author.setAssignedAuthor(assignedAuthor); // CONF-BC0061
-        doc.getAuthor().add(author); // CONF-BC0058
-
         // Custodian
         custodian = new CustodianBean(); // TODO verify CONF-BC0083
         assignedCustodian = new AssignedCustodianBean(); // TODO verify CONF-BC0514
@@ -82,8 +62,8 @@ public class ReferralRequestCreator {
         doc.setCustodian(custodian); // CONF-BC0082
 
         // Document Body
-        body = new NonXMLBodyBean();
         component = new Component2Bean();
+        body = new NonXMLBodyBean();
         component.setComponent2Choice(body);
         doc.setComponent(component);
     }
@@ -93,13 +73,13 @@ public class ReferralRequestCreator {
     }
 
     public ReferralRequestCreator templateId(String rootId, String assigningAuthorityName) {
-        doc.getTemplateId().add(createIdentifier(rootId, assigningAuthorityName));
+        doc.getTemplateId().add(DocumentUtils.createIdentifier(rootId, assigningAuthorityName));
         return this;
     }
 
     public ReferralRequestCreator docId(String docId) {
         // CONF-BC0014, CONF-BC0015
-        doc.setId(createIdentifier("2.16.840.1.113883.3.277.100.3", docId, "CDX Clinical Document ID"));
+        doc.setId(DocumentUtils.createIdentifier("2.16.840.1.113883.3.277.100.3", docId, "CDX Clinical Document ID"));
         return this;
     }
 
@@ -117,7 +97,7 @@ public class ReferralRequestCreator {
     }
 
     public ReferralRequestCreator effectiveTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
-        doc.setEffectiveTime(createDateTime(year, month, day, hour, minute, timeZone)); // CONF-BC0025, CONF-BC0026
+        doc.setEffectiveTime(DocumentUtils.createDateTime(year, month, day, hour, minute, timeZone)); // CONF-BC0025, CONF-BC0026
         return this;
     }
 
@@ -125,22 +105,22 @@ public class ReferralRequestCreator {
 
     public ReferralRequestCreator patientId(String patientId) {
         // CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO verify out of province
-        patientRole.getId().add(createIdentifier("2.16.840.1.113883.4.50", patientId, "BC Patient Health Number"));
+        patientRole.getId().add(DocumentUtils.createIdentifier("2.16.840.1.113883.4.50", patientId, "BC Patient Health Number"));
         return this;
     }
 
     public ReferralRequestCreator patientAddress(String street, String city, String state, String postalCode, String country) {
-        patientRole.getAddr().add(createAddress(street, city, state, postalCode, country)); // CONF-BC0051
+        patientRole.getAddr().add(DocumentUtils.createAddress(street, city, state, postalCode, country)); // CONF-BC0051
         return this;
     }
 
     public ReferralRequestCreator patientTelecom(String phone) {
-        patientRole.getTelecom().add(createTelecom(phone, TelecommunicationAddressUse.PRIMARY_HOME)); // CONF-BC0052
+        patientRole.getTelecom().add(DocumentUtils.createTelecom(phone, TelecommunicationAddressUse.PRIMARY_HOME)); // CONF-BC0052
         return this;
     }
 
     public ReferralRequestCreator patientName(String lastName, String firstName) {
-        patient.getName().add(createName(lastName, firstName)); // CONF-BC0054
+        patient.getName().add(DocumentUtils.createName(lastName, firstName)); // CONF-BC0054
         return this;
     }
 
@@ -151,58 +131,29 @@ public class ReferralRequestCreator {
     }
 
     public ReferralRequestCreator patientDOB(int year, int month, int day) {
-        patient.setBirthTime(createDate(year, month, day)); // CONF-BC0056
+        patient.setBirthTime(DocumentUtils.createDate(year, month, day)); // CONF-BC0056
         return this;
     }
 
     // TODO Optional patient/languageCommunication
 
-    public ReferralRequestCreator authorTime(int year, int month, int day) {
-        author.setTime(createDate(year, month, day)); // CONF-BC0059
+    public ReferralRequestCreator author(AuthorCreator authorCreator) {
+        doc.getAuthor().add(authorCreator.get()); // CONF-BC0058
         return this;
     }
 
-    public ReferralRequestCreator authorId(String authorId) {
-        // CONF-BC0062 TODO verify out of province, CONF-BC0063, CONF-BC0064
-        assignedAuthor.getId().add(new Identifier("2.16.840.1.113883.3.40.2.11", authorId));
+    public ReferralRequestCreator informationRecipient(InformationRecipientCreator informationRecipientCreator) {
+        doc.getInformationRecipient().add(informationRecipientCreator.get()); // CONF-BC0070
         return this;
     }
 
-    public ReferralRequestCreator authorPersonName(String lastName, String firstName) {
-        assignedAuthorPerson = new AssignedAuthorPersonBean();
-        assignedAuthorPerson.getName().add(createName(lastName, firstName)); // CONF-BC0068
-        assignedAuthor.setAssignedAuthorChoice(assignedAuthorPerson); // CONF-BC0065 TODO verify CONF-BC0512
-        return this;
-    }
-
-    public ReferralRequestCreator authorDeviceName(String software) {
-        assignedAuthoringDevice = new AuthoringDeviceBean();
-        // TODO assignedAuthoringDevice.setSoftwareName(new CodedTypeR2<>(???, software)); // CONF-BC0069
-        assignedAuthor.setAssignedAuthorChoice(assignedAuthoringDevice); // CONF-BC0065 TODO verify CONF-BC0513
-        return this;
-    }
-
-    public ReferralRequestCreator authorAddress(String street, String city, String state, String postalCode, String country) {
-        assignedAuthor.getAddr().add(createAddress(street, city, state, postalCode, country)); // CONF-BC0066
-        return this;
-    }
-
-    public ReferralRequestCreator authorTelecom(String phone) {
-        assignedAuthor.getTelecom().add(createTelecom(phone, TelecommunicationAddressUse.WORKPLACE)); // CONF-BC0067
-        return this;
-    }
-
-    // TODO Optional Information Recipient
-
-    public ReferralRequestCreator custodianOrgazinationId(String organizationId) {
+    public ReferralRequestCreator custodianOrganizationId(String organizationId) {
         custodianOrganization.getId().add(new Identifier("2.16.840.1.113883.3.277.1.62", organizationId)); // CONF-BC0086 TODO verify Health Authority vs EMR
         return this;
     }
 
-    public ReferralRequestCreator custodianOrgazinationName(String name) {
-        OrganizationName orgName = new OrganizationName();
-        orgName.addNamePart(new EntityNamePart(name));
-        custodianOrganization.setName(orgName); // CONF-BC0087
+    public ReferralRequestCreator custodianOrganizationName(String organizationName) {
+        custodianOrganization.setName(DocumentUtils.createOrganizationName(organizationName)); // CONF-BC0087
         return this;
     }
 
@@ -249,64 +200,5 @@ public class ReferralRequestCreator {
      */
     public ClinicalDocumentBean get() {
         return doc;
-    }
-
-    private Realm getRealmCode() {
-        //return new CodedTypeR2<>(CodeResolverRegistry.lookup(Realm.class, "CA-BC")); // CONF-BC0005
-        return Realm.BRITISH_COLUMBIA_CANADA; // CONF-BC0005 Todo verify
-    }
-
-    private CodedTypeR2<BasicConfidentialityKind> getConfidentialityCode() {
-        return new CodedTypeR2<>(CodeResolverRegistry.lookup(BasicConfidentialityKind.class, "N", "2.16.840.1.113883.5.25")); // CONF-BC0028, CONF-BC0503
-    }
-
-    private CodedTypeR2<Language> getLanguageCode() {
-        return new CodedTypeR2<>(CodeResolverRegistry.lookup(Language.class, "en-CA")); // CONF-BC0030
-    }
-
-    private PersonName createName(String lastName, String... firstNames) {
-        PersonName name = new PersonName();
-        name.getParts().add(new EntityNamePart(lastName, PersonNamePartType.FAMILY)); // CONF-BC0033
-        for (String givenName : firstNames) {
-            name.getParts().add(new EntityNamePart(givenName, PersonNamePartType.GIVEN)); // CONF-BC0034
-        }
-        // TODO verify CONF-BC0035, CONF-BC0036
-        name.getUses().add(EntityNameUse.LEGAL); // TODO verify CONF-BC0038
-        return name;
-    }
-
-    private PostalAddress createAddress(String streetAddress, String city, String state, String postalCode, String country) {
-        PostalAddress address = new PostalAddress();
-        address.getUses().add(PostalAddressUse.PRIMARY_HOME); // TODO verify CONF-BC0041
-        address.getParts().add(new PostalAddressPart(PostalAddressPartType.STREET_ADDRESS_LINE, streetAddress));
-        address.getParts().add(new PostalAddressPart(PostalAddressPartType.CITY, city));
-        address.getParts().add(new PostalAddressPart(PostalAddressPartType.STATE, state));
-        address.getParts().add(new PostalAddressPart(PostalAddressPartType.POSTAL_CODE, postalCode));
-        address.getParts().add(new PostalAddressPart(PostalAddressPartType.COUNTRY, country));
-        return address;
-    }
-
-    private TelecommunicationAddress createTelecom(String number, TelecommunicationAddressUse use) {
-        return new TelecommunicationAddress(URLScheme.TEL, number, use);
-    }
-
-    private MbDate createDate(int year, int month, int day) {
-        return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day), "yyyyMMdd"));
-    }
-
-    private MbDate createDateTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
-        return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day, hour, minute, 0, 0, timeZone), "yyyyMMddhhmmZ"));
-    }
-
-    private Identifier createIdentifier(String root, String assigningAuthorityName) {
-        Identifier id = new Identifier(root);
-        id.setAssigningAuthorityName(assigningAuthorityName);
-        return id;
-    }
-
-    private Identifier createIdentifier(String root, String extension, String assigningAuthorityName) {
-        Identifier id = new Identifier(root, extension);
-        id.setAssigningAuthorityName(assigningAuthorityName);
-        return id;
     }
 }

@@ -1,8 +1,6 @@
 package ca.leadlab.obib.doctr;
 
 import ca.infoway.messagebuilder.datatype.lang.*;
-import ca.infoway.messagebuilder.domainvalue.basic.TelecommunicationAddressUse;
-import ca.infoway.messagebuilder.domainvalue.payload.AdministrativeGender;
 import ca.infoway.messagebuilder.domainvalue.x_DocumentMediaType;
 
 import ca.infoway.messagebuilder.model.ClinicalDocumentBean;
@@ -20,10 +18,6 @@ import java.util.TimeZone;
 public class ReferralRequestCreator {
 
     private ConsultationNote doc;
-
-    private RecordTargetBean recordTarget;
-    private PatientRoleBean patientRole;
-    private PatientBean patient;
 
     private CustodianBean custodian;
     private AssignedCustodianBean assignedCustodian;
@@ -44,14 +38,6 @@ public class ReferralRequestCreator {
         doc.setConfidentialityCode(DocumentUtils.getConfidentialityCode()); // CONF-BC0027
         doc.setLanguageCode(DocumentUtils.getLanguageCode()); // CONF-BC0029
         templateId(TemplateId.E2E_UNSTRUCTURED_REFERRAL); // TemplateId for Unstructured Referral
-
-        // Record Target
-        recordTarget = new RecordTargetBean(); // TODO verify CONF-BC0507
-        patientRole = new PatientRoleBean(); // TODO verify CONF-BC0508
-        patient = new PatientBean(); // TODO verify CONF-BC0509
-        patientRole.setPatient(patient); // CONF-BC0053
-        recordTarget.setPatientRole(patientRole); // CONF-BC0047
-        doc.getRecordTarget().add(recordTarget); // CONF-BC0047
 
         // Custodian
         custodian = new CustodianBean(); // TODO verify CONF-BC0083
@@ -103,35 +89,8 @@ public class ReferralRequestCreator {
 
     // TODO Optional ClinicalDocument/documentationOf
 
-    public ReferralRequestCreator patientId(String patientId) {
-        // CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO verify out of province
-        patientRole.getId().add(DocumentUtils.createIdentifier("2.16.840.1.113883.4.50", patientId, "BC Patient Health Number"));
-        return this;
-    }
-
-    public ReferralRequestCreator patientAddress(String street, String city, String state, String postalCode, String country) {
-        patientRole.getAddr().add(DocumentUtils.createAddress(street, city, state, postalCode, country)); // CONF-BC0051
-        return this;
-    }
-
-    public ReferralRequestCreator patientTelecom(String phone) {
-        patientRole.getTelecom().add(DocumentUtils.createTelecom(phone, TelecommunicationAddressUse.PRIMARY_HOME)); // CONF-BC0052
-        return this;
-    }
-
-    public ReferralRequestCreator patientName(String lastName, String firstName) {
-        patient.getName().add(DocumentUtils.createName(lastName, firstName)); // CONF-BC0054
-        return this;
-    }
-
-    public ReferralRequestCreator patientGender(String gender) {
-        // TODO verify CONF-BC0055
-        patient.setAdministrativeGenderCode(new CodedTypeR2<>(CodeResolverRegistry.lookup(AdministrativeGender.class, gender)));
-        return this;
-    }
-
-    public ReferralRequestCreator patientDOB(int year, int month, int day) {
-        patient.setBirthTime(DocumentUtils.createDate(year, month, day)); // CONF-BC0056
+    public ReferralRequestCreator recordTarget(RecordTargetCreator recordTargetCreator) {
+        doc.getRecordTarget().add(recordTargetCreator.get()); // CONF-BC0047
         return this;
     }
 

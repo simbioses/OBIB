@@ -27,6 +27,7 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         if (receivers == null) {
             receivers = new ArrayList<>();
         }
+        // CONF-CDXOD024
         receivers.add(factory.createMCCIMT000100UV01Receiver(createDevice(receiverAgentOrganizationIdExtension)));
         return this;
     }
@@ -50,31 +51,33 @@ public class SubmitDocumentBuilder extends MessageBuilder {
 
     public SubmitDocumentBuilder document(String documentId, Serializable document) {
         controlActProcess = new RCMRIN000002UV01MCAIMT700201UV01ControlActProcess();
-        controlActProcess.setClassCode(ActClassControlAct.CACT);
-        controlActProcess.setMoodCode(XActMoodIntentEvent.APT);
+        controlActProcess.setClassCode(ActClassControlAct.CACT); // CONF-CDXOD053
+        controlActProcess.setMoodCode(XActMoodIntentEvent.APT); // CONF-CDXOD054
         controlActProcess.getId().add(factory.createII("2.16.840.1.113883.3.277.100.3",
                 "CDX Clinical Document ID",
-                documentId)); // Unique Document ID (GUID)
+                documentId)); // CONF-CDXOD055, CONF-CDXOD056, CONF-CDXOD057, CONF-CDXOD058
+        // CONF-CDXOD059, CONF-CDXOD059, CONF-CDXOD061
         controlActProcess.setCode(factory.createCD("RCMR_IN000002UV01", "2.16.840.1.113883.1.18"));
-        controlActProcess.setText(createText(document)); // Contents of document being submitted, wrapped in a CDATA or html encoded
+        controlActProcess.setText(createText(document)); // CONF-CDXOD062
         return this;
     }
 
     public RCMRIN000002UV01 build() throws MessageBuilderException {
         validate();
         // Transmission Wrapper
-        RCMRIN000002UV01 request = new RCMRIN000002UV01();
-        request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId));
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // Time of transmission yyyyMMddHHMMss-Z (201209241316-0700)
-        request.setVersionCode(factory.createCS("Ballot2009May"));
+        RCMRIN000002UV01 request = new RCMRIN000002UV01(); // CONF-CDXOD001, CONF-CDXOD002, CONF-CDXOD003
+        request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId)); // CONF-CDXOD004, CONF-CDXOD005
+        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // CONF-CDXOD007, CONF-CDXOD008
+        request.setVersionCode(factory.createCS("Ballot2009May")); // CONF-CDXOD009, CONF-CDXOD010
+        // CONF-CDXOD011, CONF-CDXOD012, CONF-CDXOD013
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "RCMR_IN000002UV01"));
-        request.setProcessingCode(factory.createCS(ProcessingID.P.value()));
-        request.setProcessingModeCode(factory.createCS(ProcessingMode.T.value()));
-        request.setAcceptAckCode(factory.createCS(AcknowledgementCondition.AL.value()));
+        request.setProcessingCode(factory.createCS(ProcessingID.P.value())); // CONF-CDXOD014, CONF-CDXOD015
+        request.setProcessingModeCode(factory.createCS(ProcessingMode.T.value())); // CONF-CDXOD016, CONF-CDXOD017
+        request.setAcceptAckCode(factory.createCS(AcknowledgementCondition.AL.value())); // CONF-CDXOD018, CONF-CDXOD019
         if (attachments != null && !attachments.isEmpty()) {
-            request.getAttachmentText().addAll(attachments);
+            request.getAttachmentText().addAll(attachments); // CONF-CDXOD020
         }
-        request.getReceiver().addAll(receivers);
+        request.getReceiver().addAll(receivers); // CONF-CDXOD023
         request.setSender(sender);
         // Control Act Wrapper
         request.setControlActProcess(controlActProcess);
@@ -82,22 +85,22 @@ public class SubmitDocumentBuilder extends MessageBuilder {
     }
 
     private ED createText(Serializable content) {
-        ED ed = factory.createED();
-        ed.setMediaType(MediaType.TEXT_XML.value());
-        // TODO ed.setRepresentation(BinaryDataEncoding.TXT);
-        ed.getContent().add("<![CDATA[ " + content + " ]]>"); // <!—HTML Encoded CDA document XML here --> OR <![CDATA[ CDA goes here ]]>
+        ED ed = new ED();
+        ed.setMediaType(MediaType.TEXT_XML.value()); // CONF-CDXOD063
+        // TODO ed.setRepresentation(BinaryDataEncoding.TXT); // CONF-CDXOD064
+        ed.getContent().add("<![CDATA[ " + content + " ]]>"); // CONF-CDXOD065
         return ed;
     }
 
     private ED createAttachmentText(MediaType mediaType, Serializable content) throws NoSuchAlgorithmException {
-        ED ed = factory.createED();
-        // TODO ed.setRepresentation(BinaryDataEncoding.B_64);
+        ED ed = new ED();
+        // TODO ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
         ed.setIntegrityCheck(DigestUtils.digest(
                 MessageDigest.getInstance(IntegrityCheckAlgorithm.SHA_1.value()),
-                SerializationUtils.serialize(content)));
-        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1);
-        ed.setMediaType(mediaType.value());
-        ed.getContent().add(content);
+                SerializationUtils.serialize(content))); // CONF-CDXOD066
+        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
+        ed.setMediaType(mediaType.value()); // CONF-CDXOD068
+        ed.getContent().add(content); // CONF-CDXOD069
         return ed;
     }
 

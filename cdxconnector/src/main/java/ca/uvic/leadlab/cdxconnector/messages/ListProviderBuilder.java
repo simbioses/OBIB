@@ -8,10 +8,11 @@ public class ListProviderBuilder extends MessageBuilder {
 
     private String messageId;
     private MCCIMT000100UV01Sender sender;
-    private PRPMIN406010UV01QUQIMT021001UV01ControlActProcess controlActProcess;
+    private PRPMIN306010UVQUQIMT021001UV01ControlActProcess controlActProcess;
 
     public ListProviderBuilder(String messageId) {
         this.messageId = messageId;
+        this.controlActProcess = createControlActProcess();
     }
 
     public ListProviderBuilder sender(String senderAgentOrganizationIdExtension) {
@@ -19,66 +20,59 @@ public class ListProviderBuilder extends MessageBuilder {
         return this;
     }
 
-    public ListProviderBuilder queryById(String root, String extension) {
-        controlActProcess = createControlActProcess();
-
-        PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
-        query.getOrganizationID().add(factory.createPRPMMT406010UV01OrganizationID(root, extension));
-
-        controlActProcess.setQueryByParameterPayload(query);
+    public ListProviderBuilder queryByProviderId(String root, String extension) {
+        PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
+        // CONF- CDXPR010, CONF- CDXPR012
+        query.getProviderID().add(factory.createPRPMMT306010UVProviderID(root, extension));
+        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
         return this;
     }
 
-    public ListProviderBuilder queryByName(String name) {
-        controlActProcess = createControlActProcess();
-
-        PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
-        query.getOrganizationName().add(factory.createPRPMMT406010UV01OrganizationName(name));
-
-        controlActProcess.setQueryByParameterPayload(query);
+    public ListProviderBuilder queryByProviderName(String name) {
+        PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
+        // CONF- CDXPR010, CONF- CDXPR011
+        query.getProviderName().add(factory.createPRPMMT306010UVProviderName(name));
+        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
         return this;
     }
 
-    public ListProviderBuilder queryByAddress(String address) {
-        controlActProcess = createControlActProcess();
-
-        PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
-        query.getOrganizationAddress().add(factory.createPRPMMT406010UV01OrganizationAddress(address));
-
-        controlActProcess.setQueryByParameterPayload(query);
+    public ListProviderBuilder queryBysdlcId(String root, String extension) {
+        PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
+        // CONF- CDXPR010, CONF- CDXPR013
+        query.getSdlcId().add(factory.createPRPMMT306010UVSdlcId(root, extension));
+        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
         return this;
     }
 
-    public PRPMIN406010UV01 build() {
-        // Transmission Wrapper
-        PRPMIN406010UV01 request = factory.createPRPMIN406010UV01();
+    public PRPMIN306010UV build() {
+        // TODO validate CONF- CDXPR099
+        PRPMIN306010UV request = new PRPMIN306010UV(); // CONF-CDXPR001
         request.setITSVersion("XML_1.0");
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId));
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // Time of transmission yyyyMMddHHMMss-Z (201209241316-0700)
-        request.setVersionCode(factory.createCS("2010Normative"));
+        request.setCreationTime(factory.createTS(ZonedDateTime.now()));
+        request.setVersionCode(factory.createCS("2010Normative")); // CONF- CDXPR002
+        // CONF- CDXPR003
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "PRPM_IN306010UV"));
         request.setProcessingCode(factory.createCS(ProcessingID.P.value()));
         request.setProcessingModeCode(factory.createCS(ProcessingMode.T.value()));
         request.setAcceptAckCode(factory.createCS(AcknowledgementCondition.AL.value()));
-        request.getReceiver().add(factory.createMCCIMT000100UV01Receiver(createDevice("CDX"))); // The receiver is always the CDX system
+        // CONF- CDXPR004
+        request.getReceiver().add(factory.createMCCIMT000100UV01Receiver(createDevice("CDX")));
         request.setSender(sender);
-        // Control Act Wrapper - this specifies the search criteria
-        request.setControlActProcess(controlActProcess);
+        request.setControlActProcess(controlActProcess); // CONF- CDXPR005
         return request;
     }
 
-    private PRPMIN406010UV01QUQIMT021001UV01ControlActProcess createControlActProcess() {
-        PRPMIN406010UV01QUQIMT021001UV01ControlActProcess controlActProcess = factory
-                .createPRPMIN406010UV01QUQIMT021001UV01ControlActProcess();
-        controlActProcess.setMoodCode(XActMoodIntentEvent.RQO);
-        controlActProcess.setClassCode(ActClassControlAct.CACT);
+    private PRPMIN306010UVQUQIMT021001UV01ControlActProcess createControlActProcess() {
+        PRPMIN306010UVQUQIMT021001UV01ControlActProcess controlActProcess = new PRPMIN306010UVQUQIMT021001UV01ControlActProcess();
+        controlActProcess.setMoodCode(XActMoodIntentEvent.RQO); // CONF- CDXPR006
+        controlActProcess.setClassCode(ActClassControlAct.CACT); // CONF- CDXPR006
         return controlActProcess;
     }
 
-    private PRPMMT406010UV01QueryByParameterPayload createParameterPayload() {
-        PRPMMT406010UV01QueryByParameterPayload parameterPayload = factory
-                .createPRPMMT406010UV01QueryByParameterPayload();
-        parameterPayload.setStatusCode(factory.createCS(QueryStatusCode.NEW.value()));
+    private PRPMMT306010UVQueryByParameterPayload createParameterPayload() {
+        PRPMMT306010UVQueryByParameterPayload parameterPayload = new PRPMMT306010UVQueryByParameterPayload();
+        parameterPayload.setStatusCode(factory.createCS(QueryStatusCode.NEW.value())); // CONF- CDXPR008, CONF- CDXPR009
         return parameterPayload;
     }
 }

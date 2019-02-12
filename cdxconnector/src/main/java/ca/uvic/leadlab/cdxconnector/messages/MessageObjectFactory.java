@@ -83,6 +83,24 @@ public class MessageObjectFactory extends ObjectFactory {
         return address;
     }
 
+    public PRPMMT306010UVProviderID createPRPMMT306010UVProviderID(String root, String extension) {
+        PRPMMT306010UVProviderID providerID = new PRPMMT306010UVProviderID();
+        providerID.setValue(createII(root, extension));
+        return providerID;
+    }
+
+    public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
+        PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
+        providerName.setValue(createEN(value));
+        return providerName;
+    }
+
+    public PRPMMT306010UVSdlcId createPRPMMT306010UVSdlcId(String root, String extension) {
+        PRPMMT306010UVSdlcId sdlcId = new PRPMMT306010UVSdlcId();
+        sdlcId.setValue(createII(root, extension));
+        return sdlcId;
+    }
+
     public EN createEN(String content) {
         EN en = createEN();
         en.getDelimiterOrFamilyOrGiven().add(createENXP(content));

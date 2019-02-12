@@ -5,6 +5,7 @@ import ca.interiorhealth.BizTalkServiceInstance;
 
 import ca.leadlab.obib.doctr.DocumentTransformer;
 import ca.leadlab.obib.doctr.ReferralRequestCreator;
+import ca.uvic.leadlab.cdxconnector.messages.ListClinicBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.SubmitDocumentBuilder;
 import org.hl7.v3.*;
@@ -28,7 +29,6 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.security.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -56,6 +56,10 @@ public class WSClient {
 
     public static void main(String[] args) {
         WSClient client = new WSClient();
+
+        //client.listClinics();
+
+        //client.listProviders();
 
         ClinicalDocumentBean referralRequest = new ReferralRequestCreator()
                 .loincCode("34117-2", "History &amp;Physical Note"  )
@@ -113,7 +117,7 @@ public class WSClient {
 
     private void listClinics() {
         try {
-            PRPMIN406010UV01 request = new ListProviderBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
+            PRPMIN406010UV01 request = new ListClinicBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
                     .sender(locationId) // ID Of requestor
                     .queryById("2.16.840.1.113883.3.277.100.2", locationId)
                     .build();
@@ -128,6 +132,30 @@ public class WSClient {
             PRPMIN406110UV01 response = clinicQuery.getCustomBindingPRPMAR400013UV().prpmIN406010UV01(request);
 
             System.out.println("\nList Clinics Response:\n");
+            System.out.println(parseObject(response));
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error on listClinics", e);
+        }
+    }
+
+    private void listProviders() {
+        try {
+            PRPMIN306010UV request = new ListProviderBuilder(UUID.randomUUID().toString())
+                    .sender(locationId)
+                    .queryBysdlcId("2.16.840.1.113883.3.277.100.2", locationId)
+                    .build();
+
+            System.out.println("\nList Provider Request:\n");
+            System.out.println(parseObject(request));
+
+            setupSSLContext(certPath, certPass.toCharArray());
+
+            ProviderQuery providerQuery = new ProviderQuery(new URL("https://servicestest.bccdx.ca/RegistrySearch/ProviderQuery.svc?WSDL"));
+            providerQuery.setHandlerResolver(handlerResolver(providerQuery.getServiceName()));
+            PRPMIN306011UV response = providerQuery.getCustomBindingPRPMAR300013UV().prpmIN306010UV(request);
+
+            System.out.println("\nList Provider Response:\n");
             System.out.println(parseObject(response));
 
         } catch (Exception e) {

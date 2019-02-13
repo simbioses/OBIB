@@ -15,15 +15,15 @@ public class RecordTargetCreator {
     private PatientBean patient;
 
     public RecordTargetCreator() {
-        recordTarget = new RecordTargetBean(); // TODO verify CONF-BC0507
-        patientRole = new PatientRoleBean(); // TODO verify CONF-BC0508
-        patient = new PatientBean(); // TODO verify CONF-BC0509
+        recordTarget = new RecordTargetBean(); // TODO verify CONF-BC0507 (typeCode = “RCT” and contextControlCode = "OP")
+        patientRole = new PatientRoleBean(); // TODO verify CONF-BC0508 (classCode = "PAT")
+        patient = new PatientBean(); // TODO verify CONF-BC0509 (classCode = “PSN” and determinerCode = “INSTANCE”)
         patientRole.setPatient(patient); // CONF-BC0053
         recordTarget.setPatientRole(patientRole); // CONF-BC0047
     }
 
     public RecordTargetCreator patientId(String patientId) {
-        // CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO verify out of province
+        // CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO verify "out of province"
         patientRole.getId().add(DocumentUtils.createIdentifier("2.16.840.1.113883.4.50", patientId, "BC Patient Health Number"));
         return this;
     }
@@ -44,7 +44,7 @@ public class RecordTargetCreator {
     }
 
     public RecordTargetCreator patientGender(String gender) {
-        // TODO verify CONF-BC0055
+        // CONF-BC0055 TODO verify "default nullFlavor"
         patient.setAdministrativeGenderCode(new CodedTypeR2<>(CodeResolverRegistry.lookup(AdministrativeGender.class, gender)));
         return this;
     }
@@ -53,6 +53,8 @@ public class RecordTargetCreator {
         patient.setBirthTime(DocumentUtils.createDate(year, month, day)); // CONF-BC0056
         return this;
     }
+
+    // TODO Optional CONF-BC0057 - languageCommunication or "default nullFlavor"
 
     public RecordTargetBean get() {
         return recordTarget;

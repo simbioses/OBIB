@@ -13,8 +13,8 @@ public class AuthorCreator {
     private AssignedAuthorBean assignedAuthor;
 
     public AuthorCreator() {
-        author = new Author_2Bean(); // TODO verify CONF-BC0510
-        assignedAuthor = new AssignedAuthorBean(); // TODO verify CONF-BC0511
+        author = new Author_2Bean(); // TODO verify CONF-BC0510 (typeCode = "AUT" and contextControlCode = "OP")
+        assignedAuthor = new AssignedAuthorBean(); // TODO verify CONF-BC0511 (classCode = “ASSIGNED”)
         author.setAssignedAuthor(assignedAuthor); // CONF-BC0061
     }
 
@@ -24,7 +24,7 @@ public class AuthorCreator {
     }
 
     public AuthorCreator authorId(String authorId) {
-        // CONF-BC0062 TODO verify out of province, CONF-BC0063, CONF-BC0064
+        // CONF-BC0062, CONF-BC0063, CONF-BC0064 TODO verify "out of province"
         assignedAuthor.getId().add(new Identifier("2.16.840.1.113883.3.40.2.11", authorId));
         return this;
     }
@@ -32,14 +32,14 @@ public class AuthorCreator {
     public AuthorCreator authorPersonName(String lastName, String firstName) {
         AssignedAuthorPersonBean assignedAuthorPerson = new AssignedAuthorPersonBean();
         assignedAuthorPerson.getName().add(DocumentUtils.createName(lastName, firstName)); // CONF-BC0068
-        assignedAuthor.setAssignedAuthorChoice(assignedAuthorPerson); // CONF-BC0065 TODO verify CONF-BC0512
+        assignedAuthor.setAssignedAuthorChoice(assignedAuthorPerson); // CONF-BC0065 TODO verify CONF-BC0512 (classCode = “PSN” and determinerCode = “INSTANCE”)
         return this;
     }
 
     public AuthorCreator authorDeviceName(String software) {
         AuthoringDeviceBean assignedAuthoringDevice = new AuthoringDeviceBean();
-        // TODO assignedAuthoringDevice.setSoftwareName(new CodedTypeR2<>(???, software)); // CONF-BC0069
-        assignedAuthor.setAssignedAuthorChoice(assignedAuthoringDevice); // CONF-BC0065 TODO verify CONF-BC0513
+        // TODO assignedAuthoringDevice.setSoftwareName(new CodedTypeR2<>(???, software)); // CONF-BC0069 verify how set this name
+        assignedAuthor.setAssignedAuthorChoice(assignedAuthoringDevice); // CONF-BC0065 TODO verify CONF-BC0513 (classCode = “DEV” and determinerCode = “INSTANCE”)
         return this;
     }
 

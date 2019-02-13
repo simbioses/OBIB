@@ -16,25 +16,25 @@ public class InformationRecipientCreator {
     private IntendedRecipientBean intendedRecipient;
 
     public InformationRecipientCreator() {
-        informationRecipient = new InformationRecipientBean(); // TODO verify CONF-BC0071
-        intendedRecipient = new IntendedRecipientBean(); // TODO verify CONF-BC0074
+        informationRecipient = new InformationRecipientBean(); // CONF-BC0071 TODO validate "at least one PRCP"?
+        intendedRecipient = new IntendedRecipientBean(); // TODO verify CONF-BC0074 (classCode = “ASSIGNED”)
         informationRecipient.setIntendedRecipient(intendedRecipient); // CONF-BC0072
     }
 
     public InformationRecipientCreator primary() {
-        // TODO verify CONF-BC0071
+        // CONF-BC0071
         informationRecipient.setTypeCode(new CodedTypeR2<>(CodeResolverRegistry.lookup(x_InformationRecipient.class, "PRCP")));
         return this;
     }
 
     public InformationRecipientCreator secondary() {
-        // TODO verify CONF-BC0071
+        // CONF-BC0071
         informationRecipient.setTypeCode(new CodedTypeR2<>(CodeResolverRegistry.lookup(x_InformationRecipient.class, "TRC")));
         return this;
     }
 
     public InformationRecipientCreator recipientId(String recipientId) {
-        // TODO verify CONF-BC0073, CONF-BC0075, CONF-BC0076
+        // CONF-BC0073 TODO "validate id limit"? verify CONF-BC0075, CONF-BC0076
         intendedRecipient.getId().add(new Identifier("2.16.840.1.113883.3.40.2.11", recipientId));
         return this;
     }
@@ -60,7 +60,7 @@ public class InformationRecipientCreator {
         IntendedRecipientOrganizationBean recipientOrganization = new IntendedRecipientOrganizationBean();
         recipientOrganization.setName(DocumentUtils.createOrganizationName(organizationName)); // CONF-BC0081
         for (String organizationId : organizationIds) {
-            // TODO verify CONF-BC0545
+            // CONF-BC0545 TODO validate "at least on id"?
             recipientOrganization.getId().add(new Identifier("2.16.840.1.113883.3.40.2.11", organizationId));
         }
         intendedRecipient.setReceivedOrganization(recipientOrganization);

@@ -31,7 +31,7 @@ public class ReferralRequestCreator {
         DefaultCodeResolutionConfigurator.configureCodeResolversWithTrivialDefault();
 
         // Document Header
-        doc = new ConsultationNote(); // CONF-BC0001, TODO verify CONF-BC0502
+        doc = new ConsultationNote(); // CONF-BC0001, TODO verify CONF-BC0502 (classCode = "DOCCLIN")
         // CONF-BC002, CONF-BC003, CONF-BC004
         doc.setTypeId(DocumentUtils.createIdentifier("2.16.840.1.113883.1.3", "POCD_HD000040", "HL7 CDA R2"));
         doc.addRealmCode(DocumentUtils.getRealmCode()); // CONF-BC0005
@@ -40,9 +40,9 @@ public class ReferralRequestCreator {
         templateId(TemplateId.E2E_UNSTRUCTURED_REFERRAL); // TemplateId for Unstructured Referral
 
         // Custodian
-        custodian = new CustodianBean(); // TODO verify CONF-BC0083
-        assignedCustodian = new AssignedCustodianBean(); // TODO verify CONF-BC0514
-        custodianOrganization = new CustodianOrganizationBean(); // TODO verify CONF-BC0515
+        custodian = new CustodianBean(); // TODO verify CONF-BC0083 (typeCode = "CST")
+        assignedCustodian = new AssignedCustodianBean(); // TODO verify CONF-BC0514 (classCode = “ASSIGNED”)
+        custodianOrganization = new CustodianOrganizationBean(); // TODO verify CONF-BC0515 (classCode = “ORG” and determinerCode = “INSTANCE”)
         assignedCustodian.setRepresentedCustodianOrganization(custodianOrganization); // CONF-BC0085
         custodian.setAssignedCustodian(assignedCustodian); // CONF-BC0084
         doc.setCustodian(custodian); // CONF-BC0082
@@ -69,9 +69,8 @@ public class ReferralRequestCreator {
         return this;
     }
 
-    // TODO Optional ClinicalDocument/setId
-    // TODO Optional ClinicalDocument/versionNumber
-    // TODO Optional ClinicalDocument/relatedDocument.typeCode
+    // TODO Optional ClinicalDocument/setId - 4.1.3. Clinical Document Identifiers
+    // TODO Optional ClinicalDocument/versionNumber - 4.1.3. Clinical Document Identifiers
 
     public ReferralRequestCreator loincCode(String code, String displayName) {
         CodedTypeR2<ConsultDocumentType> loincCode = new CodedTypeR2<>(CodeResolverRegistry.lookup(ConsultDocumentType.class, code, "2.16.840.1.113883.6.1"));
@@ -87,14 +86,12 @@ public class ReferralRequestCreator {
         return this;
     }
 
-    // TODO Optional ClinicalDocument/documentationOf
+    // TODO Optional ClinicalDocument/documentationOf - 4.3.1. Service Event
 
     public ReferralRequestCreator recordTarget(RecordTargetCreator recordTargetCreator) {
         doc.getRecordTarget().add(recordTargetCreator.get()); // CONF-BC0047
         return this;
     }
-
-    // TODO Optional patient/languageCommunication
 
     public ReferralRequestCreator author(AuthorCreator authorCreator) {
         doc.getAuthor().add(authorCreator.get()); // CONF-BC0058
@@ -116,14 +113,14 @@ public class ReferralRequestCreator {
         return this;
     }
 
-    // TODO Optional Data Enterer
-    // TODO Optional Authenticator and Legal Authenticator
-    // TODO Optional Generic Participant
+    // TODO Optional - 4.2.7. Data Enterer
+    // TODO Optional - 4.2.8. Authenticator and Legal Authenticator
+    // TODO Optional - 4.2.9. Generic Participant
 
-    // TODO Optional Service Event
-    // TODO Optional Order
-    // TODO Optional relatedDocument
-    // TODO Optional Encompassing Encounter
+    // TODO Optional - 4.3.1. Service Event
+    // TODO Optional - 4.3.2. Order
+    // TODO Optional - 4.3.3. relatedDocument
+    // TODO Optional - 4.3.5. Encompassing Encounter
 
     public ReferralRequestCreator body(String bodyString) {
         EncapsulatedData text = new EncapsulatedData();

@@ -46,7 +46,7 @@ public class DocumentTransformer {
         return new ClinicalDocumentTransformer(timeZone, timeZone);
     }
 
-    private void reportErrorsAndWarnings(TransformErrors errors, boolean toXml, boolean includeInfo) {
+    private void reportErrorsAndWarnings(TransformErrors errors, boolean toXml, boolean includeInfo) { // TODO log or return error/warnings?
         String message = (toXml ? "Document object to XML" : "Document XML to object");
         if (errors.isValid()) {
             System.out.println("\n\nNo errors or warnings to report from converting " + message + ".\n");

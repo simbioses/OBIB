@@ -15,7 +15,7 @@ import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
 
 import java.util.TimeZone;
 
-public class DocumentUtils {
+public abstract class DocumentUtils {
 
     static Realm getRealmCode() {
         //return new CodedTypeR2<>(CodeResolverRegistry.lookup(Realm.class, "CA-BC")); // CONF-BC0005

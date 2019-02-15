@@ -7,6 +7,8 @@ import ca.infoway.messagebuilder.model.ccda_r1_1.merged.AssignedAuthorPersonBean
 import ca.infoway.messagebuilder.model.ccda_r1_1.merged.Author_2Bean;
 import ca.infoway.messagebuilder.model.ccda_r1_1.merged.AuthoringDeviceBean;
 
+import java.util.Date;
+
 public class AuthorCreator {
 
     private Author_2Bean author;
@@ -23,6 +25,11 @@ public class AuthorCreator {
         return this;
     }
 
+    public AuthorCreator authorTime(Date authorTime) {
+        author.setTime(DocumentUtils.createDate(authorTime)); // CONF-BC0059
+        return this;
+    }
+
     public AuthorCreator authorId(String authorId) {
         // CONF-BC0062, CONF-BC0063, CONF-BC0064 TODO verify "out of province"
         assignedAuthor.getId().add(new Identifier("2.16.840.1.113883.3.40.2.11", authorId));
@@ -30,8 +37,13 @@ public class AuthorCreator {
     }
 
     public AuthorCreator authorPersonName(String lastName, String firstName) {
+        authorPersonName(lastName, firstName, null);
+        return this;
+    }
+
+    public AuthorCreator authorPersonName(String lastName, String firstName, String middleName) {
         AssignedAuthorPersonBean assignedAuthorPerson = new AssignedAuthorPersonBean();
-        assignedAuthorPerson.getName().add(DocumentUtils.createName(lastName, firstName)); // CONF-BC0068
+        assignedAuthorPerson.getName().add(DocumentUtils.createName(lastName, firstName, middleName)); // CONF-BC0068
         assignedAuthor.setAssignedAuthorChoice(assignedAuthorPerson); // CONF-BC0065 TODO verify CONF-BC0512 (classCode = “PSN” and determinerCode = “INSTANCE”)
         return this;
     }

@@ -13,6 +13,7 @@ import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
 import ca.infoway.messagebuilder.resolver.configurator.DefaultCodeResolutionConfigurator;
 import org.xml.sax.SAXException;
 
+import java.util.Date;
 import java.util.TimeZone;
 
 public class ReferralRequestCreator {
@@ -83,6 +84,11 @@ public class ReferralRequestCreator {
 
     public ReferralRequestCreator effectiveTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
         doc.setEffectiveTime(DocumentUtils.createDateTime(year, month, day, hour, minute, timeZone)); // CONF-BC0025, CONF-BC0026
+        return this;
+    }
+
+    public ReferralRequestCreator effectiveTime(Date effectiveTime) {
+        doc.setEffectiveTime(DocumentUtils.createDateTime(effectiveTime)); // CONF-BC0025, CONF-BC0026
         return this;
     }
 

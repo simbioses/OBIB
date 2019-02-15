@@ -40,8 +40,13 @@ public class InformationRecipientCreator {
     }
 
     public InformationRecipientCreator recipientName(String lastName, String firstName) {
+        recipientName(lastName, firstName, null);
+        return this;
+    }
+
+    public InformationRecipientCreator recipientName(String lastName, String firstName, String middleName) {
         IntendedRecipientPersonBean intendedRecipientPerson = new IntendedRecipientPersonBean();
-        intendedRecipientPerson.getName().add(DocumentUtils.createName(lastName, firstName));
+        intendedRecipientPerson.getName().add(DocumentUtils.createName(lastName, firstName, middleName));
         intendedRecipient.setInformationRecipient(intendedRecipientPerson); // CONF-BC0079
         return this;
     }

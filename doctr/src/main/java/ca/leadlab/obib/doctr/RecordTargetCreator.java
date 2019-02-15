@@ -8,6 +8,8 @@ import ca.infoway.messagebuilder.model.ccda_r1_1.merged.PatientRoleBean;
 import ca.infoway.messagebuilder.model.ccda_r1_1.merged.RecordTargetBean;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
 
+import java.util.Date;
+
 public class RecordTargetCreator {
 
     private RecordTargetBean recordTarget;
@@ -39,7 +41,12 @@ public class RecordTargetCreator {
     }
 
     public RecordTargetCreator patientName(String lastName, String firstName) {
-        patient.getName().add(DocumentUtils.createName(lastName, firstName)); // CONF-BC0054
+        patientName(lastName, firstName, null);
+        return this;
+    }
+
+    public RecordTargetCreator patientName(String lastName, String firstName, String middleName) {
+        patient.getName().add(DocumentUtils.createName(lastName, firstName, middleName)); // CONF-BC0054
         return this;
     }
 
@@ -51,6 +58,11 @@ public class RecordTargetCreator {
 
     public RecordTargetCreator patientDOB(int year, int month, int day) {
         patient.setBirthTime(DocumentUtils.createDate(year, month, day)); // CONF-BC0056
+        return this;
+    }
+
+    public RecordTargetCreator patientDOB(Date date) {
+        patient.setBirthTime(DocumentUtils.createDate(date)); // CONF-BC0056
         return this;
     }
 

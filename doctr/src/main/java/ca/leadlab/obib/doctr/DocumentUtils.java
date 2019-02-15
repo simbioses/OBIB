@@ -12,7 +12,9 @@ import ca.infoway.messagebuilder.j5goodies.DateUtil;
 import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.BasicConfidentialityKind;
 import ca.infoway.messagebuilder.model.ccda_r1_1.domainvalue.Language;
 import ca.infoway.messagebuilder.resolver.CodeResolverRegistry;
+import org.apache.commons.lang.StringUtils;
 
+import java.util.Date;
 import java.util.TimeZone;
 
 public abstract class DocumentUtils {
@@ -40,7 +42,9 @@ public abstract class DocumentUtils {
         PersonName name = new PersonName();
         name.getParts().add(new EntityNamePart(lastName, PersonNamePartType.FAMILY)); // CONF-BC0033
         for (String givenName : firstNames) {
-            name.getParts().add(new EntityNamePart(givenName, PersonNamePartType.GIVEN)); // CONF-BC0034
+            if (StringUtils.isNotBlank(givenName)) {
+                name.getParts().add(new EntityNamePart(givenName, PersonNamePartType.GIVEN)); // CONF-BC0034
+            }
         }
         // TODO verify CONF-BC0035, CONF-BC0036
         name.getUses().add(EntityNameUse.LEGAL); // TODO verify CONF-BC0038
@@ -66,8 +70,16 @@ public abstract class DocumentUtils {
         return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day), "yyyyMMdd"));
     }
 
+    static MbDate createDate(Date date) {
+        return new MbDate(new DateWithPattern(date, "yyyyMMdd"));
+    }
+
     static MbDate createDateTime(int year, int month, int day, int hour, int minute, TimeZone timeZone) {
         return new MbDate(new DateWithPattern(DateUtil.getDate(year, month, day, hour, minute, 0, 0, timeZone), "yyyyMMddhhmmZ"));
+    }
+
+    static MbDate createDateTime(Date date) {
+        return new MbDate(new DateWithPattern(date, "yyyyMMddhhmmZ"));
     }
 
     static Identifier createIdentifier(String root, String assigningAuthorityName) {

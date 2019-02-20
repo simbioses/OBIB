@@ -136,4 +136,18 @@ public class MessageObjectFactory extends ObjectFactory {
         adxp.getContent().add(content);
         return adxp;
     }
+
+    public IVLTS createIVLTS(IVXBTS ivxbtsLow, IVXBTS ivxbtsHigh) {
+        IVLTS ivlts = new IVLTS();
+        ivlts.getCenterOrHighOrLow().add(createIVLTSLow(ivxbtsLow));
+        ivlts.getCenterOrHighOrLow().add(createIVLTSHigh(ivxbtsHigh));
+        return ivlts;
+    }
+
+    public IVXBTS createIVXBTS(boolean inclusive, ZonedDateTime value) {
+        IVXBTS ivxbts = createIVXBTS();
+        ivxbts.setInclusive(inclusive);
+        ivxbts.setValue(DateTimeFormatter.ofPattern("yyyyMMddHHmmZ").format(value));
+        return ivxbts;
+    }
 }

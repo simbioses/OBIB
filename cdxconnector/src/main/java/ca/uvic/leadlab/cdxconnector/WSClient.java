@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyStore;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -104,12 +105,59 @@ public class WSClient {
         }
     }
 
+    public String searchDocumentById(DocumentQueryParameterBuilder.DocumentType documentType, String documentId) throws ConnectorException {
+        return searchDocument(new DocumentQueryParameterBuilder()
+                .clinicId(locationId)
+                .documentType(documentType)
+                .documentId(documentId));
+    }
+
+    public String searchDocumentByDate(DocumentQueryParameterBuilder.DocumentType documentType,
+                                       ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
+        return searchDocument(new DocumentQueryParameterBuilder()
+                .clinicId(locationId)
+                .documentType(documentType)
+                .documentEffectiveTime(lowDate, true, highDate, true));
+    }
+
+    public String searchDocumentByEventTime(DocumentQueryParameterBuilder.DocumentType documentType,
+                                            ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
+        return searchDocument(new DocumentQueryParameterBuilder()
+                .clinicId(locationId)
+                .documentType(documentType)
+                .eventEffectiveTime(lowDate, true, highDate, true));
+    }
+
+    private String searchDocument(DocumentQueryParameterBuilder queryParameterBuilder) throws ConnectorException {
+        try {
+            RCMRIN000029UV01 request = new SearchDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
+                    .receiver("CDX") // ID Of receiver
+                    .sender(locationId) // ID Of requestor
+                    .documentQuery(queryParameterBuilder) // query parameters
+                    .build();
+
+            WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
+
+            RCMRAR000003UV01_Service documentService = createCDARequestService();
+            RCMRIN000030UV01 response = documentService.getCDARequestEndpoint().rcmrIN000029UV01(request);
+
+            WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
+
+            return WSUtil.parseObject(response);
+        } catch (MessageBuilderException e) {
+            LOGGER.log(Level.SEVERE, "Error searching documents", e);
+            throw new ConnectorException("Error searching documents", e);
+        }
+    }
+
     public String getDocument(String documentId) throws ConnectorException {
         try {
             RCMRIN000031UV01 request = new GetDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
                     .sender(locationId) // ID Of requestor
-                    .documentQuery(locationId, documentId) // query parameters
+                    .documentQuery(new DocumentQueryParameterBuilder()
+                            .clinicId(locationId)
+                            .documentId(documentId)) // query parameters
                     .build();
 
             WSUtil.logObject(LOGGER, "\nGet Document Request:\n", request);
@@ -121,8 +169,8 @@ public class WSClient {
 
             return WSUtil.parseObject(response);
         } catch (MessageBuilderException e) {
-            LOGGER.log(Level.SEVERE, "Error listing new documents", e);
-            throw new ConnectorException("Error listing new documents", e);
+            LOGGER.log(Level.SEVERE, "Error getting documents", e);
+            throw new ConnectorException("Error getting documents", e);
         }
     }
 

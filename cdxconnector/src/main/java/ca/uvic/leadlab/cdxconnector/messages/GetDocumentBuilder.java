@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.cdxconnector.messages;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.*;
 
 import java.time.ZonedDateTime;
@@ -31,24 +30,9 @@ public class GetDocumentBuilder extends MessageBuilder {
         return this;
     }
 
-    public GetDocumentBuilder documentQuery(String clinicId, String documentId) {
+    public GetDocumentBuilder documentQuery(DocumentQueryParameterBuilder documentQueryParameterBuilder) {
         controlActProcess = new RCMRIN000031UV01QUQIMT021001UV01ControlActProcess();
-        controlActProcess.setClassCode(ActClassControlAct.CACT); // CONF-CDXMCQ062
-        controlActProcess.setMoodCode(XActMoodIntentEvent.EVN); // CONF-CDXMCQ063
-
-        RCMRMT000003UV01QueryByParameter parameter = new RCMRMT000003UV01QueryByParameter();
-
-        if (StringUtils.isNotBlank(documentId)) {
-            RCMRMT000003UV01ClinicalDocumentId clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId();
-            clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.3.4.1", documentId)); // CONF-CDXMCQ069
-            parameter.setClinicalDocumentId(clinicalDocumentId); // CONF-CDXMCQ068
-        }
-
-        RCMRMT000003UV01RepresentedOrganizationId representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId();
-        representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId)); // CONF-CDXMCQ071
-        parameter.getRepresentedOrganizationId().add(representedOrganizationId); // CONF-CDXMCQ070
-
-        controlActProcess.setQueryByParameter(parameter); // CONF-CDXMCQ064
+        controlActProcess.setQueryByParameter(documentQueryParameterBuilder.buildGet());
         return this;
     }
 

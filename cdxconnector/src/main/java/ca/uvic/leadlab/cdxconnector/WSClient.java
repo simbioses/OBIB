@@ -92,16 +92,47 @@ public class WSClient {
 
             WSUtil.logObject(LOGGER, "\nList New Documents Request:\n", request);
 
-            RCMRAR000003UV01_Service documentService = new RCMRAR000003UV01_Service(new URL(baseUrl + "/CDArequestService/CDARequest.svc?WSDL"));
-            documentService.setHandlerResolver(handlerResolver(documentService.getServiceName()));
+            RCMRAR000003UV01_Service documentService = createCDARequestService();
             RCMRIN000030UV01 response = documentService.getCDARequestEndpoint().mcciIN100001UV01(request);
 
             WSUtil.logObject(LOGGER, "\nList New Documents Response:\n", response);
 
             return WSUtil.parseObject(response);
-        } catch (MessageBuilderException | MalformedURLException e) {
+        } catch (MessageBuilderException e) {
             LOGGER.log(Level.SEVERE, "Error listing new documents", e);
             throw new ConnectorException("Error listing new documents", e);
+        }
+    }
+
+    public String getDocument(String documentId) throws ConnectorException {
+        try {
+            RCMRIN000031UV01 request = new GetDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
+                    .receiver("CDX") // ID Of receiver
+                    .sender(locationId) // ID Of requestor
+                    .documentQuery(locationId, documentId) // query parameters
+                    .build();
+
+            WSUtil.logObject(LOGGER, "\nGet Document Request:\n", request);
+
+            RCMRAR000003UV01_Service documentService = createCDARequestService();
+            RCMRIN000032UV01 response = documentService.getCDARequestEndpoint().rcmrIN000031UV01(request);
+
+            WSUtil.logObject(LOGGER, "\nGet Document Response:\n", response);
+
+            return WSUtil.parseObject(response);
+        } catch (MessageBuilderException e) {
+            LOGGER.log(Level.SEVERE, "Error listing new documents", e);
+            throw new ConnectorException("Error listing new documents", e);
+        }
+    }
+
+    private RCMRAR000003UV01_Service createCDARequestService() throws ConnectorException {
+        try {
+            RCMRAR000003UV01_Service requestService = new RCMRAR000003UV01_Service(new URL(baseUrl + "/CDArequestService/CDARequest.svc?WSDL"));
+            requestService.setHandlerResolver(handlerResolver(requestService.getServiceName()));
+            return requestService;
+        } catch (MalformedURLException e) {
+            throw new ConnectorException("Error creating CDARequestService", e);
         }
     }
 

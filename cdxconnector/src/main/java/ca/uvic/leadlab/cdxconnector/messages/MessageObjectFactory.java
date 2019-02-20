@@ -59,8 +59,20 @@ public class MessageObjectFactory extends ObjectFactory {
         return receiver;
     }
 
+    public MCCIMT100100UV01Receiver createMCCIMT100100UV01Receiver(MCCIMT100100UV01Device device) {
+        MCCIMT100100UV01Receiver receiver = new MCCIMT100100UV01Receiver();
+        receiver.setDevice(device);
+        return receiver;
+    }
+
     public MCCIMT000100UV01Sender createMCCIMT000100UV01Sender(MCCIMT000100UV01Device device) {
         MCCIMT000100UV01Sender sender = createMCCIMT000100UV01Sender();
+        sender.setDevice(device);
+        return sender;
+    }
+
+    public MCCIMT100100UV01Sender createMCCIMT100100UV01Sender(MCCIMT100100UV01Device device) {
+        MCCIMT100100UV01Sender sender = new MCCIMT100100UV01Sender();
         sender.setDevice(device);
         return sender;
     }

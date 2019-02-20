@@ -1,0 +1,54 @@
+package ca.uvic.leadlab.cdxconnector;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public abstract class WSUtil {
+
+    public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
+        if (logger.isLoggable(Level.FINEST)) {
+            logger.finest(message);
+            logger.finest(parseObject(obj));
+        }
+    }
+
+    public static String parseObject(Object obj) throws ConnectorException {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            StringWriter writer = new StringWriter();
+            marshaller.marshal(obj, writer);
+
+            return writer.toString();
+        } catch (JAXBException e) {
+            throw new ConnectorException("Error parsing object", e);
+        }
+    }
+
+    public static void validateObject(Object obj, URL schemaUrl) throws ConnectorException {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(schemaUrl);
+
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setSchema(schema);
+            marshaller.marshal(obj, new DefaultHandler());
+        } catch (JAXBException | SAXException e) {
+            throw new ConnectorException("Error validating object", e);
+        }
+    }
+}

@@ -1,33 +1,20 @@
 package ca.uvic.leadlab.cdxconnector;
 
 import ca.interiorhealth.BizTalkServiceInstance;
-
-import ca.uvic.leadlab.cdxconnector.messages.ListClinicBuilder;
-import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
-import ca.uvic.leadlab.cdxconnector.messages.MessageBuilderException;
-import ca.uvic.leadlab.cdxconnector.messages.SubmitDocumentBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.*;
 import org.hl7.v3.*;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
 import java.io.FileInputStream;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.*;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +43,7 @@ public class WSClient {
                     "cdxpostprod-otca", "VMK31", "cdxpostprod-otca",
                     "./certs/LEADlab_Keystore.jks", "LEADlab");
 
-            client.listClinics();
+            client.listNewDocuments();
         } catch (ConnectorException e) {
             e.printStackTrace();
         }
@@ -81,20 +68,40 @@ public class WSClient {
                     .document(UUID.randomUUID().toString(), document)
                     .build();
 
-            LOGGER.log(Level.FINEST,"\nSubmit Document Request:\n");
-            LOGGER.log(Level.FINEST, parseObject(request));
+            WSUtil.logObject(LOGGER, "\nSubmit Document Request:\n", request);
 
             BizTalkServiceInstance documentService = new BizTalkServiceInstance(new URL(baseUrl + "/CDASubmitService/CDASubmit.svc?WSDL"));
             documentService.setHandlerResolver(handlerResolver(documentService.getServiceName()));
             MCCIIN000002UV01 response = documentService.getCustomBindingITwoWayAsync().submitCDA(request);
 
-            LOGGER.log(Level.FINEST,"\nSubmit Document Response:\n");
-            LOGGER.log(Level.FINEST,parseObject(response));
+            WSUtil.logObject(LOGGER, "\nSubmit Document Response:\n", response);
 
-            return parseObject(response);
+            return WSUtil.parseObject(response);
         } catch (MessageBuilderException | MalformedURLException e) {
             LOGGER.log(Level.SEVERE, "Error submitting document", e);
             throw new ConnectorException("Error submitting document", e);
+        }
+    }
+
+    public String listNewDocuments() throws ConnectorException {
+        try {
+            MCCIIN100001UV01 request = new ListNewDocumentsBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
+                    .receiver("CDX") // ID Of receiver
+                    .sender(locationId) // ID Of requestor
+                    .build();
+
+            WSUtil.logObject(LOGGER, "\nList New Documents Request:\n", request);
+
+            RCMRAR000003UV01_Service documentService = new RCMRAR000003UV01_Service(new URL(baseUrl + "/CDArequestService/CDARequest.svc?WSDL"));
+            documentService.setHandlerResolver(handlerResolver(documentService.getServiceName()));
+            RCMRIN000030UV01 response = documentService.getCDARequestEndpoint().mcciIN100001UV01(request);
+
+            WSUtil.logObject(LOGGER, "\nList New Documents Response:\n", response);
+
+            return WSUtil.parseObject(response);
+        } catch (MessageBuilderException | MalformedURLException e) {
+            LOGGER.log(Level.SEVERE, "Error listing new documents", e);
+            throw new ConnectorException("Error listing new documents", e);
         }
     }
 
@@ -105,17 +112,15 @@ public class WSClient {
                     .queryById("2.16.840.1.113883.3.277.100.2", locationId)
                     .build();
 
-            LOGGER.log(Level.FINEST,"\nList Clinics Request:\n");
-            LOGGER.log(Level.FINEST,parseObject(request));
+            WSUtil.logObject(LOGGER, "\nList Clinics Request:\n", request);
 
             ClinicQuery clinicQuery = new ClinicQuery(new URL(baseUrl + "/RegistrySearch/ClinicQuery.svc?WSDL"));
             clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
             PRPMIN406110UV01 response = clinicQuery.getCustomBindingPRPMAR400013UV().prpmIN406010UV01(request);
 
-            LOGGER.log(Level.FINEST,"\nList Clinics Response:\n");
-            LOGGER.log(Level.FINEST,parseObject(response));
+            WSUtil.logObject(LOGGER, "\nList Clinics Response:\n", response);
 
-            return parseObject(response);
+            return WSUtil.parseObject(response);
         } catch (MalformedURLException e) {
             LOGGER.log(Level.SEVERE, "Error listing clinics", e);
             throw new ConnectorException("Error listing clinics", e);
@@ -129,17 +134,15 @@ public class WSClient {
                     .queryBysdlcId("2.16.840.1.113883.3.277.100.2", locationId)
                     .build();
 
-            LOGGER.log(Level.FINEST,"\nList Provider Request:\n");
-            LOGGER.log(Level.FINEST,parseObject(request));
+            WSUtil.logObject(LOGGER, "\nList Provider Request:\n", request);
 
             ProviderQuery providerQuery = new ProviderQuery(new URL(baseUrl + "/RegistrySearch/ProviderQuery.svc?WSDL"));
             providerQuery.setHandlerResolver(handlerResolver(providerQuery.getServiceName()));
             PRPMIN306011UV response = providerQuery.getCustomBindingPRPMAR300013UV().prpmIN306010UV(request);
 
-            LOGGER.log(Level.FINEST,"\nList Provider Response:\n");
-            LOGGER.log(Level.FINEST,parseObject(response));
+            WSUtil.logObject(LOGGER, "\nList Provider Response:\n", response);
 
-            return parseObject(response);
+            return WSUtil.parseObject(response);
         } catch (MalformedURLException e) {
             LOGGER.log(Level.SEVERE, "Error listing providers", e);
             throw new ConnectorException("Error listing providers", e);
@@ -177,34 +180,5 @@ public class WSClient {
                 return handlerChain;
             }
         };
-    }
-
-    private String parseObject(Object obj) throws ConnectorException {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            StringWriter writer = new StringWriter();
-            marshaller.marshal(obj, writer);
-
-            return writer.toString();
-        } catch (JAXBException e) {
-            throw new ConnectorException("Error parsing object", e);
-        }
-    }
-
-    private void validateObject(Object obj, URL schemaUrl) throws ConnectorException {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(schemaUrl);
-
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setSchema(schema);
-            marshaller.marshal(obj, new DefaultHandler());
-        } catch (JAXBException | SAXException e) {
-            throw new ConnectorException("Error validating object", e);
-        }
     }
 }

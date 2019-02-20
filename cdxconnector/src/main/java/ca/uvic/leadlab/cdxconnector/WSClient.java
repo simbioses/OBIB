@@ -81,15 +81,15 @@ public class WSClient {
                     .document(UUID.randomUUID().toString(), document)
                     .build();
 
-            System.out.println("\nSubmit Document Request:\n");
-            System.out.println(parseObject(request));
+            LOGGER.log(Level.FINEST,"\nSubmit Document Request:\n");
+            LOGGER.log(Level.FINEST, parseObject(request));
 
             BizTalkServiceInstance documentService = new BizTalkServiceInstance(new URL(baseUrl + "/CDASubmitService/CDASubmit.svc?WSDL"));
             documentService.setHandlerResolver(handlerResolver(documentService.getServiceName()));
             MCCIIN000002UV01 response = documentService.getCustomBindingITwoWayAsync().submitCDA(request);
 
-            System.out.println("\nSubmit Document Response:\n");
-            System.out.println(parseObject(response));
+            LOGGER.log(Level.FINEST,"\nSubmit Document Response:\n");
+            LOGGER.log(Level.FINEST,parseObject(response));
 
             return parseObject(response);
         } catch (MessageBuilderException | MalformedURLException e) {
@@ -105,15 +105,15 @@ public class WSClient {
                     .queryById("2.16.840.1.113883.3.277.100.2", locationId)
                     .build();
 
-            System.out.println("\nList Clinics Request:\n");
-            System.out.println(parseObject(request));
+            LOGGER.log(Level.FINEST,"\nList Clinics Request:\n");
+            LOGGER.log(Level.FINEST,parseObject(request));
 
             ClinicQuery clinicQuery = new ClinicQuery(new URL(baseUrl + "/RegistrySearch/ClinicQuery.svc?WSDL"));
             clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
             PRPMIN406110UV01 response = clinicQuery.getCustomBindingPRPMAR400013UV().prpmIN406010UV01(request);
 
-            System.out.println("\nList Clinics Response:\n");
-            System.out.println(parseObject(response));
+            LOGGER.log(Level.FINEST,"\nList Clinics Response:\n");
+            LOGGER.log(Level.FINEST,parseObject(response));
 
             return parseObject(response);
         } catch (MalformedURLException e) {
@@ -129,15 +129,15 @@ public class WSClient {
                     .queryBysdlcId("2.16.840.1.113883.3.277.100.2", locationId)
                     .build();
 
-            System.out.println("\nList Provider Request:\n");
-            System.out.println(parseObject(request));
+            LOGGER.log(Level.FINEST,"\nList Provider Request:\n");
+            LOGGER.log(Level.FINEST,parseObject(request));
 
             ProviderQuery providerQuery = new ProviderQuery(new URL(baseUrl + "/RegistrySearch/ProviderQuery.svc?WSDL"));
             providerQuery.setHandlerResolver(handlerResolver(providerQuery.getServiceName()));
             PRPMIN306011UV response = providerQuery.getCustomBindingPRPMAR300013UV().prpmIN306010UV(request);
 
-            System.out.println("\nList Provider Response:\n");
-            System.out.println(parseObject(response));
+            LOGGER.log(Level.FINEST,"\nList Provider Response:\n");
+            LOGGER.log(Level.FINEST,parseObject(response));
 
             return parseObject(response);
         } catch (MalformedURLException e) {

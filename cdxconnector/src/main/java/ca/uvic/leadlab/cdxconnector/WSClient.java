@@ -32,7 +32,6 @@ public class WSClient {
     // Location credentials
     private String username;
     private String password;
-    private String locationId;
 
     // Certificate
     private String certPath;
@@ -41,27 +40,27 @@ public class WSClient {
     public static void main(String[] args) {
         try {
             WSClient client = new WSClient("https://servicestest.bccdx.ca",
-                    "cdxpostprod-otca", "VMK31", "cdxpostprod-otca",
+                    "cdxpostprod-otca", "VMK31",
                     "./certs/LEADlab_Keystore.jks", "LEADlab");
 
-            client.listNewDocuments();
+            client.listNewDocuments("cdxpostprod-otca");
         } catch (ConnectorException e) {
             e.printStackTrace();
         }
     }
 
-    public WSClient(String baseUrl, String username, String password, String locationId, String certPath, String certPass) throws ConnectorException {
+    public WSClient(String baseUrl, String username, String password,
+                    String certPath, String certPass) throws ConnectorException {
         this.baseUrl = baseUrl;
         this.username = username;
         this.password = password;
-        this.locationId = locationId;
         this.certPath = certPath;
         this.certPass = certPass.toCharArray();
 
         setupSSLContext();
     }
 
-    public String submitDocument(String document) throws ConnectorException {
+    public String submitDocument(String locationId, String document) throws ConnectorException {
         try {
             RCMRIN000002UV01 request = new SubmitDocumentBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
@@ -84,7 +83,7 @@ public class WSClient {
         }
     }
 
-    public String listNewDocuments() throws ConnectorException {
+    public String listNewDocuments(String locationId) throws ConnectorException {
         try {
             MCCIIN100001UV01 request = new ListNewDocumentsBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
@@ -105,30 +104,32 @@ public class WSClient {
         }
     }
 
-    public String searchDocumentById(DocumentQueryParameterBuilder.DocumentType documentType, String documentId) throws ConnectorException {
-        return searchDocument(new DocumentQueryParameterBuilder()
+    public String searchDocumentById(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
+                                     String documentId) throws ConnectorException {
+        return searchDocument(locationId, new DocumentQueryParameterBuilder()
                 .clinicId(locationId)
                 .documentType(documentType)
                 .documentId(documentId));
     }
 
-    public String searchDocumentByDate(DocumentQueryParameterBuilder.DocumentType documentType,
+    public String searchDocumentByDate(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
                                        ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
-        return searchDocument(new DocumentQueryParameterBuilder()
+        return searchDocument(locationId, new DocumentQueryParameterBuilder()
                 .clinicId(locationId)
                 .documentType(documentType)
                 .documentEffectiveTime(lowDate, true, highDate, true));
     }
 
-    public String searchDocumentByEventTime(DocumentQueryParameterBuilder.DocumentType documentType,
+    public String searchDocumentByEventTime(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
                                             ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
-        return searchDocument(new DocumentQueryParameterBuilder()
+        return searchDocument(locationId, new DocumentQueryParameterBuilder()
                 .clinicId(locationId)
                 .documentType(documentType)
                 .eventEffectiveTime(lowDate, true, highDate, true));
     }
 
-    private String searchDocument(DocumentQueryParameterBuilder queryParameterBuilder) throws ConnectorException {
+    private String searchDocument(String locationId,
+                                  DocumentQueryParameterBuilder queryParameterBuilder) throws ConnectorException {
         try {
             RCMRIN000029UV01 request = new SearchDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
@@ -150,7 +151,7 @@ public class WSClient {
         }
     }
 
-    public String getDocument(String documentId) throws ConnectorException {
+    public String getDocument(String locationId, String documentId) throws ConnectorException {
         try {
             RCMRIN000031UV01 request = new GetDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
@@ -184,7 +185,7 @@ public class WSClient {
         }
     }
 
-    public String listClinics() throws ConnectorException {
+    public String listClinics(String locationId) throws ConnectorException {
         try {
             PRPMIN406010UV01 request = new ListClinicBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
                     .sender(locationId) // ID Of requestor
@@ -206,7 +207,7 @@ public class WSClient {
         }
     }
 
-    public String listProviders() throws ConnectorException {
+    public String listProviders(String locationId) throws ConnectorException {
         try {
             PRPMIN306010UV request = new ListProviderBuilder(UUID.randomUUID().toString())
                     .sender(locationId)

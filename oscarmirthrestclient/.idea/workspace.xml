@@ -174,7 +174,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="y" value="-12" />
     <option name="width" value="2908" />
@@ -194,6 +194,11 @@
             <path>
               <item name="oscarmirthrestclient" type="b2602c69:ProjectViewProjectNode" />
               <item name="oscarmirthrestclient" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="oscarmirthrestclient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="oscarmirthrestclient" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="oscarmirthrestclient" type="b2602c69:ProjectViewProjectNode" />
@@ -268,8 +273,8 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550927394426" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../OBIB-oldnew/doctr" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550927605234" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -342,12 +347,12 @@
       <option name="presentableId" value="Default" />
       <updated>1550780779520</updated>
       <workItem from="1550780783180" duration="5631000" />
-      <workItem from="1550786538125" duration="29591000" />
+      <workItem from="1550786538125" duration="29607000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35222000" />
+    <option name="totallyTimeSpent" value="35238000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -359,9 +364,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1936" height="1056" extended-state="7" />
+    <frame x="-6" y="-6" width="1453" height="783" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1716418" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23082437" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -371,7 +376,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.46401227" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.19934994" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -385,7 +390,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.1098081" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.14767025" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Database" order="6" />

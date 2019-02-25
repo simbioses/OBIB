@@ -1,22 +1,32 @@
 package ca.uvic.leadlab.oscarmirthrestclient;
-import ca.uvic.leadlab.models.*;
-import ca.uvic.leadlab.models.submitcda.*;
+
+import ca.uvic.leadlab.models.oscar.OscarReferralRequestInfo;
+import ca.uvic.leadlab.models.oscar.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SubmitCDACreator {
-
-    public   SubmitCDA setSubmitCDAInfo()  //TODO Add the object that has all the parameter from oscar EMR
+public class SetOscarReferralRequestInfo implements IOscarInformation{
+    /*
+        This is the class used to set all the Referral Request Information from Oscar EMR
+   */
+    OscarExtractedInfo oscarExtractedInfo;
+    public  SetOscarReferralRequestInfo(OscarExtractedInfo oscarExtractedInfo)
     {
-        SubmitCDA submitCDA = new SubmitCDA();
+        this.oscarExtractedInfo = oscarExtractedInfo;
+    }
+
+    public OscarReferralRequestInfo OscarInfo()  //TODO Add the object that has all the parameter from oscar EMR
+    {
+        OscarReferralRequestInfo oscarReferralRequestInfo = new OscarReferralRequestInfo();
 
      /*
     Patient Object
      */
         PatientName patientName = new PatientName();
-        patientName.setFirstname("Jens");
-        patientName.setMiddlename("D");
-        patientName.setLastname("Weber");
+        patientName.setFirstname(oscarExtractedInfo.getPatientFirstName());
+        patientName.setMiddlename(oscarExtractedInfo.getPatientMiddleName());
+        patientName.setLastname(oscarExtractedInfo.getPatientLastName());
 
         //Patient Address
         PatientAddress patientAddress = new PatientAddress();
@@ -38,25 +48,41 @@ public class SubmitCDACreator {
     /*
     Author Object
      */
+        AuthorDetail authorDetail = new AuthorDetail();
+
+        List<AuthorName> authorNameList = new ArrayList<AuthorName>();
         AuthorName authorName = new AuthorName();
         authorName.setFirstname("Jens");
         authorName.setMiddlename("D");
         authorName.setLastname("Weber");
+        authorNameList.add(authorName);
+
 
         //Author Address
+        List<AuthorAddress> authorAddressList = new ArrayList<AuthorAddress>();
         AuthorAddress authorAddress = new AuthorAddress();
         authorAddress.setStreetaddress("1775 Fort Street");
         authorAddress.setCity("Victoria");
         authorAddress.setProvince("BC");
         authorAddress.setCountry("CA");
         authorAddress.setPostalcode("V89017");
+        authorAddressList.add(authorAddress);
 
-        AuthorDetail authorDetail = new AuthorDetail();
-        authorDetail.setAuthorName(authorName);
-        authorDetail.setAuthorID("342434234");
-        authorDetail.setAuthorAddress(authorAddress);
-        authorDetail.setAuthorTelcom("(250)721-8797");
-        authorDetail.setAuthorTime("2019-02-08T19:00:31+00:00");
+
+        List<String> authorTelecomList = new ArrayList<String>();
+        authorTelecomList.add("(250)721-8797");
+
+        List<String> authorIDList = new ArrayList<String>();
+        authorIDList.add("342434234");
+
+        List<String> authorTimeList = new ArrayList<String>();
+        authorTimeList.add("2019-02-08T19:00:31+00:00");
+
+        authorDetail.setAuthorName(authorNameList);
+        authorDetail.setAuthorID(authorIDList);
+        authorDetail.setAuthorAddress(authorAddressList);
+        authorDetail.setAuthorTelcom(authorTelecomList);
+        authorDetail.setAuthorTime(authorTimeList);
 
         CustodianDetail custodianDetail = new CustodianDetail();
         custodianDetail.setCustodianOrganizationID("34455676");
@@ -84,14 +110,17 @@ public class SubmitCDACreator {
         providerDetail.setProviderTelcom("(250)721-8707");
         providerDetail.setProviderAddress(providerAddress);
 
-        submitCDA.setPatientDetail(patientDetail);
-        submitCDA.setAuthorDetail(authorDetail);
-        submitCDA.setEffectiveTime("2019-02-08T19:00:31+00:00");
-        submitCDA.setCustodianDetail(custodianDetail);
-        submitCDA.setProviderDetail(providerDetail);
-        submitCDA.setBodyText("This patient was refered to you");
-        return  submitCDA;
+
+        oscarReferralRequestInfo.setPatientDetail(patientDetail);
+        oscarReferralRequestInfo.setAuthorDetail(authorDetail);
+        oscarReferralRequestInfo.setEffectiveTime("2019-02-08T19:00:31+00:00");
+        oscarReferralRequestInfo.setCustodianDetail(custodianDetail);
+        oscarReferralRequestInfo.setProviderDetail(providerDetail);
+        oscarReferralRequestInfo.setBodyText("This patient was refered to you");
+        return  oscarReferralRequestInfo;
     }
+
+
 
 
 }

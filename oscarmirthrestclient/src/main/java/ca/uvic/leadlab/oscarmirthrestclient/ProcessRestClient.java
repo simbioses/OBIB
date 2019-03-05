@@ -39,7 +39,7 @@ public class ProcessRestClient
         OscarReferralRequestInfo oscarReferralRequestInfo = iOscarInformation.OscarInfo();
 
         RestClient restClient = new RestClient();
-        restClient.createJsonSubmitCDA_NEW_InterfaceImplementation(oscarReferralRequestInfo);
+        restClient.createJsonSubmitCDA_NEW_InterfaceImplementation(oscarReferralRequestInfo,"deploy","xxx","555");
     }
 
 }

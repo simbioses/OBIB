@@ -1,7 +1,5 @@
 package ca.uvic.leadlab.oscarmirthrestclient;
-import ca.uvic.leadlab.models.oscar.OscarExtractedInfo;
-import ca.uvic.leadlab.models.oscar.OscarReferralRequestInfo;
-import ca.uvic.leadlab.models.submitcda.*;
+import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
 
 public class ProcessRestClient
 {
@@ -10,15 +8,6 @@ public class ProcessRestClient
 
   //ToDo Get the parsed data from  Oscar
 
-      //SubmitCDACreator submitCDACreator = new SubmitCDACreator();
-      //RestClient restClient = new RestClient();
-      //restClient.createJsonSubmitCDA_NEW(submitCDACreator.setSubmitCDAInfo());
-
-
-      // Testing the Interface Implementation
-      //SubmitCDACreator submitCDACreator = new SubmitCDACreator();
-      //RestClient restClient = new RestClient();
-      //restClient.createJsonSubmitCDA_NEW(submitCDACreator.setSubmitCDAInfo());
 
       UsedInterfaceImplementation();
   }
@@ -28,18 +17,26 @@ public class ProcessRestClient
 
    */
     private static void UsedInterfaceImplementation(){
-        // Set OscarExtractedInfo
-        OscarExtractedInfo oscarExtractedInfo = new OscarExtractedInfo();
-        oscarExtractedInfo.setPatientFirstName("Oluwaseun");
-        oscarExtractedInfo.setPatientLastName("Alani");
-        oscarExtractedInfo.setPatientMiddleName("Hannah");
-       IOscarInformation iOscarInformation;
-       iOscarInformation = new SetOscarReferralRequestInfo(oscarExtractedInfo);
 
-        OscarReferralRequestInfo oscarReferralRequestInfo = iOscarInformation.OscarInfo();
+        SetOscarReferralRequestInfo setOscarReferralRequestInfo = new SetOscarReferralRequestInfo();
+        ClinicalCredentials clinicalCredentials = new ClinicalCredentials();
+
+        ClinicalDocument clinicalDocument = setOscarReferralRequestInfo.OscarInfo();
+
+
+
+
+        //set credentials
+       // ClinicalCredentials clinicalCredentials = new ClinicalCredentials();
+        clinicalCredentials.setUsername("cdxpostprod-otca");
+        clinicalCredentials.setPassword("VMK31");
+        clinicalCredentials.setLocationId("cdxpostprod-obctc");
+
+
 
         RestClient restClient = new RestClient();
-        restClient.createJsonSubmitCDA_NEW_InterfaceImplementation(oscarReferralRequestInfo,"deploy","xxx","555");
+        restClient.submitCDA(clinicalDocument,clinicalCredentials);
+        //restClient.createJsonSubmitCDA_NEW_InterfaceImplementation(oscarReferralRequestInfo,"cdxpostprod-otca","VMK31","cdxpostprod-obctc");
     }
 
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/oscarmirthrestclient.iml" filepath="$PROJECT_DIR$/oscarmirthrestclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/obibconnector.iml" filepath="$PROJECT_DIR$/obibconnector.iml" />
     </modules>
   </component>
 </project>

@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="oscarmirthrestclient" />
+        <module name="obibconnector" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="oscarmirthrestclient" target="1.8" />
+      <module name="obibconnector" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -21,22 +21,32 @@ public class ProcessRestClient
         SetOscarReferralRequestInfo setOscarReferralRequestInfo = new SetOscarReferralRequestInfo();
         ClinicalCredentials clinicalCredentials = new ClinicalCredentials();
 
-        ClinicalDocument clinicalDocument = setOscarReferralRequestInfo.OscarInfo();
-
-
-
+        ClinicalDocument clinicalDocument = setOscarReferralRequestInfo.OscarInfo();  // This is to populate the clinicaldocument object
 
         //set credentials
        // ClinicalCredentials clinicalCredentials = new ClinicalCredentials();
         clinicalCredentials.setUsername("cdxpostprod-otca");
         clinicalCredentials.setPassword("VMK31");
-        clinicalCredentials.setLocationId("cdxpostprod-obctc");
+        clinicalCredentials.setLocationId("cdxpostprod-otca");
+
+        //set search criteria
+        SearchCriterials searchCriterials = new SearchCriterials();
+        searchCriterials.setDocumentId("b3894465-eb45-e911-a96a-0050568c55a6");
 
 
 
-        RestClient restClient = new RestClient();
-        restClient.submitCDA(clinicalDocument,clinicalCredentials);
-        //restClient.createJsonSubmitCDA_NEW_InterfaceImplementation(oscarReferralRequestInfo,"cdxpostprod-otca","VMK31","cdxpostprod-obctc");
+        if(clinicalCredentials != null && clinicalCredentials != null){
+            RestClient restClient = new RestClient();
+            //Submit Document
+            restClient.submitCDA(clinicalDocument,clinicalCredentials);
+
+            //List Document
+            restClient.listDocument(clinicalCredentials);
+
+            //GetDocument
+            restClient.getDocument(searchCriterials,clinicalCredentials);
+
+        }
     }
 
 }

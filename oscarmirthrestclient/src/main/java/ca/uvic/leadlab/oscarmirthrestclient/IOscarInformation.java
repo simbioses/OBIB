@@ -17,7 +17,7 @@ public interface IOscarInformation {
     CDResponse searchDocument(ClinicalCredentials clinicalCredentials, SearchCriterials searchCriterials );
 
     //for get document
-    CDResponse getDocument (String documentId);
+    CDResponse getDocument (SearchCriterials searchCriterials,ClinicalCredentials clinicalCredentials);
 
     //list Provider
     CDResponse listProviders(ClinicalCredentials clinicalCredentials);

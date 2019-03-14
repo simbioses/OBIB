@@ -5,11 +5,15 @@ import com.sun.jersey.api.client.WebResource;
 import com.google.gson.Gson;
 import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
 
+import javax.ws.rs.core.MediaType;
+
 public class RestClient implements IOscarInformation {
 
     private static final String REST_URI_SubmitCDA = "http://localhost:8081/SubmitCDA";
+    private static final String REST_URI_LISTDOCUMENTS = "http://localhost:8081/ListDocuments";
+    private static final String REST_URI_GETDOCUMENT = "http://localhost:8081/GetDocument";
     Client client = Client.create();
-    WebResource webResource = client.resource(REST_URI_SubmitCDA);
+
 /*
     public String createJsonSubmitCDA_NEW_InterfaceImplementation(ClinicalDocument submitCDA, String username, String password, String locationID) {
         String output = "";
@@ -42,22 +46,28 @@ public class RestClient implements IOscarInformation {
 */
 
 
-    private String Object2JSONConverterGSON(ClinicalDocument submitCDA) {
+    private String Object2JSONConverterGSON(Object data) {
         Gson gson = new Gson();
-        String json = gson.toJson(submitCDA);
+        String json = gson.toJson(data);
         System.out.println(json);
         return json;
     }
 
+
+
     @Override
     public CDResponse submitCDA(ClinicalDocument clinicalDocument, ClinicalCredentials clinicalCredentials) {
         String output = "";
-        CDResponse cdResponse ;
+        WebResource webResource = client.resource(REST_URI_SubmitCDA);
+        CDResponse cdResponse = new CDResponse();
+
+
+        //ClientResponse response = resource.type(MediaType.APPLICATION_XML).put(ClientResponse.class, b1);
         try{
-            ClientResponse response = webResource.type("application/json")
+            ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
                     .header("username",clinicalCredentials.getUsername())
                     .header("password",clinicalCredentials.getPassword())
-                    .header("locationid",clinicalCredentials.getLocationId())
+                    .header("locationId",clinicalCredentials.getLocationId())
                     .post(ClientResponse.class, Object2JSONConverterGSON(clinicalDocument));
 
             if (response.getStatus() != 200) {
@@ -76,12 +86,38 @@ public class RestClient implements IOscarInformation {
             e.printStackTrace();
 
         }
-        return null;
+        return cdResponse;
     }
 
     @Override
     public CDResponse listDocument(ClinicalCredentials clinicalCredentials) {
-        return null;
+        String output = "";
+        WebResource webResource = client.resource(REST_URI_LISTDOCUMENTS);
+        CDResponse cdResponse = new CDResponse();
+        try{
+            ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
+                    .header("username",clinicalCredentials.getUsername())
+                    .header("password",clinicalCredentials.getPassword())
+                    .header("locationId",clinicalCredentials.getLocationId())
+                    .post(ClientResponse.class,Object2JSONConverterGSON(clinicalCredentials));
+
+            if (response.getStatus() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + response.getStatus());
+                //cdResponse
+            }
+
+            System.out.println("Output from Server .... \n");
+            output = response.getEntity(String.class);
+            System.out.println(output);
+
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return cdResponse;
     }
 
     @Override
@@ -90,8 +126,35 @@ public class RestClient implements IOscarInformation {
     }
 
     @Override
-    public CDResponse getDocument(String documentId) {
-        return null;
+    public CDResponse getDocument(SearchCriterials searchCriterials,ClinicalCredentials clinicalCredentials) {
+        String output = "";
+        WebResource webResource = client.resource(REST_URI_GETDOCUMENT);
+        CDResponse cdResponse = new CDResponse();
+        try{
+            ClientResponse response = webResource.type(MediaType.APPLICATION_JSON) //"application/json"
+                    .header("username",clinicalCredentials.getUsername())
+                    .header("password",clinicalCredentials.getPassword())
+                    .header("locationId",clinicalCredentials.getLocationId())
+                    .post(ClientResponse.class,Object2JSONConverterGSON(searchCriterials));
+
+            if (response.getStatus() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + response.getStatus());
+                //cdResponse
+            }
+
+            System.out.println("Output from Server .... \n");
+            output = response.getEntity(String.class);
+            System.out.println(output);
+
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return cdResponse;
+
     }
 
     @Override

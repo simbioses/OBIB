@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="da838fa9-4a68-4077-919c-212bf807660a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/OBIB.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sbt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../oscarmirthrestclient/.idea/artifacts/oscarmirthrestclient_jar2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/PopulateClinicalDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/resources/OscarInfoClassStructure.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cdxconnector/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cdxconnector/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doctr/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../doctr/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/.idea/artifacts/oscarmirthrestclient_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/.idea/artifacts/oscarmirthrestclient_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/out/artifacts/oscarmirthrestclient_jar/oscarmirthrestclient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/out/artifacts/oscarmirthrestclient_jar/oscarmirthrestclient.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/RestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/RestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/resources/ReducedClassStructure.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/main/resources/new_oscardatafortesting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/src/test/resources/OsacarDataforTesting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/META-INF/oscarmirthrestclient.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ReducedClassStructure.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/CDResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/CDResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/classes/new_oscardatafortesting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/oscarmirthrestclient.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/test-classes/META-INF/oscarmirthrestclient.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oscarmirthrestclient/target/test-classes/OsacarDataforTesting" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10">
+              <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../oscarmirthrestclient/target/OBIBRestClientConnector.jar!/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../oscarmirthrestclient/target/OBIBRestClientConnector.jar!/ca/uvic/leadlab/oscarmirthrestclient/PopulateClinicalDocument.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/Main.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="2908" />
+    <option name="height" value="1568" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TestOscarMirthRestClient" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TestOscarMirthRestClient" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="OBIBRestClientConnector.jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="OBIBRestClientConnector.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="leadlab" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TestOscarMirthRestClient" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="OBIBRestClientConnector.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="leadlab" type="462c0819:PsiDirectoryNode" />
+              <item name="oscarmirthrestclient" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552569700475" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../oscarmirthrestclient/target/dependencies/jersey-media-json-jackson-2.25.1.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="TestOscarMirthRestClient" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="da838fa9-4a68-4077-919c-212bf807660a" name="Default Changelist" comment="" />
+      <created>1552503278995</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1552503278995</updated>
+      <workItem from="1552503284731" duration="7761000" />
+      <workItem from="1552569083949" duration="599000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="8360000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-6" y="-6" width="1453" height="783" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.34121865" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Learn" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32924962" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5650842" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.3297491" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Google Cloud Storage" order="9" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="0" />
+      <window_info id="Image Layers" order="1" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Learn" order="5" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.3362007" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="0" />
+      <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="5" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.32924962" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.5650842" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="right" id="Maven" order="0" visible="true" weight="0.3297491" />
+      <window_info anchor="right" id="Palette" order="1" />
+      <window_info anchor="right" id="Google Cloud Storage" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Bean Validation" order="7" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="8" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="9" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="10" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient.jar!/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class</url>
+          <line>34</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient.jar!/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient-1.0-SNAPSHOT.jar!/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient.jar!/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient.jar!/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/oscarmirthrestclient.jar!/com/sun/jersey/client/urlconnection/URLConnectionClientHandler.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/OBIBRestClientConnector.jar!/com/sun/jersey/api/client/Client.class" />
+    <entry file="jar://$PROJECT_DIR$/../Github/OBIB/oscarmirthrestclient/target/OBIBRestClientConnector.jar!/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" />
+    <entry file="jar://$PROJECT_DIR$/../oscarmirthrestclient/target/OBIBRestClientConnector.jar!/ca/uvic/leadlab/oscarmirthrestclient/PopulateClinicalDocument.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../oscarmirthrestclient/target/OBIBRestClientConnector.jar!/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10">
+          <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>TestOscarMirthRestClient</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

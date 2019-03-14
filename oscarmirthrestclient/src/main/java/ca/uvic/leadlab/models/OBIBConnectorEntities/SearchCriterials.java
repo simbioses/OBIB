@@ -9,18 +9,18 @@ import com.google.gson.annotations.Expose;
 public class SearchCriterials {
 
     @Expose
-    private String documentid;
+    private String documentId;
     @Expose
     private String enddate;
     @Expose
     private String startdate;
 
-    public String getDocumentid() {
-        return documentid;
+    public String getDocumentId() {
+        return documentId;
     }
 
-    public void setDocumentid(String documentid) {
-        this.documentid = documentid;
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     public String getEnddate() {

@@ -1,0 +1,229 @@
+{
+  "authenticator": [
+    {
+      "address": [
+        {
+          "city": "Victoria",
+          "country": "CA",
+          "postalCode": "V89017",
+          "province": "BC",
+          "streetAddress": "1775 Fort Street",
+          "use": "H"
+        }
+      ],
+      "id": "987653421",
+      "name": {
+        "family": "Weber-R",
+        "given": [
+          "Jens-A"
+        ],
+        "prefix": "Dr",
+        "suffix": ""
+      },
+      "telecom": [
+        {
+          "type": "tel",
+          "use": "H",
+          "value": "(250)721-8797"
+        },
+        {
+          "type": "email",
+          "use": "H",
+          "value": "patient@gmail.com"
+        }
+      ]
+    }
+  ],
+  "author": [
+    {
+      "address": [
+        {
+          "city": "Victoria",
+          "country": "CA",
+          "postalCode": "V89017",
+          "province": "BC",
+          "streetAddress": "1775 Fort Street",
+          "use": "H"
+        }
+      ],
+      "id": "123456789",
+      "name": {
+        "family": "Weber-A",
+        "given": [
+          "Jens-A"
+        ],
+        "prefix": "Dr",
+        "suffix": ""
+      },
+      "telecom": [
+        {
+          "type": "tel",
+          "use": "H",
+          "value": "(250)721-8797"
+        },
+        {
+          "type": "email",
+          "use": "H",
+          "value": "patient@gmail.com"
+        }
+      ],
+      "time": "2019-02-08t19:00:31:00+00:00"
+    }
+  ],
+  "custodian": {
+    "id": "45545453444",
+    "name": "Ocean Spread Medical"
+  },
+  "dataEnterer": {
+    "address": [
+      {
+        "city": "Victoria",
+        "country": "CA",
+        "postalCode": "V89017",
+        "province": "BC",
+        "streetAddress": "1775 Fort Street",
+        "use": "H"
+      }
+    ],
+    "id": "123456789",
+    "name": {
+      "family": "Weber-D",
+      "given": [
+        "Jens-A"
+      ],
+      "prefix": "Dr",
+      "suffix": ""
+    },
+    "telecom": [
+      {
+        "type": "tel",
+        "use": "H",
+        "value": "(250)721-8797"
+      },
+      {
+        "type": "email",
+        "use": "H",
+        "value": "patient@gmail.com"
+      }
+    ],
+    "time": "2019-02-08t19:00:31:00+00:00"
+  },
+  "effectiveTime": "2019-02-08T19:00:31:00+00:00",
+  "functionCode":"PSN",
+  "nonXMLBody": {
+    "content": "This Patient was refered to you",
+    "mediaType": "text/plain"
+  },
+  "participant": [
+    {
+      "address": [
+        {
+          "city": "Victoria",
+          "country": "CA",
+          "postalCode": "V89017",
+          "province": "BC",
+          "streetAddress": "1775 Fort Street",
+          "use": "H"
+        }
+      ],
+      "id": "987653421",
+      "name": {
+        "family": "Weber",
+        "given": [
+          "Jens-A"
+        ],
+        "prefix": "Dr",
+        "suffix": ""
+      },
+      "telecom": [
+        {
+          "type": "tel",
+          "use": "H",
+          "value": "(250)721-8797"
+        },
+        {
+          "type": "email",
+          "use": "H",
+          "value": "patient@gmail.com"
+        }
+      ]
+    }
+  ],
+  "patient": {
+    "address": [
+      {
+        "city": "Victoria",
+        "country": "CA",
+        "postalCode": "V89017",
+        "province": "BC",
+        "streetAddress": "1775 Fort Street",
+        "use": "H"
+      }
+    ],
+    "dob": "2019-02-08",
+    "gender": "M",
+    "id": "123456789",
+    "name": [
+      {
+        "family": "Weber-P",
+        "given": [
+          "Jens-P"
+        ],
+        "prefix": "Dr",
+        "suffix": "",
+        "use": "L"
+      }
+    ],
+    "telecom": [
+      {
+        "type": "tel",
+        "use": "H",
+        "value": "(250)721-8797"
+      },
+      {
+        "type": "email",
+        "use": "H",
+        "value": "patient@gmail.com"
+      }
+    ]
+  },
+  "recipient": [
+    {
+      "address": [
+        {
+          "city": "Victoria",
+          "country": "CA",
+          "postalCode": "V89017",
+          "province": "BC",
+          "streetAddress": "1775 Fort Street",
+          "use": "H"
+        }
+      ],
+      "id": "987653421",
+      "name": {
+        "family": "Weber-R",
+        "given": [
+          "Jens-A"
+        ],
+        "prefix": "Dr",
+        "suffix": ""
+      },
+      "receivedOrganization": {
+        "id": "34534545454",
+        "name": "Organization Name"
+      },
+      "telecom": [
+        {
+          "type": "tel",
+          "use": "H",
+          "value": "(250)721-8797"
+        },
+        {
+          "type": "email",
+          "use": "H",
+          "value": "patient@gmail.com"
+        }
+      ]
+    }
+  ]
+}

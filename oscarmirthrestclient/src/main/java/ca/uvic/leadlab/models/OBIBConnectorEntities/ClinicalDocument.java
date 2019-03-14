@@ -19,6 +19,10 @@ public class  ClinicalDocument {
     private DataEnterer dataEnterer;
     @Expose
     private String effectiveTime;
+
+
+    @Expose
+    private String functionCode;
     @Expose
     private NonXMLBody nonXMLBody;
     @Expose
@@ -67,6 +71,16 @@ public class  ClinicalDocument {
     public void setEffectiveTime(String effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
+
+    public String getFunctionCode() {
+        return functionCode;
+    }
+
+    public void setFunctionCode(String functionCode) {
+        this.functionCode = functionCode;
+    }
+
+
 
     public NonXMLBody getNonXMLBody() {
         return nonXMLBody;

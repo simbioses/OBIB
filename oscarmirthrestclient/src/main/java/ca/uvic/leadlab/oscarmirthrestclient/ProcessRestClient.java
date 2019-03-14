@@ -1,4 +1,5 @@
 package ca.uvic.leadlab.oscarmirthrestclient;
+import ca.uvic.leadlab.models.CDXReturnEntities.CDResponses;
 import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
 
 public class ProcessRestClient
@@ -20,7 +21,7 @@ public class ProcessRestClient
 
         SetOscarReferralRequestInfo setOscarReferralRequestInfo = new SetOscarReferralRequestInfo();
         ClinicalCredentials clinicalCredentials = new ClinicalCredentials();
-
+        CDResponses cdResponses = new CDResponses();
         ClinicalDocument clinicalDocument = setOscarReferralRequestInfo.OscarInfo();  // This is to populate the clinicaldocument object
 
         //set credentials
@@ -38,15 +39,19 @@ public class ProcessRestClient
         if(clinicalCredentials != null && clinicalCredentials != null){
             RestClient restClient = new RestClient();
             //Submit Document
-            restClient.submitCDA(clinicalDocument,clinicalCredentials);
+            Object submitCDAResult = restClient.submitCDA(clinicalDocument,clinicalCredentials);
+            ProcessReturnMessages processReturnMessages = new ProcessReturnMessages();
+            cdResponses = processReturnMessages.getReturnedMessage(submitCDAResult); //Result can be obtained from here
 
             //List Document
-            restClient.listDocument(clinicalCredentials);
+            Object listDocumentResult = restClient.listDocument(clinicalCredentials);
 
             //GetDocument
-            restClient.getDocument(searchCriterials,clinicalCredentials);
+            Object getDocumentResult = restClient.getDocument(searchCriterials,clinicalCredentials);
 
         }
     }
+
+
 
 }

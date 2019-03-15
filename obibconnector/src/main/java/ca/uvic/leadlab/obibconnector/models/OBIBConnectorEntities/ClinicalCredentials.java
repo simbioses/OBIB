@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.OBIBConnectorEntities;
+package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

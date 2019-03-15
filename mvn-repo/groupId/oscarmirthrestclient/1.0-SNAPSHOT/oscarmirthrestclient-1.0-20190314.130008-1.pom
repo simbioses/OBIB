@@ -20,7 +20,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>ca.uvic.leadlab.oscarmirthrestclient.ProcessRestClient</mainClass>
+                            <mainClass>ca.uvic.leadlab.obibconnector.builders.ProcessRestClient</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,7 +1,7 @@
-import ca.uvic.leadlab.models.*;
-import ca.uvic.leadlab.models.OBIBConnectorEntities.ClinicalCredentials;
-import ca.uvic.leadlab.models.OBIBConnectorEntities.ClinicalDocument;
-import ca.uvic.leadlab.models.OBIBConnectorEntities.SearchCriterials;
+import ca.uvic.leadlab.obibconnector.models.*;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.ClinicalCredentials;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.ClinicalDocument;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.SearchCriterials;
 import ca.uvic.leadlab.oscarmirthrestclient.ProcessRestClient;
 import ca.uvic.leadlab.oscarmirthrestclient.RestClient;
 import ca.uvic.leadlab.oscarmirthrestclient.SetOscarReferralRequestInfo;

@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.CDXReturnEntities;
+package ca.uvic.leadlab.obibconnector.models.CDXReturnEntities;
 
 import java.util.List;
 import javax.annotation.Generated;

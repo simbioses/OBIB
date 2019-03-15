@@ -1,10 +1,10 @@
-package ca.uvic.leadlab.oscarmirthrestclient;
-import ca.uvic.leadlab.models.CDXReturnEntities.*;
+package ca.uvic.leadlab.obibconnector.builders;
+import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.google.gson.Gson;
-import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 
 import javax.ws.rs.core.MediaType;
 

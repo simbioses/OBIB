@@ -1,6 +1,6 @@
-package ca.uvic.leadlab.oscarmirthrestclient;
-import ca.uvic.leadlab.models.CDXReturnEntities.CDResponses;
-import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
+package ca.uvic.leadlab.obibconnector.builders;
+import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.CDResponses;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 
 public class ProcessRestClient
 {

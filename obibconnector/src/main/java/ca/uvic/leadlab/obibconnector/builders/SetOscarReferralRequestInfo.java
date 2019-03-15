@@ -1,7 +1,7 @@
-package ca.uvic.leadlab.oscarmirthrestclient;
+package ca.uvic.leadlab.obibconnector.builders;
 
 
-import ca.uvic.leadlab.models.OBIBConnectorEntities.*;
+import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 
 
 import java.util.ArrayList;

@@ -1,186 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ac1dd32-73ec-4463-8400-013526517419" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/obibconnector/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/artifacts/oscarmirthrestclient_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/artifacts/oscarmirthrestclient_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/artifacts/oscarmirthrestclient_jar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/artifacts/oscarmirthrestclient_jar2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__asm_asm_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__asm_asm_3_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_6_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_6_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_6_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_6_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_9_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_9_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_base_2_8_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_base_2_8_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_json_provider_2_8_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_json_provider_2_8_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_8_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_8_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_google_code_findbugs_annotations_1_3_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_google_code_findbugs_annotations_1_3_9.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_google_code_gson_gson_2_8_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_google_code_gson_gson_2_8_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_google_code_javaparser_javaparser_1_0_10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_google_code_javaparser_javaparser_1_0_10.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_codemodel_codemodel_2_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_codemodel_codemodel_2_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_jersey_jersey_client_1_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_jersey_jersey_client_1_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_jersey_jersey_core_1_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_jersey_jersey_core_1_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_jersey_jersey_json_1_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_jersey_jersey_json_1_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_jersey_jersey_server_1_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_jersey_jersey_server_1_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__com_sun_xml_bind_jaxb_impl_2_2_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__com_sun_xml_bind_jaxb_impl_2_2_3_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__commons_io_commons_io_2_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__commons_io_commons_io_2_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_activation_activation_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_activation_activation_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_validation_validation_api_1_0_0_GA.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_validation_validation_api_1_0_0_GA.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_ws_rs_javax_ws_rs_api_2_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_ws_rs_javax_ws_rs_api_2_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_2_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_2_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__javax_xml_stream_stax_api_1_0_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__javax_xml_stream_stax_api_1_0_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__joda_time_joda_time_2_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__joda_time_joda_time_2_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__net_sourceforge_collections_collections_generic_4_01.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__net_sourceforge_collections_collections_generic_4_01.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_2_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_2_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_7_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_7_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_codehaus_jackson_jackson_jaxrs_1_7_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_codehaus_jackson_jackson_jaxrs_1_7_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_codehaus_jackson_jackson_xc_1_7_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_codehaus_jackson_jackson_xc_1_7_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_codehaus_jettison_jettison_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_codehaus_jettison_jettison_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_external_aopalliance_repackaged_2_5_0_b32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_external_aopalliance_repackaged_2_5_0_b32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_external_javax_inject_2_5_0_b32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_external_javax_inject_2_5_0_b32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_hk2_api_2_5_0_b32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_hk2_api_2_5_0_b32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_hk2_locator_2_5_0_b32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_hk2_locator_2_5_0_b32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_hk2_utils_2_5_0_b32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_hk2_utils_2_5_0_b32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_hk2_osgi_resource_locator_1_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_hk2_osgi_resource_locator_1_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_jersey_bundles_repackaged_jersey_guava_2_25_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_jersey_bundles_repackaged_jersey_guava_2_25_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_client_2_25_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_client_2_25_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_common_2_25_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_common_2_25_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_jersey_ext_jersey_entity_filtering_2_25_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_jersey_ext_jersey_entity_filtering_2_25_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_glassfish_jersey_media_jersey_media_json_jackson_2_25_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_glassfish_jersey_media_jersey_media_json_jackson_2_25_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_javassist_javassist_3_20_0_GA.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_javassist_javassist_3_20_0_GA.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_jsonschema2pojo_jsonschema2pojo_core_1_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_jsonschema2pojo_jsonschema2pojo_core_1_0_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_jsonschema2pojo_jsonschema2pojo_scalagen_1_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_jsonschema2pojo_jsonschema2pojo_scalagen_1_0_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_scala_lang_scala_library_2_11_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_scala_lang_scala_library_2_11_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__org_yaml_snakeyaml_1_23.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__org_yaml_snakeyaml_1_23.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/sbt.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/oscarmirthrestclient.iml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/obibconnector.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/out/artifacts/oscarmirthrestclient_jar/oscarmirthrestclient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/out/artifacts/oscarmirthrestclient_jar/oscarmirthrestclient.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/out/artifacts/oscarmirthrestclient_jar2/oscarmirthrestclient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/out/artifacts/oscarmirthrestclient_jar2/oscarmirthrestclient.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/AckDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/AckDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/AckQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/AckQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/CDResponses.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/CDResponses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/CDXReturnEntities/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessReturnMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/ProcessReturnMessages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/RestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/RestClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/src/main/resources/OscarInfoClassStructure.json" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/resources/OscarInfoClassStructure.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/OBIBRestClientConnector.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/OBIBRestClientConnector.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/OscarInfoClassStructure.json" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/OscarInfoClassStructure.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/AckDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/AckDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/AckQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/AckQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/CDResponses.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/CDResponses.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/Document.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/Document.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/CDXReturnEntities/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Address.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Authenticator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Author.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalCredentials.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ClinicalDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Custodian.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/DataEnterer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Name.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/NonXMLBody.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Participant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Patient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/ReceivedOrganization.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Recipient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/SearchCriterials.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/models/OBIBConnectorEntities/Telecom.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/oscarmirthrestclient/IOscarInformation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessRestClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessReturnMessages.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/oscarmirthrestclient/ProcessReturnMessages.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/oscarmirthrestclient/RestClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/classes/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/classes/ca/uvic/leadlab/oscarmirthrestclient/SetOscarReferralRequestInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/activation-1.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/activation-1.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/annotations-1.3.9.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/annotations-1.3.9.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/aopalliance-repackaged-2.5.0-b32.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/aopalliance-repackaged-2.5.0-b32.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/asm-3.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/asm-3.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/codemodel-2.6.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/codemodel-2.6.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/collections-generic-4.01.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/collections-generic-4.01.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/commons-io-2.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/commons-io-2.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/commons-lang-2.6.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/commons-lang-2.6.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/commons-lang3-3.2.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/commons-lang3-3.2.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/gson-2.8.5.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/gson-2.8.5.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/hk2-api-2.5.0-b32.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/hk2-api-2.5.0-b32.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/hk2-locator-2.5.0-b32.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/hk2-locator-2.5.0-b32.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/hk2-utils-2.5.0-b32.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/hk2-utils-2.5.0-b32.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-annotations-2.8.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-annotations-2.8.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-core-2.6.3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-core-2.6.3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-core-asl-1.7.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-core-asl-1.7.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-databind-2.6.3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-databind-2.6.3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-dataformat-yaml-2.9.7.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-dataformat-yaml-2.9.7.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-jaxrs-1.7.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-jaxrs-1.7.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-jaxrs-base-2.8.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-jaxrs-base-2.8.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-jaxrs-json-provider-2.8.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-jaxrs-json-provider-2.8.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-mapper-asl-1.9.13.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-mapper-asl-1.9.13.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-module-jaxb-annotations-2.8.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-module-jaxb-annotations-2.8.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jackson-xc-1.7.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jackson-xc-1.7.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/javaparser-1.0.10.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/javaparser-1.0.10.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/javassist-3.20.0-GA.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/javassist-3.20.0-GA.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/javax.annotation-api-1.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/javax.annotation-api-1.2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/javax.inject-2.5.0-b32.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/javax.inject-2.5.0-b32.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/javax.ws.rs-api-2.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/javax.ws.rs-api-2.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jaxb-api-2.2.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jaxb-api-2.2.2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jaxb-impl-2.2.3-1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jaxb-impl-2.2.3-1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-client-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-client-1.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-client-2.25.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-client-2.25.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-common-2.25.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-common-2.25.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-core-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-core-1.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-entity-filtering-2.25.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-entity-filtering-2.25.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-guava-2.25.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-guava-2.25.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-json-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-json-1.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-media-json-jackson-2.25.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-media-json-jackson-2.25.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jersey-server-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jersey-server-1.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jettison-1.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jettison-1.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/joda-time-2.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/joda-time-2.2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jsonschema2pojo-core-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jsonschema2pojo-core-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jsonschema2pojo-scalagen-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jsonschema2pojo-scalagen-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/jsr305-3.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/jsr305-3.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/osgi-resource-locator-1.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/osgi-resource-locator-1.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/scala-library-2.11.6.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/scala-library-2.11.6.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/snakeyaml-1.23.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/snakeyaml-1.23.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/stax-api-1.0-2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/stax-api-1.0-2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/stax-api-1.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/stax-api-1.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/dependencies/validation-api-1.0.0.GA.jar" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/dependencies/validation-api-1.0.0.GA.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oscarmirthrestclient/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+    <list default="true" id="0ac1dd32-73ec-4463-8400-013526517419" name="Default Changelist" comment="gitignore file">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -189,20 +11,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7" selection-start-column="7" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/.gitignore" />
+      </list>
+    </option>
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
@@ -243,6 +62,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/obibconnector" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -267,15 +91,37 @@
       <updated>1552508764380</updated>
       <workItem from="1552508766186" duration="120000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactor project name obibconnector">
+      <created>1552607969142</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1552607969142</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Cleaning project">
+      <created>1552608115986</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1552608115986</updated>
+    </task>
+    <task id="LOCAL-00003" summary="gitignore file">
+      <created>1552608138650</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1552608138650</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="379000" />
+    <option name="totallyTimeSpent" value="687000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -292,9 +138,9 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.39767933" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005342" side_tool="true" weight="0.4978903" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="11" visible="true" weight="0.6729958" />
+      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49946582" visible="true" weight="0.14451477" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -312,13 +158,32 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor project name obibconnector" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor project name obibconnector" />
+    <MESSAGE value="Cleaning project" />
+    <MESSAGE value="gitignore file" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore file" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cdxconnector/src/main/java/ca/uvic/leadlab/cdxconnector/WSClientDocument.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1020" />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="136" column="37" selection-start-line="136" selection-start-column="37" selection-end-line="136" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="5" lean-forward="true" selection-end-line="136" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">

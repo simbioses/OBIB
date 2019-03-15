@@ -1,12 +1,12 @@
 
-package ca.uvic.leadlab.models.OBIBConnectorEntities;
+package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class ReceivedOrganization {
+public class Custodian {
 
     @Expose
     private String id;

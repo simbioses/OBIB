@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.OBIBConnectorEntities;
+package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
 import java.util.List;
 import javax.annotation.Generated;

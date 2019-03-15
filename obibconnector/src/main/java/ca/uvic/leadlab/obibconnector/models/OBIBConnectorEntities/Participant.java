@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.OBIBConnectorEntities;
+package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
 import java.util.List;
 import javax.annotation.Generated;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class Recipient {
+public class Participant {
 
     @Expose
     private List<Address> address;
@@ -15,8 +15,6 @@ public class Recipient {
     private String id;
     @Expose
     private Name name;
-    @Expose
-    private ReceivedOrganization receivedOrganization;
     @Expose
     private List<Telecom> telecom;
 
@@ -42,14 +40,6 @@ public class Recipient {
 
     public void setName(Name name) {
         this.name = name;
-    }
-
-    public ReceivedOrganization getReceivedOrganization() {
-        return receivedOrganization;
-    }
-
-    public void setReceivedOrganization(ReceivedOrganization receivedOrganization) {
-        this.receivedOrganization = receivedOrganization;
     }
 
     public List<Telecom> getTelecom() {

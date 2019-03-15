@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.OBIBConnectorEntities;
+package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
 import java.util.List;
 import javax.annotation.Generated;
@@ -7,18 +7,20 @@ import com.google.gson.annotations.Expose;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class DataEnterer {
+public class Patient {
 
     @Expose
     private List<Address> address;
     @Expose
+    private String dob;
+    @Expose
+    private String gender;
+    @Expose
     private String id;
     @Expose
-    private Name name;
+    private List<Name> name;
     @Expose
     private List<Telecom> telecom;
-    @Expose
-    private String time;
 
     public List<Address> getAddress() {
         return address;
@@ -26,6 +28,22 @@ public class DataEnterer {
 
     public void setAddress(List<Address> address) {
         this.address = address;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getId() {
@@ -36,11 +54,11 @@ public class DataEnterer {
         this.id = id;
     }
 
-    public Name getName() {
+    public List<Name> getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(List<Name> name) {
         this.name = name;
     }
 
@@ -50,14 +68,6 @@ public class DataEnterer {
 
     public void setTelecom(List<Telecom> telecom) {
         this.telecom = telecom;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
 }

@@ -1,6 +1,6 @@
-package ca.uvic.leadlab.oscarmirthrestclient;
+package ca.uvic.leadlab.obibconnector.builders;
 
-import ca.uvic.leadlab.models.CDXReturnEntities.*;
+import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.*;
 
 /*
 Processing the returned messages

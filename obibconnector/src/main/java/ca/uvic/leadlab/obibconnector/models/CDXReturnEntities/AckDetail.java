@@ -1,5 +1,5 @@
 
-package ca.uvic.leadlab.models.CDXReturnEntities;
+package ca.uvic.leadlab.obibconnector.models.CDXReturnEntities;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

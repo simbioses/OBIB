@@ -13,6 +13,14 @@ public class NonXMLBody {
     @Expose
     private String mediaType;
 
+    public NonXMLBody() {
+    }
+
+    public NonXMLBody(String content, String mediaType) {
+        this.content = content;
+        this.mediaType = mediaType;
+    }
+
     public String getContent() {
         return content;
     }

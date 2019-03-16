@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.builders;
+package ca.uvic.leadlab.obibconnector.rest;
 import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -23,27 +23,20 @@ public class RestClient implements IOscarInformation {
         return json;
     }
 
-
-
     @Override
-    public CDResponses submitCDA(ClinicalDocument clinicalDocument, ClinicalCredentials clinicalCredentials) {
-        String output = "";
+    public CDResponses submitCDA(ClinicalDocument clinicalDocument) {
+        String output;
         WebResource webResource = client.resource(REST_URI_SubmitCDA);
         CDResponses cdResponses = new CDResponses();
-
 
         //ClientResponse response = resource.type(MediaType.APPLICATION_XML).put(ClientResponse.class, b1);
         try{
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
-                    .header("username",clinicalCredentials.getUsername())
-                    .header("password",clinicalCredentials.getPassword())
-                    .header("locationId",clinicalCredentials.getLocationId())
+                    .header("locationId", clinicalDocument.getLocationId())
                     .post(ClientResponse.class, Object2JSONConverterGSON(clinicalDocument));
 
             if (response.getStatus() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + response.getStatus());
-                //cdResponse
+                throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
 
             System.out.println("Output from Server .... \n");

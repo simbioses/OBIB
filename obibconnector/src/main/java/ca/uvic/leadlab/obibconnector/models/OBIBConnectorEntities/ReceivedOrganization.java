@@ -13,6 +13,14 @@ public class ReceivedOrganization {
     @Expose
     private String name;
 
+    public ReceivedOrganization() {
+    }
+
+    public ReceivedOrganization(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }

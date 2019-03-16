@@ -21,6 +21,18 @@ public class Address {
     @Expose
     private String use;
 
+    public Address() {
+    }
+
+    public Address(String use, String streetAddress, String city, String province, String postalCode, String country) {
+        this.use = use;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+        this.country = country;
+    }
+
     public String getCity() {
         return city;
     }

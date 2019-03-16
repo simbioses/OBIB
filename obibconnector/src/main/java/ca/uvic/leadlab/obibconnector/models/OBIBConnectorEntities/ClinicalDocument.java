@@ -1,6 +1,7 @@
 
 package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -9,6 +10,7 @@ import com.google.gson.annotations.Expose;
 @SuppressWarnings("unused")
 public class  ClinicalDocument {
 
+    private String locationId;
     @Expose
     private List<Authenticator> authenticator;
     @Expose
@@ -19,8 +21,6 @@ public class  ClinicalDocument {
     private DataEnterer dataEnterer;
     @Expose
     private String effectiveTime;
-
-
     @Expose
     private String functionCode;
     @Expose
@@ -31,6 +31,14 @@ public class  ClinicalDocument {
     private Patient patient;
     @Expose
     private List<Recipient> recipient;
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
 
     public List<Authenticator> getAuthenticator() {
         return authenticator;
@@ -46,6 +54,13 @@ public class  ClinicalDocument {
 
     public void setAuthor(List<Author> author) {
         this.author = author;
+    }
+
+    public void addAuthor(Author author) {
+        if (this.author == null) {
+            this.author = new ArrayList<>();
+        }
+        this.author.add(author);
     }
 
     public Custodian getCustodian() {
@@ -80,8 +95,6 @@ public class  ClinicalDocument {
         this.functionCode = functionCode;
     }
 
-
-
     public NonXMLBody getNonXMLBody() {
         return nonXMLBody;
     }
@@ -98,6 +111,13 @@ public class  ClinicalDocument {
         this.participant = participant;
     }
 
+    public void addParticipant(Participant participant) {
+        if (this.participant == null) {
+            this.participant = new ArrayList<>();
+        }
+        this.participant.add(participant);
+    }
+
     public Patient getPatient() {
         return patient;
     }
@@ -112,6 +132,13 @@ public class  ClinicalDocument {
 
     public void setRecipient(List<Recipient> recipient) {
         this.recipient = recipient;
+    }
+
+    public void addRecipient(Recipient recipient) {
+        if (this.recipient == null) {
+            this.recipient = new ArrayList<>();
+        }
+        this.recipient.add(recipient);
     }
 
 }

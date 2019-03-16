@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.builders;
+package ca.uvic.leadlab.obibconnector.rest;
 import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.CDResponses;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.* ;
 
@@ -9,13 +9,13 @@ public interface IOscarInformation {
 
     //ClinicalDocument OscarInfo();
     //This is for Submit CDA
-     CDResponses submitCDA(ClinicalDocument clinicalDocument, ClinicalCredentials clinicalCredentials);
+     CDResponses submitCDA(ClinicalDocument clinicalDocument);
 
      //for List Document
     CDResponses listDocument(ClinicalCredentials clinicalCredentials);
 
     //for search Document
-    CDResponses searchDocument(ClinicalCredentials clinicalCredentials, SearchCriterials searchCriterials );
+    CDResponses searchDocument(ClinicalCredentials clinicalCredentials, SearchCriterials searchCriterials);
 
     //for get document
     CDResponses getDocument (SearchCriterials searchCriterials,ClinicalCredentials clinicalCredentials);

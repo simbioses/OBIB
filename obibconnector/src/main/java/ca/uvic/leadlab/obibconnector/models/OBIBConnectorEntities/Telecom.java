@@ -15,6 +15,15 @@ public class Telecom {
     @Expose
     private String value;
 
+    public Telecom() {
+    }
+
+    public Telecom(String use, String type, String value) {
+        this.use = use;
+        this.type = type;
+        this.value = value;
+    }
+
     public String getType() {
         return type;
     }

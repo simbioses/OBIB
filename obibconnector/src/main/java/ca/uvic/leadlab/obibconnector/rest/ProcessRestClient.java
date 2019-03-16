@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.builders;
+package ca.uvic.leadlab.obibconnector.rest;
 import ca.uvic.leadlab.obibconnector.models.CDXReturnEntities.CDResponses;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 
@@ -39,7 +39,7 @@ public class ProcessRestClient
         if(clinicalCredentials != null && clinicalCredentials != null){
             RestClient restClient = new RestClient();
             //Submit Document
-            Object submitCDAResult = restClient.submitCDA(clinicalDocument,clinicalCredentials);
+            Object submitCDAResult = restClient.submitCDA(clinicalDocument);
             ProcessReturnMessages processReturnMessages = new ProcessReturnMessages();
             cdResponses = processReturnMessages.getReturnedMessage(submitCDAResult); //Result can be obtained from here
 

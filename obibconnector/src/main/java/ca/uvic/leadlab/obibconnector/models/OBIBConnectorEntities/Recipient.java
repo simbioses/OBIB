@@ -1,13 +1,14 @@
 
 package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class Recipient {
+public class Recipient implements IPerson {
 
     @Expose
     private List<Address> address;
@@ -60,4 +61,34 @@ public class Recipient {
         this.telecom = telecom;
     }
 
+    @Override
+    public void setGender(String gender) {
+        throw new UnsupportedOperationException("Not implemented by this class");
+    }
+
+    @Override
+    public void setDob(String date) {
+        throw new UnsupportedOperationException("Not implemented by this class");
+    }
+
+    @Override
+    public void setAddress(Address address) {
+        if (this.address == null) {
+            this.address = new ArrayList<>();
+        }
+        this.address.add(address);
+    }
+
+    @Override
+    public void setTelecom(Telecom telecom) {
+        if (this.telecom == null) {
+            this.telecom = new ArrayList<>();
+        }
+        this.telecom.add(telecom);
+    }
+
+    @Override
+    public void setTime(String time) {
+        throw new UnsupportedOperationException("Not implemented by this class");
+    }
 }

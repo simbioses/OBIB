@@ -1,6 +1,7 @@
 
 package ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -20,6 +21,17 @@ public class Name {
     @Expose
     private String use;
 
+    public Name() {
+    }
+
+    public Name(String use, String family, String given, String prefix, String suffix) {
+        this.use = use;
+        this.family = family;
+        this.addGiven(given);
+        this.prefix = prefix;
+        this.suffix = suffix;
+    }
+
     public String getFamily() {
         return family;
     }
@@ -34,6 +46,13 @@ public class Name {
 
     public void setGiven(List<String> given) {
         this.given = given;
+    }
+
+    public void addGiven(String given) {
+        if (this.given == null) {
+            this.given = new ArrayList<>();
+        }
+        this.given.add(given);
     }
 
     public String getPrefix() {

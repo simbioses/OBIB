@@ -20,7 +20,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>ca.uvic.leadlab.obibconnector.builders.ProcessRestClient</mainClass>
+                            <mainClass>ca.uvic.leadlab.obibconnector.rest.ProcessRestClient</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -118,6 +118,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.6.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.testifyproject.junit5</groupId>
+            <artifactId>junit5</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
 
     </dependencies>
 

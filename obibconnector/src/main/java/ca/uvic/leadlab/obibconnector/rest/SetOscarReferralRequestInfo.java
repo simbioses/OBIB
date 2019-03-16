@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.builders;
+package ca.uvic.leadlab.obibconnector.rest;
 
 
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;

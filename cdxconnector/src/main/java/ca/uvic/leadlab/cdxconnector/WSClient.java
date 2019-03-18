@@ -60,7 +60,7 @@ public abstract class WSClient {
         }
     }
 
-    HandlerResolver handlerResolver(QName serviceName) {
+    HandlerResolver handlerResolver(final QName serviceName) {
         return new HandlerResolver() {
             @Override
             public List<Handler> getHandlerChain(PortInfo portInfo) {

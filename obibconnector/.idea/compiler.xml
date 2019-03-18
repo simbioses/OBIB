@@ -9,8 +9,5 @@
         <module name="obibconnector" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="obibconnector" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

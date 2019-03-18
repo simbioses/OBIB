@@ -1,3 +1,6 @@
+## Local development/test repo
+mvn-repo/*
+
 ## Maven
 target/
 pom.xml.tag

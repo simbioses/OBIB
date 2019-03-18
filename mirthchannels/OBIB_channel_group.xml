@@ -1,0 +1,2403 @@
+<channelGroup version="3.7.0">
+  <id>a79c9fe3-7a08-42c2-abe1-caf4d426f430</id>
+  <name>OBIB</name>
+  <revision>1</revision>
+  <lastModified>
+    <time>1552006016944</time>
+    <timezone>Etc/UTC</timezone>
+  </lastModified>
+  <description></description>
+  <channels>
+    <channel version="3.7.0">
+      <id>b2f0c503-a881-4126-995e-844c3e7692fd</id>
+      <nextMetaDataId>14</nextMetaDataId>
+      <name>OBIB Services</name>
+      <description>- Receive JSON messages via REST API [&quot;HTTP Listener&quot; source connector]
+- Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
+- Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
+- Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
+      <revision>931</revision>
+      <sourceConnector version="3.7.0">
+        <metaDataId>0</metaDataId>
+        <name>sourceConnector</name>
+        <properties class="com.mirth.connect.connectors.http.HttpReceiverProperties" version="3.7.0">
+          <pluginProperties>
+            <com.mirth.connect.plugins.httpauth.NoneHttpAuthProperties version="3.7.0">
+  <authType>NONE</authType>
+            </com.mirth.connect.plugins.httpauth.NoneHttpAuthProperties>
+          </pluginProperties>
+          <listenerConnectorProperties version="3.7.0">
+            <host>0.0.0.0</host>
+            <port>8081</port>
+          </listenerConnectorProperties>
+          <sourceConnectorProperties version="3.7.0">
+            <responseVariable>responseMessage</responseVariable>
+            <respondAfterProcessing>true</respondAfterProcessing>
+            <processBatch>false</processBatch>
+            <firstResponse>false</firstResponse>
+            <processingThreads>1</processingThreads>
+            <resourceIds class="linked-hash-map">
+              <entry>
+                <string>Default Resource</string>
+                <string>[Default Resource]</string>
+              </entry>
+              <entry>
+                <string>3ee0c1db-83b0-49f6-9323-8884b5bd43da</string>
+                <string>CDA Parser</string>
+              </entry>
+            </resourceIds>
+            <queueBufferSize>1000</queueBufferSize>
+          </sourceConnectorProperties>
+          <xmlBody>false</xmlBody>
+          <parseMultipart>true</parseMultipart>
+          <includeMetadata>true</includeMetadata>
+          <binaryMimeTypes>application/.*(?&lt;!json|xml)$|image/.*|video/.*|audio/.*</binaryMimeTypes>
+          <binaryMimeTypesRegex>true</binaryMimeTypesRegex>
+          <responseContentType>application/json</responseContentType>
+          <responseDataTypeBinary>false</responseDataTypeBinary>
+          <responseStatusCode>${responseStatus}</responseStatusCode>
+          <responseHeaders class="linked-hash-map"/>
+          <charset>UTF-8</charset>
+          <contextPath></contextPath>
+          <timeout>30000</timeout>
+          <staticResources/>
+        </properties>
+        <transformer version="3.7.0">
+          <elements>
+            <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+              <name>Store Clinic Credentials</name>
+              <sequenceNumber>0</sequenceNumber>
+              <enabled>true</enabled>
+              <script>// store the clinic credentials, necessary to call the cdx services
+channelMap.put(&apos;locationId&apos;, sourceMap.get(&apos;headers&apos;).getHeader(&apos;locationId&apos;));
+channelMap.put(&apos;username&apos;, &apos;cdxpostprod-otca&apos;); // TODO get from ??? using locationId
+channelMap.put(&apos;password&apos;, &apos;VMK31&apos;); // TODO get from ??? using locationId</script>
+            </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
+              <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/SubmitCDA&apos;</name>
+              <sequenceNumber>1</sequenceNumber>
+              <enabled>true</enabled>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
+              <metaDataIds>
+                <int>1</int>
+              </metaDataIds>
+              <field>sourceMap.get(&apos;contextPath&apos;)</field>
+              <condition>EQUALS</condition>
+              <values>
+                <string>&apos;/SubmitCDA&apos;</string>
+              </values>
+            </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
+            <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
+              <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListDocuments&apos;</name>
+              <sequenceNumber>2</sequenceNumber>
+              <enabled>true</enabled>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
+              <metaDataIds>
+                <int>2</int>
+              </metaDataIds>
+              <field>sourceMap.get(&apos;contextPath&apos;)</field>
+              <condition>EQUALS</condition>
+              <values>
+                <string>&apos;/ListDocuments&apos;</string>
+              </values>
+            </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
+            <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
+              <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/GetDocument&apos;</name>
+              <sequenceNumber>3</sequenceNumber>
+              <enabled>true</enabled>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
+              <metaDataIds>
+                <int>11</int>
+              </metaDataIds>
+              <field>sourceMap.get(&apos;contextPath&apos;)</field>
+              <condition>EQUALS</condition>
+              <values>
+                <string>&apos;/GetDocument&apos;</string>
+              </values>
+            </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
+          </elements>
+          <inboundTemplate encoding="base64">ewogICJMb2NhdGlvbiIgOiB7CiAgICAidXNlcm5hbWUiIDogImNkeHBvc3Rwcm9kLW90Y2EiLAog
+ICAgInBhc3N3b3JkIiA6ICJWTUszMSIsCiAgICAibG9jYXRpb25JZCIgOiAiY2R4cG9zdHByb2Qt
+b3RjYSIKICB9Cn0=</inboundTemplate>
+          <outboundTemplate encoding="base64"></outboundTemplate>
+          <inboundDataType>JSON</inboundDataType>
+          <outboundDataType>JSON</outboundDataType>
+          <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+            <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+              <splitType>JavaScript</splitType>
+              <batchScript></batchScript>
+            </batchProperties>
+          </inboundProperties>
+          <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+            <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+              <splitType>JavaScript</splitType>
+              <batchScript></batchScript>
+            </batchProperties>
+          </outboundProperties>
+        </transformer>
+        <filter version="3.7.0">
+          <elements/>
+        </filter>
+        <transportName>HTTP Listener</transportName>
+        <mode>SOURCE</mode>
+        <enabled>true</enabled>
+        <waitForPrevious>true</waitForPrevious>
+      </sourceConnector>
+      <destinationConnectors>
+        <connector version="3.7.0">
+          <metaDataId>1</metaDataId>
+          <name>Service Submit Document</name>
+          <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.7.0">
+            <pluginProperties/>
+            <destinationConnectorProperties version="3.7.0">
+              <queueEnabled>false</queueEnabled>
+              <sendFirst>false</sendFirst>
+              <retryIntervalMillis>10000</retryIntervalMillis>
+              <regenerateTemplate>false</regenerateTemplate>
+              <retryCount>0</retryCount>
+              <rotate>false</rotate>
+              <includeFilterTransformer>false</includeFilterTransformer>
+              <threadCount>1</threadCount>
+              <threadAssignmentVariable></threadAssignmentVariable>
+              <validateResponse>true</validateResponse>
+              <resourceIds class="linked-hash-map">
+                <entry>
+                  <string>Default Resource</string>
+                  <string>[Default Resource]</string>
+                </entry>
+                <entry>
+                  <string>3ee0c1db-83b0-49f6-9323-8884b5bd43da</string>
+                  <string>CDA Parser</string>
+                </entry>
+              </resourceIds>
+              <queueBufferSize>1000</queueBufferSize>
+              <reattachAttachments>true</reattachAttachments>
+            </destinationConnectorProperties>
+            <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
+logger.debug(&apos;Service Submit Document&apos;);
+try {		
+	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
+							    &quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+
+	// Get the message with the default namespace
+	default xml namespace = &quot;urn:hl7-org:v3&quot;;
+	var document = new XML(connectorMessage.getEncodedData());
+	logger.debug(&quot;DOCUMENT:\n&quot; + XmlUtil.prettyPrint(document));
+
+	// Call the WS method
+	var cdxResponse = client.submitDocument($(&apos;locationId&apos;), document, $(&apos;recipientId&apos;));
+
+	// return the raw response to be processed by the &apos;response transformers&apos;
+	return ResponseFactory.getSentResponse(cdxResponse); 
+} catch (e) {
+	logger.error(&quot;Error on &apos;Service Submit Document&apos;: &quot; + e);
+	return ResponseFactory.getErrorResponse(&quot;Error on &apos;Service Submit Document&apos;: &quot; + e)
+}</script>
+          </properties>
+          <transformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Store recipients IDs</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	var recipientId = [];
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;]); i++) {
+    		recipientId[i] = msg[&apos;recipient&apos;][i][&apos;id&apos;][0][&apos;id&apos;]; // TODO get only a specific type of ID ?
+	}
+	// store the recipients IDs, necessary to call &apos;send document service&apos;
+	channelMap.put(&apos;recipientId&apos;, validate(recipientId, &apos;&apos;, new Array()));
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Store recipients IDs&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Header Attributes</name>
+                <sequenceNumber>1</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// 4.1. Header Attributes
+	
+	// CONF-BC0001, CONF-BC0502, CONF-BC0002, CONF-BC0003, CONF-BC0004, CONF-BC0005 (fixed in the message template)
+	//default xml namespace = &quot;urn:hl7-org:v3&quot;;
+	
+	// ClinicalDocument/templateId (fixed in the message template, change it for different documents)
+	
+	// CONF-BC0014, CONF-BC0015
+	var documentId = UUIDGenerator.getUUID();
+	tmp[&apos;id&apos;] = buildCDAId(&quot;2.16.840.1.113883.3.277.100.3&quot;, documentId);
+	channelMap.put(&apos;documentId&apos;, documentId); // store the documentId, necessary in the response
+	
+	// CONF-BC0016, CONF-BC0552, CONF-BC0553, CONF-BC0017, CONF-BC0018, CONF-BC0019, CONF-BC0020, CONF-BC0554, CONF-BC0555 
+	// (&apos;setId&apos; and &apos;versionNumber&apos; are not implemented)
+	
+	// ClinicalDocument/code CONF-BC0021, CONF-BC0022 (fixed in the message template, change it for different documents)
+	
+	// ClinicalDocument/title CONF-BC0023, CONF-BC0024  (fixed in the message template, change it for different documents)
+	
+	// ClinicalDocument/effectiveTime CONF-BC0025, CONF-BC0026 
+	tmp[&apos;effectiveTime&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;effectiveTime&apos;]);
+	
+	// ClinicalDocument/confidentialityCode CONF-BC0027, CONF-BC0028, CONF-BC0503 (fixed in the message template)
+	
+	// ClinicalDocument/languageCode CONF-BC0029, CONF-BC0030 (fixed in the message template)
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Header Attributes&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Record Target (Patient Identifiers)</name>
+                <sequenceNumber>2</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// 4.2.2. Record Target (Patient Identifiers) - Mandatory - 1..1
+
+	// CONF-BC0047, CONF-BC0507, CONF-BC0508 (fixed in the message template)
+
+	var patientRole = tmp[&apos;recordTarget&apos;][&apos;patientRole&apos;];
+
+	// CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO local or out of province PHN?
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;id&apos;]); i++) {
+		// Insert IDs as first children of &apos;patientRole&apos;
+		patientRole.prependChild(buildCDAId(msg[&apos;patient&apos;][&apos;id&apos;][i][&apos;type&apos;], 
+								      msg[&apos;patient&apos;][&apos;id&apos;][i][&apos;id&apos;]));
+	}
+	
+	// CONF-BC0051: patientRole MAY contain zero or more [0..*] addr (address)
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;address&apos;]); i++) {
+		patientRole[&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;use&apos;], 
+										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;streetAddress&apos;], 
+										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;city&apos;], 
+										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;province&apos;], 
+										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;postalCode&apos;], 
+										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;contry&apos;]);
+	}
+	
+	// CONF-BC0052: patientRole MAY contain zero or more [0..*] telecom (address)
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;telecom&apos;]); i++) {
+		patientRole[&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;use&apos;], 
+										    msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;type&apos;], 
+										    msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;value&apos;]);
+	}
+	
+	// CONF-BC0053, CONF-BC0509
+	patientRole[&apos;patient&apos;] = new XML(&apos;&lt;patient classCode=&quot;PSN&quot;/&gt;&apos;);
+	
+	// CONF-BC0054: patient SHALL contain at least 1 [1..*] name
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;name&apos;]); i++) {  
+	  patientRole[&apos;patient&apos;][&apos;name&apos;][i] = buildCDAName(msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;use&apos;], 
+											 msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;family&apos;], 
+											 msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;given&apos;], 
+											 msg[&apos;patient&apos;][&apos;name&apos;][0][&apos;prefix&apos;], 
+											 msg[&apos;patient&apos;][&apos;name&apos;][0][&apos;suffix&apos;]);
+	}
+	
+	// CONF-BC0055
+	patientRole[&apos;patient&apos;][&apos;administrativeGenderCode&apos;][&apos;@code&apos;] = msg[&apos;patient&apos;][&apos;gender&apos;];
+	
+	// CONF-BC0056
+	patientRole[&apos;patient&apos;][&apos;birthTime&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;patient&apos;][&apos;dob&apos;]);
+	
+	// CONF-BC0057 TODO languageCommunication?
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Record Target&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Author</name>
+                <sequenceNumber>3</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// 4.2.3. Author - Mandatory - 1..*
+
+	// Update the time for the fist author, who is the system author, fixed in the message template
+	tmp[&apos;author&apos;][0][&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(new Date());
+	
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;author&apos;]); i++) {
+		// CONF-BC0058, CONF-BC0510
+	  	var author = new XML(&apos;&lt;author typeCode=&quot;AUT&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
+		
+	  	// CONF-BC0060
+	  	author[&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;author&apos;][i][&apos;time&apos;]);
+	
+	  	// CONF-BC0061, CONF-BC0511
+	  	author[&apos;assignedAuthor&apos;][&apos;@classCode&apos;] = &apos;ASSIGNED&apos;;
+	  	
+	  	// CONF-BC0062
+	  	for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;id&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;author&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
+										  		  msg[&apos;author&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
+	  	}
+	  	
+	  	// CONF-BC0066: assignedAuthor MAY contain zero or more [0..*] addr (address)
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;address&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
+													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
+													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
+													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
+													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
+													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		}
+		
+		// CONF-BC0067: assignedAuthor MAY contain zero or more [0..*] telecom
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;telecom&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
+														  msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
+														  msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		}
+		
+		// CONF-BC0512
+		var assignedPerson = new XML(&apos;&lt;assignedPerson classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot;/&gt;&apos;);
+	
+	  	// CONF-BC0068
+	  	assignedPerson[&apos;name&apos;] = buildCDAName(msg[&apos;author&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
+		
+		// CONF-BC0065
+		author[&apos;assignedAuthor&apos;][&apos;assignedPerson&apos;] = assignedPerson;
+		
+		// Insert authors after the first &apos;author&apos;
+		tmp.insertChildAfter(tmp[&apos;author&apos;][0], author);
+		
+		// CONF-BC0513, CONF-BC0069 (fixed in the template)
+	}
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Author&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Custodian</name>
+                <sequenceNumber>4</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// 4.2.6. Custodian - Mandatory - 1..1
+	
+	// CONF-BC0082, CONF-BC0083, CONF-BC0084, CONF-BC0514, CONF-BC0515 implemented by the message template
+	
+	// CONF-BC0086 TODO ? If the clinical document is generated from an EMR, this id SHALL NOT contain the root OID of a Health Authority or of the BC Ministry of Health.
+	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;id&apos;] = buildCDAId(&quot;2.16.840.1.113883.3.277.100.2&quot;, $(&apos;locationId&apos;));
+	
+	// CONF-BC0087 TODO ? contain zero or one [0..1] name
+	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;name&apos;] = new XML(&apos;&lt;name&gt;Oscar Test Clinic A&lt;/name&apos;); // TODO get from locationId
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Custodian&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Information Recipient</name>
+                <sequenceNumber>5</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// 4.2.4. Information Recipient - Optional - 0..*
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;]); i++) {
+		// CONF-BC0070
+		var recipient = new XML(&apos;&lt;informationRecipient /&gt;&apos;);
+	
+	  	// CONF-BC0071
+	  	recipient[&apos;@typeCode&apos;] = (i == 0) ? &apos;PRCP&apos; : &apos;TRC&apos;;
+	
+	  	// CONF-BC0072, CONF-BC0074
+	  	recipient[&apos;intendedRecipient&apos;] = new XML(&apos;&lt;intendedRecipient classCode=&quot;ASSIGNED&quot;/&gt;&apos;);
+
+		// CONF-BC0073, CONF-BC0075, CONF-BC0076
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;id&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;recipient&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
+										  		        msg[&apos;recipient&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
+	  	}
+	  	
+	  	// CONF-BC0077: intendedRecipient MAY contain zero or more [0..*] addr
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;address&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
+												       		msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
+													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
+													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
+													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
+													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		}
+		
+		// CONF-BC0078: intendedRecipient MAY contain zero or more [0..*] telecom
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;telecom&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
+															   msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
+															   msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		}
+	
+		// CONF-BC0079
+		var recipientName = new XML(&apos;&lt;informationRecipient classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot; /&gt;&apos;);
+	  	recipientName[&apos;name&apos;] = buildCDAName(msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+									  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
+		recipient[&apos;intendedRecipient&apos;][&apos;informationRecipient&apos;] = recipientName;
+	
+		// CONF-BC0080: intendedRecipient MAY contain zero or one [0..1] receivedOrganization
+		if (msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;]) {
+			var receivedOrganization = new XML(&apos;&lt;receivedOrganization /&gt;&apos;);
+			receivedOrganization[&apos;id&apos;] = buildCDAId(msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;id&apos;][&apos;type&apos;], 
+							  		          msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;id&apos;][&apos;id&apos;]);
+			receivedOrganization[&apos;name&apos;] = msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;name&apos;];
+			recipient[&apos;intendedRecipient&apos;][&apos;receivedOrganization&apos;] = receivedOrganization;
+		}
+		
+		// Insert informationRecipients after &apos;custodian&apos;
+		tmp.insertChildAfter(tmp[&apos;custodian&apos;], recipient);
+	}
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Information Recipient&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Data Enterer</name>
+                <sequenceNumber>6</sequenceNumber>
+                <enabled>true</enabled>
+                <script>/*try { TODO ? This participation is where the transcriptionist...
+	// 4.2.7. Data Enterer - Optional - 0..1
+	
+	// CONF-BC0088: MAY contain zero or one [0..1] dataEnterer
+	if (msg[&apos;dataEnterer&apos;]) {
+		// CONF-BC0516
+		var dataEnterer = new XML(&apos;&lt;dataEnterer typeCode=&quot;ENT&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
+	
+		// CONF-BC0090
+		dataEnterer[&apos;assignedEntity&apos;][&apos;classCode&apos;] = &quot;ASSIGNED&quot;;
+	
+		// CONF-BC0550
+		dataEnterer[&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;dataEnterer&apos;][&apos;time&apos;]);
+	
+		// CONF-BC0091: assignedEntity SHOULD contain zero or one [0..1] id, which MAY be a local identifier
+		if (msg[&apos;dataEnterer&apos;][&apos;id&apos;]) {
+			dataEnterer[&apos;assignedEntity&apos;][&apos;id&apos;] = buildCDAId(null, msg[&apos;dataEnterer&apos;][&apos;id&apos;]);
+		}
+	  
+	  	// CONF-BC0092: assignedEntity MAY contain zero or more [0..*] addr elements
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;address&apos;]); j++) {
+			dataEnterer[&apos;assignedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;use&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;streetAddress&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;city&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;province&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;postalCode&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;contry&apos;]);
+		}
+		
+		// CONF-BC0093: assignedEntity MAY contain zero or more [0..*] telecom elements
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;telecom&apos;]); j++) {
+			dataEnterer[&apos;assignedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;use&apos;], 
+														       msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;type&apos;], 
+														       msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;value&apos;]);
+		}
+	
+		// CONF-BC0094: assignedEntity SHOULD contain zero or one [0..1]
+		if (msg[&apos;dataEnterer&apos;][&apos;name&apos;]) {
+			// CONF-BC0518
+			var assignedPerson = new XML(&apos;&lt;assignedPerson classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot;/&gt;&apos;);
+	
+	  		// CONF-BC0095
+	  		assignedPerson[&apos;name&apos;] = buildCDAName(msg[&apos;dataEnterer&apos;][&apos;name&apos;][&apos;use&apos;], 
+	  									   msg[&apos;dataEnterer&apos;][&apos;name&apos;][&apos;family&apos;], 
+	  									   msg[&apos;dataEnterer&apos;][&apos;name&apos;][&apos;given&apos;], 
+	  									   msg[&apos;dataEnterer&apos;][&apos;name&apos;][&apos;prefix&apos;], 
+	  									   msg[&apos;dataEnterer&apos;][&apos;name&apos;][&apos;suffix&apos;]);
+		
+			dataEnterer[&apos;assignedEntity&apos;][&apos;assignedPerson&apos;] = assignedPerson;
+		}
+		
+		tmp[&apos;dataEnterer&apos;] = dataEnterer; // TODO insert it at?
+	}
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Data Enterer&quot;: &apos; + e);
+} */</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Authenticator</name>
+                <sequenceNumber>7</sequenceNumber>
+                <enabled>true</enabled>
+                <script>// 4.2.8. Authenticator and Legal Authenticator - Optional - 0..*
+	
+// CONF-BC0096 TODO ? Authenticator is the person or persons who attest to the content of the document.</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Generic Participant</name>
+                <sequenceNumber>8</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try { 
+	// 4.2.9. Generic Participant - Optional - 0..*
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;participant&apos;]); i++) {
+		// CONF-8504, CONF-8505
+		var participant = new XML(&apos;&lt;participant typeCode=&quot;IND&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
+	
+		// CONF-8506
+		participant[&apos;functionCode&apos;] = new XML(&apos;&lt;functionCode code=&quot;&apos; + msg[&apos;participant&apos;][i][&apos;functionCode&apos;] + &apos;&quot; \
+										codeSystem=&quot;2.16.840.1.113883.2.20.3.88&quot; \
+									     codeSystemName=&quot;HL7ParticipationFunction&quot; displayName=&quot;Primary Care Physician&quot; /&gt;&apos;);
+	
+		// CONF-8507
+		participant[&apos;associatedEntity&apos;][&apos;@classCode&apos;] = &quot;PROV&quot;;
+	
+		// CONF-8508, CONF-BC0519
+		participant[&apos;associatedEntity&apos;][&apos;associatedPerson&apos;] = new XML(&apos;&lt;associatedPerson classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot; /&gt;&apos;);
+	
+		// TODO ? For use in British Columbia, the following constraints apply to the participation:
+		
+		// CONF-BC0097, CONF-BC0098, CONF-BC0099
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;id&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;participant&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
+										  		         msg[&apos;participant&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
+	  	}
+	
+		// CONF-BC0101: associatedEntity MAY contain zero or more [0..*] addr
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;address&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
+															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
+															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
+															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
+															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
+															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		}
+		
+		// CONF-BC0102: associatedEntity MAY contain zero or more [0..*] telecom
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;telecom&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
+															    msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
+															    msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		}
+	
+		// CONF-BC0100
+		participant[&apos;associatedEntity&apos;][&apos;associatedPerson&apos;][&apos;name&apos;] = buildCDAName(msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
+	
+		// Insert participant after &apos;informationRecipient&apos;
+		tmp.insertChildAfter(tmp[&apos;informationRecipient&apos;], participant);
+	}
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Generic Participant&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Order</name>
+                <sequenceNumber>9</sequenceNumber>
+                <enabled>true</enabled>
+                <script>// 4.3.2. Order
+
+// CONF-BC0524, CONF-BC0123, CONF-BC0525, CONF-BC0124, CONF-BC0526 (fixed in the message template)</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Document Body</name>
+                <sequenceNumber>10</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try { 
+	// 2.3. CDA LEVEL 1 NARRATIVE TEXT AND ATTACHMENTS
+	
+	// CONF-BC0009, CONF-BC0010
+	// CONF-BC0011: text.mediaType=”text/plain”
+	if (msg[&apos;nonXMLBody&apos;][&apos;mediaType&apos;] === &quot;text/plain&quot;) {
+		tmp[&apos;component&apos;][&apos;nonXMLBody&apos;][&apos;text&apos;] = new XML(&apos;&lt;text mediaType=&quot;&apos; + msg[&apos;nonXMLBody&apos;][&apos;mediaType&apos;] + &apos;&quot; \
+			representation=&quot;TXT&quot;&gt;&apos; + msg[&apos;nonXMLBody&apos;][&apos;content&apos;] + &apos;&lt;/text&gt;&apos;);
+	} else { // CONF-BC0012: text.mediaType=”text/rtf”, or “application/pdf”
+		tmp[&apos;component&apos;][&apos;nonXMLBody&apos;][&apos;text&apos;] = new XML(&apos;&lt;text mediaType=&quot;&apos; + msg[&apos;nonXMLBody&apos;][&apos;mediaType&apos;] + &apos;&quot; \
+			value=&quot;&apos; + msg[&apos;nonXMLBody&apos;][&apos;content&apos;] + &apos;&quot;/&gt;&apos;);
+	}
+} catch (e) {
+    logger.error(&apos;Error on Transformer &quot;Document Body&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>CDA Schema Validation</name>
+                <sequenceNumber>11</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	default xml namespace = &quot;urn:hl7-org:v3&quot;;
+	
+	var msgValidate = new XML(tmp.toString());
+	msgValidate.addNamespace(new Namespace(&apos;xsi&apos;,&apos;http://www.w3.org/2001/XMLSchema -instance&apos;));
+	
+	var factory = new Packages.javax.xml.validation.SchemaFactory.newInstance(&apos;http://www.w3.org/2001/XMLSchema&apos;);
+	
+	var schemaLocation = new Packages.java.io.File( $(&apos;custom-lib&apos;) + &apos;CDA_with_BcCdaExtensions/&apos; + globalMap.get(&apos;CDASchema&apos;) );
+	var schema = factory.newSchema(schemaLocation);
+	
+	var validator = schema.newValidator();
+	
+	var reader = new java.io.StringReader(msgValidate);
+	var source = new Packages.javax.xml.transform.stream.StreamSource(reader);
+	
+	var validationResult = false;
+	var errorString = &apos;&apos;;
+	
+	try {
+		validator.validate(source);
+		validationResult = true;
+	} catch(err) {
+		logger.error(&quot;Error validating CDA XML&quot; + err);
+		errorString = err.message.replace(&apos;org.xml.sax.SAXParseException:&apos;,&apos;&apos;).replace(/(&quot;|&apos;)/g, &apos;&apos;);
+	} finally {
+		channelMap.put(&apos;schemaValidationError&apos;, errorString);
+		channelMap.put(&apos;schemaValidationPassed&apos;, validationResult);
+	}
+} catch(e) {
+	logger.error(&apos;Error on Transformer &quot;CDA Schema Validation&quot;: &apos; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64">ewogICJlZmZlY3RpdmVUaW1lIjogIjIwMTktMDItMDhUMTk6MDA6MzE6MDArMDA6MDAiLA0KICAi
+cGF0aWVudCI6IHsKICAgICJpZCI6ICIxMjM0NTY3ODkiLAogICAgImFkZHJlc3MiOiBbewogICAg
+ICAidXNlIjogIkgiLA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIs
+DQogICAgICAiY2l0eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAg
+ICAgInBvc3RhbENvZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1d
+LA0KICAgICJ0ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjog
+InRlbCIsCiAgICAgICAgInZhbHVlIjogIigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAg
+ICJ1c2UiOiAiSCIsCiAgICAgICAgInR5cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJw
+YXRpZW50QGVtYWlsLmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiBbewogICAgICAidXNlIjogIkwi
+LA0KICAgICAgImdpdmVuIjogWyJKZW5zIl0sDQogICAgICAiZmFtaWx5IjogIldlYmVyIiwKICAg
+ICAgInByZWZpeCI6ICJEciIsCiAgICAgICJzdWZmaXgiOiAiIg0KICAgIH1dLA0KICAgICJnZW5k
+ZXIiOiAiTSIsDQogICAgImRvYiI6ICIyMDE5LTAyLTA4Ig0KICB9LA0KICAiYXV0aG9yIjogW3sK
+ICAgICJ0aW1lIjogIjIwMTktMDItMDhUMTk6MDA6MzE6MDArMDA6MDAiLA0KICAgICJpZCI6ICI5
+ODc2NTQzMjEiLAogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0
+cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3Jp
+YSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3
+IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAg
+ICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjog
+IigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5
+cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1d
+LAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMi
+XSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAg
+InN1ZmZpeCI6ICIiDQogICAgfQ0KICB9XSwKICAicmVjaXBpZW50IjogW3sKICAgICJpZCI6ICI5
+ODc2NTQzMjEiLAogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0
+cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3Jp
+YSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3
+IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAg
+ICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjog
+IigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5
+cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1d
+LAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMi
+XSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAg
+InN1ZmZpeCI6ICIiDQogICAgfSwKICAgICJyZWNlaXZlZE9yZ2FuaXphdGlvbiI6ewogICAgICAi
+aWQiOiAiMTIzNDEyMzQxMjM0IiwKICAgICAgIm5hbWUiOiAiT3JnYW5pemF0aW9uIE5hbWUiCiAg
+ICB9IA0KICB9XSwKICAiY3VzdG9kaWFuIjogew0KICAgICJpZCI6IFt7CiAgICAgICJ0eXBlIjoi
+Mi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiLAogICAgICAiaWQiOiJjZHhwb3N0cHJvZC1v
+dGNhIgogICAgfV0sCiAgICAibmFtZSI6ICJPc2NhciBUZXN0IENsaW5pYyBBIgogIH0sCiAgImRh
+dGFFbnRlcmVyIjogewogICAgInRpbWUiOiAiMjAxOS0wMi0wOFQxOTowMDozMTowMCswMDowMCIs
+CiAgICAiaWQiOiIxMjM0MTIzNCIsDQogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgi
+LA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0
+eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENv
+ZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxl
+Y29tIjogW3sKICAgICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAg
+ICAgInZhbHVlIjogIigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIs
+CiAgICAgICAgInR5cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWls
+LmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2
+ZW4iOiBbIkplbnMiXSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4Ijog
+IkRyIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfQ0KICB9LA0KICAiYXV0aGVudGljYXRvciI6
+IFt7CiAgICAiaWQiOiIxMjM0MTIzNCIsDQogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjog
+IkgiLA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAi
+Y2l0eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3Rh
+bENvZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0
+ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAg
+ICAgICAgInZhbHVlIjogIigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAi
+SCIsCiAgICAgICAgInR5cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVt
+YWlsLmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAi
+Z2l2ZW4iOiBbIkplbnMiXSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4
+IjogIkRyIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfQ0KICB9XSwKICAicGFydGljaXBhbnQi
+OiBbewogICAgImlkIjoiMTIzNDEyMzQiLAogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjog
+IkgiLA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAi
+Y2l0eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3Rh
+bENvZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0
+ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAg
+ICAgICAgInZhbHVlIjogIigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAi
+SCIsCiAgICAgICAgInR5cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVt
+YWlsLmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAi
+Z2l2ZW4iOiBbIkplbnMiXSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4
+IjogIkRyIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfQ0KICB9XSwNCiAgIm5vblhNTEJvZHki
+OiB7CiAgICAibWVkaWFUeXBlIjogInRleHQvcGxhaW4iLAogICAgImNvbnRlbnQiOiAiVGhpcyBw
+YXRpZW50IHdhcyByZWZlcmVkIHRvIHlvdSIKICB9DQp9DQ==</inboundTemplate>
+            <outboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPENsaW5pY2FsRG9jdW1lbnQg
+eG1sbnM9InVybjpobDctb3JnOnYzIiB4bWxuczpiY2NkYT0idXJuOmJjY2RhIiB4bWxuczpuczA9
+Imh0dHA6Ly9taWNyb3NvZnQuY29tL0hlYWx0aENhcmUvSEw3LzJYIiB4bWxuczp4YWxhbj0iaHR0
+cDovL3htbC5hcGFjaGUub3JnL3hzbHQiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAw
+MS9YTUxTY2hlbWEtaW5zdGFuY2UiIGNsYXNzQ29kZT0iRE9DQ0xJTiIgbW9vZENvZGU9IkVWTiI+
+CiAgPHJlYWxtQ29kZSBjb2RlPSJDQS1CQyIgLz4NCiAgPHR5cGVJZCByb290PSIyLjE2Ljg0MC4x
+LjExMzg4My4xLjMiIGV4dGVuc2lvbj0iUE9DRF9IRDAwMDA0MCIgYXNzaWduaW5nQXV0aG9yaXR5
+TmFtZT0iSEw3IENEQSBSMiIgLz4NCiAgPHRlbXBsYXRlSWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4
+ODMuMy4xODE4LjEwLjEuNSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iZTJlIFJlZmVycmFsIChV
+bnN0cnVjdHVyZWQpIiAvPg0KICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAw
+LjMiIGV4dGVuc2lvbj0iNjFhMWEzODctNDA4Yi00ZTVjLWJlMjQtMTk3NmFjZTFjMjgwIiBhc3Np
+Z25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ2xpbmljYWwgRG9jdW1lbnQgSUQiIC8+DQogIDxjb2Rl
+IGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIgY29kZT0iNTcxMzMtMSIgY29kZVN5
+c3RlbU5hbWU9IkxPSU5DIENvZGUiIGRpc3BsYXlOYW1lPSJSZWZlcnJhbCBub3RlIiAvPg0KICA8
+dGl0bGU+UmVmZXJyYWwgTm90ZTwvdGl0bGU+DQogIDxlZmZlY3RpdmVUaW1lIHZhbHVlPSIyMDE5
+MDMxNDE5MDMtMDcwMCIgLz4NCiAgPGNvbmZpZGVudGlhbGl0eUNvZGUgY29kZT0iTiIgY29kZVN5
+c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNS4yNSIgY29kZVN5c3RlbU5hbWU9IkNvbmZpZGVudGlh
+bGl0eSIgLz4NCiAgPGxhbmd1YWdlQ29kZSBjb2RlPSJlbi1DQSIgLz4KCiAgPHJlY29yZFRhcmdl
+dCB0eXBlQ29kZT0iUkNUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIj4NCiAgICA8cGF0aWVudFJv
+bGUgY2xhc3NDb2RlPSJQQVQiPgogICAgIDwvcGF0aWVudFJvbGU+CiAgPC9yZWNvcmRUYXJnZXQ+
+CgogIDxhdXRob3IgdHlwZUNvZGU9IkFVVCIgY29udGV4dENvbnRyb2xDb2RlPSJPUCI+DQogICAg
+PHRpbWUgdmFsdWU9IjIwMTkwMzE0MTkwMy0wNzAwIiAvPg0KICAgIDxhc3NpZ25lZEF1dGhvciBj
+bGFzc0NvZGU9IkFTU0lHTkVEIj4NCiAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIgLz4NCiAgICAg
+IDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZT4NCiAgICAgICAgPHNvZnR3YXJlTmFtZSBjb2RlPSJP
+U0NBUlNQIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjEyIiBjb2RlU3lz
+dGVtTmFtZT0iT3NjYXIgU2VydmljZSBQcm92aWRlciIgZGlzcGxheU5hbWU9Ik9zY2FyIFNlcnZp
+Y2UgUHJvdmlkZXIiIC8+DQogICAgICA8L2Fzc2lnbmVkQXV0aG9yaW5nRGV2aWNlPg0KICAgIDwv
+YXNzaWduZWRBdXRob3I+DQogIDwvYXV0aG9yPgoKICA8Y3VzdG9kaWFuIHR5cGVDb2RlPSJDU1Qi
+Pg0KICAgIDxhc3NpZ25lZEN1c3RvZGlhbiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4NCiAgICAgIDxy
+ZXByZXNlbnRlZEN1c3RvZGlhbk9yZ2FuaXphdGlvbiBjbGFzc0NvZGU9Ik9SRyIgZGV0ZXJtaW5l
+ckNvZGU9IklOU1RBTkNFIj4NCiAgICAgIDwvcmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRp
+b24+DQogICAgPC9hc3NpZ25lZEN1c3RvZGlhbj4NCiAgPC9jdXN0b2RpYW4+CgogICA8aW5GdWxm
+aWxsbWVudE9mIHR5cGVDb2RlPSJGTEZTIj4NCiAgICAgIDxvcmRlciBjbGFzc0NvZGU9IkVOQyIg
+bW9vZENvZGU9IlJRTyI+DQogICAgICAgICA8aWQgbnVsbEZsYXZvcj0iVU5LIiBhc3NpZ25pbmdB
+dXRob3JpdHlOYW1lPSJPcmRlciBJRCIgLz4NCiAgICAgIDwvb3JkZXI+DQogICA8L2luRnVsZmls
+bG1lbnRPZj4KCiAgIDxjb21wb25lbnQgdHlwZUNvZGU9IkNPTVAiPgogICAgICA8bm9uWE1MQm9k
+eSBjbGFzc0NvZGU9IkRPQ0JPRFkiIG1vb2RDb2RlPSJFVk4iPgogICAgICA8L25vblhNTEJvZHk+
+CiAgIDwvY29tcG9uZW50Pgo8L0NsaW5pY2FsRG9jdW1lbnQ+</outboundTemplate>
+            <inboundDataType>JSON</inboundDataType>
+            <outboundDataType>HL7V3</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>true</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </transformer>
+          <responseTransformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Submit Document Response</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>logger.debug(&apos;Submit Document Response&apos;);
+
+try {
+	// Store the response to be returned by the &quot;Source Connector&quot;
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+		// Ack details
+		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] = msg[&apos;acknowledgement&apos;][&apos;targetMessage&apos;][&apos;id&apos;][&apos;@extension&apos;].toString()
+        	tmp[&apos;ackDetail&apos;][&apos;documentId&apos;] = channelMap.get(&apos;documentId&apos;);
+        	
+		// Status and message
+		if (msg[&apos;acknowledgement&apos;][&apos;acknowledgementDetail&apos;][&apos;@typeCode&apos;].toString() === &apos;E&apos;) {
+			var text = msg[&apos;acknowledgement&apos;][&apos;acknowledgementDetail&apos;][&apos;text&apos;].toString();
+			tmp[&apos;message&apos;] = text;
+			tmp[&apos;status&apos;] = &quot;ERROR&quot;;
+			
+			logger.error(&apos;MessagId &apos; + tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] + &apos; has the following errors: &apos; + text);
+		} else {
+			tmp[&apos;status&apos;] = &quot;SENT&quot;;
+			
+			logger.debug(&apos;MessageId &apos; + tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] + &apos; was successfully sent.&apos;);
+		}
+
+		return tmp; // Return the transformed message to be converted on &apos;handleResponseMessage&apos;
+	}));
+	responseMap.put(&apos;responseStatus&apos;, &apos;200&apos;);
+} catch(e) {
+	logger.error(&quot;Error on &apos;Submit Document Response&apos;: &quot; + e);
+
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(e));
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64">PE1DQ0lfSU4wMDAwMDJVVjAxIElUU1ZlcnNpb249IlhNTF8xLjAiIHhtbG5zPSJ1cm46aGw3LW9y
+Zzp2MyI+CiAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjEiIGV4dGVu
+c2lvbj0iMzA5M2RiYTItMTRjOC00OWU1LTkzYzUtMTk1NTVjN2FiYWNkIi8+CiAgICA8Y3JlYXRp
+b25UaW1lIHZhbHVlPSIyMDE5MDMxNDAwMDMtMDcwMCIvPgogICAgPHZlcnNpb25Db2RlIGNvZGU9
+IkJhbGxvdDIwMDlNYXkiLz4KICAgIDxpbnRlcmFjdGlvbklkIHJvb3Q9IjIuMTYuODQwLjEuMTEz
+ODgzLjEuNiIgZXh0ZW5zaW9uPSJNQ0NJX0lOMDAwMDAyVVYwMSIvPgogICAgPHByb2Nlc3NpbmdD
+b2RlIGNvZGU9IlAiLz4KICAgIDxwcm9jZXNzaW5nTW9kZUNvZGUgY29kZT0iVCIvPgogICAgPGFj
+Y2VwdEFja0NvZGUgY29kZT0iTkUiLz4KICAgIDxyZWNlaXZlcj4KICAgICAgICA8ZGV2aWNlIGNs
+YXNzQ29kZT0iREVWIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICA8aWQg
+bnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgPGFzQWdlbnQgY2xhc3NDb2RlPSJBR05UIj4K
+ICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0NvZGU9Ik9SRyIg
+ZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICA8aWQgcm9vdD0i
+Mi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiIGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3Rj
+YSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIvPgogICAgICAgICAgICAg
+ICAgICAgIDxub3RpZmljYXRpb25QYXJ0eSB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4c2k9Imh0dHA6
+Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAgICAgICAgICAgICA8
+L3JlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICA8L2FzQWdlbnQ+CiAgICAgICAg
+PC9kZXZpY2U+CiAgICA8L3JlY2VpdmVyPgogICAgPHNlbmRlcj4KICAgICAgICA8ZGV2aWNlIGNs
+YXNzQ29kZT0iREVWIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICA8aWQg
+bnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgPGFzQWdlbnQgY2xhc3NDb2RlPSJBR05UIj4K
+ICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0NvZGU9Ik9SRyIg
+ZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICA8aWQgcm9vdD0i
+Mi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiIGV4dGVuc2lvbj0iW29iamVjdCBPYmplY3Rd
+LFtvYmplY3QgT2JqZWN0XSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIv
+PgogICAgICAgICAgICAgICAgICAgIDxub3RpZmljYXRpb25QYXJ0eSB4c2k6bmlsPSJ0cnVlIiB4
+bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAg
+ICAgICAgICAgICAgICA8L3JlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICA8L2Fz
+QWdlbnQ+CiAgICAgICAgPC9kZXZpY2U+CiAgICA8L3NlbmRlcj4KICAgIDxhY2tub3dsZWRnZW1l
+bnQgdHlwZUNvZGU9IkNFIj4KICAgICAgICA8dGFyZ2V0TWVzc2FnZT4KICAgICAgICAgICAgPGlk
+IHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIiBleHRlbnNpb249IjZmZGZmZjJj
+LTA2MTQtNGE3MS05NDg0LTU5YjA0NTFiZTc3ZCIvPgogICAgICAgIDwvdGFyZ2V0TWVzc2FnZT4K
+ICAgICAgICA8YWNrbm93bGVkZ2VtZW50RGV0YWlsIHR5cGVDb2RlPSJFIj4KICAgICAgICAgICAg
+PHRleHQ+CiAgICAgICAgRG9jdW1lbnQgZXJyb3JzICgyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4x
+MDAuMyA0ZTRiN2VlMC1kMWQ4LTQ4NDQtYjA3NC05N2FhMzEyYWQ0MTYpOgpOb2RlIE5hbWU6ICdp
+ZCcsIEF0dHJpYnV0ZSBOYW1lOiAnJyBOYW1lU3BhY2U6ICd1cm46aGw3LW9yZzp2MycsIFR5cGU6
+ICdFbGVtZW50JywgTGluZTogMSwgUG9zaXRpb24gMTE1OCwgVmFsdWU6ICcnLCBTZXZlcml0eTog
+J0Vycm9yJy4gICBEZXNjcmlwdGlvbjogVGhlIGVsZW1lbnQgJ3BhdGllbnRSb2xlJyBpbiBuYW1l
+c3BhY2UgJ3VybjpobDctb3JnOnYzJyBoYXMgaW52YWxpZCBjaGlsZCBlbGVtZW50ICdpZCcgaW4g
+bmFtZXNwYWNlICd1cm46aGw3LW9yZzp2MycuIExpc3Qgb2YgcG9zc2libGUgZWxlbWVudHMgZXhw
+ZWN0ZWQ6ICdwcm92aWRlck9yZ2FuaXphdGlvbicgaW4gbmFtZXNwYWNlICd1cm46aGw3LW9yZzp2
+MycuCk5vZGUgTmFtZTogJ2luZm9ybWF0aW9uUmVjaXBpZW50JywgQXR0cmlidXRlIE5hbWU6ICcn
+IE5hbWVTcGFjZTogJ3VybjpobDctb3JnOnYzJywgVHlwZTogJ0VsZW1lbnQnLCBMaW5lOiAxLCBQ
+b3NpdGlvbiAyNTM3LCBWYWx1ZTogJycsIFNldmVyaXR5OiAnRXJyb3InLiAgIERlc2NyaXB0aW9u
+OiBUaGUgZWxlbWVudCAnQ2xpbmljYWxEb2N1bWVudCcgaW4gbmFtZXNwYWNlICd1cm46aGw3LW9y
+Zzp2MycgaGFzIGludmFsaWQgY2hpbGQgZWxlbWVudCAnaW5mb3JtYXRpb25SZWNpcGllbnQnIGlu
+IG5hbWVzcGFjZSAndXJuOmhsNy1vcmc6djMnLgogICAgICA8L3RleHQ+CiAgICAgICAgPC9hY2tu
+b3dsZWRnZW1lbnREZXRhaWw+CiAgICA8L2Fja25vd2xlZGdlbWVudD4KPC9NQ0NJX0lOMDAwMDAy
+VVYwMT4=</inboundTemplate>
+            <outboundTemplate encoding="base64">ewoJInN0YXR1cyI6ICIiLAoJIm1lc3NhZ2UiOiAiIiwKCSJhY2tEZXRhaWwiOiB7CgkJImFja0lk
+IjogIiIsCgkJImFja1RpbWUiOiAiIiwKCQkibWVzc2FnZUlkIjogIiIsCgkJImRvY3VtZW50SWQi
+OiAiIgoJfQp9</outboundTemplate>
+            <inboundDataType>HL7V3</inboundDataType>
+            <outboundDataType>JSON</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>false</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </responseTransformer>
+          <filter version="3.7.0">
+            <elements/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+          <waitForPrevious>true</waitForPrevious>
+        </connector>
+        <connector version="3.7.0">
+          <metaDataId>2</metaDataId>
+          <name>Service List New Documents</name>
+          <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.7.0">
+            <pluginProperties/>
+            <destinationConnectorProperties version="3.7.0">
+              <queueEnabled>false</queueEnabled>
+              <sendFirst>false</sendFirst>
+              <retryIntervalMillis>10000</retryIntervalMillis>
+              <regenerateTemplate>false</regenerateTemplate>
+              <retryCount>0</retryCount>
+              <rotate>false</rotate>
+              <includeFilterTransformer>false</includeFilterTransformer>
+              <threadCount>1</threadCount>
+              <threadAssignmentVariable></threadAssignmentVariable>
+              <validateResponse>true</validateResponse>
+              <resourceIds class="linked-hash-map">
+                <entry>
+                  <string>Default Resource</string>
+                  <string>[Default Resource]</string>
+                </entry>
+                <entry>
+                  <string>3ee0c1db-83b0-49f6-9323-8884b5bd43da</string>
+                  <string>CDA Parser</string>
+                </entry>
+              </resourceIds>
+              <queueBufferSize>1000</queueBufferSize>
+              <reattachAttachments>true</reattachAttachments>
+            </destinationConnectorProperties>
+            <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
+logger.debug(&apos;Service List New Documents&apos;);
+try {
+	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
+		&quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+	
+	var cdxResponse = client.listNewDocuments($(&apos;locationId&apos;));
+	
+	return ResponseFactory.getSentResponse(cdxResponse);
+} catch (e) {
+	logger.error(&quot;Error on &apos;Service List New Documents&apos;: &quot; + e);
+	return ResponseFactory.getErrorResponse(&quot;Error on &apos;Service List New Documents&apos;: &quot; + e)
+}</script>
+          </properties>
+          <transformer version="3.7.0">
+            <elements/>
+            <inboundTemplate encoding="base64"></inboundTemplate>
+            <outboundTemplate encoding="base64"></outboundTemplate>
+            <inboundDataType>JSON</inboundDataType>
+            <outboundDataType>HL7V3</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>true</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </transformer>
+          <responseTransformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>List New Documents Response</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>logger.debug(&apos;List New Documents Response&apos;);
+
+try {
+	// Store the response to be returned by the &quot;Source Connector&quot;
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+		// Ack details
+		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] = msg[&apos;acknowledgement&apos;][&apos;targetMessage&apos;][&apos;id&apos;][&apos;@extension&apos;].toString()
+
+		// Ack query
+		tmp[&apos;ackQuery&apos;][&apos;status&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;queryResponseCode&apos;][&apos;@code&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;total&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultTotalQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;current&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultCurrentQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;remaining&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultRemainingQuantity&apos;][&apos;@value&apos;].toString();
+		for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;controlActProcess&apos;][&apos;subject&apos;]); i++) { // Document list
+			var document = {};
+			document[&apos;documentId&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;id&apos;][&apos;@extension&apos;].toString();
+			document[&apos;typeCode&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;code&apos;][&apos;@code&apos;].toString();
+			document[&apos;effectiveTime&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;effectiveTime&apos;][&apos;@value&apos;].toString();
+			tmp[&apos;ackQuery&apos;][&apos;documents&apos;][i] = document;
+		}
+		
+		return tmp; // Return the transformed message to be converted on &apos;handleResponseMessage&apos;
+	}));
+	responseMap.put(&apos;responseStatus&apos;, &apos;200&apos;);
+} catch(e) {
+	logger.error(&quot;Error on &apos;List New Documents Response&apos;: &quot; + e);
+
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(e));
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8
+UkNNUl9JTjAwMDAzMFVWMDEgSVRTVmVyc2lvbj0iWE1MXzEuMCIgeG1sbnM9InVybjpobDctb3Jn
+OnYzIj4KICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5z
+aW9uPSI1ZmI1MGU1Mi1mZTkwLTRlNjUtYmIxNi0wYTFkMTAyMmFhNDMiIGFzc2lnbmluZ0F1dGhv
+cml0eU5hbWU9IkNEWCBNZXNzYWdlIElEIi8+CiAgICA8Y3JlYXRpb25UaW1lIHZhbHVlPSIyMDE5
+MDMxMzE4MzEtMDcwMCIvPgogICAgPHZlcnNpb25Db2RlIGNvZGU9IkJhbGxvdDIwMDlNYXkiLz4K
+ICAgIDxpbnRlcmFjdGlvbklkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjEuNiIvPgogICAgPHBy
+b2Nlc3NpbmdDb2RlIGNvZGU9IlAiLz4KICAgIDxwcm9jZXNzaW5nTW9kZUNvZGUgY29kZT0iVCIv
+PgogICAgPGFjY2VwdEFja0NvZGUgY29kZT0iTkUiLz4KICAgIDxyZWNlaXZlcj4KICAgICAgICA8
+ZGV2aWNlIGNsYXNzQ29kZT0iREVWIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAg
+ICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgPGFzQWdlbnQgY2xhc3NDb2Rl
+PSJBR05UIj4KICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0Nv
+ZGU9Ik9SRyIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICA8
+aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiIGV4dGVuc2lvbj0iY2R4cG9z
+dHByb2Qtb3RjYSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIvPgogICAg
+ICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0Fn
+ZW50PgogICAgICAgIDwvZGV2aWNlPgogICAgPC9yZWNlaXZlcj4KICAgIDxzZW5kZXI+CiAgICAg
+ICAgPGRldmljZSBjbGFzc0NvZGU9IkRFViIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAg
+ICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgIDxhc0FnZW50IGNsYXNz
+Q29kZT0iQUdOVCI+CiAgICAgICAgICAgICAgICA8cmVwcmVzZW50ZWRPcmdhbml6YXRpb24gY2xh
+c3NDb2RlPSJPUkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAg
+ICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yIiBleHRlbnNpb249IkNE
+WElIQSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIvPgogICAgICAgICAg
+ICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0FnZW50Pgog
+ICAgICAgIDwvZGV2aWNlPgogICAgPC9zZW5kZXI+CiAgICA8YWNrbm93bGVkZ2VtZW50IHR5cGVD
+b2RlPSJBQSI+CiAgICAgICAgPHRhcmdldE1lc3NhZ2U+CiAgICAgICAgICAgIDxpZCByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9uPSI4OTUxZWU4Mi00NDVmLTQy
+ODgtODM2Yy1lOWE4YmY1YmEwZmIiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBNZXNzYWdl
+IElEIi8+CiAgICAgICAgPC90YXJnZXRNZXNzYWdlPgogICAgPC9hY2tub3dsZWRnZW1lbnQ+CiAg
+ICA8Y29udHJvbEFjdFByb2Nlc3MgY2xhc3NDb2RlPSJDQUNUIiBtb29kQ29kZT0iQVBUIj4KICAg
+ICAgICA8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiI+CiAgICAgICAgICAgIDx0YXJnZXQgY2xhc3ND
+b2RlPSJET0NDTElOIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlk
+IHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yMCIgZXh0ZW5zaW9uPSJDREEiIGFz
+c2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDb250ZW50IFR5cGUiLz4KICAgICAgICAgICAgICAg
+IDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9uPSIyYjBk
+ODI2MC0wYzIwLWU5MTEtYTk2YS0wMDUwNTY4YzU1YTYiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9
+IkNEWCBNZXNzYWdlIElEIi8+CiAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSIyLjE2Ljg0MC4x
+LjExMzg4My4zLjUxLjYwLjIuMSIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIiBk
+aXNwbGF5TmFtZT0iTGFiIFJlcG9ydCBUZW1wbGF0ZSIvPgogICAgICAgICAgICAgICAgPHRleHQg
+bWVkaWFUeXBlPSJ0ZXh0L3htbCI+QXR0YWNobWVudENvdW50OjB8VG90YWxBdHRhY2htZW50U2l6
+ZTowPC90ZXh0PgogICAgICAgICAgICAgICAgPHN0YXR1c0NvZGUgY29kZT0iY29tcGxldGVkIi8+
+CiAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAxMjQxMTE0LTA4MDAi
+Lz4KICAgICAgICAgICAgICAgIDxjb25maWRlbnRpYWxpdHlDb2RlIGNvZGU9Ik4iIGNvZGVTeXN0
+ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIvPgogICAgICAgICAgICAgICAgPHJlY29yZFRhcmdl
+dCBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IlJDVCI+CiAgICAgICAgICAgICAgICAgICAgPHBh
+dGllbnQgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iUEFUIj4KICAgICAgICAgICAgICAgICAg
+ICAgICAgPHBhdGllbnROb25QZXJzb25MaXZpbmdTdWJqZWN0IHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgPHBhdGllbnRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1sbnM6eHNp
+PSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAgICAgICAg
+ICAgICAgICAgIDwvcGF0aWVudD4KICAgICAgICAgICAgICAgIDwvcmVjb3JkVGFyZ2V0PgogICAg
+ICAgICAgICAgICAgPGF1dGhvciBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkFVVCI+CiAgICAg
+ICAgICAgICAgICAgICAgPHRpbWUgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgICAgICAg
+ICA8YXNzaWduZWRBdXRob3IgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iQVNTSUdORUQiPgog
+ICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAg
+ICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yaW5nRGV2aWNlIHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkUGVyc29uIHhzaTpuaWw9InRydWUiIHhtbG5zOnhz
+aT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAgICAg
+ICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgICAgICAgICAgICAgPC9hdXRob3I+CiAg
+ICAgICAgICAgICAgICA8Y3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQ1NUIj4K
+ICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRDdXN0b2RpYW4gbnVsbEZsYXZvcj0iTkEiIGNs
+YXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVwcmVzZW50ZWRP
+cmdhbml6YXRpb24gbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iTkFUIiBkZXRlcm1pbmVyQ29k
+ZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9
+Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvcmVwcmVzZW50ZWRPcmdhbml6YXRpb24+
+CiAgICAgICAgICAgICAgICAgICAgPC9hc3NpZ25lZEN1c3RvZGlhbj4KICAgICAgICAgICAgICAg
+IDwvY3VzdG9kaWFuPgogICAgICAgICAgICA8L3RhcmdldD4KICAgICAgICA8L3N1YmplY3Q+CiAg
+ICAgICAgPHN1YmplY3QgdHlwZUNvZGU9IlNVQkoiPgogICAgICAgICAgICA8dGFyZ2V0IGNsYXNz
+Q29kZT0iRE9DQ0xJTiIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgICAgICA8dGVtcGxhdGVJ
+ZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMjAiIGV4dGVuc2lvbj0iQ0RBIiBh
+c3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ29udGVudCBUeXBlIi8+CiAgICAgICAgICAgICAg
+ICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjEiIGV4dGVuc2lvbj0iOGE5
+NmMxZDctMjgyMy1lOTExLWE5NmEtMDA1MDU2OGM1NWE2IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1l
+PSJDRFggTWVzc2FnZSBJRCIvPgogICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iMi4xNi44NDAu
+MS4xMTM4ODMuMy41MS42MC4yLjEiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIg
+ZGlzcGxheU5hbWU9IkxhYiBSZXBvcnQgVGVtcGxhdGUiLz4KICAgICAgICAgICAgICAgIDx0ZXh0
+IG1lZGlhVHlwZT0idGV4dC94bWwiPkF0dGFjaG1lbnRDb3VudDowfFRvdGFsQXR0YWNobWVudFNp
+emU6MDwvdGV4dD4KICAgICAgICAgICAgICAgIDxzdGF0dXNDb2RlIGNvZGU9ImNvbXBsZXRlZCIv
+PgogICAgICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMTI4MTAxNS0wODAw
+Ii8+CiAgICAgICAgICAgICAgICA8Y29uZmlkZW50aWFsaXR5Q29kZSBjb2RlPSJOIiBjb2RlU3lz
+dGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiLz4KICAgICAgICAgICAgICAgIDxyZWNvcmRUYXJn
+ZXQgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJSQ1QiPgogICAgICAgICAgICAgICAgICAgIDxw
+YXRpZW50IG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IlBBVCI+CiAgICAgICAgICAgICAgICAg
+ICAgICAgIDxwYXRpZW50Tm9uUGVyc29uTGl2aW5nU3ViamVjdCB4c2k6bmlsPSJ0cnVlIiB4bWxu
+czp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAg
+ICAgICAgICAgICAgICAgICAgIDxwYXRpZW50UGVyc29uIHhzaTpuaWw9InRydWUiIHhtbG5zOnhz
+aT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAgICAg
+ICAgICAgICAgICA8L3BhdGllbnQ+CiAgICAgICAgICAgICAgICA8L3JlY29yZFRhcmdldD4KICAg
+ICAgICAgICAgICAgIDxhdXRob3IgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJBVVQiPgogICAg
+ICAgICAgICAgICAgICAgIDx0aW1lIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAg
+ICAgPGFzc2lnbmVkQXV0aG9yIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4K
+ICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAg
+ICAgICAgICAgICAgIDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZSB4c2k6bmlsPSJ0cnVlIiB4bWxu
+czp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAg
+ICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4
+c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAgICAg
+ICAgICAgICAgICAgPC9hc3NpZ25lZEF1dGhvcj4KICAgICAgICAgICAgICAgIDwvYXV0aG9yPgog
+ICAgICAgICAgICAgICAgPGN1c3RvZGlhbiBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkNTVCI+
+CiAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5BIiBj
+bGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPHJlcHJlc2VudGVk
+T3JnYW5pemF0aW9uIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9Ik5BVCIgZGV0ZXJtaW5lckNv
+ZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxsRmxhdm9y
+PSJOQSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L3JlcHJlc2VudGVkT3JnYW5pemF0aW9u
+PgogICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRDdXN0b2RpYW4+CiAgICAgICAgICAgICAg
+ICA8L2N1c3RvZGlhbj4KICAgICAgICAgICAgPC90YXJnZXQ+CiAgICAgICAgPC9zdWJqZWN0Pgog
+ICAgICAgIDxzdWJqZWN0IHR5cGVDb2RlPSJTVUJKIj4KICAgICAgICAgICAgPHRhcmdldCBjbGFz
+c0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICAgICAgICAgPHRlbXBsYXRl
+SWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIwIiBleHRlbnNpb249IkNEQSIg
+YXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENvbnRlbnQgVHlwZSIvPgogICAgICAgICAgICAg
+ICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIiBleHRlbnNpb249IjFi
+OTIwYWM3LWUyMjQtZTkxMS1hOTZhLTAwNTA1NjhjNTVhNiIgYXNzaWduaW5nQXV0aG9yaXR5TmFt
+ZT0iQ0RYIE1lc3NhZ2UgSUQiLz4KICAgICAgICAgICAgICAgIDxjb2RlIGNvZGU9IjIuMTYuODQw
+LjEuMTEzODgzLjMuNTEuNjAuMi4xIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEi
+IGRpc3BsYXlOYW1lPSJMYWIgUmVwb3J0IFRlbXBsYXRlIi8+CiAgICAgICAgICAgICAgICA8dGV4
+dCBtZWRpYVR5cGU9InRleHQveG1sIj5BdHRhY2htZW50Q291bnQ6MHxUb3RhbEF0dGFjaG1lbnRT
+aXplOjA8L3RleHQ+CiAgICAgICAgICAgICAgICA8c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0ZWQi
+Lz4KICAgICAgICAgICAgICAgIDxlZmZlY3RpdmVUaW1lIHZhbHVlPSIyMDE5MDEzMDE0NTktMDgw
+MCIvPgogICAgICAgICAgICAgICAgPGNvbmZpZGVudGlhbGl0eUNvZGUgY29kZT0iTiIgY29kZVN5
+c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIi8+CiAgICAgICAgICAgICAgICA8cmVjb3JkVGFy
+Z2V0IG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iUkNUIj4KICAgICAgICAgICAgICAgICAgICA8
+cGF0aWVudCBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJQQVQiPgogICAgICAgICAgICAgICAg
+ICAgICAgICA8cGF0aWVudE5vblBlcnNvbkxpdmluZ1N1YmplY3QgeHNpOm5pbD0idHJ1ZSIgeG1s
+bnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAg
+ICAgICAgICAgICAgICAgICAgICA8cGF0aWVudFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4
+c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAgICAg
+ICAgICAgICAgICAgPC9wYXRpZW50PgogICAgICAgICAgICAgICAgPC9yZWNvcmRUYXJnZXQ+CiAg
+ICAgICAgICAgICAgICA8YXV0aG9yIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQVVUIj4KICAg
+ICAgICAgICAgICAgICAgICA8dGltZSBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAgICAgICAg
+ICAgIDxhc3NpZ25lZEF1dGhvciBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJBU1NJR05FRCI+
+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAg
+ICAgICAgICAgICAgICA8YXNzaWduZWRBdXRob3JpbmdEZXZpY2UgeHNpOm5pbD0idHJ1ZSIgeG1s
+bnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAg
+ICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1sbnM6
+eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAgICAg
+ICAgICAgICAgICAgIDwvYXNzaWduZWRBdXRob3I+CiAgICAgICAgICAgICAgICA8L2F1dGhvcj4K
+ICAgICAgICAgICAgICAgIDxjdXN0b2RpYW4gbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJDU1Qi
+PgogICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEN1c3RvZGlhbiBudWxsRmxhdm9yPSJOQSIg
+Y2xhc3NDb2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZXByZXNlbnRl
+ZE9yZ2FuaXphdGlvbiBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJOQVQiIGRldGVybWluZXJD
+b2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZv
+cj0iTkEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlv
+bj4KICAgICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkQ3VzdG9kaWFuPgogICAgICAgICAgICAg
+ICAgPC9jdXN0b2RpYW4+CiAgICAgICAgICAgIDwvdGFyZ2V0PgogICAgICAgIDwvc3ViamVjdD4K
+ICAgICAgICA8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiI+CiAgICAgICAgICAgIDx0YXJnZXQgY2xh
+c3NDb2RlPSJET0NDTElOIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDx0ZW1wbGF0
+ZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yMCIgZXh0ZW5zaW9uPSJDREEi
+IGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDb250ZW50IFR5cGUiLz4KICAgICAgICAgICAg
+ICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9uPSJh
+OWRkMDVkOC05ZTI1LWU5MTEtYTk2YS0wMDUwNTY4YzU1YTYiIGFzc2lnbmluZ0F1dGhvcml0eU5h
+bWU9IkNEWCBNZXNzYWdlIElEIi8+CiAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSIyLjE2Ljg0
+MC4xLjExMzg4My4zLjUxLjYwLjIuMSIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4x
+IiBkaXNwbGF5TmFtZT0iTGFiIFJlcG9ydCBUZW1wbGF0ZSIvPgogICAgICAgICAgICAgICAgPHRl
+eHQgbWVkaWFUeXBlPSJ0ZXh0L3htbCI+QXR0YWNobWVudENvdW50OjB8VG90YWxBdHRhY2htZW50
+U2l6ZTowPC90ZXh0PgogICAgICAgICAgICAgICAgPHN0YXR1c0NvZGUgY29kZT0iY29tcGxldGVk
+Ii8+CiAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAxMzExMzI1LTA4
+MDAiLz4KICAgICAgICAgICAgICAgIDxjb25maWRlbnRpYWxpdHlDb2RlIGNvZGU9Ik4iIGNvZGVT
+eXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIvPgogICAgICAgICAgICAgICAgPHJlY29yZFRh
+cmdldCBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IlJDVCI+CiAgICAgICAgICAgICAgICAgICAg
+PHBhdGllbnQgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iUEFUIj4KICAgICAgICAgICAgICAg
+ICAgICAgICAgPHBhdGllbnROb25QZXJzb25MaXZpbmdTdWJqZWN0IHhzaTpuaWw9InRydWUiIHht
+bG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAg
+ICAgICAgICAgICAgICAgICAgICAgPHBhdGllbnRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1sbnM6
+eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAgICAg
+ICAgICAgICAgICAgIDwvcGF0aWVudD4KICAgICAgICAgICAgICAgIDwvcmVjb3JkVGFyZ2V0Pgog
+ICAgICAgICAgICAgICAgPGF1dGhvciBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkFVVCI+CiAg
+ICAgICAgICAgICAgICAgICAgPHRpbWUgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgICAg
+ICAgICA8YXNzaWduZWRBdXRob3IgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iQVNTSUdORUQi
+PgogICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAg
+ICAgICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yaW5nRGV2aWNlIHhzaTpuaWw9InRydWUiIHht
+bG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAg
+ICAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkUGVyc29uIHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgICAgICAgICAgICAgPC9hdXRob3I+
+CiAgICAgICAgICAgICAgICA8Y3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQ1NU
+Ij4KICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRDdXN0b2RpYW4gbnVsbEZsYXZvcj0iTkEi
+IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVwcmVzZW50
+ZWRPcmdhbml6YXRpb24gbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iTkFUIiBkZXRlcm1pbmVy
+Q29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxGbGF2
+b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvcmVwcmVzZW50ZWRPcmdhbml6YXRp
+b24+CiAgICAgICAgICAgICAgICAgICAgPC9hc3NpZ25lZEN1c3RvZGlhbj4KICAgICAgICAgICAg
+ICAgIDwvY3VzdG9kaWFuPgogICAgICAgICAgICA8L3RhcmdldD4KICAgICAgICA8L3N1YmplY3Q+
+CiAgICAgICAgPHN1YmplY3QgdHlwZUNvZGU9IlNVQkoiPgogICAgICAgICAgICA8dGFyZ2V0IGNs
+YXNzQ29kZT0iRE9DQ0xJTiIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgICAgICA8dGVtcGxh
+dGVJZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMjAiIGV4dGVuc2lvbj0iQ0RB
+IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ29udGVudCBUeXBlIi8+CiAgICAgICAgICAg
+ICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjEiIGV4dGVuc2lvbj0i
+ZTdhNGVmMGEtNzEyOS1lOTExLWE5NmEtMDA1MDU2OGM1NWE2IiBhc3NpZ25pbmdBdXRob3JpdHlO
+YW1lPSJDRFggTWVzc2FnZSBJRCIvPgogICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iMi4xNi44
+NDAuMS4xMTM4ODMuMy41MS42MC4yLjEiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYu
+MSIgZGlzcGxheU5hbWU9IkxhYiBSZXBvcnQgVGVtcGxhdGUiLz4KICAgICAgICAgICAgICAgIDx0
+ZXh0IG1lZGlhVHlwZT0idGV4dC94bWwiPkF0dGFjaG1lbnRDb3VudDowfFRvdGFsQXR0YWNobWVu
+dFNpemU6MDwvdGV4dD4KICAgICAgICAgICAgICAgIDxzdGF0dXNDb2RlIGNvZGU9ImNvbXBsZXRl
+ZCIvPgogICAgICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMjA1MTAwNy0w
+ODAwIi8+CiAgICAgICAgICAgICAgICA8Y29uZmlkZW50aWFsaXR5Q29kZSBjb2RlPSJOIiBjb2Rl
+U3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiLz4KICAgICAgICAgICAgICAgIDxyZWNvcmRU
+YXJnZXQgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJSQ1QiPgogICAgICAgICAgICAgICAgICAg
+IDxwYXRpZW50IG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IlBBVCI+CiAgICAgICAgICAgICAg
+ICAgICAgICAgIDxwYXRpZW50Tm9uUGVyc29uTGl2aW5nU3ViamVjdCB4c2k6bmlsPSJ0cnVlIiB4
+bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAg
+ICAgICAgICAgICAgICAgICAgICAgIDxwYXRpZW50UGVyc29uIHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICA8L3BhdGllbnQ+CiAgICAgICAgICAgICAgICA8L3JlY29yZFRhcmdldD4K
+ICAgICAgICAgICAgICAgIDxhdXRob3IgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJBVVQiPgog
+ICAgICAgICAgICAgICAgICAgIDx0aW1lIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAg
+ICAgICAgPGFzc2lnbmVkQXV0aG9yIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IkFTU0lHTkVE
+Ij4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAg
+ICAgICAgICAgICAgICAgIDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZSB4c2k6bmlsPSJ0cnVlIiB4
+bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAg
+ICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4bWxu
+czp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAg
+ICAgICAgICAgICAgICAgPC9hc3NpZ25lZEF1dGhvcj4KICAgICAgICAgICAgICAgIDwvYXV0aG9y
+PgogICAgICAgICAgICAgICAgPGN1c3RvZGlhbiBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkNT
+VCI+CiAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5B
+IiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPHJlcHJlc2Vu
+dGVkT3JnYW5pemF0aW9uIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9Ik5BVCIgZGV0ZXJtaW5l
+ckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxsRmxh
+dm9yPSJOQSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L3JlcHJlc2VudGVkT3JnYW5pemF0
+aW9uPgogICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRDdXN0b2RpYW4+CiAgICAgICAgICAg
+ICAgICA8L2N1c3RvZGlhbj4KICAgICAgICAgICAgPC90YXJnZXQ+CiAgICAgICAgPC9zdWJqZWN0
+PgogICAgICAgIDxzdWJqZWN0IHR5cGVDb2RlPSJTVUJKIj4KICAgICAgICAgICAgPHRhcmdldCBj
+bGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICAgICAgICAgPHRlbXBs
+YXRlSWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIwIiBleHRlbnNpb249IkNE
+QSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENvbnRlbnQgVHlwZSIvPgogICAgICAgICAg
+ICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIiBleHRlbnNpb249
+IjE4NzBiMzE4LTcxMjktZTkxMS1hOTZhLTAwNTA1NjhjNTVhNiIgYXNzaWduaW5nQXV0aG9yaXR5
+TmFtZT0iQ0RYIE1lc3NhZ2UgSUQiLz4KICAgICAgICAgICAgICAgIDxjb2RlIGNvZGU9IjIuMTYu
+ODQwLjEuMTEzODgzLjMuNTEuNjAuMi4xIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42
+LjEiIGRpc3BsYXlOYW1lPSJMYWIgUmVwb3J0IFRlbXBsYXRlIi8+CiAgICAgICAgICAgICAgICA8
+dGV4dCBtZWRpYVR5cGU9InRleHQveG1sIj5BdHRhY2htZW50Q291bnQ6MHxUb3RhbEF0dGFjaG1l
+bnRTaXplOjA8L3RleHQ+CiAgICAgICAgICAgICAgICA8c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0
+ZWQiLz4KICAgICAgICAgICAgICAgIDxlZmZlY3RpdmVUaW1lIHZhbHVlPSIyMDE5MDIwNTEwMDgt
+MDgwMCIvPgogICAgICAgICAgICAgICAgPGNvbmZpZGVudGlhbGl0eUNvZGUgY29kZT0iTiIgY29k
+ZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIi8+CiAgICAgICAgICAgICAgICA8cmVjb3Jk
+VGFyZ2V0IG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iUkNUIj4KICAgICAgICAgICAgICAgICAg
+ICA8cGF0aWVudCBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJQQVQiPgogICAgICAgICAgICAg
+ICAgICAgICAgICA8cGF0aWVudE5vblBlcnNvbkxpdmluZ1N1YmplY3QgeHNpOm5pbD0idHJ1ZSIg
+eG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgog
+ICAgICAgICAgICAgICAgICAgICAgICA8cGF0aWVudFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4bWxu
+czp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAgICAg
+ICAgICAgICAgICAgICAgPC9wYXRpZW50PgogICAgICAgICAgICAgICAgPC9yZWNvcmRUYXJnZXQ+
+CiAgICAgICAgICAgICAgICA8YXV0aG9yIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQVVUIj4K
+ICAgICAgICAgICAgICAgICAgICA8dGltZSBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAgICAg
+ICAgICAgIDxhc3NpZ25lZEF1dGhvciBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJBU1NJR05F
+RCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAgICAg
+ICAgICAgICAgICAgICAgICA8YXNzaWduZWRBdXRob3JpbmdEZXZpY2UgeHNpOm5pbD0idHJ1ZSIg
+eG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgog
+ICAgICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1s
+bnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAg
+ICAgICAgICAgICAgICAgIDwvYXNzaWduZWRBdXRob3I+CiAgICAgICAgICAgICAgICA8L2F1dGhv
+cj4KICAgICAgICAgICAgICAgIDxjdXN0b2RpYW4gbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJD
+U1QiPgogICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEN1c3RvZGlhbiBudWxsRmxhdm9yPSJO
+QSIgY2xhc3NDb2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZXByZXNl
+bnRlZE9yZ2FuaXphdGlvbiBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJOQVQiIGRldGVybWlu
+ZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZs
+YXZvcj0iTkEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXph
+dGlvbj4KICAgICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkQ3VzdG9kaWFuPgogICAgICAgICAg
+ICAgICAgPC9jdXN0b2RpYW4+CiAgICAgICAgICAgIDwvdGFyZ2V0PgogICAgICAgIDwvc3ViamVj
+dD4KICAgICAgICA8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiI+CiAgICAgICAgICAgIDx0YXJnZXQg
+Y2xhc3NDb2RlPSJET0NDTElOIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDx0ZW1w
+bGF0ZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yMCIgZXh0ZW5zaW9uPSJD
+REEiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDb250ZW50IFR5cGUiLz4KICAgICAgICAg
+ICAgICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9u
+PSI2ZWQ5NGY3NC03MTI5LWU5MTEtYTk2YS0wMDUwNTY4YzU1YTYiIGFzc2lnbmluZ0F1dGhvcml0
+eU5hbWU9IkNEWCBNZXNzYWdlIElEIi8+CiAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSIyLjE2
+Ljg0MC4xLjExMzg4My4zLjUxLjYwLjIuMSIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMu
+Ni4xIiBkaXNwbGF5TmFtZT0iTGFiIFJlcG9ydCBUZW1wbGF0ZSIvPgogICAgICAgICAgICAgICAg
+PHRleHQgbWVkaWFUeXBlPSJ0ZXh0L3htbCI+QXR0YWNobWVudENvdW50OjB8VG90YWxBdHRhY2ht
+ZW50U2l6ZTowPC90ZXh0PgogICAgICAgICAgICAgICAgPHN0YXR1c0NvZGUgY29kZT0iY29tcGxl
+dGVkIi8+CiAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAyMDUxMDEw
+LTA4MDAiLz4KICAgICAgICAgICAgICAgIDxjb25maWRlbnRpYWxpdHlDb2RlIGNvZGU9Ik4iIGNv
+ZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIvPgogICAgICAgICAgICAgICAgPHJlY29y
+ZFRhcmdldCBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IlJDVCI+CiAgICAgICAgICAgICAgICAg
+ICAgPHBhdGllbnQgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iUEFUIj4KICAgICAgICAgICAg
+ICAgICAgICAgICAgPHBhdGllbnROb25QZXJzb25MaXZpbmdTdWJqZWN0IHhzaTpuaWw9InRydWUi
+IHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4K
+ICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGllbnRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1s
+bnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAg
+ICAgICAgICAgICAgICAgIDwvcGF0aWVudD4KICAgICAgICAgICAgICAgIDwvcmVjb3JkVGFyZ2V0
+PgogICAgICAgICAgICAgICAgPGF1dGhvciBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkFVVCI+
+CiAgICAgICAgICAgICAgICAgICAgPHRpbWUgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAg
+ICAgICAgICA8YXNzaWduZWRBdXRob3IgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iQVNTSUdO
+RUQiPgogICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yaW5nRGV2aWNlIHhzaTpuaWw9InRydWUi
+IHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4K
+ICAgICAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkUGVyc29uIHhzaTpuaWw9InRydWUiIHht
+bG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAg
+ICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgICAgICAgICAgICAgPC9hdXRo
+b3I+CiAgICAgICAgICAgICAgICA8Y3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0i
+Q1NUIj4KICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRDdXN0b2RpYW4gbnVsbEZsYXZvcj0i
+TkEiIGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVwcmVz
+ZW50ZWRPcmdhbml6YXRpb24gbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iTkFUIiBkZXRlcm1p
+bmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxG
+bGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvcmVwcmVzZW50ZWRPcmdhbml6
+YXRpb24+CiAgICAgICAgICAgICAgICAgICAgPC9hc3NpZ25lZEN1c3RvZGlhbj4KICAgICAgICAg
+ICAgICAgIDwvY3VzdG9kaWFuPgogICAgICAgICAgICA8L3RhcmdldD4KICAgICAgICA8L3N1Ympl
+Y3Q+CiAgICAgICAgPHN1YmplY3QgdHlwZUNvZGU9IlNVQkoiPgogICAgICAgICAgICA8dGFyZ2V0
+IGNsYXNzQ29kZT0iRE9DQ0xJTiIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgICAgICA8dGVt
+cGxhdGVJZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMjAiIGV4dGVuc2lvbj0i
+Q0RBIiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ29udGVudCBUeXBlIi8+CiAgICAgICAg
+ICAgICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjEiIGV4dGVuc2lv
+bj0iMTE0NGI4MjYtN2EyZC1lOTExLWE5NmEtMDA1MDU2OGM1NWE2IiBhc3NpZ25pbmdBdXRob3Jp
+dHlOYW1lPSJDRFggTWVzc2FnZSBJRCIvPgogICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iMi4x
+Ni44NDAuMS4xMTM4ODMuMy41MS42MC4yLjEiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgz
+LjYuMSIgZGlzcGxheU5hbWU9IkxhYiBSZXBvcnQgVGVtcGxhdGUiLz4KICAgICAgICAgICAgICAg
+IDx0ZXh0IG1lZGlhVHlwZT0idGV4dC94bWwiPkF0dGFjaG1lbnRDb3VudDowfFRvdGFsQXR0YWNo
+bWVudFNpemU6MDwvdGV4dD4KICAgICAgICAgICAgICAgIDxzdGF0dXNDb2RlIGNvZGU9ImNvbXBs
+ZXRlZCIvPgogICAgICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMjEwMTMy
+My0wODAwIi8+CiAgICAgICAgICAgICAgICA8Y29uZmlkZW50aWFsaXR5Q29kZSBjb2RlPSJOIiBj
+b2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiLz4KICAgICAgICAgICAgICAgIDxyZWNv
+cmRUYXJnZXQgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJSQ1QiPgogICAgICAgICAgICAgICAg
+ICAgIDxwYXRpZW50IG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IlBBVCI+CiAgICAgICAgICAg
+ICAgICAgICAgICAgIDxwYXRpZW50Tm9uUGVyc29uTGl2aW5nU3ViamVjdCB4c2k6bmlsPSJ0cnVl
+IiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+
+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRpZW50UGVyc29uIHhzaTpuaWw9InRydWUiIHht
+bG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAg
+ICAgICAgICAgICAgICAgICA8L3BhdGllbnQ+CiAgICAgICAgICAgICAgICA8L3JlY29yZFRhcmdl
+dD4KICAgICAgICAgICAgICAgIDxhdXRob3IgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJBVVQi
+PgogICAgICAgICAgICAgICAgICAgIDx0aW1lIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAg
+ICAgICAgICAgPGFzc2lnbmVkQXV0aG9yIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IkFTU0lH
+TkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAg
+ICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZSB4c2k6bmlsPSJ0cnVl
+IiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+
+CiAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4
+bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAg
+ICAgICAgICAgICAgICAgICAgPC9hc3NpZ25lZEF1dGhvcj4KICAgICAgICAgICAgICAgIDwvYXV0
+aG9yPgogICAgICAgICAgICAgICAgPGN1c3RvZGlhbiBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9
+IkNTVCI+CiAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIG51bGxGbGF2b3I9
+Ik5BIiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPHJlcHJl
+c2VudGVkT3JnYW5pemF0aW9uIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9Ik5BVCIgZGV0ZXJt
+aW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxs
+Rmxhdm9yPSJOQSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L3JlcHJlc2VudGVkT3JnYW5p
+emF0aW9uPgogICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRDdXN0b2RpYW4+CiAgICAgICAg
+ICAgICAgICA8L2N1c3RvZGlhbj4KICAgICAgICAgICAgPC90YXJnZXQ+CiAgICAgICAgPC9zdWJq
+ZWN0PgogICAgICAgIDxzdWJqZWN0IHR5cGVDb2RlPSJTVUJKIj4KICAgICAgICAgICAgPHRhcmdl
+dCBjbGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICAgICAgICAgPHRl
+bXBsYXRlSWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIwIiBleHRlbnNpb249
+IkNEQSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENvbnRlbnQgVHlwZSIvPgogICAgICAg
+ICAgICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIiBleHRlbnNp
+b249ImUwMDVmOWNjLTFkM2EtZTkxMS1hOTZhLTAwNTA1NjhjNTVhNiIgYXNzaWduaW5nQXV0aG9y
+aXR5TmFtZT0iQ0RYIE1lc3NhZ2UgSUQiLz4KICAgICAgICAgICAgICAgIDxjb2RlIGNvZGU9IjIu
+MTYuODQwLjEuMTEzODgzLjMuNTEuNjAuMi4xIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4
+My42LjEiIGRpc3BsYXlOYW1lPSJMYWIgUmVwb3J0IFRlbXBsYXRlIi8+CiAgICAgICAgICAgICAg
+ICA8dGV4dCBtZWRpYVR5cGU9InRleHQveG1sIj5BdHRhY2htZW50Q291bnQ6MHxUb3RhbEF0dGFj
+aG1lbnRTaXplOjA8L3RleHQ+CiAgICAgICAgICAgICAgICA8c3RhdHVzQ29kZSBjb2RlPSJjb21w
+bGV0ZWQiLz4KICAgICAgICAgICAgICAgIDxlZmZlY3RpdmVUaW1lIHZhbHVlPSIyMDE5MDIyNjE1
+MjUtMDgwMCIvPgogICAgICAgICAgICAgICAgPGNvbmZpZGVudGlhbGl0eUNvZGUgY29kZT0iTiIg
+Y29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIi8+CiAgICAgICAgICAgICAgICA8cmVj
+b3JkVGFyZ2V0IG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iUkNUIj4KICAgICAgICAgICAgICAg
+ICAgICA8cGF0aWVudCBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJQQVQiPgogICAgICAgICAg
+ICAgICAgICAgICAgICA8cGF0aWVudE5vblBlcnNvbkxpdmluZ1N1YmplY3QgeHNpOm5pbD0idHJ1
+ZSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIv
+PgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aWVudFBlcnNvbiB4c2k6bmlsPSJ0cnVlIiB4
+bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIi8+CiAg
+ICAgICAgICAgICAgICAgICAgPC9wYXRpZW50PgogICAgICAgICAgICAgICAgPC9yZWNvcmRUYXJn
+ZXQ+CiAgICAgICAgICAgICAgICA8YXV0aG9yIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQVVU
+Ij4KICAgICAgICAgICAgICAgICAgICA8dGltZSBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAg
+ICAgICAgICAgIDxhc3NpZ25lZEF1dGhvciBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJBU1NJ
+R05FRCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAg
+ICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRBdXRob3JpbmdEZXZpY2UgeHNpOm5pbD0idHJ1
+ZSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIv
+PgogICAgICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRQZXJzb24geHNpOm5pbD0idHJ1ZSIg
+eG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgog
+ICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRBdXRob3I+CiAgICAgICAgICAgICAgICA8L2F1
+dGhvcj4KICAgICAgICAgICAgICAgIDxjdXN0b2RpYW4gbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2Rl
+PSJDU1QiPgogICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEN1c3RvZGlhbiBudWxsRmxhdm9y
+PSJOQSIgY2xhc3NDb2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZXBy
+ZXNlbnRlZE9yZ2FuaXphdGlvbiBudWxsRmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJOQVQiIGRldGVy
+bWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVs
+bEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2Fu
+aXphdGlvbj4KICAgICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkQ3VzdG9kaWFuPgogICAgICAg
+ICAgICAgICAgPC9jdXN0b2RpYW4+CiAgICAgICAgICAgIDwvdGFyZ2V0PgogICAgICAgIDwvc3Vi
+amVjdD4KICAgICAgICA8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiI+CiAgICAgICAgICAgIDx0YXJn
+ZXQgY2xhc3NDb2RlPSJET0NDTElOIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDx0
+ZW1wbGF0ZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yMCIgZXh0ZW5zaW9u
+PSJDREEiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDb250ZW50IFR5cGUiLz4KICAgICAg
+ICAgICAgICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5z
+aW9uPSJiMzg5NDQ2NS1lYjQ1LWU5MTEtYTk2YS0wMDUwNTY4YzU1YTYiIGFzc2lnbmluZ0F1dGhv
+cml0eU5hbWU9IkNEWCBNZXNzYWdlIElEIi8+CiAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjE4MTguMTAuMS41IiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjEx
+Mzg4My42LjEiIGRpc3BsYXlOYW1lPSJlMmUgR2VuZXJpYyBVbnN0cnVjdHVyZWQgUmVmZXJyYWwi
+Lz4KICAgICAgICAgICAgICAgIDx0ZXh0IG1lZGlhVHlwZT0idGV4dC94bWwiPkF0dGFjaG1lbnRD
+b3VudDowfFRvdGFsQXR0YWNobWVudFNpemU6MDwvdGV4dD4KICAgICAgICAgICAgICAgIDxzdGF0
+dXNDb2RlIGNvZGU9ImNvbXBsZXRlZCIvPgogICAgICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUg
+dmFsdWU9IjIwMTkwMzEzMTIwMy0wNzAwIi8+CiAgICAgICAgICAgICAgICA8Y29uZmlkZW50aWFs
+aXR5Q29kZSBjb2RlPSJOIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiLz4KICAg
+ICAgICAgICAgICAgIDxyZWNvcmRUYXJnZXQgbnVsbEZsYXZvcj0iTkEiIHR5cGVDb2RlPSJSQ1Qi
+PgogICAgICAgICAgICAgICAgICAgIDxwYXRpZW50IG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9
+IlBBVCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRpZW50Tm9uUGVyc29uTGl2aW5nU3Vi
+amVjdCB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1M
+U2NoZW1hLWluc3RhbmNlIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRpZW50UGVyc29u
+IHhzaTpuaWw9InRydWUiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hl
+bWEtaW5zdGFuY2UiLz4KICAgICAgICAgICAgICAgICAgICA8L3BhdGllbnQ+CiAgICAgICAgICAg
+ICAgICA8L3JlY29yZFRhcmdldD4KICAgICAgICAgICAgICAgIDxhdXRob3IgbnVsbEZsYXZvcj0i
+TkEiIHR5cGVDb2RlPSJBVVQiPgogICAgICAgICAgICAgICAgICAgIDx0aW1lIG51bGxGbGF2b3I9
+Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yIG51bGxGbGF2b3I9Ik5B
+IiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIG51bGxG
+bGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEF1dGhvcmluZ0Rl
+dmljZSB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1M
+U2NoZW1hLWluc3RhbmNlIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZFBlcnNv
+biB4c2k6bmlsPSJ0cnVlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2No
+ZW1hLWluc3RhbmNlIi8+CiAgICAgICAgICAgICAgICAgICAgPC9hc3NpZ25lZEF1dGhvcj4KICAg
+ICAgICAgICAgICAgIDwvYXV0aG9yPgogICAgICAgICAgICAgICAgPGN1c3RvZGlhbiBudWxsRmxh
+dm9yPSJOQSIgdHlwZUNvZGU9IkNTVCI+CiAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkQ3Vz
+dG9kaWFuIG51bGxGbGF2b3I9Ik5BIiBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAg
+ICAgICAgICAgICAgPHJlcHJlc2VudGVkT3JnYW5pemF0aW9uIG51bGxGbGF2b3I9Ik5BIiBjbGFz
+c0NvZGU9Ik5BVCIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8
+L3JlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRD
+dXN0b2RpYW4+CiAgICAgICAgICAgICAgICA8L2N1c3RvZGlhbj4KICAgICAgICAgICAgPC90YXJn
+ZXQ+CiAgICAgICAgPC9zdWJqZWN0PgogICAgICAgIDxxdWVyeUFjaz4KICAgICAgICAgICAgPHF1
+ZXJ5UmVzcG9uc2VDb2RlIGNvZGU9Ik9LIi8+CiAgICAgICAgICAgIDxyZXN1bHRUb3RhbFF1YW50
+aXR5IHZhbHVlPSIxMCIvPgogICAgICAgICAgICA8cmVzdWx0Q3VycmVudFF1YW50aXR5IHZhbHVl
+PSIxMCIvPgogICAgICAgICAgICA8cmVzdWx0UmVtYWluaW5nUXVhbnRpdHkgdmFsdWU9IjAiLz4K
+ICAgICAgICA8L3F1ZXJ5QWNrPgogICAgPC9jb250cm9sQWN0UHJvY2Vzcz4KPC9SQ01SX0lOMDAw
+MDMwVVYwMT4K</inboundTemplate>
+            <outboundTemplate encoding="base64">ewoJInN0YXR1cyI6ICIiLAoJIm1lc3NhZ2UiOiAiIiwKCSJhY2tEZXRhaWwiOiB7CgkJImFja0lk
+IjogIiIsCgkJImFja1RpbWUiOiAiIiwKCQkibWVzc2FnZUlkIjogIiIKCX0sCgkiYWNrUXVlcnki
+OiB7CgkgICJzdGF0dXMiOiAiIiwKCQkidG90YWwiOiAiIiwKCQkiY3VycmVudCI6ICIiLAoJCSJy
+ZW1haW5pbmciOiAiIiwKCQkiZG9jdW1lbnRzIjogW3sKCQkJImRvY3VtZW50SWQiOiAiIiwKCQkJ
+InR5cGVDb2RlIjogIiIsCgkJCSJlZmZlY3RpdmVUaW1lIjogIiIKCQl9XQoJfQp9</outboundTemplate>
+            <inboundDataType>HL7V3</inboundDataType>
+            <outboundDataType>JSON</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>false</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </responseTransformer>
+          <filter version="3.7.0">
+            <elements/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+          <waitForPrevious>false</waitForPrevious>
+        </connector>
+        <connector version="3.7.0">
+          <metaDataId>11</metaDataId>
+          <name>Service Get Document</name>
+          <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.7.0">
+            <pluginProperties/>
+            <destinationConnectorProperties version="3.7.0">
+              <queueEnabled>false</queueEnabled>
+              <sendFirst>false</sendFirst>
+              <retryIntervalMillis>10000</retryIntervalMillis>
+              <regenerateTemplate>false</regenerateTemplate>
+              <retryCount>0</retryCount>
+              <rotate>false</rotate>
+              <includeFilterTransformer>false</includeFilterTransformer>
+              <threadCount>1</threadCount>
+              <threadAssignmentVariable></threadAssignmentVariable>
+              <validateResponse>true</validateResponse>
+              <resourceIds class="linked-hash-map">
+                <entry>
+                  <string>Default Resource</string>
+                  <string>[Default Resource]</string>
+                </entry>
+              </resourceIds>
+              <queueBufferSize>1000</queueBufferSize>
+              <reattachAttachments>true</reattachAttachments>
+            </destinationConnectorProperties>
+            <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
+logger.debug(&apos;Service Get Document&apos;);
+try {
+	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
+		&quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+	
+	var cdxResponse = client.getDocument($(&apos;locationId&apos;), $(&apos;documentId&apos;));
+	
+	return ResponseFactory.getSentResponse(cdxResponse);
+} catch (e) {
+	logger.error(&quot;Error on &apos;Service Get Document&apos;: &quot; + e);
+	return ResponseFactory.getErrorResponse(&quot;Error on &apos;Service Get Document&apos;: &quot; + e)
+}
+</script>
+          </properties>
+          <transformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Document Query</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>channelMap.put(&quot;documentId&quot;, msg[&apos;documentId&apos;]); // TODO get it from url</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64"></inboundTemplate>
+            <outboundTemplate encoding="base64"></outboundTemplate>
+            <inboundDataType>JSON</inboundDataType>
+            <outboundDataType>HL7V3</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>true</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </transformer>
+          <responseTransformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Get Documents Response</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>logger.debug(&apos;Get Documents Response&apos;);
+
+try {
+	// Store the response to be returned by the &quot;Source Connector&quot;
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+		// Ack details
+		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] = msg[&apos;acknowledgement&apos;][&apos;targetMessage&apos;][&apos;id&apos;][&apos;@extension&apos;].toString()
+
+		// Ack query
+		tmp[&apos;ackQuery&apos;][&apos;status&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;queryResponseCode&apos;][&apos;@code&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;total&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultTotalQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;current&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultCurrentQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;remaining&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultRemainingQuantity&apos;][&apos;@value&apos;].toString();
+		for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;controlActProcess&apos;][&apos;subject&apos;]); i++) { // Document list
+			var document = {};
+			document[&apos;documentId&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;id&apos;][&apos;@extension&apos;].toString();
+			document[&apos;typeCode&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;code&apos;][&apos;@code&apos;].toString();
+			document[&apos;effectiveTime&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;target&apos;][&apos;effectiveTime&apos;][&apos;@value&apos;].toString();
+			document[&apos;document&apos;] = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][&apos;target&apos;][&apos;text&apos;].toString(); // TODO parse document
+			tmp[&apos;ackQuery&apos;][&apos;documents&apos;][i] = document;
+		}
+		
+		return tmp; // Return the transformed message to be converted on &apos;handleResponseMessage&apos;
+	}));
+} catch(e) {
+	logger.error(&quot;Error on &apos;Get Documents Response&apos;: &quot; + e);
+
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(e));
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8
+UkNNUl9JTjAwMDAzMlVWMDEgSVRTVmVyc2lvbj0iWE1MXzEuMCIgeG1sbnM9InVybjpobDctb3Jn
+OnYzIj4KICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5z
+aW9uPSJiNDRiZDNlNy02ZjYwLTRlMjAtODA0ZC00YWMyMTRiMzNhN2MiIGFzc2lnbmluZ0F1dGhv
+cml0eU5hbWU9IkNEWCBNZXNzYWdlIElEIi8+CiAgICA8Y3JlYXRpb25UaW1lIHZhbHVlPSIyMDE5
+MDMxMzE5MDktMDcwMCIvPgogICAgPHZlcnNpb25Db2RlIGNvZGU9IkJhbGxvdDIwMDlNYXkiLz4K
+ICAgIDxpbnRlcmFjdGlvbklkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjEuNiIvPgogICAgPHBy
+b2Nlc3NpbmdDb2RlIGNvZGU9IlAiLz4KICAgIDxwcm9jZXNzaW5nTW9kZUNvZGUgY29kZT0iVCIv
+PgogICAgPGFjY2VwdEFja0NvZGUgY29kZT0iTkUiLz4KICAgIDxyZWNlaXZlcj4KICAgICAgICA8
+ZGV2aWNlIGNsYXNzQ29kZT0iREVWIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAg
+ICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgPGFzQWdlbnQgY2xhc3NDb2Rl
+PSJBR05UIj4KICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0Nv
+ZGU9Ik9SRyIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICA8
+aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiIGV4dGVuc2lvbj0iY2R4cG9z
+dHByb2Qtb3RjYSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIvPgogICAg
+ICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0Fn
+ZW50PgogICAgICAgIDwvZGV2aWNlPgogICAgPC9yZWNlaXZlcj4KICAgIDxzZW5kZXI+CiAgICAg
+ICAgPGRldmljZSBjbGFzc0NvZGU9IkRFViIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAg
+ICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgIDxhc0FnZW50IGNsYXNz
+Q29kZT0iQUdOVCI+CiAgICAgICAgICAgICAgICA8cmVwcmVzZW50ZWRPcmdhbml6YXRpb24gY2xh
+c3NDb2RlPSJPUkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAg
+ICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yIiBleHRlbnNpb249IkNE
+WElIQSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBJRCIvPgogICAgICAgICAg
+ICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0FnZW50Pgog
+ICAgICAgIDwvZGV2aWNlPgogICAgPC9zZW5kZXI+CiAgICA8YWNrbm93bGVkZ2VtZW50IHR5cGVD
+b2RlPSJBQSI+CiAgICAgICAgPHRhcmdldE1lc3NhZ2U+CiAgICAgICAgICAgIDxpZCByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9uPSI3YzBlMDhjNi0wZWFiLTRl
+MmYtYjNhZi03NmY3ZGVkYWRkMzYiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBNZXNzYWdl
+IElEIi8+CiAgICAgICAgPC90YXJnZXRNZXNzYWdlPgogICAgPC9hY2tub3dsZWRnZW1lbnQ+CiAg
+ICA8Y29udHJvbEFjdFByb2Nlc3MgY2xhc3NDb2RlPSJDQUNUIiBtb29kQ29kZT0iQVBUIj4KICAg
+ICAgICA8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiI+CiAgICAgICAgICAgIDx0YXJnZXQgY2xhc3ND
+b2RlPSJET0NDTElOIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlk
+IHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yMCIgZXh0ZW5zaW9uPSJDREEiIGFz
+c2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDb250ZW50IFR5cGUiLz4KICAgICAgICAgICAgICAg
+IDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMSIgZXh0ZW5zaW9uPSJjZmM2
+MTU3My1lNDNhLWU5MTEtYTk2YS0wMDUwNTY4YzU1YTYiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9
+IkNEWCBNZXNzYWdlIElEIi8+CiAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSIyLjE2Ljg0MC4x
+LjExMzg4My4zLjUxLjYwLjIuMSIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIiBk
+aXNwbGF5TmFtZT0iTGFiIFJlcG9ydCBUZW1wbGF0ZSIvPgogICAgICAgICAgICAgICAgPHRleHQg
+bWVkaWFUeXBlPSJ0ZXh0L3htbCI+Jmx0Oz94bWwtc3R5bGVzaGVldCB0eXBlPSJ0ZXh0L3hzbCIg
+aHJlZj0iQ0RBLnhzbCI/Jmd0OyZsdDtDbGluaWNhbERvY3VtZW50IHhtbG5zPSJ1cm46aGw3LW9y
+Zzp2MyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5j
+ZSIgeG1sbnM6bnMwPSJodHRwOi8vbWljcm9zb2Z0LmNvbS9IZWFsdGhDYXJlL0hMNy8yWCIgeG1s
+bnM6YmNjZGE9InVybjpiY2NkYSIgeG1sbnM6eGFsYW49Imh0dHA6Ly94bWwuYXBhY2hlLm9yZy94
+c2x0IiBjbGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iJmd0OyZsdDshLS0mIzEzOwoJ
+CQkJKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KiomIzEzOwoJCQkJQ0RBIEhlYWRlciAtIElIQSBMYWIvTWljcm8gVHJhbnNmb3JtJiMxMzsKCQkJ
+CSoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+JiMxMzsKCQkJCS0tJmd0OyZsdDtyZWFsbUNvZGUgY29kZT0iQ0EtQkMiIC8mZ3Q7Jmx0O3R5cGVJ
+ZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4xLjMiIGV4dGVuc2lvbj0iUE9DRF9IRDAwMDA0MCIg
+YXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSEw3IENEQSBSMiIgLyZndDsmbHQ7dGVtcGxhdGVJZCBy
+b290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjUxLjYwLjIuMSIgYXNzaWduaW5nQXV0aG9yaXR5TmFt
+ZT0iR2VuZXJhbCBMYWIgUmVwb3J0IHRlbXBsYXRlIiAvJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0
+MC4xLjExMzg4My4zLjI3Ny4xMDAuMyIgZXh0ZW5zaW9uPSIzYWRmYjBhZS00NzVmLTRlYzktYTc1
+Mi1mZDFlNzUzNmZkNjMiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWNhbCBEb2N1
+bWVudCBJRCIgLyZndDsmbHQ7Y29kZSBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEi
+IGNvZGU9IjExNTAyLTIiIGNvZGVTeXN0ZW1OYW1lPSJMT0lOQyBDb2RlIiBkaXNwbGF5TmFtZT0i
+R2VuZXJhbCBMYWIgUmVwb3J0IiAvJmd0OyZsdDt0aXRsZSZndDtHZW5lcmFsIExhYiBSZXBvcnQm
+bHQ7L3RpdGxlJmd0OyZsdDshLS1NZXNzYWdlIERhdGVUaW1lIChNU0guNyktLSZndDsmbHQ7ZWZm
+ZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAyMjcxNTA2LTA4MDAiIC8mZ3Q7Jmx0O2NvbmZpZGVudGlh
+bGl0eUNvZGUgY29kZT0iTiIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNS4yNSIgY29k
+ZVN5c3RlbU5hbWU9IkNvbmZpZGVudGlhbGl0eSIgLyZndDsmbHQ7bGFuZ3VhZ2VDb2RlIGNvZGU9
+ImVuLUNBIiAvJmd0OyZsdDshLS0gPT09PSBQYXRpZW50IEluZm9ybWF0aW9uID09PT0gLS0mZ3Q7
+Jmx0O3JlY29yZFRhcmdldCB0eXBlQ29kZT0iUkNUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiZn
+dDsmbHQ7cGF0aWVudFJvbGUgY2xhc3NDb2RlPSJQQVQiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0
+MC4xLjExMzg4My40LjUwIiBleHRlbnNpb249Ijk4NzU4NjY5OTIiIGFzc2lnbmluZ0F1dGhvcml0
+eU5hbWU9IkJDIFBhdGllbnQgSGVhbHRoIE51bWJlciIgLyZndDsmbHQ7aWQgcm9vdD0iMi4xNi44
+NDAuMS4xMTM4ODMuMy4yNzcuMS43MyIgZXh0ZW5zaW9uPSJBMDIxNzQ2MDUiIGFzc2lnbmluZ0F1
+dGhvcml0eU5hbWU9IklIQSBQYXRpZW50IEVNUiBOdW1iZXIiIC8mZ3Q7Jmx0O2FkZHIgdXNlPSJI
+IiZndDsmIzEzOwoxMzUzIFNoYWR5IExhbmUgUm9hZCZsdDtkZWxpbWl0ZXIgLyZndDsmbHQ7Y2l0
+eSZndDtWRVJOT04mbHQ7L2NpdHkmZ3Q7Jmx0O3N0YXRlJmd0O0NBLUJDJmx0Oy9zdGF0ZSZndDsm
+bHQ7cG9zdGFsQ29kZSZndDtWMVQgMEExJmx0Oy9wb3N0YWxDb2RlJmd0OyZsdDsvYWRkciZndDsm
+bHQ7dGVsZWNvbSB1c2U9IkgiIHZhbHVlPSJ0ZWw6MjUwLTU0NS01NTU1IiAvJmd0OyZsdDtwYXRp
+ZW50IGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiJmd0OyZsdDtuYW1l
+IHVzZT0iTCImZ3Q7Jmx0O2ZhbWlseSZndDtMYWJrZ2h4bHMmbHQ7L2ZhbWlseSZndDsmbHQ7Z2l2
+ZW4mZ3Q7TmV3Jmx0Oy9naXZlbiZndDsmbHQ7Z2l2ZW4mZ3Q7QmFieSZsdDsvZ2l2ZW4mZ3Q7Jmx0
+Oy9uYW1lJmd0OyZsdDthZG1pbmlzdHJhdGl2ZUdlbmRlckNvZGUgY29kZT0iRiIgLyZndDsmbHQ7
+YmlydGhUaW1lIHZhbHVlPSIyMDE4MDgxMCIgLyZndDsmbHQ7L3BhdGllbnQmZ3Q7Jmx0Oy9wYXRp
+ZW50Um9sZSZndDsmbHQ7L3JlY29yZFRhcmdldCZndDsmbHQ7IS0tID09PT0gQXV0aG9yOiBQZXJz
+b24gYW5kL29yIHNvZnR3YXJlIHRoYXQgY3JlYXRlZCB0aGlzIGRvY3VtZW50ID09PT0gLS0mZ3Q7
+Jmx0O2F1dGhvciB0eXBlQ29kZT0iQVVUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiZndDsmbHQ7
+dGltZSB2YWx1ZT0iMjAxOTAyMjcxNTA1LTA4MDAiIC8mZ3Q7Jmx0O2Fzc2lnbmVkQXV0aG9yIGNs
+YXNzQ29kZT0iQVNTSUdORUQiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3
+Ny4xLjgxIiBleHRlbnNpb249Ijg0NTA1MCIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1l
+c3NhZ2UgTnVtYmVyIiAvJmd0OyZsdDthc3NpZ25lZEF1dGhvcmluZ0RldmljZSBjbGFzc0NvZGU9
+IkRFViIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIiZndDsmbHQ7c29mdHdhcmVOYW1lIGNvZGU9
+IkxBQl9JSEtHSCIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS4xMiIgY29k
+ZVN5c3RlbU5hbWU9IklIQSBTb2Z0d2FyZSBDb2RlIiBkaXNwbGF5TmFtZT0iSW50ZXJpb3IgSGVh
+bHRoIE1lZGl0ZWNoIiAvJmd0OyZsdDsvYXNzaWduZWRBdXRob3JpbmdEZXZpY2UmZ3Q7Jmx0Oy9h
+c3NpZ25lZEF1dGhvciZndDsmbHQ7L2F1dGhvciZndDsmbHQ7IS0tICA9PT09IEN1c3RvZGlhbjog
+b3JnYW5pemF0aW9uIHJlc3BvbnNpYmxlIGZvciB0aGlzIGRvY3VtZW50ID09PT0gLS0mZ3Q7Jmx0
+O2N1c3RvZGlhbiB0eXBlQ29kZT0iQ1NUIiZndDsmbHQ7YXNzaWduZWRDdXN0b2RpYW4gY2xhc3ND
+b2RlPSJBU1NJR05FRCImZ3Q7Jmx0O3JlcHJlc2VudGVkQ3VzdG9kaWFuT3JnYW5pemF0aW9uIGNs
+YXNzQ29kZT0iT1JHIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiJmd0OyZsdDtpZCByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjYyIiBleHRlbnNpb249IklIS0dIIiBhc3NpZ25pbmdB
+dXRob3JpdHlOYW1lPSJJSEEgTWVkaXRlY2ggTG9jYXRpb24gSWRlbnRpZmllciIgLyZndDsmbHQ7
+bmFtZSZndDtJbnRlcmlvciBIZWFsdGggQXV0aG9yaXR5Jmx0Oy9uYW1lJmd0OyZsdDsvcmVwcmVz
+ZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24mZ3Q7Jmx0Oy9hc3NpZ25lZEN1c3RvZGlhbiZndDsm
+bHQ7L2N1c3RvZGlhbiZndDsmbHQ7IS0tID09PT0gSW5mb3JtYXRpb24gUmVjaXBpZW50czogUHJv
+dmlkZXJzIHdobyBoYXZlIHJlcXVlc3RlZCBhIGNvcHkgb2YgdGhpcyBkb2N1bWVudCA9PT09IC0t
+Jmd0OyZsdDtpbmZvcm1hdGlvblJlY2lwaWVudCB0eXBlQ29kZT0iUFJDUCImZ3Q7Jmx0O2ludGVu
+ZGVkUmVjaXBpZW50IGNsYXNzQ29kZT0iQVNTSUdORUQiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0
+MC4xLjExMzg4My4zLjQwLjIuMTEiIGV4dGVuc2lvbj0iOTMxOTQiIGFzc2lnbmluZ0F1dGhvcml0
+eU5hbWU9IkJDIE1TUCBQcm92aWRlciBMaWNlbnNlIE51bWJlciIgLyZndDsmbHQ7aWQgcm9vdD0i
+Mi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS42MSIgZXh0ZW5zaW9uPSJQTElTSUhOTyIgYXNzaWdu
+aW5nQXV0aG9yaXR5TmFtZT0iSUhBIFByb3ZpZGVyIENvZGU6IElIQS1NVCBQVkQtSUQiIC8mZ3Q7
+Jmx0O2luZm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0i
+SU5TVEFOQ0UiJmd0OyZsdDtuYW1lIHVzZT0iTCImZ3Q7Jmx0O3ByZWZpeCZndDtEciZsdDsvcHJl
+Zml4Jmd0OyZsdDtmYW1pbHkmZ3Q7UGxpc2loZyZsdDsvZmFtaWx5Jmd0OyZsdDtnaXZlbiZndDtO
+b2VsJmx0Oy9naXZlbiZndDsmbHQ7L25hbWUmZ3Q7Jmx0Oy9pbmZvcm1hdGlvblJlY2lwaWVudCZn
+dDsmbHQ7L2ludGVuZGVkUmVjaXBpZW50Jmd0OyZsdDsvaW5mb3JtYXRpb25SZWNpcGllbnQmZ3Q7
+Jmx0OyEtLSA9PT09IE9yZGVyaW5nIFBoeXNpY2lhbiA9PT09IC0tJmd0OyZsdDtwYXJ0aWNpcGFu
+dCB0eXBlQ29kZT0iUkVGIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiZndDsmbHQ7ZnVuY3Rpb25D
+b2RlIGNvZGU9Ik9SRCIgZGlzcGxheU5hbWU9Ik9yZGVyaW5nIFByb3ZpZGVyIiAvJmd0OyZsdDt0
+aW1lIHZhbHVlPSIyMDE5MDIyNzE1MDctMDgwMCIgLyZndDsmbHQ7YXNzb2NpYXRlZEVudGl0eSBj
+bGFzc0NvZGU9IlBST1YiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIu
+MTEiIGV4dGVuc2lvbj0iOTMxOTQiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkJDIE1TUCBQcm92
+aWRlciBMaWNlbnNlIE51bWJlciIgLyZndDsmbHQ7aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMu
+My4yNzcuMS42MSIgZXh0ZW5zaW9uPSJQTElTSUhOTyIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0i
+SUhBIFByb3ZpZGVyIENvZGU6IElIQS1NVCBQVkQtSUQiIC8mZ3Q7Jmx0O2Fzc29jaWF0ZWRQZXJz
+b24gY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSImZ3Q7Jmx0O25hbWUg
+dXNlPSJMIiZndDsmbHQ7cHJlZml4Jmd0O0RyJmx0Oy9wcmVmaXgmZ3Q7Jmx0O2ZhbWlseSZndDtQ
+bGlzaWhnJmx0Oy9mYW1pbHkmZ3Q7Jmx0O2dpdmVuJmd0O05vZWwmbHQ7L2dpdmVuJmd0OyZsdDsv
+bmFtZSZndDsmbHQ7L2Fzc29jaWF0ZWRQZXJzb24mZ3Q7Jmx0Oy9hc3NvY2lhdGVkRW50aXR5Jmd0
+OyZsdDsvcGFydGljaXBhbnQmZ3Q7Jmx0OyEtLSA9PT09IE9yZGVyIGluZm9ybWF0aW9uID09PT0g
+LS0mZ3Q7Jmx0O2luRnVsZmlsbG1lbnRPZiB0eXBlQ29kZT0iRkxGUyImZ3Q7Jmx0O29yZGVyIGNs
+YXNzQ29kZT0iRU5DIiBtb29kQ29kZT0iUlFPIiZndDsmbHQ7aWQgcm9vdD0iMi4xNi44NDAuMS4x
+MTM4ODMuMy4yNzcuMS4yMiIgZXh0ZW5zaW9uPSJJSEtHSC0yMDE5MDIyNy0wMDAzMDE3OSIgYXNz
+aWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1lZGl0ZWNoIFJlcXVpc2l0aW9uIE51bWJlciIgLyZn
+dDsmbHQ7Y29kZSBjb2RlPSJSRTpDTTpOIiBjb2RlU3lzdGVtTmFtZT0iT3JkZXIgU3RhdHVzIChP
+cmRlciBDb250cm9sWzpPcmRlciBTdGF0dXNdWzpSZXNwb25zZSBGbGFnXSkiIC8mZ3Q7Jmx0Oy9v
+cmRlciZndDsmbHQ7L2luRnVsZmlsbG1lbnRPZiZndDsmbHQ7aW5GdWxmaWxsbWVudE9mIHR5cGVD
+b2RlPSJGTEZTIiZndDsmbHQ7dGVtcGxhdGVJZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3
+Ny4xMDAuNiIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iT3JkZXIgQ29tcG9uZW50IFRlbXBsYXRl
+IiAvJmd0OyZsdDtvcmRlciBjbGFzc0NvZGU9IkVOQyIgbW9vZENvZGU9IlJRTyImZ3Q7Jmx0OyEt
+LSA9PT09IFVuaXF1ZSBPcmRlciBDb21wb25lbnQgTnVtYmVyIChSZXF1aXNpdGlvbiMgKyBTcGVj
+aW1lbiMpIC0gQmVjYXVzZSB0aGVyZSBtYXkgYmUgbXVsdGlwbGUgZG9jdW1lbnRzIHRoYXQgZWFj
+aCByZXByZXNlbnQgdGhlIGZ1bGZpbGxtZW50IG9mIHBhcnQgb2YgYW4gb3JkZXIvcmVxdWlzaXRp
+b24uJiMxMzsKCQkJCQkJQW55IGluZnVsZmlsbG1lbnRPZiBlbGVtZW50cyB3aXRoIHRoaXMgdGVt
+cGxhdGVJZCBtZWFuIHRoYXQgdGhlIGlkZW50aWZpZXIgdW5pcXVlbHkgaWRlbnRpZmllcyB0aGUg
+cGFydCwgbm90IHRoZSB3aG9sZS4gTGFiIHJlcXVpc2l0aW9ucyBtYXkgY29udGFpbiB0ZXN0cyBm
+b3IgbXVsdGlwbGUgc3BlY2ltZW5zIGFuZCBlYWNoIHNwZWNpbWVuIHdpbGwgJiMxMzsKCQkJCQkJ
+Y29tZSBhY3Jvc3MgYXMgYSBwYXJ0IG9mIHRoZSB3aG9sZSBSZXF1aXNpdGlvbi4gPT09PSYjMTM7
+CgkJCQkJCS0tJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjIyLjEi
+IGV4dGVuc2lvbj0iSUhLR0gtMjAxOTAyMjctMDAwMzAxNzlfX1BUMjcwMjpDMDAwMzJSIiBhc3Np
+Z25pbmdBdXRob3JpdHlOYW1lPSJJSEEgT3JkZXIgQ29tcG9uZW50IE51bWJlciIgLyZndDsmbHQ7
+L29yZGVyJmd0OyZsdDsvaW5GdWxmaWxsbWVudE9mJmd0OyZsdDshLS0gPT09PSBTZXJ2aWNlIEV2
+ZW50OiBQcm9jZWR1cmUgPT09PSAtLSZndDsmbHQ7ZG9jdW1lbnRhdGlvbk9mIHR5cGVDb2RlPSJE
+T0MiJmd0OyZsdDtzZXJ2aWNlRXZlbnQgY2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2RlPSJFVk4iJmd0
+OyZsdDtjb2RlIG51bGxGbGF2b3I9IlVOSyIgLyZndDsmbHQ7IS0tT2JzZXJ2YXRpb24gRGF0ZSAo
+T0JSLjcpLS0mZ3Q7Jmx0O2VmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMjI3MTUwNS0wODAwIiAv
+Jmd0OyZsdDtwZXJmb3JtZXIgdHlwZUNvZGU9IlBQUkYiJmd0OyZsdDthc3NpZ25lZEVudGl0eSBj
+bGFzc0NvZGU9IkFTU0lHTkVEIiZndDsmbHQ7aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy40
+MC4yLjExIiBleHRlbnNpb249IjkzMTk0IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJCQyBNU1Ag
+UHJvdmlkZXIgTGljZW5zZSBOdW1iZXIiIC8mZ3Q7Jmx0O2lkIHJvb3Q9IjIuMTYuODQwLjEuMTEz
+ODgzLjMuMjc3LjEuNjEiIGV4dGVuc2lvbj0iUExJU0lITk8iIGFzc2lnbmluZ0F1dGhvcml0eU5h
+bWU9IklIQSBQcm92aWRlciBDb2RlOiBJSEEtTVQgUFZELUlEIiAvJmd0OyZsdDthc3NpZ25lZFBl
+cnNvbiBjbGFzc0NvZGU9IlBTTiIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIiZndDsmbHQ7bmFt
+ZSB1c2U9IkwiJmd0OyZsdDtwcmVmaXgmZ3Q7RHImbHQ7L3ByZWZpeCZndDsmbHQ7ZmFtaWx5Jmd0
+O1BsaXNpaGcmbHQ7L2ZhbWlseSZndDsmbHQ7Z2l2ZW4mZ3Q7Tm9lbCZsdDsvZ2l2ZW4mZ3Q7Jmx0
+Oy9uYW1lJmd0OyZsdDsvYXNzaWduZWRQZXJzb24mZ3Q7Jmx0Oy9hc3NpZ25lZEVudGl0eSZndDsm
+bHQ7L3BlcmZvcm1lciZndDsmbHQ7YmNjZGE6c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0ZWQiIC8m
+Z3Q7Jmx0Oy9zZXJ2aWNlRXZlbnQmZ3Q7Jmx0Oy9kb2N1bWVudGF0aW9uT2YmZ3Q7Jmx0OyEtLSA9
+PT09IFBhcmVudCBEb2N1bWVudDogSEw3IHYyIG1lc3NhZ2UgZnJvbSBNZWRpdGVjaCA9PT09IC0t
+Jmd0OyZsdDtyZWxhdGVkRG9jdW1lbnQgdHlwZUNvZGU9IlhGUk0iJmd0OyZsdDtwYXJlbnREb2N1
+bWVudCBjbGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iJmd0OyZsdDtpZCByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjgxIiBleHRlbnNpb249Ijg0NTA1MCIgYXNzaWduaW5n
+QXV0aG9yaXR5TmFtZT0iSUhBIE1lc3NhZ2UgTnVtYmVyIiAvJmd0OyZsdDsvcGFyZW50RG9jdW1l
+bnQmZ3Q7Jmx0Oy9yZWxhdGVkRG9jdW1lbnQmZ3Q7Jmx0OyEtLSA9PT09IEVuY29tcGFzc2luZyBF
+bmNvdW50ZXI6IFBhdGllbnQgVmlzaXQgPT09PSAtLSZndDsmbHQ7Y29tcG9uZW50T2YgdHlwZUNv
+ZGU9IkNPTVAiJmd0OyZsdDshLS1QYXRpZW50IEFjY291bnQgTnVtYmVyIChQSURfMTgpLS0mZ3Q7
+Jmx0O2VuY29tcGFzc2luZ0VuY291bnRlciBjbGFzc0NvZGU9IkVOQyIgbW9vZENvZGU9IkVWTiIm
+Z3Q7Jmx0O2lkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEuNzIiIGV4dGVuc2lvbj0i
+S0cwNjUwODEwLzE5IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEgUGF0aWVudCBBY2NvdW50
+IE51bWJlciIgLyZndDsmbHQ7IS0tRW5jb3VudGVyIGhhcyBhbiBhZG1pc3Npb24gZGF0ZSBvbmx5
+LS0mZ3Q7Jmx0O2VmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTgwODE1MTEzOS0wNzAwIiAvJmd0OyZs
+dDtlbmNvdW50ZXJQYXJ0aWNpcGFudCB0eXBlQ29kZT0iQVRORCImZ3Q7Jmx0O2Fzc2lnbmVkRW50
+aXR5IGNsYXNzQ29kZT0iQVNTSUdORUQiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4
+My4zLjQwLjIuMTEiIGV4dGVuc2lvbj0iOTMxOTQiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkJD
+IE1TUCBQcm92aWRlciBMaWNlbnNlIE51bWJlciIgLyZndDsmbHQ7aWQgcm9vdD0iMi4xNi44NDAu
+MS4xMTM4ODMuMy4yNzcuMS42MSIgZXh0ZW5zaW9uPSJQTElTSUhOTyIgYXNzaWduaW5nQXV0aG9y
+aXR5TmFtZT0iSUhBIFByb3ZpZGVyIENvZGU6IElIQS1NVCBQVkQtSUQiIC8mZ3Q7Jmx0O2Fzc2ln
+bmVkUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiJmd0OyZs
+dDtuYW1lIHVzZT0iTCImZ3Q7Jmx0O3ByZWZpeCZndDtEciZsdDsvcHJlZml4Jmd0OyZsdDtmYW1p
+bHkmZ3Q7UGxpc2loZyZsdDsvZmFtaWx5Jmd0OyZsdDtnaXZlbiZndDtOb2VsJmx0Oy9naXZlbiZn
+dDsmbHQ7L25hbWUmZ3Q7Jmx0Oy9hc3NpZ25lZFBlcnNvbiZndDsmbHQ7L2Fzc2lnbmVkRW50aXR5
+Jmd0OyZsdDsvZW5jb3VudGVyUGFydGljaXBhbnQmZ3Q7Jmx0O2xvY2F0aW9uJmd0OyZsdDtoZWFs
+dGhDYXJlRmFjaWxpdHkgY2xhc3NDb2RlPSJTRExPQyImZ3Q7Jmx0O2lkIHJvb3Q9IjIuMTYuODQw
+LjEuMTEzODgzLjMuMjc3LjEuNjIiIGV4dGVuc2lvbj0iSUhLR0giIGFzc2lnbmluZ0F1dGhvcml0
+eU5hbWU9IklIQSBNZWRpdGVjaCBMb2NhdGlvbiBJZGVudGlmaWVyIiAvJmd0OyZsdDshLS1jb2Rl
+IHJlcHJlc2VudHMgdGhlIHBhdGllbnQgbG9jYXRpb24sIGluIHRoZSBmb3JtICJQdC5UeXBlOlVu
+aXRbOlJvb21bOkJlZF1dIi0tJmd0OyZsdDtjb2RlIGNvZGU9IlJFRjpLRUxLR0hETEIiIGNvZGVT
+eXN0ZW1OYW1lPSJQYXRpZW50IFR5cGU6VW5pdCIgLyZndDsmbHQ7L2hlYWx0aENhcmVGYWNpbGl0
+eSZndDsmbHQ7L2xvY2F0aW9uJmd0OyZsdDsvZW5jb21wYXNzaW5nRW5jb3VudGVyJmd0OyZsdDsv
+Y29tcG9uZW50T2YmZ3Q7Jmx0OyEtLSAmIzEzOwoJCQkJKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiomIzEzOwoJCQkJQ0RBIEJvZHk6IExldmVs
+IDMgLSBEaXNjcmV0ZSBMYWIgUmVzdWx0cyAgJiMxMzsKCQkJCSoqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqJiMxMzsKCQkJLS0mZ3Q7Jmx0O2Nv
+bXBvbmVudCB0eXBlQ29kZT0iQ09NUCImZ3Q7Jmx0O3N0cnVjdHVyZWRCb2R5IGNsYXNzQ29kZT0i
+RE9DQk9EWSIgbW9vZENvZGU9IkVWTiImZ3Q7Jmx0O2NvbXBvbmVudCB0eXBlQ29kZT0iQ09NUCIm
+Z3Q7Jmx0O3NlY3Rpb24gY2xhc3NDb2RlPSJET0NTRUNUIiBtb29kQ29kZT0iRVZOIiZndDsmbHQ7
+dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjMuMy4yLjEiIGFzc2lnbmluZ0F1
+dGhvcml0eU5hbWU9IkxhYm9yYXRvcnkgU3BlY2lhbHR5IFNlY3Rpb24iIC8mZ3Q7Jmx0O2NvZGUg
+Y29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIiBjb2RlU3lzdGVtTmFtZT0iTE9JTkMg
+Q29kZSIgY29kZT0iMjY0MzYtNiIgZGlzcGxheU5hbWU9IkxhYm9yYXRvcnkgU3R1ZGllcyIgLyZn
+dDsmbHQ7dGl0bGUmZ3Q7TGFib3JhdG9yeSBTdHVkaWVzJmx0Oy90aXRsZSZndDsmbHQ7Y29tcG9u
+ZW50IHR5cGVDb2RlPSJDT01QIiZndDsmbHQ7c2VjdGlvbiBjbGFzc0NvZGU9IkRPQ1NFQ1QiIG1v
+b2RDb2RlPSJFVk4iJmd0OyZsdDt0ZW1wbGF0ZUlkIHJvb3Q9IjEuMy42LjEuNC4xLjE5Mzc2LjEu
+My4zLjIuMiIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iTGFib3JhdG9yeSBSZXBvcnQgSXRlbSBT
+ZWN0aW9uIiAvJmd0OyZsdDtjb2RlIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjIuMjAu
+NS4xIiBjb2RlU3lzdGVtTmFtZT0icENMT0NEIiBjb2RlPSIxNzEuMDMwMCIgZGlzcGxheU5hbWU9
+IkZJVCIgLyZndDsmbHQ7IS0tID09PT0gRGVyaXZlZCBUZXh0IFJlcHJlc2VudGF0aW9uIG9mIERp
+c2NyZXRlIExhYiBSZXN1bHRzID09PT0gLS0mZ3Q7Jmx0O3RpdGxlJmd0O0ZJVCZsdDsvdGl0bGUm
+Z3Q7Jmx0O3RleHQmZ3Q7Jmx0O3RhYmxlJmd0OyZsdDtjYXB0aW9uJmd0O1NwZWNpbWVuIEluZm9y
+bWF0aW9uJmx0Oy9jYXB0aW9uJmd0OyZsdDt0Ym9keSZndDsmbHQ7dHImZ3Q7Jmx0O3RoJmd0O1Nw
+ZWNpbWVuICM6Jmx0Oy90aCZndDsmbHQ7dGQmZ3Q7UFQyNzAyOkMwMDAzMlImbHQ7L3RkJmd0OyZs
+dDsvdHImZ3Q7Jmx0O3RyJmd0OyZsdDt0aCZndDtDb2xsZWN0ZWQ6Jmx0Oy90aCZndDsmbHQ7dGQm
+Z3Q7MjcvRmViLzIwMTkgMTU6MDUgUFNUJmx0Oy90ZCZndDsmbHQ7L3RyJmd0OyZsdDt0ciZndDsm
+bHQ7dGgmZ3Q7UmVjZWl2ZWQ6Jmx0Oy90aCZndDsmbHQ7dGQmZ3Q7MjcvRmViLzIwMTkgMTU6MDUg
+UFNUJmx0Oy90ZCZndDsmbHQ7L3RyJmd0OyZsdDt0ciZndDsmbHQ7dGgmZ3Q7UmVxdWlzaXRpb24g
+IzombHQ7L3RoJmd0OyZsdDt0ZCZndDtJSEtHSC0yMDE5MDIyNy0wMDAzMDE3OSZsdDsvdGQmZ3Q7
+Jmx0Oy90ciZndDsmbHQ7L3Rib2R5Jmd0OyZsdDsvdGFibGUmZ3Q7Jmx0O2JyIC8mZ3Q7Jmx0O3Rh
+YmxlJmd0OyZsdDtjYXB0aW9uJmd0OzE3MS4wMzAwIEZJVCZsdDsvY2FwdGlvbiZndDsmbHQ7dGJv
+ZHkmZ3Q7Jmx0O3RyJmd0OyZsdDt0aCZndDtDb21tZW50cyZsdDsvdGgmZ3Q7Jmx0O3RkIGNvbHNw
+YW49IjciJmd0O1JlcXVpc2l0aW9uIG1hcmtlZCBhcyBjb3B5IHRvIENvbG9uIFNjcmVlbmluZyBQ
+cm9ncmFtPyBZZXMmbHQ7YnIgLyZndDsmbHQ7L3RkJmd0OyZsdDsvdHImZ3Q7Jmx0O3RyJmd0OyZs
+dDt0ZCBjb2xzcGFuPSI4IiAvJmd0OyZsdDsvdHImZ3Q7Jmx0O3RyJmd0OyZsdDt0aCZndDtUZXN0
+IElEOiZsdDsvdGgmZ3Q7Jmx0O3RoJmd0O1Rlc3QgTmFtZTombHQ7L3RoJmd0OyZsdDt0aCZndDtU
+ZXN0IFJlc3VsdDombHQ7L3RoJmd0OyZsdDt0aCZndDtSZXN1bHQgRmxhZ3M6Jmx0Oy90aCZndDsm
+bHQ7dGgmZ3Q7UmVmZXJlbmNlIFJhbmdlOiZsdDsvdGgmZ3Q7Jmx0O3RoJmd0O1Jlc3VsdCBVbml0
+czombHQ7L3RoJmd0OyZsdDt0aCZndDtUaW1lIFJlc3VsdGVkOiZsdDsvdGgmZ3Q7Jmx0O3RoJmd0
+O1N0YXR1czombHQ7L3RoJmd0OyZsdDsvdHImZ3Q7Jmx0OyEtLSAxIC0gT2NjdWx0IEJsb29kOyBJ
+bW11bm9jaGVtaWNhbCAtLSZndDsmbHQ7dHIgSUQ9InA1ODQ1My0yXzEtMSImZ3Q7Jmx0O3RkJmd0
+OzU4NDUzLTImbHQ7L3RkJmd0OyZsdDt0ZCZndDtPY2N1bHQgQmxvb2Q7IEltbXVub2NoZW1pY2Fs
+Jmx0Oy90ZCZndDsmbHQ7dGQmZ3Q7TkQmbHQ7L3RkJmd0OyZsdDt0ZCAvJmd0OyZsdDt0ZCZndDsw
+LTQ5Jmx0Oy90ZCZndDsmbHQ7dGQmZ3Q7bmcvbUwmbHQ7L3RkJmd0OyZsdDt0ZCZndDsyNy9GZWIv
+MjAxOSAxNTowNiBQU1QmbHQ7L3RkJmd0OyZsdDt0ZCZndDsmbHQ7Y29udGVudCZndDtjb21wbGV0
+ZWQmbHQ7L2NvbnRlbnQmZ3Q7Jmx0Oy90ZCZndDsmbHQ7L3RyJmd0OyZsdDshLS0gMiAtIEZJVCBR
+dWFsaXRhdGl2ZSAtLSZndDsmbHQ7dHIgSUQ9InA2MDIuODE1N18yLTEiJmd0OyZsdDt0ZCZndDs2
+MDIuODE1NyZsdDsvdGQmZ3Q7Jmx0O3RkJmd0O0ZJVCBRdWFsaXRhdGl2ZSZsdDsvdGQmZ3Q7Jmx0
+O3RkJmd0O05EJmx0Oy90ZCZndDsmbHQ7dGQgLyZndDsmbHQ7dGQmZ3Q7TmVnYXRpdmUmbHQ7L3Rk
+Jmd0OyZsdDt0ZCAvJmd0OyZsdDt0ZCZndDsyNy9GZWIvMjAxOSAxNTowNiBQU1QmbHQ7L3RkJmd0
+OyZsdDt0ZCZndDsmbHQ7Y29udGVudCZndDtjb21wbGV0ZWQmbHQ7L2NvbnRlbnQmZ3Q7Jmx0Oy90
+ZCZndDsmbHQ7L3RyJmd0OyZsdDt0ciZndDsmbHQ7dGQgY29sc3Bhbj0iMiIgLyZndDsmbHQ7dGQg
+Y29sc3Bhbj0iOSImZ3Q7Jmx0O2NvbnRlbnQgc3R5bGVDb2RlPSJCb2xkIiZndDtPYnNlcnZhdGlv
+biBOb3RlczombHQ7L2NvbnRlbnQmZ3Q7Jmx0O2JyIC8mZ3Q7U3BlY2ltZW4gd2FzIHJlamVjdGVk
+IGR1ZSB0bzogcGF0aWVudCBJRCBlcnJvci4mbHQ7YnIgLyZndDsmbHQ7YnIgLyZndDtQaHlzaWNp
+YW4gbm90aWZpZWQ/IFkgKFkvTikmbHQ7YnIgLyZndDsmbHQ7YnIgLyZndDtQYXRpZW50IHJlY2Fs
+bGVkIGJ5IExhYj8gTiAoWS9OKSZsdDticiAvJmd0OyZsdDticiAvJmd0OyZsdDsvdGQmZ3Q7Jmx0
+Oy90ciZndDsmbHQ7L3Rib2R5Jmd0OyZsdDsvdGFibGUmZ3Q7Jmx0O2JyIC8mZ3Q7Jmx0O2JyIC8m
+Z3Q7Jmx0O3RhYmxlJmd0OyZsdDt0Ym9keSZndDsmbHQ7dHImZ3Q7Jmx0O3RoJmd0O1Jlc3VsdCBG
+bGFncyBMZWdlbmQ6Jmx0Oy90aCZndDsmbHQ7dGQmZ3Q7Jmx0O2NvbnRlbnQmZ3Q7TiZsdDsvY29u
+dGVudCZndDsmbHQ7YnIgLyZndDsmbHQ7Y29udGVudCBzdHlsZUNvZGU9ImFsZXJ0IiZndDtIJmx0
+Oy9jb250ZW50Jmd0Oy8mbHQ7Y29udGVudCBzdHlsZUNvZGU9ImFsZXJ0IiZndDtMJmx0Oy9jb250
+ZW50Jmd0Oy8mbHQ7Y29udGVudCBzdHlsZUNvZGU9ImFsZXJ0IiZndDtBJmx0Oy9jb250ZW50Jmd0
+OyZsdDticiAvJmd0OyZsdDtjb250ZW50IHN0eWxlQ29kZT0iYWxlcnQiJmd0O0hIJmx0Oy9jb250
+ZW50Jmd0Oy8mbHQ7Y29udGVudCBzdHlsZUNvZGU9ImFsZXJ0IiZndDtMTCZsdDsvY29udGVudCZn
+dDsvJmx0O2NvbnRlbnQgc3R5bGVDb2RlPSJhbGVydCImZ3Q7QUEmbHQ7L2NvbnRlbnQmZ3Q7Jmx0
+Oy90ZCZndDsmbHQ7dGQmZ3Q7Tm9ybWFsJmx0O2JyIC8mZ3Q7QWJub3JtYWwgVmFsdWUmbHQ7YnIg
+LyZndDtDcml0aWNhbCBWYWx1ZSZsdDsvdGQmZ3Q7Jmx0Oy90ciZndDsmbHQ7dHImZ3Q7Jmx0O3Ro
+Jmd0O1BlcmZvcm1pbmcgTGFiOiZsdDsvdGgmZ3Q7Jmx0O3RkIGNvbHNwYW49IjIiJmd0O0lIS0dI
+IC0gS2Vsb3duYSBHZW5lcmFsIEhvc3AmbHQ7L3RkJmd0OyZsdDsvdHImZ3Q7Jmx0O3RyJmd0OyZs
+dDt0aCZndDtDb2xsZWN0aW5nIExhYjombHQ7L3RoJmd0OyZsdDt0ZCBjb2xzcGFuPSIyIiZndDtJ
+SEtHSCAtIEludGVyaW9yIEhlYWx0aCBBdXRob3JpdHkmbHQ7L3RkJmd0OyZsdDsvdHImZ3Q7Jmx0
+O3RyJmd0OyZsdDt0aCZndDtSZXBvcnQgU3RhdHVzOiZsdDsvdGgmZ3Q7Jmx0O3RkIGNvbHNwYW49
+IjIiJmd0O2NvbXBsZXRlZCZsdDsvdGQmZ3Q7Jmx0Oy90ciZndDsmbHQ7L3Rib2R5Jmd0OyZsdDsv
+dGFibGUmZ3Q7Jmx0O2Zvb3Rub3RlJmd0OyZsdDticiAvJmd0OyZsdDticiAvJmd0OyZsdDtwYXJh
+Z3JhcGgmZ3Q7Jmx0O2NvbnRlbnQgc3R5bGVDb2RlPSJCb2xkIiZndDtJTlFVSVJJRVMgLSAmbHQ7
+L2NvbnRlbnQmZ3Q7UGxlYXNlIGRpcmVjdCBhbGwgaW5xdWlyaWVzIHRvIHRoZSBDb2xsZWN0aW5n
+IExhYi4mbHQ7L3BhcmFncmFwaCZndDsmbHQ7cGFyYWdyYXBoJmd0OyZsdDtjb250ZW50IHN0eWxl
+Q29kZT0iQm9sZCImZ3Q7Q09ORklERU5USUFMIC0gJmx0Oy9jb250ZW50Jmd0O1RoaXMgY2xpbmlj
+YWwgZG9jdW1lbnQgY29udGFpbnMgY29uZmlkZW50aWFsIHBlcnNvbmFsIGluZm9ybWF0aW9uIGFu
+ZCBpcyBmb3IgZGlyZWN0IGNhcmUgcHVycG9zZXMgb25seS4gIFBsZWFzZSB1c2UsIGNvcHkgYW5k
+IHNoYXJlIHdpdGggYXV0aG9yaXplZCBpbmRpdmlkdWFscyBvbmx5LiZsdDsvcGFyYWdyYXBoJmd0
+OyZsdDtwYXJhZ3JhcGgmZ3Q7Jmx0O2NvbnRlbnQgc3R5bGVDb2RlPSJDZW50ZXIiJmd0OyoqKiBJ
+ZiByZWNlaXZlZCBpbiBlcnJvciBjYWxsIElIIEluZm9ybWF0aW9uIFByaXZhY3kgJmFtcDthbXA7
+IFNlY3VyaXR5IHRvbGwgZnJlZSBhdCAxLTg1NS05ODAtNTAyMCAqKiombHQ7L2NvbnRlbnQmZ3Q7
+Jmx0Oy9wYXJhZ3JhcGgmZ3Q7Jmx0O3BhcmFncmFwaCZndDsmbHQ7Y29udGVudCBzdHlsZUNvZGU9
+IkJvbGQiJmd0O0VORCBPRiBSRVBPUlQmbHQ7L2NvbnRlbnQmZ3Q7Jmx0Oy9wYXJhZ3JhcGgmZ3Q7
+Jmx0Oy9mb290bm90ZSZndDsmbHQ7L3RleHQmZ3Q7Jmx0OyEtLSA9PT09IE1hY2hpbmUgUmVhZGFi
+bGUgSEw3IFYzIFJlcHJlc2VudGF0aW9uIG9mIERpc2NyZXRlIExhYiBSZXN1bHRzID09PT0gLS0m
+Z3Q7Jmx0O2VudHJ5IHR5cGVDb2RlPSJEUklWIiZndDsmbHQ7dGVtcGxhdGVJZCByb290PSIxLjMu
+Ni4xLjQuMS4xOTM3Ni4xLjMuMSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iTGFib3JhdG9yeSBS
+ZXBvcnQgRGF0YSBQcm9jZXNzaW5nIEVudHJ5IiAvJmd0OyZsdDthY3QgY2xhc3NDb2RlPSJBQ1Qi
+IG1vb2RDb2RlPSJFVk4iJmd0OyZsdDtjb2RlIG51bGxGbGF2b3I9Ik5BIiAvJmd0OyZsdDtzdGF0
+dXNDb2RlIGNvZGU9ImNvbXBsZXRlZCIgLyZndDsmbHQ7IS0tU3BlY2ltZW4gQ29sbGVjdGlvbjog
+UFQyNzAyOkMwMDAzMlItLSZndDsmbHQ7ZW50cnlSZWxhdGlvbnNoaXAgdHlwZUNvZGU9IkNPTVAi
+Jmd0OyZsdDtwcm9jZWR1cmUgY2xhc3NDb2RlPSJQUk9DIiBtb29kQ29kZT0iRVZOIiZndDsmbHQ7
+dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjMuMS4yIiBhc3NpZ25pbmdBdXRo
+b3JpdHlOYW1lPSJTcGVjaW1lbiBDb2xsZWN0aW9uIiAvJmd0OyZsdDtjb2RlIGNvZGVTeXN0ZW09
+IjIuMTYuODQwLjEuMTEzODgzLjYuMSIgY29kZVN5c3RlbU5hbWU9IkxPSU5DIENvZGUiIGNvZGU9
+IjMzODgyLTIiIGRpc3BsYXlOYW1lPSJTcGVjaW1lbiBDb2xsZWN0aW9uIiAvJmd0OyZsdDshLS1T
+cGVjaW1lbiBDb2xsZWN0ZWQgRGF0ZVRpbWUgKE9CUi43KS0tJmd0OyZsdDtlZmZlY3RpdmVUaW1l
+IHZhbHVlPSIyMDE5MDIyNzE1MDUtMDgwMCIgLyZndDsmbHQ7IS0tVGFyZ2V0IFNpdGUgZnJvbSBP
+QlIuMTUtLSZndDsmbHQ7IS0tU3BlY2ltZW4gTnVtYmVyIChPQlIuMyktLSZndDsmbHQ7cGFydGlj
+aXBhbnQgdHlwZUNvZGU9IlBSRCImZ3Q7Jmx0O3BhcnRpY2lwYW50Um9sZSBjbGFzc0NvZGU9IlNQ
+RUMiJmd0OyZsdDtpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjExIiBleHRlbnNp
+b249IlBUMjcwMjpDMDAwMzJSIiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEgTWVkaXRlY2gg
+U3BlY2ltZW4gTnVtYmVyIiAvJmd0OyZsdDtwbGF5aW5nRW50aXR5Jmd0OyZsdDtjb2RlIG51bGxG
+bGF2b3I9IlVOSyIgLyZndDsmbHQ7L3BsYXlpbmdFbnRpdHkmZ3Q7Jmx0Oy9wYXJ0aWNpcGFudFJv
+bGUmZ3Q7Jmx0Oy9wYXJ0aWNpcGFudCZndDsmbHQ7IS0tU3BlY2ltZW4gUmVjZWl2ZWQgRGF0ZVRp
+bWUgKE9CUi4xNCktLSZndDsmbHQ7ZW50cnlSZWxhdGlvbnNoaXAgdHlwZUNvZGU9IkNPTVAiJmd0
+OyZsdDthY3QgY2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2RlPSJFVk4iJmd0OyZsdDt0ZW1wbGF0ZUlk
+IHJvb3Q9IjEuMy42LjEuNC4xLjE5Mzc2LjEuMy4xLjMiIC8mZ3Q7Jmx0O2NvZGUgY29kZT0iU1BS
+RUNFSVZFIiBjb2RlU3lzdGVtPSIxLjMuNS4xLjQuMS4xOTM3Ni4xLjUuMy4yIiBjb2RlU3lzdGVt
+TmFtZT0iSUhFQWN0Q29kZSIgLyZndDsmbHQ7IS0tT0JSLjE0IFNwZWNpbWVuIERhdGUgUmVjZWl2
+ZWQtLSZndDsmbHQ7ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAyMjcxNTA1LTA4MDAiIC8mZ3Q7
+Jmx0Oy9hY3QmZ3Q7Jmx0Oy9lbnRyeVJlbGF0aW9uc2hpcCZndDsmbHQ7L3Byb2NlZHVyZSZndDsm
+bHQ7L2VudHJ5UmVsYXRpb25zaGlwJmd0OyZsdDshLS0gQmF0dGVyeTogRklUIC0tJmd0OyZsdDtl
+bnRyeVJlbGF0aW9uc2hpcCB0eXBlQ29kZT0iQ09NUCImZ3Q7Jmx0O29yZ2FuaXplciBjbGFzc0Nv
+ZGU9IkJBVFRFUlkiIG1vb2RDb2RlPSJFVk4iJmd0OyZsdDt0ZW1wbGF0ZUlkIHJvb3Q9IjEuMy42
+LjEuNC4xLjE5Mzc2LjEuMy4xLjQiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkxhYm9yYXRvcnkg
+QmF0dGVyeSBPcmdhbml6ZXIiIC8mZ3Q7Jmx0O2lkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMu
+Mjc3LjEuMTEiIGV4dGVuc2lvbj0iUFQyNzAyOkMwMDAzMlIiIGFzc2lnbmluZ0F1dGhvcml0eU5h
+bWU9IklIQSBNZWRpdGVjaCBTcGVjaW1lbiBOdW1iZXIiIC8mZ3Q7Jmx0O2NvZGUgY29kZVN5c3Rl
+bT0iMi4xNi44NDAuMS4xMTM4ODMuMi4yMC41LjEiIGNvZGVTeXN0ZW1OYW1lPSJwQ0xPQ0QiIGNv
+ZGU9IjE3MS4wMzAwIiBkaXNwbGF5TmFtZT0iRklUIiAvJmd0OyZsdDtzdGF0dXNDb2RlIGNvZGU9
+ImNvbXBsZXRlZCIgLyZndDsmbHQ7IS0tUmVzdWx0cyBDb21wb3NlZCBEYXRlVGltZSAoT0JSLjIy
+KS0tJmd0OyZsdDtlZmZlY3RpdmVUaW1lIHZhbHVlPSIyMDE5MDIyNzE1MDYtMDgwMCIgLyZndDsm
+bHQ7IS0tQXNzb2NpYXRlZCBCYXR0ZXJ5IE9ic2VydmF0aW9uIEFubm90YXRpb24tLSZndDsmbHQ7
+Y29tcG9uZW50IHR5cGVDb2RlPSJDT01QIiZndDsmbHQ7YWN0IGNsYXNzQ29kZT0iQUNUIiBtb29k
+Q29kZT0iRVZOIiZndDsmbHQ7dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjUu
+My4xLjQuMiIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQW5ub3RhdGlvbiBDb21tZW50IiAvJmd0
+OyZsdDtjb2RlIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIgY29kZVN5c3RlbU5h
+bWU9IkxPSU5DIENvZGUiIGNvZGU9IjQ4NzY3LTgiIGRpc3BsYXlOYW1lPSJBbm5vdGF0aW9uIENv
+bW1lbnQiIC8mZ3Q7Jmx0O3RleHQmZ3Q7UmVxdWlzaXRpb24gbWFya2VkIGFzIGNvcHkgdG8gQ29s
+b24gU2NyZWVuaW5nIFByb2dyYW0/IFllcyZsdDsvdGV4dCZndDsmbHQ7c3RhdHVzQ29kZSBjb2Rl
+PSJjb21wbGV0ZWQiIC8mZ3Q7Jmx0Oy9hY3QmZ3Q7Jmx0Oy9jb21wb25lbnQmZ3Q7Jmx0OyEtLSAx
+IC0gT2NjdWx0IEJsb29kOyBJbW11bm9jaGVtaWNhbCAtLSZndDsmbHQ7Y29tcG9uZW50IHR5cGVD
+b2RlPSJDT01QIiZndDsmbHQ7b2JzZXJ2YXRpb24gY2xhc3NDb2RlPSJPQlMiIG1vb2RDb2RlPSJF
+Vk4iJmd0OyZsdDt0ZW1wbGF0ZUlkIHJvb3Q9IjEuMy42LjEuNC4xLjE5Mzc2LjEuMy4xLjYiIGFz
+c2lnbmluZ0F1dGhvcml0eU5hbWU9IkxhYm9yYXRvcnkgT2JzZXJ2YXRpb24iIC8mZ3Q7Jmx0O2Nv
+ZGUgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuMi4yMC41LjEiIGNvZGVTeXN0ZW1OYW1l
+PSJwQ0xPQ0QiIGNvZGU9IjU4NDUzLTIiIGRpc3BsYXlOYW1lPSJPY2N1bHQgQmxvb2Q7IEltbXVu
+b2NoZW1pY2FsIiAvJmd0OyZsdDtzdGF0dXNDb2RlIGNvZGU9ImNvbXBsZXRlZCIgLyZndDsmbHQ7
+IS0tUmVzdWx0ZWQgRGF0ZVRpbWUgKE9CWC4xNCktLSZndDsmbHQ7ZWZmZWN0aXZlVGltZSB2YWx1
+ZT0iMjAxOTAyMjcxNTA2LTA4MDAiIC8mZ3Q7Jmx0O3ZhbHVlIG1lZGlhVHlwZT0idGV4dC9wbGFp
+biIgcmVwcmVzZW50YXRpb249IlRYVCIgeHNpOnR5cGU9IlNUIiZndDtORCBuZy9tTCZsdDsvdmFs
+dWUmZ3Q7Jmx0O3BlcmZvcm1lciB0eXBlQ29kZT0iUFJGIiZndDsmbHQ7YXNzaWduZWRFbnRpdHkg
+Y2xhc3NDb2RlPSJBU1NJR05FRCImZ3Q7Jmx0O2lkIG51bGxGbGF2b3I9Ik5JIiAvJmd0OyZsdDty
+ZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0NvZGU9Ik9SRyIgZGV0ZXJtaW5lckNvZGU9IklO
+U1RBTkNFIiZndDsmbHQ7aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS42MiIgZXh0
+ZW5zaW9uPSJJSEtHSCIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIExhYiBQcm92aWRlciIg
+LyZndDsmbHQ7bmFtZSZndDtLZWxvd25hIEdlbmVyYWwgSG9zcCZsdDsvbmFtZSZndDsmbHQ7L3Jl
+cHJlc2VudGVkT3JnYW5pemF0aW9uJmd0OyZsdDsvYXNzaWduZWRFbnRpdHkmZ3Q7Jmx0Oy9wZXJm
+b3JtZXImZ3Q7Jmx0O3JlZmVyZW5jZVJhbmdlJmd0OyZsdDtvYnNlcnZhdGlvblJhbmdlJmd0OyZs
+dDt2YWx1ZSBtZWRpYVR5cGU9InRleHQvcGxhaW4iIHJlcHJlc2VudGF0aW9uPSJUWFQiIHhzaTp0
+eXBlPSJTVCImZ3Q7MC00OSZsdDsvdmFsdWUmZ3Q7Jmx0Oy9vYnNlcnZhdGlvblJhbmdlJmd0OyZs
+dDsvcmVmZXJlbmNlUmFuZ2UmZ3Q7Jmx0Oy9vYnNlcnZhdGlvbiZndDsmbHQ7L2NvbXBvbmVudCZn
+dDsmbHQ7IS0tIDIgLSBGSVQgUXVhbGl0YXRpdmUgLS0mZ3Q7Jmx0O2NvbXBvbmVudCB0eXBlQ29k
+ZT0iQ09NUCImZ3Q7Jmx0O29ic2VydmF0aW9uIGNsYXNzQ29kZT0iT0JTIiBtb29kQ29kZT0iRVZO
+IiZndDsmbHQ7dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjMuMS42IiBhc3Np
+Z25pbmdBdXRob3JpdHlOYW1lPSJMYWJvcmF0b3J5IE9ic2VydmF0aW9uIiAvJmd0OyZsdDtjb2Rl
+IGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjIuMjAuNS4xIiBjb2RlU3lzdGVtTmFtZT0i
+cENMT0NEIiBjb2RlPSI2MDIuODE1NyIgZGlzcGxheU5hbWU9IkZJVCBRdWFsaXRhdGl2ZSIgLyZn
+dDsmbHQ7c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0ZWQiIC8mZ3Q7Jmx0OyEtLVJlc3VsdGVkIERh
+dGVUaW1lIChPQlguMTQpLS0mZ3Q7Jmx0O2VmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMjI3MTUw
+Ni0wODAwIiAvJmd0OyZsdDt2YWx1ZSBtZWRpYVR5cGU9InRleHQvcGxhaW4iIHJlcHJlc2VudGF0
+aW9uPSJUWFQiIHhzaTp0eXBlPSJTVCImZ3Q7TkQmbHQ7L3ZhbHVlJmd0OyZsdDtwZXJmb3JtZXIg
+dHlwZUNvZGU9IlBSRiImZ3Q7Jmx0O2Fzc2lnbmVkRW50aXR5IGNsYXNzQ29kZT0iQVNTSUdORUQi
+Jmd0OyZsdDtpZCBudWxsRmxhdm9yPSJOSSIgLyZndDsmbHQ7cmVwcmVzZW50ZWRPcmdhbml6YXRp
+b24gY2xhc3NDb2RlPSJPUkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSImZ3Q7Jmx0O2lkIHJv
+b3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEuNjIiIGV4dGVuc2lvbj0iSUhLR0giIGFzc2ln
+bmluZ0F1dGhvcml0eU5hbWU9IklIQSBMYWIgUHJvdmlkZXIiIC8mZ3Q7Jmx0O25hbWUmZ3Q7S2Vs
+b3duYSBHZW5lcmFsIEhvc3AmbHQ7L25hbWUmZ3Q7Jmx0Oy9yZXByZXNlbnRlZE9yZ2FuaXphdGlv
+biZndDsmbHQ7L2Fzc2lnbmVkRW50aXR5Jmd0OyZsdDsvcGVyZm9ybWVyJmd0OyZsdDtlbnRyeVJl
+bGF0aW9uc2hpcCB0eXBlQ29kZT0iQ09NUCImZ3Q7Jmx0O2FjdCBjbGFzc0NvZGU9IkFDVCIgbW9v
+ZENvZGU9IkVWTiImZ3Q7Jmx0O3RlbXBsYXRlSWQgcm9vdD0iMS4zLjYuMS40LjEuMTkzNzYuMS41
+LjMuMS40LjIiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkFubm90YXRpb24gQ29tbWVudCIgLyZn
+dDsmbHQ7Y29kZSBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiIGNvZGVTeXN0ZW1O
+YW1lPSJMT0lOQyBDb2RlIiBjb2RlPSI0ODc2Ny04IiBkaXNwbGF5TmFtZT0iQW5ub3RhdGlvbiBD
+b21tZW50IiAvJmd0OyZsdDt0ZXh0Jmd0O1NwZWNpbWVuIHdhcyByZWplY3RlZCBkdWUgdG86IHBh
+dGllbnQgSUQgZXJyb3IuJiMxMzsKCQkJJiMxMzsKCQkJUGh5c2ljaWFuIG5vdGlmaWVkPyBZIChZ
+L04pJiMxMzsKCQkJJiMxMzsKCQkJUGF0aWVudCByZWNhbGxlZCBieSBMYWI/IE4gKFkvTikmIzEz
+OwoJCQkmbHQ7L3RleHQmZ3Q7Jmx0O3N0YXR1c0NvZGUgY29kZT0iY29tcGxldGVkIiAvJmd0OyZs
+dDsvYWN0Jmd0OyZsdDsvZW50cnlSZWxhdGlvbnNoaXAmZ3Q7Jmx0O3JlZmVyZW5jZVJhbmdlJmd0
+OyZsdDtvYnNlcnZhdGlvblJhbmdlJmd0OyZsdDt2YWx1ZSBtZWRpYVR5cGU9InRleHQvcGxhaW4i
+IHJlcHJlc2VudGF0aW9uPSJUWFQiIHhzaTp0eXBlPSJTVCImZ3Q7TmVnYXRpdmUmbHQ7L3ZhbHVl
+Jmd0OyZsdDsvb2JzZXJ2YXRpb25SYW5nZSZndDsmbHQ7L3JlZmVyZW5jZVJhbmdlJmd0OyZsdDsv
+b2JzZXJ2YXRpb24mZ3Q7Jmx0Oy9jb21wb25lbnQmZ3Q7Jmx0Oy9vcmdhbml6ZXImZ3Q7Jmx0Oy9l
+bnRyeVJlbGF0aW9uc2hpcCZndDsmbHQ7L2FjdCZndDsmbHQ7L2VudHJ5Jmd0OyZsdDsvc2VjdGlv
+biZndDsmbHQ7L2NvbXBvbmVudCZndDsmbHQ7L3NlY3Rpb24mZ3Q7Jmx0Oy9jb21wb25lbnQmZ3Q7
+Jmx0O2NvbXBvbmVudCB0eXBlQ29kZT0iQ09NUCImZ3Q7Jmx0O3NlY3Rpb24gY2xhc3NDb2RlPSJE
+T0NTRUNUIiBtb29kQ29kZT0iRVZOIiZndDsmbHQ7dGVtcGxhdGVJZCByb290PSIyLjE2Ljg0MC4x
+LjExMzg4My4zLjI3Ny4xMDAuNDAiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9Ikluc3RydWN0aW9u
+YWwgQ29udGVudCBDb21wb25lbnQiIC8mZ3Q7Jmx0O3RleHQmZ3Q7JiMxMzsKJiMxMzsKQ29sbGVj
+dGluZyBMYWI6IElIS0dIIC0gSW50ZXJpb3IgSGVhbHRoIEF1dGhvcml0eSYjMTM7ClBlcmZvcm1p
+bmcgTGFiOiBJSEtHSCAtIEtlbG93bmEgR2VuZXJhbCBIb3NwJiMxMzsKSU5RVUlSSUVTIC0gUGxl
+YXNlIGRpcmVjdCBhbGwgaW5xdWlyaWVzIHRvIHRoZSBDb2xsZWN0aW5nIExhYi4mIzEzOwpDT05G
+SURFTlRJQUwgLSBUaGlzIGNsaW5pY2FsIGRvY3VtZW50IGNvbnRhaW5zIGNvbmZpZGVudGlhbCBw
+ZXJzb25hbCBpbmZvcm1hdGlvbiBhbmQgaXMgZm9yIGRpcmVjdCBjYXJlIHB1cnBvc2VzIG9ubHku
+IFBsZWFzZSB1c2UsIGNvcHkgYW5kIHNoYXJlIHdpdGggYXV0aG9yaXplZCBpbmRpdmlkdWFscyBv
+bmx5LiYjMTM7CiAgICAgICAgICAgICAgICAmIzEzOwomIzEzOwogICAgKioqIElmIHJlY2VpdmVk
+IGluIGVycm9yIGNhbGwgSUggSW5mb3JtYXRpb24gUHJpdmFjeSAmYW1wO2FtcDsgU2VjdXJpdHkg
+dG9sbCBmcmVlIGF0IDEtODU1LTk4MC01MDIwICoqKiAgJiMxMzsKICAgICAgICAgICAgICAgICYj
+MTM7CiZsdDsvdGV4dCZndDsmbHQ7L3NlY3Rpb24mZ3Q7Jmx0Oy9jb21wb25lbnQmZ3Q7Jmx0Oy9z
+dHJ1Y3R1cmVkQm9keSZndDsmbHQ7L2NvbXBvbmVudCZndDsmbHQ7L0NsaW5pY2FsRG9jdW1lbnQm
+Z3Q7PC90ZXh0PgogICAgICAgICAgICAgICAgPHN0YXR1c0NvZGUgY29kZT0iY29tcGxldGVkIi8+
+CiAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAxOTAzMTMxOTA5LTA3MDAi
+Lz4KICAgICAgICAgICAgICAgIDxjb25maWRlbnRpYWxpdHlDb2RlIGNvZGU9Ik4iIGNvZGVTeXN0
+ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIvPgogICAgICAgICAgICAgICAgPHJlY29yZFRhcmdl
+dCBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IlJDVCI+CiAgICAgICAgICAgICAgICAgICAgPHBh
+dGllbnQgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iUEFUIj4KICAgICAgICAgICAgICAgICAg
+ICAgICAgPHBhdGllbnROb25QZXJzb25MaXZpbmdTdWJqZWN0IHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgPHBhdGllbnRQZXJzb24geHNpOm5pbD0idHJ1ZSIgeG1sbnM6eHNp
+PSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAgICAgICAg
+ICAgICAgICAgIDwvcGF0aWVudD4KICAgICAgICAgICAgICAgIDwvcmVjb3JkVGFyZ2V0PgogICAg
+ICAgICAgICAgICAgPGF1dGhvciBudWxsRmxhdm9yPSJOQSIgdHlwZUNvZGU9IkFVVCI+CiAgICAg
+ICAgICAgICAgICAgICAgPHRpbWUgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgICAgICAg
+ICA8YXNzaWduZWRBdXRob3IgbnVsbEZsYXZvcj0iTkEiIGNsYXNzQ29kZT0iQVNTSUdORUQiPgog
+ICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAg
+ICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yaW5nRGV2aWNlIHhzaTpuaWw9InRydWUiIHhtbG5z
+OnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkUGVyc29uIHhzaTpuaWw9InRydWUiIHhtbG5zOnhz
+aT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAgICAg
+ICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgICAgICAgICAgICAgPC9hdXRob3I+CiAg
+ICAgICAgICAgICAgICA8Y3VzdG9kaWFuIG51bGxGbGF2b3I9Ik5BIiB0eXBlQ29kZT0iQ1NUIj4K
+ICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRDdXN0b2RpYW4gY2xhc3NDb2RlPSJBU1NJR05F
+RCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBudWxs
+Rmxhdm9yPSJOQSIgY2xhc3NDb2RlPSJOQVQiIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgbnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAg
+ICAgICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgICAg
+ICAgICA8L2Fzc2lnbmVkQ3VzdG9kaWFuPgogICAgICAgICAgICAgICAgPC9jdXN0b2RpYW4+CiAg
+ICAgICAgICAgICAgICA8aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNvZGU9IlBSQ1AiPgogICAg
+ICAgICAgICAgICAgICAgIDxpbnRlbmRlZFJlY2lwaWVudCBjbGFzc0NvZGU9IkFTU0lHTkVEIj4K
+ICAgICAgICAgICAgICAgICAgICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuNDAu
+Mi4xMSIgZXh0ZW5zaW9uPSI5MzE5NCIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgTWluaXN0
+cnkgUHJhY3RpdGlvbmVyIElEIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjYxIiBleHRlbnNpb249IlBMSVNJSE5PIiBhc3NpZ25p
+bmdBdXRob3JpdHlOYW1lPSJJSEEgTWVkaXRlY2ggSUQiLz4KICAgICAgICAgICAgICAgICAgICAg
+ICAgPGluZm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0i
+SU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPG5hbWU+CiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhnPC9mYW1pbHk+CiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgPGdpdmVuPk5vZWw8L2dpdmVuPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIDxwcmVmaXg+RHIuPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICA8L25hbWU+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvaW5mb3JtYXRpb25SZWNp
+cGllbnQ+CiAgICAgICAgICAgICAgICAgICAgPC9pbnRlbmRlZFJlY2lwaWVudD4KICAgICAgICAg
+ICAgICAgIDwvaW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICAgICAgICAgIDwvdGFyZ2V0PgogICAg
+ICAgIDwvc3ViamVjdD4KICAgICAgICA8cXVlcnlBY2s+CiAgICAgICAgICAgIDxxdWVyeVJlc3Bv
+bnNlQ29kZSBjb2RlPSJPSyIvPgogICAgICAgICAgICA8cmVzdWx0VG90YWxRdWFudGl0eSB2YWx1
+ZT0iMSIvPgogICAgICAgICAgICA8cmVzdWx0Q3VycmVudFF1YW50aXR5IHZhbHVlPSIxIi8+CiAg
+ICAgICAgICAgIDxyZXN1bHRSZW1haW5pbmdRdWFudGl0eSB2YWx1ZT0iMCIvPgogICAgICAgIDwv
+cXVlcnlBY2s+CiAgICA8L2NvbnRyb2xBY3RQcm9jZXNzPgo8L1JDTVJfSU4wMDAwMzJVVjAxPgo=
+</inboundTemplate>
+            <outboundTemplate encoding="base64">ewoJInN0YXR1cyI6ICIiLAoJIm1lc3NhZ2UiOiAiIiwKCSJhY2tEZXRhaWwiOiB7CgkJImFja0lk
+IjogIiIsCgkJImFja1RpbWUiOiAiIiwKCQkibWVzc2FnZUlkIjogIiIKCX0sCgkiYWNrUXVlcnki
+OiB7CgkgICJzdGF0dXMiOiAiIiwKCQkidG90YWwiOiAiIiwKCQkiY3VycmVudCI6ICIiLAoJCSJy
+ZW1haW5pbmciOiAiIiwKCQkiZG9jdW1lbnRzIjogW3sKCQkJImRvY3VtZW50SWQiOiAiIiwKCQkJ
+InR5cGVDb2RlIjogIiIsCgkJCSJlZmZlY3RpdmVUaW1lIjogIiIsCgkJCSJkb2N1bWVudCI6IHt9
+CgkJfV0KCX0KfQ==</outboundTemplate>
+            <inboundDataType>HL7V3</inboundDataType>
+            <outboundDataType>JSON</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>false</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </responseTransformer>
+          <filter version="3.7.0">
+            <elements/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+          <waitForPrevious>false</waitForPrevious>
+        </connector>
+      </destinationConnectors>
+      <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+      <postprocessingScript>// This script executes once after a message has been processed
+// Responses returned from here will be stored as &quot;Postprocessor&quot; in the response map
+return;</postprocessingScript>
+      <deployScript>// This script executes once when the channel is deployed
+// You only have access to the globalMap and globalChannelMap here to persist data
+
+/**** Load the CDA properties ****/
+var properties = new Packages.java.util.Properties();
+var fileProp = new Packages.java.io.FileInputStream(new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)));
+
+properties.load(fileProp);
+globalMap.globalVariableMap.putAll(properties);
+
+fileProp.close();
+logger.debug(&quot;Loaded &apos;&quot; + properties.size() + &quot;&apos; CDA properties&quot;);
+
+return;</deployScript>
+      <undeployScript>// This script executes once when the channel is undeployed
+// You only have access to the globalMap and globalChannelMap here to persist data
+return;</undeployScript>
+      <properties version="3.7.0">
+        <clearGlobalChannelMap>true</clearGlobalChannelMap>
+        <messageStorageMode>DEVELOPMENT</messageStorageMode>
+        <encryptData>false</encryptData>
+        <removeContentOnCompletion>false</removeContentOnCompletion>
+        <removeOnlyFilteredOnCompletion>false</removeOnlyFilteredOnCompletion>
+        <removeAttachmentsOnCompletion>false</removeAttachmentsOnCompletion>
+        <initialState>STARTED</initialState>
+        <storeAttachments>true</storeAttachments>
+        <metaDataColumns>
+          <metaDataColumn>
+            <name>SOURCE</name>
+            <type>STRING</type>
+            <mappingName>mirth_source</mappingName>
+          </metaDataColumn>
+          <metaDataColumn>
+            <name>TYPE</name>
+            <type>STRING</type>
+            <mappingName>mirth_type</mappingName>
+          </metaDataColumn>
+          <metaDataColumn>
+            <name>VERSION</name>
+            <type>STRING</type>
+            <mappingName>mirth_version</mappingName>
+          </metaDataColumn>
+        </metaDataColumns>
+        <attachmentProperties version="3.7.0">
+          <type>None</type>
+          <properties/>
+        </attachmentProperties>
+        <resourceIds class="linked-hash-map">
+          <entry>
+            <string>Default Resource</string>
+            <string>[Default Resource]</string>
+          </entry>
+          <entry>
+            <string>3ee0c1db-83b0-49f6-9323-8884b5bd43da</string>
+            <string>CDA Parser</string>
+          </entry>
+        </resourceIds>
+      </properties>
+      <exportData>
+        <metadata>
+          <enabled>true</enabled>
+          <lastModified>
+            <time>1552931754638</time>
+            <timezone>America/Vancouver</timezone>
+          </lastModified>
+          <pruningSettings>
+            <archiveEnabled>true</archiveEnabled>
+          </pruningSettings>
+        </metadata>
+        <codeTemplateLibraries>
+          <codeTemplateLibrary version="3.7.0">
+            <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
+            <name>OBIB</name>
+            <revision>17</revision>
+            <lastModified>
+              <time>1552675775171</time>
+              <timezone>Etc/UTC</timezone>
+            </lastModified>
+            <description></description>
+            <includeNewChannels>false</includeNewChannels>
+            <enabledChannelIds>
+              <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
+            </enabledChannelIds>
+            <disabledChannelIds/>
+            <codeTemplates>
+              <codeTemplate version="3.7.0">
+                <id>9914a610-67bc-42b7-aa87-6a693ed1800c</id>
+                <name>Build CDA Address</name>
+                <revision>11</revision>
+                <lastModified>
+                  <time>1552676615741</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Build a XML address tag based on &apos;4.2.1.2. Addresses&apos;
+
+	@param {String} use - 
+	@param {String} streetAddress - 
+	@param {String} city - 
+	@param {String} state - 
+	@param {String} postalCode - 
+	@param {String} country - 
+	@return {Object} return the XML address tag
+*/
+function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
+	var addr = new XML(&quot;&lt;addr&gt;&quot; + streetAddress + &quot;&lt;delimiter/&gt;&lt;/addr&gt;&quot;); // CONF-BC0039
+  	addr[&apos;@use&apos;] = use; // CONF-BC0041
+  	addr[&apos;city&apos;] = city 
+  	addr[&apos;state&apos;] = state; // CONF-BC0045
+  	addr[&apos;postalCode&apos;] = postalCode;
+  	if (country) {
+  		addr[&apos;country&apos;] = country; // CONF-BC0044
+  	}
+  	return addr;
+}</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>d56207a8-0d51-40fb-9437-73815405b6a2</id>
+                <name>Build CDA ID</name>
+                <revision>9</revision>
+                <lastModified>
+                  <time>1552929329851</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Build a XML id tag
+
+	@param {String} root - 
+	@param {String} extension - 
+	@return {Object} return the XML id tag
+*/
+function buildCDAId(root, extension) {
+	if (extension) {
+		var id = new XML(&apos;&lt;id/&gt;&apos;);
+	  	id[&apos;@extension&apos;] = extension;
+		if (root) {
+		  	id[&apos;@root&apos;] = root;
+		  	// Get the authority name from the GlobalMap (CDA properties)
+		  	var authName = globalMap.get(root);
+		  	if (authName) {
+		  		id[&apos;@assigningAuthorityName&apos;] = authName;
+		  	}
+		}
+	  	return id;
+	}
+	return new XML(&apos;&lt;id nullFlavor=&quot;NA&quot; /&gt;&apos;);
+}
+
+</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
+                <name>Build CDA Name</name>
+                <revision>11</revision>
+                <lastModified>
+                  <time>1552676615795</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Build a XML name tag based on &apos;4.2.1.1. Person Names&apos;
+
+	@param {String} use -
+	@param {String} family -
+	@param {String} given -
+	@param {String} prefix -
+	@param {String} sufix -
+	@return {Object} return the XML name tag
+*/
+function buildCDAName(use, family, given, prefix, sufix) {
+	var name = new XML(&quot;&lt;name/&gt;&quot;);
+  	name[&apos;@use&apos;] = use; // CONF-BC0038
+  	name[&apos;family&apos;] = family;
+  	if (given instanceof Array) { // CONF-BC0031, CONF-BC0034
+  		for (var i = 0; i &lt; given.length; i++) {
+  			name[&apos;given&apos;][i] = given[i];
+  		}
+  	} else {
+  		name[&apos;given&apos;] = given;
+  	}
+  	if (prefix) { // CONF-BC0035
+  		name[&apos;prefix&apos;] = prefix;
+  	}
+  	if (sufix) { // CONF-BC0036
+  		name[&apos;sufix&apos;] = sufix;
+  	}
+  	return name;
+}</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
+                <name>Build CDA Telecom</name>
+                <revision>7</revision>
+                <lastModified>
+                  <time>1552676615842</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Build a XML telecom tag
+
+	@param {String} use - 
+	@param {String} value - 
+	@return {Object} return the XML telecom tag
+*/
+function buildCDATelecom(use, value) {
+	var telecom = new XML(&quot;&lt;telecom/&gt;&quot;);
+  	telecom[&apos;@use&apos;] = use;
+  	var type = &apos;tel&apos;; // TODO get from &apos;email regex&apos;
+  	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
+  	return telecom;
+}</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>60bfd3ac-552a-4d59-ac1d-48fbe4f430b2</id>
+                <name>Create Error Message</name>
+                <revision>5</revision>
+                <lastModified>
+                  <time>1552674434307</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Create JSON error message
+
+	@param {String} error - 
+	@return {String} return the JSON response
+*/
+function createErrorMessage(error) {
+	return JSON.stringify({&apos;status&apos;: &apos;ERROR&apos;, &apos;message&apos;: error});
+}</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>07a8a226-a4d4-4248-b816-00011d888d0f</id>
+                <name>Format CDA Date/Time</name>
+                <revision>9</revision>
+                <lastModified>
+                  <time>1552931840208</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Format the date/time for the CDA
+
+	@param {String} dateTime - 
+	@return {String} return the formated dateTime
+*/
+function formatCDAdataTime(dateTime) {
+	if (dateTime.lenght &lt;= 10) {
+		return DateUtil.formatDate(&apos;yyyyMMdd&apos;, new Date(dateTime));
+	}
+	return DateUtil.formatDate(&apos;yyyyMMddHHmmZZZ&apos;, new Date(dateTime));
+}</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
+                <name>Handle Return Message</name>
+                <revision>7</revision>
+                <lastModified>
+                  <time>1552676529829</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Handle the return message creation.
+
+	@param {Object} responseStatus - 
+	@param {Object} responseMessage - 
+	@param {Function} createMessage - Callback function responsible for creating and return the result message.
+	@return {String} return the stringify json message
+*/
+function handleResponseMessage(responseStatus, responseMessage, createMessage) {
+	if (responseStatus === SENT) { // process only SENT messages
+		return JSON.stringify(createMessage()); // Convert the json to string and return it
+	} else if (responseStatus === ERROR) {
+		throw msg.toString();
+	} else {
+		throw &quot;Not able to handle the response message: &apos;&quot; + responseMessage + &quot;&apos;\n with status code: &quot; + responseStatus
+	}
+}
+</code>
+                </properties>
+              </codeTemplate>
+            </codeTemplates>
+          </codeTemplateLibrary>
+        </codeTemplateLibraries>
+      </exportData>
+    </channel>
+  </channels>
+</channelGroup>

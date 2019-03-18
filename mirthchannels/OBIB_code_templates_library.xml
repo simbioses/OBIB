@@ -1,0 +1,293 @@
+<codeTemplateLibrary version="3.7.0">
+  <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
+  <name>OBIB</name>
+  <revision>17</revision>
+  <lastModified>
+    <time>1552675775171</time>
+    <timezone>Etc/UTC</timezone>
+  </lastModified>
+  <description></description>
+  <includeNewChannels>false</includeNewChannels>
+  <enabledChannelIds>
+    <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
+  </enabledChannelIds>
+  <disabledChannelIds/>
+  <codeTemplates>
+    <codeTemplate version="3.7.0">
+      <id>9914a610-67bc-42b7-aa87-6a693ed1800c</id>
+      <name>Build CDA Address</name>
+      <revision>11</revision>
+      <lastModified>
+        <time>1552676615741</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Build a XML address tag based on &apos;4.2.1.2. Addresses&apos;
+
+	@param {String} use - 
+	@param {String} streetAddress - 
+	@param {String} city - 
+	@param {String} state - 
+	@param {String} postalCode - 
+	@param {String} country - 
+	@return {Object} return the XML address tag
+*/
+function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
+	var addr = new XML(&quot;&lt;addr&gt;&quot; + streetAddress + &quot;&lt;delimiter/&gt;&lt;/addr&gt;&quot;); // CONF-BC0039
+  	addr[&apos;@use&apos;] = use; // CONF-BC0041
+  	addr[&apos;city&apos;] = city 
+  	addr[&apos;state&apos;] = state; // CONF-BC0045
+  	addr[&apos;postalCode&apos;] = postalCode;
+  	if (country) {
+  		addr[&apos;country&apos;] = country; // CONF-BC0044
+  	}
+  	return addr;
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>d56207a8-0d51-40fb-9437-73815405b6a2</id>
+      <name>Build CDA ID</name>
+      <revision>9</revision>
+      <lastModified>
+        <time>1552929329851</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Build a XML id tag
+
+	@param {String} root - 
+	@param {String} extension - 
+	@return {Object} return the XML id tag
+*/
+function buildCDAId(root, extension) {
+	if (extension) {
+		var id = new XML(&apos;&lt;id/&gt;&apos;);
+	  	id[&apos;@extension&apos;] = extension;
+		if (root) {
+		  	id[&apos;@root&apos;] = root;
+		  	// Get the authority name from the GlobalMap (CDA properties)
+		  	var authName = globalMap.get(root);
+		  	if (authName) {
+		  		id[&apos;@assigningAuthorityName&apos;] = authName;
+		  	}
+		}
+	  	return id;
+	}
+	return new XML(&apos;&lt;id nullFlavor=&quot;NA&quot; /&gt;&apos;);
+}
+
+</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
+      <name>Build CDA Name</name>
+      <revision>11</revision>
+      <lastModified>
+        <time>1552676615795</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Build a XML name tag based on &apos;4.2.1.1. Person Names&apos;
+
+	@param {String} use -
+	@param {String} family -
+	@param {String} given -
+	@param {String} prefix -
+	@param {String} sufix -
+	@return {Object} return the XML name tag
+*/
+function buildCDAName(use, family, given, prefix, sufix) {
+	var name = new XML(&quot;&lt;name/&gt;&quot;);
+  	name[&apos;@use&apos;] = use; // CONF-BC0038
+  	name[&apos;family&apos;] = family;
+  	if (given instanceof Array) { // CONF-BC0031, CONF-BC0034
+  		for (var i = 0; i &lt; given.length; i++) {
+  			name[&apos;given&apos;][i] = given[i];
+  		}
+  	} else {
+  		name[&apos;given&apos;] = given;
+  	}
+  	if (prefix) { // CONF-BC0035
+  		name[&apos;prefix&apos;] = prefix;
+  	}
+  	if (sufix) { // CONF-BC0036
+  		name[&apos;sufix&apos;] = sufix;
+  	}
+  	return name;
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
+      <name>Build CDA Telecom</name>
+      <revision>7</revision>
+      <lastModified>
+        <time>1552676615842</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Build a XML telecom tag
+
+	@param {String} use - 
+	@param {String} value - 
+	@return {Object} return the XML telecom tag
+*/
+function buildCDATelecom(use, value) {
+	var telecom = new XML(&quot;&lt;telecom/&gt;&quot;);
+  	telecom[&apos;@use&apos;] = use;
+  	var type = &apos;tel&apos;; // TODO get from &apos;email regex&apos;
+  	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
+  	return telecom;
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>60bfd3ac-552a-4d59-ac1d-48fbe4f430b2</id>
+      <name>Create Error Message</name>
+      <revision>5</revision>
+      <lastModified>
+        <time>1552674434307</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Create JSON error message
+
+	@param {String} error - 
+	@return {String} return the JSON response
+*/
+function createErrorMessage(error) {
+	return JSON.stringify({&apos;status&apos;: &apos;ERROR&apos;, &apos;message&apos;: error});
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>07a8a226-a4d4-4248-b816-00011d888d0f</id>
+      <name>Format CDA Date/Time</name>
+      <revision>9</revision>
+      <lastModified>
+        <time>1552931840208</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Format the date/time for the CDA
+
+	@param {String} dateTime - 
+	@return {String} return the formated dateTime
+*/
+function formatCDAdataTime(dateTime) {
+	if (dateTime.lenght &lt;= 10) {
+		return DateUtil.formatDate(&apos;yyyyMMdd&apos;, new Date(dateTime));
+	}
+	return DateUtil.formatDate(&apos;yyyyMMddHHmmZZZ&apos;, new Date(dateTime));
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
+      <name>Handle Return Message</name>
+      <revision>7</revision>
+      <lastModified>
+        <time>1552676529829</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Handle the return message creation.
+
+	@param {Object} responseStatus - 
+	@param {Object} responseMessage - 
+	@param {Function} createMessage - Callback function responsible for creating and return the result message.
+	@return {String} return the stringify json message
+*/
+function handleResponseMessage(responseStatus, responseMessage, createMessage) {
+	if (responseStatus === SENT) { // process only SENT messages
+		return JSON.stringify(createMessage()); // Convert the json to string and return it
+	} else if (responseStatus === ERROR) {
+		throw msg.toString();
+	} else {
+		throw &quot;Not able to handle the response message: &apos;&quot; + responseMessage + &quot;&apos;\n with status code: &quot; + responseStatus
+	}
+}
+</code>
+      </properties>
+    </codeTemplate>
+  </codeTemplates>
+</codeTemplateLibrary>

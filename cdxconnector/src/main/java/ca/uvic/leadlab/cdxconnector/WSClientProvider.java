@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.cdxconnector;
 
 import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.PRPMIN306010UV;
 import org.hl7.v3.PRPMIN306011UV;
 import org.hl7.v3.ProviderQuery;
@@ -17,12 +18,24 @@ public class WSClientProvider extends WSClient {
         super(baseUrl, username, password, certPath, certPass);
     }
 
-    public String listProviders(String locationId) throws ConnectorException {
+    public String listProviders(String locationId,
+                                String clinicId, String providerId, String providerName) throws ConnectorException {
         try {
-            PRPMIN306010UV request = new ListProviderBuilder(UUID.randomUUID().toString())
-                    .sender(locationId)
-                    .queryBysdlcId("2.16.840.1.113883.3.277.100.2", locationId)
-                    .build();
+            ListProviderBuilder builder = new ListProviderBuilder(UUID.randomUUID().toString()).sender(locationId);
+
+            // CONF-CDXPR099: If providerID is present, then providerName and sdlcId SHALL NOT be present.
+            if (StringUtils.isNotBlank(providerId)) {
+                builder.queryByProviderId("2.16.840.1.113883.3.40.2.11", providerId); // CONF-CDXPR012
+            } else {
+                if (StringUtils.isNotBlank(providerName)) {
+                    builder.queryByProviderName(providerName); // CONF-CDXPR011
+                }
+                if (StringUtils.isNotBlank(clinicId)) {
+                    builder.queryBysdlcId("2.16.840.1.113883.3.277.100.2", clinicId); // CONF-CDXPR013
+                }
+            }
+
+            PRPMIN306010UV request = builder.build();
 
             WSUtil.logObject(LOGGER, "\nList Provider Request:\n", request);
 

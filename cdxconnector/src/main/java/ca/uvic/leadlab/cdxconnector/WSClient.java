@@ -30,7 +30,7 @@ public abstract class WSClient {
     private char[] certPass;
 
     WSClient(String baseUrl, String username, String password,
-                    String certPath, String certPass) throws ConnectorException {
+             String certPath, String certPass) throws ConnectorException {
         this.baseUrl = baseUrl;
         this.username = username;
         this.password = password;

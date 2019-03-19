@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.cdxconnector;
 
 import ca.uvic.leadlab.cdxconnector.messages.ListClinicBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.ClinicQuery;
 import org.hl7.v3.PRPMIN406010UV01;
 import org.hl7.v3.PRPMIN406110UV01;
@@ -17,12 +18,25 @@ public class WSClientClinic extends WSClient {
         super(baseUrl, username, password, certPath, certPass);
     }
 
-    public String listClinics(String locationId) throws ConnectorException {
+    public String listClinics(String locationId,
+                              String clinicId, String clinicName, String clinicAddress) throws ConnectorException {
         try {
-            PRPMIN406010UV01 request = new ListClinicBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
-                    .sender(locationId) // ID Of requestor
-                    .queryById("2.16.840.1.113883.3.277.100.2", locationId)
-                    .build();
+            // Create the builder with Unique Message ID (GUID) and Requestor ID
+            ListClinicBuilder builder = new ListClinicBuilder(UUID.randomUUID().toString()).sender(locationId);
+
+            // CONF-CDXPR62a: If clinicID is present, then organizationName and organizationAddress SHALL NOT be present.
+            if (StringUtils.isNotBlank(clinicId)) {
+                builder.queryById("2.16.840.1.113883.3.277.100.2", locationId); // CONF-CDXPR061
+            } else {
+                if (StringUtils.isNotBlank(clinicName)) {
+                    builder.queryByName(clinicName); // CONF-CDXPR060
+                }
+                if (StringUtils.isNotBlank(clinicAddress)) {
+                    builder.queryByAddress(clinicAddress); // CONF- CDXPR062
+                }
+            }
+
+            PRPMIN406010UV01 request = builder.build();
 
             WSUtil.logObject(LOGGER, "\nList Clinics Request:\n", request);
 

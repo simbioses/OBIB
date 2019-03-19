@@ -23,10 +23,10 @@
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
       </contextSet>
@@ -66,9 +66,9 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
@@ -112,10 +112,10 @@ function buildCDAId(root, extension) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
       </contextSet>
@@ -162,10 +162,10 @@ function buildCDAName(use, family, given, prefix, sufix) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
       </contextSet>
@@ -197,10 +197,10 @@ function buildCDATelecom(use, value) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
       </contextSet>
@@ -227,9 +227,9 @@ function createErrorMessage(error) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
@@ -253,17 +253,17 @@ function formatCDAdataTime(dateTime) {
     <codeTemplate version="3.7.0">
       <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
       <name>Handle Return Message</name>
-      <revision>7</revision>
+      <revision>10</revision>
       <lastModified>
-        <time>1552676529829</time>
+        <time>1553021983347</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
         </delegate>
       </contextSet>
@@ -273,17 +273,21 @@ function formatCDAdataTime(dateTime) {
 	Handle the return message creation.
 
 	@param {Object} responseStatus - 
+	@param {Object} responseStatusMessage - 
 	@param {Object} responseMessage - 
 	@param {Function} createMessage - Callback function responsible for creating and return the result message.
 	@return {String} return the stringify json message
 */
-function handleResponseMessage(responseStatus, responseMessage, createMessage) {
+function handleResponseMessage(responseStatus, responseStatusMessage, responseMessage, createMessage) {
 	if (responseStatus === SENT) { // process only SENT messages
 		return JSON.stringify(createMessage()); // Convert the json to string and return it
 	} else if (responseStatus === ERROR) {
-		throw msg.toString();
+		throw &quot;Error Message: &apos;&quot; + responseStatusMessage.toString() 
+			+ &quot;&apos;\n Original Message: &apos;&quot; + msg.toString() + &quot;&apos;&quot;;
 	} else {
-		throw &quot;Not able to handle the response message: &apos;&quot; + responseMessage + &quot;&apos;\n with status code: &quot; + responseStatus
+		throw &quot;Not able to handle the response code: &apos;&quot; + responseStatus 
+		+ &quot;&apos; \n Error Message: &apos;&quot; + responseStatusMessage.toString() 
+		+ &quot;&apos;\n Original Message: &apos;&quot; + msg.toString() + &quot;&apos;&quot;;
 	}
 }
 </code>

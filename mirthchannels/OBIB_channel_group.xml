@@ -10,13 +10,13 @@
   <channels>
     <channel version="3.7.0">
       <id>b2f0c503-a881-4126-995e-844c3e7692fd</id>
-      <nextMetaDataId>14</nextMetaDataId>
+      <nextMetaDataId>16</nextMetaDataId>
       <name>OBIB Services</name>
       <description>- Receive JSON messages via REST API [&quot;HTTP Listener&quot; source connector]
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>931</revision>
+      <revision>1058</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -68,10 +68,14 @@
               <name>Store Clinic Credentials</name>
               <sequenceNumber>0</sequenceNumber>
               <enabled>true</enabled>
-              <script>// store the clinic credentials, necessary to call the cdx services
+              <script>channelMap.put(&apos;cdxBaseUrl&apos;, &apos;https://servicestest.bccdx.ca&apos;);
+
+// store the clinic credentials, necessary to call the cdx services
 channelMap.put(&apos;locationId&apos;, sourceMap.get(&apos;headers&apos;).getHeader(&apos;locationId&apos;));
 channelMap.put(&apos;username&apos;, &apos;cdxpostprod-otca&apos;); // TODO get from ??? using locationId
-channelMap.put(&apos;password&apos;, &apos;VMK31&apos;); // TODO get from ??? using locationId</script>
+channelMap.put(&apos;password&apos;, &apos;VMK31&apos;); // TODO get from ??? using locationId
+channelMap.put(&apos;certPath&apos;, &apos;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&apos;); // TODO get from ??? using locationId
+channelMap.put(&apos;certPass&apos;, &apos;LEADlab&apos;); // TODO get from ??? using locationId</script>
             </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/SubmitCDA&apos;</name>
@@ -113,6 +117,34 @@ channelMap.put(&apos;password&apos;, &apos;VMK31&apos;); // TODO get from ??? us
               <condition>EQUALS</condition>
               <values>
                 <string>&apos;/GetDocument&apos;</string>
+              </values>
+            </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
+            <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
+              <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListClinics&apos;</name>
+              <sequenceNumber>4</sequenceNumber>
+              <enabled>true</enabled>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
+              <metaDataIds>
+                <int>14</int>
+              </metaDataIds>
+              <field>sourceMap.get(&apos;contextPath&apos;)</field>
+              <condition>EQUALS</condition>
+              <values>
+                <string>&apos;/ListClinics&apos;</string>
+              </values>
+            </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
+            <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.0">
+              <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListProviders&apos;</name>
+              <sequenceNumber>5</sequenceNumber>
+              <enabled>true</enabled>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
+              <metaDataIds>
+                <int>15</int>
+              </metaDataIds>
+              <field>sourceMap.get(&apos;contextPath&apos;)</field>
+              <condition>EQUALS</condition>
+              <values>
+                <string>&apos;/ListProviders&apos;</string>
               </values>
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
           </elements>
@@ -176,8 +208,7 @@ b3RjYSIKICB9Cn0=</inboundTemplate>
             <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
 logger.debug(&apos;Service Submit Document&apos;);
 try {		
-	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
-							    &quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+	var client = new WSClientDocument($(&apos;cdxBaseUrl&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
 
 	// Get the message with the default namespace
 	default xml namespace = &quot;urn:hl7-org:v3&quot;;
@@ -781,7 +812,7 @@ CiAgIDwvY29tcG9uZW50Pgo8L0NsaW5pY2FsRG9jdW1lbnQ+</outboundTemplate>
 
 try {
 	// Store the response to be returned by the &quot;Source Connector&quot;
-	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, responseStatusMessage, msg, function() {
 		// Ack details
 		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
 		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
@@ -921,8 +952,7 @@ OiAiIgoJfQp9</outboundTemplate>
             <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
 logger.debug(&apos;Service List New Documents&apos;);
 try {
-	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
-		&quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+	var client = new WSClientDocument($(&apos;cdxBaseUrl&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
 	
 	var cdxResponse = client.listNewDocuments($(&apos;locationId&apos;));
 	
@@ -964,7 +994,7 @@ try {
 
 try {
 	// Store the response to be returned by the &quot;Source Connector&quot;
-	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, responseStatusMessage, msg, function() {
 		// Ack details
 		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
 		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
@@ -1469,8 +1499,7 @@ InR5cGVDb2RlIjogIiIsCgkJCSJlZmZlY3RpdmVUaW1lIjogIiIKCQl9XQoJfQp9</outboundTempla
             <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
 logger.debug(&apos;Service Get Document&apos;);
 try {
-	var client = new WSClientDocument(&quot;https://servicestest.bccdx.ca&quot;, $(&apos;username&apos;), $(&apos;password&apos;), 
-		&quot;/vagrant/mirthconnect-3.7.0.b2399-unix/certs/LEADlab_Keystore.jks&quot;, &quot;LEADlab&quot;);
+	var client = new WSClientDocument($(&apos;cdxBaseUrl&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
 	
 	var cdxResponse = client.getDocument($(&apos;locationId&apos;), $(&apos;documentId&apos;));
 	
@@ -1520,7 +1549,7 @@ try {
 
 try {
 	// Store the response to be returned by the &quot;Source Connector&quot;
-	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, msg, function() {
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, responseStatusMessage, msg, function() {
 		// Ack details
 		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
 		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
@@ -1548,6 +1577,12 @@ try {
 	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(e));
 	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
 }</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Build Document</name>
+                <sequenceNumber>1</sequenceNumber>
+                <enabled>true</enabled>
+                <script></script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             </elements>
             <inboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8
@@ -2027,6 +2062,583 @@ CgkJfV0KCX0KfQ==</outboundTemplate>
           <enabled>true</enabled>
           <waitForPrevious>false</waitForPrevious>
         </connector>
+        <connector version="3.7.0">
+          <metaDataId>14</metaDataId>
+          <name>Service List Clinics</name>
+          <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.7.0">
+            <pluginProperties/>
+            <destinationConnectorProperties version="3.7.0">
+              <queueEnabled>false</queueEnabled>
+              <sendFirst>false</sendFirst>
+              <retryIntervalMillis>10000</retryIntervalMillis>
+              <regenerateTemplate>false</regenerateTemplate>
+              <retryCount>0</retryCount>
+              <rotate>false</rotate>
+              <includeFilterTransformer>false</includeFilterTransformer>
+              <threadCount>1</threadCount>
+              <threadAssignmentVariable></threadAssignmentVariable>
+              <validateResponse>true</validateResponse>
+              <resourceIds class="linked-hash-map">
+                <entry>
+                  <string>Default Resource</string>
+                  <string>[Default Resource]</string>
+                </entry>
+              </resourceIds>
+              <queueBufferSize>1000</queueBufferSize>
+              <reattachAttachments>true</reattachAttachments>
+            </destinationConnectorProperties>
+            <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
+logger.debug(&apos;Service List Clinics&apos;);
+try {
+	var client = new WSClientClinic($(&apos;cdxBaseUrl&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
+	
+	var cdxResponse = client.listClinics($(&apos;locationId&apos;));
+	
+	return ResponseFactory.getSentResponse(cdxResponse);
+} catch (e) {
+	logger.error(&quot;Error on &apos;Service List Clinics&apos;: &quot; + e);
+	return ResponseFactory.getErrorResponse(&quot;Error on &apos;Service List Clinics&apos;: &quot; + e)
+}</script>
+          </properties>
+          <transformer version="3.7.0">
+            <elements/>
+            <inboundTemplate encoding="base64"></inboundTemplate>
+            <outboundTemplate encoding="base64"></outboundTemplate>
+            <inboundDataType>JSON</inboundDataType>
+            <outboundDataType>HL7V3</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>true</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </transformer>
+          <responseTransformer version="3.7.0">
+            <elements>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Build Response Clinics</name>
+                <sequenceNumber>0</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	if (responseStatus === SENT) { // process only SENT messages
+		for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;controlActProcess&apos;][&apos;subject&apos;]); i++) { // Clinic list, CONF-CDXPR072
+			var clinic = {};
+			
+			var subject = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i];
+			var entity = subject[&apos;registrationEvent&apos;][&apos;subject1&apos;][&apos;assignedEntity&apos;];
+			
+			// Clinic info
+			clinic[&apos;status&apos;] = subject[&apos;registrationEvent&apos;][&apos;statusCode&apos;][&apos;@code&apos;].toString(); // CONF-CDXPR074
+			clinic[&apos;name&apos;] = entity[&apos;name&apos;].toString(); // CONF-CDXPR080 
+			
+			// Clinic IDs, CONF-CDXPR077, CONF-CDXPR078
+			clinic[&apos;id&apos;] = [];
+			for (var j = 0; j &lt; getArrayOrXmlLength(entity[&apos;id&apos;]); j++) {
+				var id = {};
+				id[&apos;id&apos;] = entity[&apos;id&apos;][j][&apos;@extension&apos;].toString();
+				id[&apos;type&apos;] = entity[&apos;id&apos;][j][&apos;@root&apos;].toString();
+				
+				clinic[&apos;id&apos;][j] = id;
+			}
+			
+			// Clinic address, CONF-CDXPR081, // CONF-CDXPR082
+			var addr = {};
+			for (var j = 0; j &lt; getArrayOrXmlLength(entity[&apos;addr&apos;][&apos;delimiter&apos;]); j++) {
+				addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + entity[&apos;addr&apos;][&apos;delimiter&apos;][j].toString();
+			}
+			if (entity[&apos;addr&apos;][&apos;city&apos;]) {
+				addr[&apos;city&apos;] = entity[&apos;addr&apos;][&apos;city&apos;].toString();
+			}
+			if (entity[&apos;addr&apos;][&apos;state&apos;]) {
+				addr[&apos;state&apos;] = entity[&apos;addr&apos;][&apos;state&apos;].toString();
+			}
+			if (entity[&apos;addr&apos;][&apos;postalCode&apos;]) {
+				addr[&apos;postalCode&apos;] = entity[&apos;addr&apos;][&apos;postalCode&apos;].toString();
+			}
+			clinic[&apos;address&apos;] = addr;
+			
+			tmp[&apos;ackQuery&apos;][&apos;clinic&apos;][i] = clinic;
+		}
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Build Response Clinics&apos;: &quot; + e);
+	
+	responseStatus = ERROR;
+	responseStatusMessage += &quot; \n Error on &apos;Build Response Clinics&apos;: &quot; + e;
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Build Response Providers</name>
+                <sequenceNumber>1</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	if (responseStatus === SENT) { // process only SENT messages
+		for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;controlActProcess&apos;][&apos;subject&apos;]); i++) { // Clinic list, CONF-CDXPR072
+			var clinicEntity = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i][&apos;registrationEvent&apos;][&apos;subject1&apos;][&apos;assignedEntity&apos;];
+
+			// Related Providers, CONF-CDXPR083
+			for (var j = 0; j &lt; getArrayOrXmlLength(clinicEntity[&apos;relatedTo&apos;]); j++) {
+				var provider = {};
+
+				var entity = clinicEntity[&apos;relatedTo&apos;][j][&apos;assignedEntity&apos;];
+				
+				if (entity[&apos;templateId&apos;]) { // CONF-CDXPR084b
+					continue; // TODO Provider Groups?
+				}
+				
+				// Provider ids, CONF-CDXPR085, CONF-CDXPR086
+				provider[&apos;id&apos;] = [];
+				for (var k = 0; k &lt; getArrayOrXmlLength(entity[&apos;id&apos;]); k++) {
+					var id = {};
+					id[&apos;id&apos;] = entity[&apos;id&apos;][k][&apos;@extension&apos;].toString();
+					id[&apos;type&apos;] = entity[&apos;id&apos;][k][&apos;@root&apos;].toString();
+
+					provider[&apos;id&apos;][k] = id;
+				}
+			
+				// Provider name, CONF-CDXPR088
+				var name = {};
+				name[&apos;family&apos;] = entity[&apos;name&apos;][&apos;family&apos;].toString(); // CONF-CDXPR089
+				name[&apos;given&apos;] = [];
+				for (var k = 0; k &lt; getArrayOrXmlLength(entity[&apos;name&apos;][&apos;given&apos;]); k++) { // CONF-CDXPR090
+					name[&apos;given&apos;][j] = entity[&apos;name&apos;][&apos;given&apos;][k].toString();
+				}
+				if (entity[&apos;name&apos;][&apos;prefix&apos;]) { // CONF-CDXPR091
+					name[&apos;prefix&apos;] = entity[&apos;name&apos;][&apos;prefix&apos;].toString();
+				}
+				if (entity[&apos;name&apos;][&apos;sufix&apos;]) { // CONF-???
+					name[&apos;sufix&apos;] = entity[&apos;name&apos;][&apos;sufix&apos;].toString();
+				}
+
+				tmp[&apos;ackQuery&apos;][&apos;clinic&apos;][i][&apos;provider&apos;] = [];
+				tmp[&apos;ackQuery&apos;][&apos;clinic&apos;][i][&apos;provider&apos;][j] = provider;
+			}
+		}
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Build Response Providers&apos;: &quot; + e);
+
+	responseStatus = ERROR;
+	responseStatusMessage += &quot; \n Error on &apos;Build Response Providers&apos;: &quot; + e;
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>Build Response Templates</name>
+                <sequenceNumber>2</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	if (responseStatus === SENT) { // process only SENT messages
+		for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;controlActProcess&apos;][&apos;subject&apos;]); i++) { // Clinic list, CONF-CDXPR072
+			var subject = msg[&apos;controlActProcess&apos;][&apos;subject&apos;][i];
+			
+			if (subject[&apos;registrationEvent&apos;][&apos;definition&apos;]) { // CONF-CDXPR092
+				var definition = subject[&apos;registrationEvent&apos;][&apos;definition&apos;][&apos;actDefinition&apos;];
+				
+				// Consumable document templates, CONF- CDXPR094, CONF- CDXPR094b
+				tmp[&apos;ackQuery&apos;][&apos;clinic&apos;][i][&apos;template&apos;] = [];
+				for (var j = 0; j &lt; getArrayOrXmlLength(definition[&apos;id&apos;]); j++) {
+					var template = {};
+					template[&apos;id&apos;] = definition[&apos;id&apos;][j][&apos;@extension&apos;].toString();
+					template[&apos;label&apos;] = definition[&apos;id&apos;][j][&apos;@assigningAuthorityName&apos;].toString();
+
+					tmp[&apos;ackQuery&apos;][&apos;clinic&apos;][i][&apos;template&apos;][j] = template;
+				}
+			}
+		}
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Build Response Templates&apos;: &quot; + e);
+	
+	responseStatus = ERROR;
+	responseStatusMessage += &quot; \n Error on &apos;Build Response Templates&apos;: &quot; + e;
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
+                <name>List Clinics Response</name>
+                <sequenceNumber>3</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// Store the response to be returned by the &quot;Source Connector&quot;
+	responseMap.put(&apos;responseMessage&apos;, handleResponseMessage(responseStatus, responseStatusMessage, msg, function() {
+		// Ack details
+		tmp[&apos;ackDetail&apos;][&apos;ackId&apos;] = msg[&apos;id&apos;][&apos;@extension&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;ackTime&apos;] = msg[&apos;creationTime&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackDetail&apos;][&apos;messageId&apos;] = msg[&apos;acknowledgement&apos;][&apos;targetMessage&apos;][&apos;id&apos;][&apos;@extension&apos;].toString()
+
+		// Ack query
+		tmp[&apos;ackQuery&apos;][&apos;status&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;queryResponseCode&apos;][&apos;@code&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;total&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultTotalQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;current&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultCurrentQuantity&apos;][&apos;@value&apos;].toString();
+		tmp[&apos;ackQuery&apos;][&apos;remaining&apos;] = msg[&apos;controlActProcess&apos;][&apos;queryAck&apos;][&apos;resultRemainingQuantity&apos;][&apos;@value&apos;].toString();
+
+		tmp[&apos;status&apos;] = &quot;SENT&quot;;
+		
+		return tmp; // Return the transformed message to be converted on &apos;handleResponseMessage&apos;
+	}));
+	responseMap.put(&apos;responseStatus&apos;, &apos;200&apos;);
+} catch(e) {
+	logger.error(&quot;Error on &apos;List Clinics Response&apos;: &quot; + e);
+
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(e));
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+            </elements>
+            <inboundTemplate encoding="base64">PFBSUE1fSU40MDYxMTBVVjAxIHhtbG5zPSJ1cm46aGw3LW9yZzp2MyIgSVRTVmVyc2lvbj0iWE1M
+XzEuMCI+CiAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ2xpbmljIExpc3QgUmVzcG9u
+c2UgV3JhcHBlciBJRCIgZXh0ZW5zaW9uPSJmYTYwZmUzMi0wMDdlLTQyNDktYWFjMC0zOTg1ZDg1
+NjY4MmEiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIi8+CiAgICA8Y3JlYXRp
+b25UaW1lIHZhbHVlPSIyMDE5MDMxOTExMDAtMDcwMCIvPgogICAgPHZlcnNpb25Db2RlIGNvZGU9
+IjIwMTBOb3JtYXRpdmUiLz4KICAgIDxpbnRlcmFjdGlvbklkIGV4dGVuc2lvbj0iUFJQTV9JTjQw
+NjExMFVWMDEiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjEuNiIvPgogICAgPHByb2Nlc3NpbmdD
+b2RlIGNvZGU9IlAiLz4KICAgIDxwcm9jZXNzaW5nTW9kZUNvZGUgY29kZT0iVCIvPgogICAgPGFj
+Y2VwdEFja0NvZGUgY29kZT0iTkUiLz4KICAgIDxyZWNlaXZlcj4KICAgICAgICA8ZGV2aWNlIGNs
+YXNzQ29kZT0iREVWIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICA8aWQg
+bnVsbEZsYXZvcj0iTkEiLz4KICAgICAgICAgICAgPGFzQWdlbnQgY2xhc3NDb2RlPSJBR05UIj4K
+ICAgICAgICAgICAgICAgIDxyZXByZXNlbnRlZE9yZ2FuaXphdGlvbiBjbGFzc0NvZGU9Ik9SRyIg
+ZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWdu
+aW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBSZWdpc3RyeSBJRCIgZXh0ZW5zaW9uPSJjZHhw
+b3N0cHJvZC1vdGNhIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMiIvPgogICAg
+ICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0Fn
+ZW50PgogICAgICAgIDwvZGV2aWNlPgogICAgPC9yZWNlaXZlcj4KICAgIDxzZW5kZXI+CiAgICAg
+ICAgPGRldmljZSBjbGFzc0NvZGU9IkRFViIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAg
+ICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgIDxhc0FnZW50IGNsYXNz
+Q29kZT0iQUdOVCI+CiAgICAgICAgICAgICAgICA8cmVwcmVzZW50ZWRPcmdhbml6YXRpb24gY2xh
+c3NDb2RlPSJPUkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAg
+ICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQiIGV4
+dGVuc2lvbj0iQ0RYIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMiIvPgogICAg
+ICAgICAgICAgICAgPC9yZXByZXNlbnRlZE9yZ2FuaXphdGlvbj4KICAgICAgICAgICAgPC9hc0Fn
+ZW50PgogICAgICAgIDwvZGV2aWNlPgogICAgPC9zZW5kZXI+CiAgICA8YWNrbm93bGVkZ2VtZW50
+IHR5cGVDb2RlPSJBQSI+CiAgICAgICAgPHRhcmdldE1lc3NhZ2U+CiAgICAgICAgICAgIDxpZCBh
+c3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ2xpbmljYWwgUmVwb3NpdG9yeSBRdWVyeSBJRCIg
+ZXh0ZW5zaW9uPSI3NTc2MzNkMC1mNWZmLTRkZDktOTkwOS1hMDQxYzNkNGFmODgiIHJvb3Q9IjIu
+MTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIi8+CiAgICAgICAgPC90YXJnZXRNZXNzYWdlPgog
+ICAgICAgIDxhY2tub3dsZWRnZW1lbnREZXRhaWw+CiAgICAgICAgICAgIDx0ZXh0Pk9LPC90ZXh0
+PgogICAgICAgIDwvYWNrbm93bGVkZ2VtZW50RGV0YWlsPgogICAgPC9hY2tub3dsZWRnZW1lbnQ+
+CiAgICA8Y29udHJvbEFjdFByb2Nlc3MgY2xhc3NDb2RlPSJDQUNUIiBtb29kQ29kZT0iRVZOIj4K
+CQk8c3ViamVjdCB0eXBlQ29kZT0iU1VCSiIvPgogICAgICAgIDxzdWJqZWN0IHR5cGVDb2RlPSJT
+VUJKIj4KICAgICAgICAgICAgPHJlZ2lzdHJhdGlvbkV2ZW50IGNsYXNzQ29kZT0iUkVHIiBtb29k
+Q29kZT0iRVZOIj4KICAgICAgICAgICAgICAgIDxzdGF0dXNDb2RlIGNvZGU9ImFjdGl2ZSIvPgog
+ICAgICAgICAgICAgICAgPHN1YmplY3QxIHR5cGVDb2RlPSJTQkoiPgogICAgICAgICAgICAgICAg
+ICAgIDxhc3NpZ25lZEVudGl0eSBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAg
+ICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkg
+SUQiIGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMu
+My4yNzcuMTAwLjIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhv
+cml0eU5hbWU9IlBPSSBDbGluaWMgSUQiIGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9v
+dD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIuMSIvPgogICAgICAgICAgICAgICAgICAg
+ICAgICA8Y29kZSBjb2RlPSJDbGluaWMiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPG5hbWUv
+PgogICAgICAgICAgICAgICAgICAgICAgICA8YWRkcj4KICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIDxkZWxpbWl0ZXI+MTgxOCBUZXN0IEF2ZTwvZGVsaW1pdGVyPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgPGNpdHk+S2Vsb3duYTwvY2l0eT4KICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIDxzdGF0ZT5Ccml0aXNoIENvbHVtYmlhPC9zdGF0ZT4KICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIDxjb3VudHJ5PkNhbmFkYTwvY291bnRyeT4KICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIDxwb3N0YWxDb2RlPlYxVjFWMTwvcG9zdGFsQ29kZT4KICAgICAgICAgICAgICAgICAgICAg
+ICAgPC9hZGRyPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVsYXRlZFRvIHR5cGVDb2RlPSJQ
+QVJUIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEVudGl0eSBjbGFzc0Nv
+ZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWdu
+aW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1lZGl0ZWNoIElEIiBleHRlbnNpb249IlBMSUYiIHJvb3Q9
+IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEuNjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICA8Y29kZSBjb2RlPSJQcm92aWRlciIvPgogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIDxuYW1lPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cHJlZml4
+PkRyPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmYW1pbHk+
+UGxpczwvZmFtaWx5PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8Z2l2ZW4+
+RmFtaWx5PC9naXZlbj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L25hbWU+CiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkRW50aXR5PgogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgPHF1YWxpZmllZEVudGl0eSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMu
+b3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4c2k6bmlsPSJ0cnVlIi8+CiAgICAgICAgICAg
+ICAgICAgICAgICAgIDwvcmVsYXRlZFRvPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVsYXRl
+ZFRvIHR5cGVDb2RlPSJQQVJUIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25l
+ZEVudGl0eSBjbGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVy
+IElEIiBleHRlbnNpb249IjkzMTg4IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEi
+Lz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5
+TmFtZT0iSUhBIE1lZGl0ZWNoIElEIiBleHRlbnNpb249IlBMSVNJSExVIiByb290PSIyLjE2Ljg0
+MC4xLjExMzg4My4zLjI3Ny4xLjYxIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+PGNvZGUgY29kZT0iUHJvdmlkZXIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8
+bmFtZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHByZWZpeD5Eci48L3By
+ZWZpeD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhi
+PC9mYW1pbHk+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnaXZlbj5MdWNp
+dXM8L2dpdmVuPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIDwvYXNzaWduZWRFbnRpdHk+CiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICA8cXVhbGlmaWVkRW50aXR5IHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcv
+MjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhzaTpuaWw9InRydWUiLz4KICAgICAgICAgICAgICAg
+ICAgICAgICAgPC9yZWxhdGVkVG8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZWxhdGVkVG8g
+dHlwZUNvZGU9IlBBUlQiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkRW50
+aXR5IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJCQyBNaW5pc3RyeSBQcmFjdGl0aW9uZXIgSUQi
+IGV4dGVuc2lvbj0iOTMxOTAiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuNDAuMi4xMSIvPgog
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1l
+PSJJSEEgTWVkaXRlY2ggSUQiIGV4dGVuc2lvbj0iUExJU0lIQUEiIHJvb3Q9IjIuMTYuODQwLjEu
+MTEzODgzLjMuMjc3LjEuNjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8Y29k
+ZSBjb2RlPSJQcm92aWRlciIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1l
+PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cHJlZml4PkRyLjwvcHJlZml4
+PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmFtaWx5PlBsaXNpaGQ8L2Zh
+bWlseT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGdpdmVuPkFhcm9uPC9n
+aXZlbj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICA8L2Fzc2lnbmVkRW50aXR5PgogICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgPHF1YWxpZmllZEVudGl0eSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEv
+WE1MU2NoZW1hLWluc3RhbmNlIiB4c2k6bmlsPSJ0cnVlIi8+CiAgICAgICAgICAgICAgICAgICAg
+ICAgIDwvcmVsYXRlZFRvPgogICAgICAgICAgICAgICAgICAgICAgICA8cmVsYXRlZFRvIHR5cGVD
+b2RlPSJQQVJUIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEVudGl0eSBj
+bGFzc0NvZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQg
+YXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVyIElEIiBleHRl
+bnNpb249Ijk0NzIyIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEiLz4KICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhB
+IE1lZGl0ZWNoIElEIiBleHRlbnNpb249IlBMSVNJSEdSIiByb290PSIyLjE2Ljg0MC4xLjExMzg4
+My4zLjI3Ny4xLjYxIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNvZGUgY29k
+ZT0iUHJvdmlkZXIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bmFtZT4KICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHByZWZpeD5Eci48L3ByZWZpeD4KICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhxPC9mYW1pbHk+
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnaXZlbj5HcmFudDwvZ2l2ZW4+
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9uYW1lPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgPC9hc3NpZ25lZEVudGl0eT4KICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IDxxdWFsaWZpZWRFbnRpdHkgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNj
+aGVtYS1pbnN0YW5jZSIgeHNpOm5pbD0idHJ1ZSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8
+L3JlbGF0ZWRUbz4KICAgICAgICAgICAgICAgICAgICAgICAgPHJlbGF0ZWRUbyB0eXBlQ29kZT0i
+UEFSVCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8YXNzaWduZWRFbnRpdHkgY2xhc3ND
+b2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2ln
+bmluZ0F1dGhvcml0eU5hbWU9IkJDIE1pbmlzdHJ5IFByYWN0aXRpb25lciBJRCIgZXh0ZW5zaW9u
+PSI5MzE5NSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy40MC4yLjExIi8+CiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRp
+dGVjaCBJRCIgZXh0ZW5zaW9uPSJQTElTSUhITyIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4y
+NzcuMS42MSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjb2RlIGNvZGU9IlBy
+b3ZpZGVyIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPG5hbWU+CiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwcmVmaXg+RHIuPC9wcmVmaXg+CiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmYW1pbHk+UGxpc2loaDwvZmFtaWx5PgogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8Z2l2ZW4+SG9tZXI8L2dpdmVuPgogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIDwvYXNzaWduZWRFbnRpdHk+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cXVh
+bGlmaWVkRW50aXR5IHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEt
+aW5zdGFuY2UiIHhzaTpuaWw9InRydWUiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9yZWxh
+dGVkVG8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxyZWxhdGVkVG8gdHlwZUNvZGU9IlBBUlQi
+PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGFzc2lnbmVkRW50aXR5IGNsYXNzQ29kZT0i
+QVNTSUdORUQiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdB
+dXRob3JpdHlOYW1lPSJCQyBNaW5pc3RyeSBQcmFjdGl0aW9uZXIgSUQiIGV4dGVuc2lvbj0iOTMx
+OTMiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuNDAuMi4xMSIvPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEgTWVkaXRlY2gg
+SUQiIGV4dGVuc2lvbj0iUExJU0lITUkiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEu
+NjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8Y29kZSBjb2RlPSJQcm92aWRl
+ciIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1lPgogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICA8cHJlZml4PkRyLjwvcHJlZml4PgogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICA8ZmFtaWx5PlBsaXNpaGY8L2ZhbWlseT4KICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgPGdpdmVuPk1pa2VsPC9naXZlbj4KICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICA8L2Fzc2lnbmVkRW50aXR5PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHF1YWxpZmll
+ZEVudGl0eSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3Rh
+bmNlIiB4c2k6bmlsPSJ0cnVlIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvcmVsYXRlZFRv
+PgogICAgICAgICAgICAgICAgICAgICAgICA8cmVsYXRlZFRvIHR5cGVDb2RlPSJQQVJUIj4KICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIDxhc3NpZ25lZEVudGl0eSBjbGFzc0NvZGU9IkFTU0lH
+TkVEIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9y
+aXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVyIElEIiBleHRlbnNpb249IjkzMTk0IiBy
+b290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEiLz4KICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1lZGl0ZWNoIElEIiBl
+eHRlbnNpb249IlBMSVNJSE5PIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjYxIi8+
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iUHJvdmlkZXIiLz4K
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bmFtZT4KICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgPHByZWZpeD5Eci48L3ByZWZpeD4KICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhnPC9mYW1pbHk+CiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIDxnaXZlbj5Ob2VsPC9naXZlbj4KICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2Fz
+c2lnbmVkRW50aXR5PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHF1YWxpZmllZEVudGl0
+eSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4
+c2k6bmlsPSJ0cnVlIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvcmVsYXRlZFRvPgogICAg
+ICAgICAgICAgICAgICAgIDwvYXNzaWduZWRFbnRpdHk+CiAgICAgICAgICAgICAgICAgICAgPHF1
+YWxpZmllZEVudGl0eSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1h
+LWluc3RhbmNlIiB4c2k6bmlsPSJ0cnVlIi8+CiAgICAgICAgICAgICAgICA8L3N1YmplY3QxPgog
+ICAgICAgICAgICAgICAgPGN1c3RvZGlhbiB0eXBlQ29kZT0iQ1NUIj4KICAgICAgICAgICAgICAg
+ICAgICA8YXNzaWduZWRFbnRpdHkgY2xhc3NDb2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgICAg
+ICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8
+YXNzaWduZWREZXZpY2UgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVt
+YS1pbnN0YW5jZSIgeHNpOm5pbD0idHJ1ZSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8YXNz
+aWduZWRPcmdhbml6YXRpb24geG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNj
+aGVtYS1pbnN0YW5jZSIgeHNpOm5pbD0idHJ1ZSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8
+YXNzaWduZWRQZXJzb24geG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVt
+YS1pbnN0YW5jZSIgeHNpOm5pbD0idHJ1ZSIvPgogICAgICAgICAgICAgICAgICAgIDwvYXNzaWdu
+ZWRFbnRpdHk+CiAgICAgICAgICAgICAgICA8L2N1c3RvZGlhbj4KICAgICAgICAgICAgICAgIDxk
+ZWZpbml0aW9uIHR5cGVDb2RlPSJJTlNUIj4KICAgICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJ
+ZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJEb2N1bWVudCBUZW1wbGF0ZSBPSUQiIHJvb3Q9IjIu
+MTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC40MCIvPgogICAgICAgICAgICAgICAgICAgIDxhY3RE
+ZWZpbml0aW9uIGNsYXNzQ29kZT0iSU5GTyIgbW9vZENvZGU9IkRFRiI+CiAgICAgICAgICAgICAg
+ICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJBZG1pdCBOb3RpZmljYXRpb24g
+VGVtcGxhdGUiIGV4dGVuc2lvbj0iMi4xNi44NDAuMS4xMTM4ODMuMy41MS42MC4yLjciIHJvb3Q9
+IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC40MC4xIi8+CiAgICAgICAgICAgICAgICAgICAg
+ICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJBbmF0b21pYyBQYXRob2xvZ3kgUmVwb3J0
+IFRlbXBsYXRlIiBleHRlbnNpb249IjIuMTYuODQwLjEuMTEzODgzLjMuNTEuNjAuMi4yIiByb290
+PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuNDAuMSIvPgogICAgICAgICAgICAgICAgICAg
+ICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ29uc3VsdGF0aW9uIE5vdGUiIGV4dGVu
+c2lvbj0iMi4xNi44NDAuMS4xMTM4ODMuMTAuMjAuNCIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMu
+My4yNzcuMTAwLjQwLjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1
+dGhvcml0eU5hbWU9IkRpYWdub3N0aWMgSW1hZ2luZyBSZXBvcnQgVGVtcGxhdGUiIGV4dGVuc2lv
+bj0iMi4xNi44NDAuMS4xMTM4ODMuMy41MS42MC4yLjUiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgz
+LjMuMjc3LjEwMC40MC4xIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdB
+dXRob3JpdHlOYW1lPSJEaXNjaGFyZ2UgTm90aWZpY2F0aW9uIFRlbXBsYXRlIiBleHRlbnNpb249
+IjIuMTYuODQwLjEuMTEzODgzLjMuNTEuNjAuMi42IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4z
+LjI3Ny4xMDAuNDAuMSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0
+aG9yaXR5TmFtZT0iRGlzY2hhcmdlIFN1bW1hcnkgVGVtcGxhdGUiIGV4dGVuc2lvbj0iMi4xNi44
+NDAuMS4xMTM4ODMuMy41MS42MC4yLjQiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEw
+MC40MC4xIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlO
+YW1lPSJlMmUgR2VuZXJpYyBFcGlzb2RpYyBEb2N1bWVudCIgZXh0ZW5zaW9uPSIyLjE2Ljg0MC4x
+LjExMzg4My4zLjE4MTguMTAuMS4yIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAu
+NDAuMSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFt
+ZT0iZTJlIEdlbmVyaWMgVW5zdHJ1Y3R1cmVkIFJlZmVycmFsIiBleHRlbnNpb249IjIuMTYuODQw
+LjEuMTEzODgzLjMuMTgxOC4xMC4xLjUiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEw
+MC40MC4xIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlO
+YW1lPSJlMmUgVW5zdHJ1Y3R1cmVkIERvY3VtZW50IiBleHRlbnNpb249IjIuMTYuODQwLjEuMTEz
+ODgzLjMuMTgxOC4xMC4xLjQiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC40MC4x
+Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJI
+aXN0b3J5IGFuZCBQaHlzaWNhbCBOb3RlIiBleHRlbnNpb249IjIuMTYuODQwLjEuMTEzODgzLjEw
+LjIwLjIiIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC40MC4xIi8+CiAgICAgICAg
+ICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJMYWIgUmVwb3J0IFRl
+bXBsYXRlIiBleHRlbnNpb249IjIuMTYuODQwLjEuMTEzODgzLjMuNTEuNjAuMi4xIiByb290PSIy
+LjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuNDAuMSIvPgogICAgICAgICAgICAgICAgICAgICAg
+ICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iT3BlcmF0aXZlIE5vdGUiIGV4dGVuc2lvbj0i
+Mi4xNi44NDAuMS4xMTM4ODMuMTAuMjAuNyIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcu
+MTAwLjQwLjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0
+eU5hbWU9IlByb2NlZHVyZSBOb3RlIFRlbXBsYXRlIiBleHRlbnNpb249IjIuMTYuODQwLjEuMTEz
+ODgzLjMuNTEuNjAuMi4zIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuNDAuMSIv
+PgogICAgICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iUHJv
+Z3Jlc3MgTm90ZSIgZXh0ZW5zaW9uPSIyLjE2Ljg0MC4xLjExMzg4My4xMC4yMC4yMSIgcm9vdD0i
+Mi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjQwLjEiLz4KICAgICAgICAgICAgICAgICAgICAg
+ICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IlVuc3RydWN0dXJlZCBSZXBvcnQgVGVtcGxh
+dGUiIGV4dGVuc2lvbj0iMi4xNi44NDAuMS4xMTM4ODMuMTAuMjAuMTkiIHJvb3Q9IjIuMTYuODQw
+LjEuMTEzODgzLjMuMjc3LjEwMC40MC4xIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxjb2Rl
+IG51bGxGbGF2b3I9IlVOSyIvPgogICAgICAgICAgICAgICAgICAgIDwvYWN0RGVmaW5pdGlvbj4K
+ICAgICAgICAgICAgICAgIDwvZGVmaW5pdGlvbj4KICAgICAgICAgICAgPC9yZWdpc3RyYXRpb25F
+dmVudD4KICAgICAgICA8L3N1YmplY3Q+CiAgICAgICAgPHF1ZXJ5QWNrPgogICAgICAgICAgICA8
+cXVlcnlJZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ2xpbmljYWwgUmVwb3NpdG9yeSBR
+dWVyeSBJRCIgZXh0ZW5zaW9uPSI3NTc2MzNkMC1mNWZmLTRkZDktOTkwOS1hMDQxYzNkNGFmODgi
+IHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4xIi8+CiAgICAgICAgICAgIDxzdGF0
+dXNDb2RlIGNvZGU9ImRlbGl2ZXJlZFJlc3BvbnNlIi8+CiAgICAgICAgICAgIDxxdWVyeVJlc3Bv
+bnNlQ29kZSBjb2RlPSJPSyIvPgogICAgICAgICAgICA8cmVzdWx0VG90YWxRdWFudGl0eSB2YWx1
+ZT0iMSIvPgogICAgICAgICAgICA8cmVzdWx0Q3VycmVudFF1YW50aXR5IHZhbHVlPSIxIi8+CiAg
+ICAgICAgICAgIDxyZXN1bHRSZW1haW5pbmdRdWFudGl0eSB2YWx1ZT0iMCIvPgogICAgICAgIDwv
+cXVlcnlBY2s+CiAgICA8L2NvbnRyb2xBY3RQcm9jZXNzPgo8L1BSUE1fSU40MDYxMTBVVjAxPgo=
+</inboundTemplate>
+            <outboundTemplate encoding="base64">ewoJInN0YXR1cyI6ICIiLAoJIm1lc3NhZ2UiOiAiIiwKCSJhY2tEZXRhaWwiOnsKCX0sCgkiYWNr
+UXVlcnkiOnsKCQkiY2xpbmljIjpbXQoJfQp9</outboundTemplate>
+            <inboundDataType>HL7V3</inboundDataType>
+            <outboundDataType>JSON</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>false</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </responseTransformer>
+          <filter version="3.7.0">
+            <elements/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+          <waitForPrevious>false</waitForPrevious>
+        </connector>
+        <connector version="3.7.0">
+          <metaDataId>15</metaDataId>
+          <name>Service List Providers</name>
+          <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.7.0">
+            <pluginProperties/>
+            <destinationConnectorProperties version="3.7.0">
+              <queueEnabled>false</queueEnabled>
+              <sendFirst>false</sendFirst>
+              <retryIntervalMillis>10000</retryIntervalMillis>
+              <regenerateTemplate>false</regenerateTemplate>
+              <retryCount>0</retryCount>
+              <rotate>false</rotate>
+              <includeFilterTransformer>false</includeFilterTransformer>
+              <threadCount>1</threadCount>
+              <threadAssignmentVariable></threadAssignmentVariable>
+              <validateResponse>true</validateResponse>
+              <resourceIds class="linked-hash-map">
+                <entry>
+                  <string>Default Resource</string>
+                  <string>[Default Resource]</string>
+                </entry>
+              </resourceIds>
+              <queueBufferSize>1000</queueBufferSize>
+              <reattachAttachments>true</reattachAttachments>
+            </destinationConnectorProperties>
+            <script>importPackage(Packages.ca.uvic.leadlab.cdxconnector);
+logger.debug(&apos;Service List Providers&apos;);
+try {
+	var client = new WSClientProvider($(&apos;cdxBaseUrl&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
+	
+	var cdxResponse = client.listProviders($(&apos;locationId&apos;));
+	
+	return ResponseFactory.getSentResponse(cdxResponse);
+} catch (e) {
+	logger.error(&quot;Error on &apos;Service List Providers&apos;: &quot; + e);
+	return ResponseFactory.getErrorResponse(&quot;Error on &apos;Service List Providers&apos;: &quot; + e)
+}</script>
+          </properties>
+          <transformer version="3.7.0">
+            <elements/>
+            <inboundDataType>JSON</inboundDataType>
+            <outboundDataType>HL7V3</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>true</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </transformer>
+          <responseTransformer version="3.7.0">
+            <elements/>
+            <inboundTemplate encoding="base64"></inboundTemplate>
+            <outboundTemplate encoding="base64"></outboundTemplate>
+            <inboundDataType>HL7V3</inboundDataType>
+            <outboundDataType>JSON</outboundDataType>
+            <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.0">
+              <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3SerializationProperties" version="3.7.0">
+                <stripNamespaces>false</stripNamespaces>
+              </serializationProperties>
+              <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3BatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </inboundProperties>
+            <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
+              <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.7.0">
+                <splitType>JavaScript</splitType>
+                <batchScript></batchScript>
+              </batchProperties>
+            </outboundProperties>
+          </responseTransformer>
+          <filter version="3.7.0">
+            <elements/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+          <waitForPrevious>false</waitForPrevious>
+        </connector>
       </destinationConnectors>
       <preprocessingScript>// Modify the message variable below to pre process data
 return message;</preprocessingScript>
@@ -2095,7 +2707,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1552931754638</time>
+            <time>1553021691284</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -2128,10 +2740,10 @@ return;</undeployScript>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -2171,9 +2783,9 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
@@ -2217,10 +2829,10 @@ function buildCDAId(root, extension) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -2267,10 +2879,10 @@ function buildCDAName(use, family, given, prefix, sufix) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -2302,10 +2914,10 @@ function buildCDATelecom(use, value) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -2332,9 +2944,9 @@ function createErrorMessage(error) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
@@ -2358,17 +2970,17 @@ function formatCDAdataTime(dateTime) {
               <codeTemplate version="3.7.0">
                 <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
                 <name>Handle Return Message</name>
-                <revision>7</revision>
+                <revision>10</revision>
                 <lastModified>
-                  <time>1552676529829</time>
+                  <time>1553021983347</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -2378,17 +2990,21 @@ function formatCDAdataTime(dateTime) {
 	Handle the return message creation.
 
 	@param {Object} responseStatus - 
+	@param {Object} responseStatusMessage - 
 	@param {Object} responseMessage - 
 	@param {Function} createMessage - Callback function responsible for creating and return the result message.
 	@return {String} return the stringify json message
 */
-function handleResponseMessage(responseStatus, responseMessage, createMessage) {
+function handleResponseMessage(responseStatus, responseStatusMessage, responseMessage, createMessage) {
 	if (responseStatus === SENT) { // process only SENT messages
 		return JSON.stringify(createMessage()); // Convert the json to string and return it
 	} else if (responseStatus === ERROR) {
-		throw msg.toString();
+		throw &quot;Error Message: &apos;&quot; + responseStatusMessage.toString() 
+			+ &quot;&apos;\n Original Message: &apos;&quot; + msg.toString() + &quot;&apos;&quot;;
 	} else {
-		throw &quot;Not able to handle the response message: &apos;&quot; + responseMessage + &quot;&apos;\n with status code: &quot; + responseStatus
+		throw &quot;Not able to handle the response code: &apos;&quot; + responseStatus 
+		+ &quot;&apos; \n Error Message: &apos;&quot; + responseStatusMessage.toString() 
+		+ &quot;&apos;\n Original Message: &apos;&quot; + msg.toString() + &quot;&apos;&quot;;
 	}
 }
 </code>

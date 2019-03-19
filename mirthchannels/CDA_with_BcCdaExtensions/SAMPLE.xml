@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClinicalDocument classCode="DOCCLIN" moodCode="EVN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3" xmlns:bccda="urn:bccda" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+	<!--
+********************************************************
+CDA Header
+********************************************************
+-->
+	<realmCode code="CA-BC"/>
+	<typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040" assigningAuthorityName="HL7 CDA R2"/>
+	<templateId root="2.16.840.1.113883.3.51.60.2.1" assigningAuthorityName="General Lab Report template"/>
+	<id root="2.16.840.1.113883.3.277.100.3" extension="eae2b9e6-321c-4957-8b6f-4a3513ce99eb" assigningAuthorityName="CDX Clinical Document ID"/>
+	<code codeSystem="2.16.840.1.113883.6.1" code="11502-2" displayName="General Lab Report"/>
+	<title>General Lab Report</title>
+	<effectiveTime value="201311071138-0800"/>
+	<confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="Confidentiality"/>
+	<languageCode code="en-CA"/>
+	<!-- ==== Document versioning Information ==== -->
+	<setId root="2.16.840.1.113883.3.277.3.4.2" extension="bba5c335-01d2-4439-880f-feb464fdcbac" assigningAuthorityName="Clinical Document Revision Number"/>
+	<versionNumber value="2" />	
+	<!-- ==== Patient Information ==== -->
+	<recordTarget typeCode="RCT" contextControlCode="OP">
+		<patientRole classCode="PAT">
+			<id root="2.16.840.1.113883.4.50" extension="9191610101" assigningAuthorityName="BC Patient Health Number"/>
+			<addr use="H">8423 Panko Pvt<delimiter/>
+				<city>Here</city>
+				<state>CA-BC</state>
+				<postalCode>XXX XXX</postalCode>
+			</addr>
+			<telecom use="H" value="tel:111-1111"/>
+			<patient classCode="PSN" determinerCode="INSTANCE">
+				<name use="L">
+					<family>Ihhendrickson</family>
+					<given>Plis</given>
+				</name>
+				<administrativeGenderCode code="M"/>
+				<birthTime value="19691202"/>
+			</patient>
+		</patientRole>
+	</recordTarget>
+	<!-- ==== Author: Person and/or software that created this document ==== -->
+	<author typeCode="AUT" contextControlCode="OP">
+		<time value="201311071004-0800"/>
+		<assignedAuthor classCode="ASSIGNED">
+			<id root="2.16.840.1.113883.3.277.1.81" extension="D2863329" assigningAuthorityName="IHA Message Number"/>
+			<assignedAuthoringDevice classCode="DEV" determinerCode="INSTANCE">
+				<softwareName code="LAB_ABC" codeSystem="2.16.840.1.113883.3.277.1.12" codeSystemName="IHA Software Code"/>
+			</assignedAuthoringDevice>
+		</assignedAuthor>
+	</author>
+	<!--  ==== Custodian: organization responsible for this document ==== -->
+	<custodian typeCode="CST">
+		<assignedCustodian classCode="ASSIGNED">
+			<representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
+				<id root="2.16.840.1.113883.3.277.1.62" extension="ABC" assigningAuthorityName="IHA Meditech Location Identifier"/>
+			</representedCustodianOrganization>
+		</assignedCustodian>
+	</custodian>
+	<!-- ==== Order information ==== -->
+	<inFulfillmentOf typeCode="FLFS">
+		<order classCode="ENC" moodCode="RQO">
+			<id root="2.16.840.1.113883.3.277.1.22" extension="00050252" assigningAuthorityName="IHA Order Number (Requisition Number)"/>
+			<!-- ==== Being used as a statusCode for this order ==== -->
+			<code code="active" codeSystem="statusCode" displayName="statusCode" />			
+		</order>
+	</inFulfillmentOf>
+	<!-- ==== Service Event information ==== -->
+	<documentationOf typeCode="DOC">
+		<serviceEvent classCode="ACT" moodCode="EVN">
+			<code code="71388002" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+			<effectiveTime value="201207261453-0700"/>
+			<performer typeCode="PPRF">
+				<assignedEntity classCode="ASSIGNED">
+					<id nullFlavor="NI"/>
+					<representedOrganization classCode="ORG" determinerCode="INSTANCE">
+						<id root="2.16.840.1.113883.3.277.1.62" extension="IHKGH" assigningAuthorityName="IHA Lab Provider"/>
+						<name>Kelowna General Hosp</name>
+					</representedOrganization>
+				</assignedEntity>
+			</performer>
+			<!-- ==== CDA extension element to allow for status of serviceEvent (active, completed, aborted) ==== -->
+			<bccda:statusCode code="active"/>
+		</serviceEvent>
+	</documentationOf>
+	<!-- ==== Parent Document: HL7 v2 message from Meditech ==== -->
+	<relatedDocument typeCode="RPLC">
+		<parentDocument classCode="DOCCLIN" moodCode="EVN">
+			<id root="2.16.840.1.113883.3.277.1.81" extension="D2863329" assigningAuthorityName="IHA Message Number"/>
+			<!-- ==== versioning information ==== -->
+			<setId root="2.16.840.1.113883.3.277.3.4.2" extension="bba5c335-01d2-4439-880f-feb464fdcbac" assigningAuthorityName="Clinical Document Revision Number"/>
+			<versionNumber value="1" />
+		</parentDocument>
+	</relatedDocument>
+	<!-- ==== Encompassing Encounter: Patient Visit ==== -->
+	<componentOf typeCode="COMP">
+		<encompassingEncounter classCode="ENC" moodCode="EVN">
+			<id root="2.16.840.1.113883.3.277.1.72" extension="xx0055355x3" assigningAuthorityName="IHA Patient Account Number"/>
+			<!--Encounter has an admission date only-->
+			<effectiveTime value="201207261453-0700"/>
+			<encounterParticipant typeCode="ATND">
+				<assignedEntity classCode="ASSIGNED">
+					<id root="2.16.840.1.113883.3.40.2.11" extension="93190" assigningAuthorityName="BC MSP Provider License Number"/>
+					<id root="2.16.840.1.113883.3.277.1.61" extension="xxxxxx" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID"/>
+					<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+						<name use="L">
+							<prefix>Dr</prefix>
+							<family>Plisihd</family>
+							<given>xxxxxx</given>
+						</name>
+					</assignedPerson>
+				</assignedEntity>
+			</encounterParticipant>
+			<location>
+				<healthCareFacility classCode="SDLOC">
+					<id root="2.16.840.1.113883.3.277.1.62" extension="xxxxx" assigningAuthorityName="IHA Meditech Location Identifier"/>
+					<!--code represents the patient location, in the form "Pt.Type:Unit[:Room[:Bed]]"-->
+					<code code="RCR:TRAKBHLB" codeSystemName="Patient Type:Unit"/>
+				</healthCareFacility>
+			</location>
+		</encompassingEncounter>
+	</componentOf>
+	<!-- 
+********************************************************
+CDA Body: Level 3 - Discrete Lab Results  
+********************************************************
+-->
+	<component typeCode="COMP">
+		<structuredBody classCode="DOCBODY" moodCode="EVN">
+			<component typeCode="COMP">
+				<section classCode="DOCSECT" moodCode="EVN">
+					<templateId root="1.3.6.1.4.1.19376.1.3.3.2.1" assigningAuthorityName="Laboratory Specialty Section"/>
+					<code codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC Code" code="26436-6" displayName="Laboratory Studies"/>
+					<title>Laboratory Studies</title>
+					<component typeCode="COMP">
+						<section classCode="DOCSECT" moodCode="EVN">
+							<templateId root="1.3.6.1.4.1.19376.1.3.3.2.2" assigningAuthorityName="Laboratory Report Item Section"/>
+							<code codeSystem="2.16.840.1.113883.2.20.5.1" codeSystemName="pCLOCD" code="34532-2" displayName="Blood Type &amp; Indirect Antibody Screen"/>
+							<!-- ==== Derived Text Representation of Discrete Lab Results ==== -->
+							<title>Blood Type &amp; Indirect Antibody Screen</title>
+							<text>
+								<table>
+									<caption>Specimen Information</caption>
+									<tbody>
+										<tr>
+											<th>Lab #</th>
+											<td>PT0711:T00001R</td>
+										</tr>
+										<tr>
+											<th>Collected:</th>
+											<td>07/Nov/2013 10:04 PST</td>
+										</tr>
+										<tr>
+											<th>Received:</th>
+											<td>07/Nov/2013 10:04 PST</td>
+										</tr>
+									</tbody>
+								</table>
+								<br/>
+								<table>
+									<caption>34532-2 Blood Type &amp; Indirect Antibody Screen</caption>
+									<tbody>
+										<tr>
+											<th>Comments</th>
+											<td colspan="7">Date required: 20131107<br/>Any previous transfusions? Unknown<br/>Specify any underlying blood disorders: U<br/>Has consent for blood products been obtained? Yes<br/>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8"/>
+										</tr>
+										<tr>
+											<th>Test ID:</th>
+											<th>Test Name:</th>
+											<th>Test Result:</th>
+											<th>Result Flags:</th>
+											<th>Reference Range:</th>
+											<th>Result Units:</th>
+											<th>Time Resulted:</th>
+											<th>Status:</th>
+										</tr>
+										<tr ID="p882-1_1-1">
+											<td>882-1</td>
+											<td>Blood Type &amp; Indirect Antibody Screen</td>
+											<td>OPOS</td>
+											<td/>
+											<td/>
+											<td/>
+											<td>07/Nov/2013 11:37 PST</td>
+											<td>completed</td>
+										</tr>
+										<tr ID="pXBC1931-6_2-1">
+											<td>XBC1931-6</td>
+											<td>Blood Type &amp; Indirect Antibody Screen</td>
+											<td>NEGATIVE</td>
+											<td/>
+											<td/>
+											<td/>
+											<td>07/Nov/2013 11:38 PST</td>
+											<td>completed</td>
+										</tr>
+									</tbody>
+								</table>
+								<br/>
+								<br/>
+								<table>
+									<tbody>
+										<tr>
+											<th>Result Flags Legend:</th>
+											<td>
+												<content styleCode="alert">H</content>/<content styleCode="alert">L</content>/<content styleCode="alert">A</content>
+												<br/>
+												<content styleCode="alert">HH</content>/<content styleCode="alert">LL</content>/<content styleCode="alert">AA</content>
+											</td>
+											<td>Abnormal Value<br/>Critical Value</td>
+										</tr>
+										<tr>
+											<th>Performing Lab:</th>
+											<td colspan="2">xx (xx)</td>
+										</tr>
+										<tr>
+											<th>Report Status:</th>
+											<td colspan="2">completed</td>
+										</tr>
+									</tbody>
+								</table>
+							</text>
+							<!-- ==== Machine Readable HL7 V3 Representation of Discrete Lab Results ==== -->
+							<entry typeCode="DRIV">
+								<templateId root="1.3.6.1.4.1.19376.1.3.1" assigningAuthorityName="Laboratory Report Data Processing Entry"/>
+								<act classCode="ACT" moodCode="EVN">
+									<code nullFlavor="NA"/>
+									<statusCode code="NI"/>
+									<!--Specimen Collection: PT0711:T00001R-->
+									<entryRelationship typeCode="COMP">
+										<procedure classCode="PROC" moodCode="EVN">
+											<templateId root="1.3.6.1.4.1.19376.1.3.1.2" assigningAuthorityName="Specimen Collection"/>
+											<code codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC Code" code="33882-2" displayName="Specimen Collection"/>
+											<effectiveTime value="201311071004-0800"/>
+											<targetSiteCode code="T"/>
+											<participant typeCode="PRD">
+												<participantRole classCode="SPEC">
+													<id root="2.16.840.1.113883.3.277.1.11" extension="PT0711:T00001R" assigningAuthorityName="IHA Test/Specimen Number (OBR.3 Filler Order Number)"/>
+													<playingEntity>
+														<code nullFlavor="UNK"/>
+													</playingEntity>
+												</participantRole>
+											</participant>
+										</procedure>
+									</entryRelationship>
+									<!-- Battery: Blood Type & Indirect Antibody Screen -->
+									<entryRelationship typeCode="COMP">
+										<organizer classCode="BATTERY" moodCode="EVN">
+											<templateId root="1.3.6.1.4.1.19376.1.3.1.4" assigningAuthorityName="Laboratory Battery Organizer"/>
+											<id root="2.16.840.1.113883.3.277.1.11" extension="PT0711:T00001R" assigningAuthorityName="IHA Test/Specimen Number (OBR.3 Filler Order Number)"/>
+											<code codeSystem="2.16.840.1.113883.2.20.5.1" codeSystemName="pCLOCD" code="34532-2" displayName="Blood Type &amp; Indirect Antibody Screen"/>
+											<statusCode code="completed"/>
+											<effectiveTime value="201311071004-0800"/>
+											<!--Associated Battery Observation Annotation-->
+											<component typeCode="COMP">
+												<act classCode="ACT" moodCode="EVN">
+													<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.2" assigningAuthorityName="Annotation Comment"/>
+													<code codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC Code" code="48767-8" displayName="Annotation Comment"/>
+													<text>Date required: 20131107
+			Any previous transfusions? Unknown
+			Specify any underlying blood disorders: U
+			Has consent for blood products been obtained? Yes</text>
+													<statusCode code="completed"/>
+												</act>
+											</component>
+											<!--1 - Blood Type & Indirect Antibody Screen-->
+											<component typeCode="COMP">
+												<observation classCode="OBS" moodCode="EVN">
+													<templateId root="1.3.6.1.4.1.19376.1.3.1.6" assigningAuthorityName="Laboratory Observation"/>
+													<code codeSystem="2.16.840.1.113883.2.20.5.1" codeSystemName="pCLOCD" code="882-1" displayName="Blood Type &amp; Indirect Antibody Screen"/>
+													<text>
+														<reference value="#p882-1_1-1"/>
+													</text>
+													<statusCode code="NI"/>
+													<effectiveTime value="201311071137-0800"/>
+													<value mediaType="text/plain" representation="TXT" xsi:type="ST">OPOS</value>
+													<performer typeCode="PRF">
+														<assignedEntity classCode="ASSIGNED">
+															<id nullFlavor="NI"/>
+															<representedOrganization classCode="ORG" determinerCode="INSTANCE">
+																<id root="2.16.840.1.113883.3.277.1.62" extension="xx" assigningAuthorityName="IHA Lab Provider"/>
+																<name>xx</name>
+															</representedOrganization>
+														</assignedEntity>
+													</performer>
+												</observation>
+											</component>
+											<!--2 - Blood Type & Indirect Antibody Screen-->
+											<component typeCode="COMP">
+												<observation classCode="OBS" moodCode="EVN">
+													<templateId root="1.3.6.1.4.1.19376.1.3.1.6" assigningAuthorityName="Laboratory Observation"/>
+													<code codeSystem="2.16.840.1.113883.2.20.5.1" codeSystemName="pCLOCD" code="XBC1931-6" displayName="Blood Type &amp; Indirect Antibody Screen"/>
+													<text>
+														<reference value="#pXBC1931-6_2-1"/>
+													</text>
+													<statusCode code="NI"/>
+													<effectiveTime value="201311071138-0800"/>
+													<value mediaType="text/plain" representation="TXT" xsi:type="ST">NEGATIVE</value>
+													<performer typeCode="PRF">
+														<assignedEntity classCode="ASSIGNED">
+															<id nullFlavor="NI"/>
+															<representedOrganization classCode="ORG" determinerCode="INSTANCE">
+																<id root="2.16.840.1.113883.3.277.1.62" extension="xx" assigningAuthorityName="IHA Lab Provider"/>
+																<name>xx</name>
+															</representedOrganization>
+														</assignedEntity>
+													</performer>
+												</observation>
+											</component>
+										</organizer>
+									</entryRelationship>
+								</act>
+							</entry>
+						</section>
+					</component>
+				</section>
+			</component>
+		</structuredBody>
+	</component>
+</ClinicalDocument>

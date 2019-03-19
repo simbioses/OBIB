@@ -6,7 +6,6 @@ import org.hl7.v3.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -72,31 +71,7 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    public String searchDocumentById(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
-                                     String documentId) throws ConnectorException {
-        return searchDocument(locationId, new DocumentQueryParameterBuilder()
-                .clinicId(locationId)
-                .documentType(documentType)
-                .documentId(documentId));
-    }
-
-    public String searchDocumentByDate(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
-                                       Date lowDate, Date highDate) throws ConnectorException {
-        return searchDocument(locationId, new DocumentQueryParameterBuilder()
-                .clinicId(locationId)
-                .documentType(documentType)
-                .documentEffectiveTime(lowDate, true, highDate, true));
-    }
-
-    public String searchDocumentByEventTime(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
-                                            Date lowDate, Date highDate) throws ConnectorException {
-        return searchDocument(locationId, new DocumentQueryParameterBuilder()
-                .clinicId(locationId)
-                .documentType(documentType)
-                .eventEffectiveTime(lowDate, true, highDate, true));
-    }
-
-    private String searchDocument(String locationId,
+    public String searchDocuments(String locationId,
                                   DocumentQueryParameterBuilder queryParameterBuilder) throws ConnectorException {
         try {
             RCMRIN000029UV01 request = new SearchDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)

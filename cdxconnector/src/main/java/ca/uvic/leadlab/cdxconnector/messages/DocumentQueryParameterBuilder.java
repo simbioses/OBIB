@@ -22,32 +22,32 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
     }
 
     public DocumentQueryParameterBuilder clinicId(String clinicId) {
-        representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId();
-        representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId));
+        representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId(); // CONF-CDXMQ070
+        representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId)); // CONF-CDXMQ071
         return this;
     }
 
     public DocumentQueryParameterBuilder documentId(String documentId) {
-        clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId();
-        clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.3.4.1", documentId));
+        clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId(); // CONF-CDXMQ068
+        clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.3.4.1", documentId)); // CONF-CDXMQ069
         return this;
     }
 
     public DocumentQueryParameterBuilder documentEffectiveTime(Date lowDate, boolean lowDateInclusive,
                                                                Date highDate, boolean highDateInclusive) {
-        clinicalDocumentEffectiveTime = new RCMRMT000003UV01ClinicalDocumentEffectiveTime();
+        clinicalDocumentEffectiveTime = new RCMRMT000003UV01ClinicalDocumentEffectiveTime(); // CONF-CDXMQ065
         clinicalDocumentEffectiveTime.setValue(factory.createIVLTS(
-                factory.createIVXBTS(lowDateInclusive, lowDate),
-                factory.createIVXBTS(highDateInclusive, highDate)));
+                factory.createIVXBTS(lowDateInclusive, lowDate), // CONF-CDXMQ066
+                factory.createIVXBTS(highDateInclusive, highDate))); // CONF-CDXMQ067
         return this;
     }
 
     public DocumentQueryParameterBuilder eventEffectiveTime(Date lowDate, boolean lowDateInclusive,
                                                             Date highDate, boolean highDateInclusive) {
-        serviceEventEffectiveTime = new RCMRMT000003UV01ServiceEventEffectiveTime();
+        serviceEventEffectiveTime = new RCMRMT000003UV01ServiceEventEffectiveTime(); // CONF-CDXMQ072
         serviceEventEffectiveTime.setValue(factory.createIVLTS(
-                factory.createIVXBTS(lowDateInclusive, lowDate),
-                factory.createIVXBTS(highDateInclusive, highDate)));
+                factory.createIVXBTS(lowDateInclusive, lowDate), // CONF-CDXMQ073
+                factory.createIVXBTS(highDateInclusive, highDate))); // CONF-CDXMQ074
         return this;
     }
 
@@ -62,7 +62,7 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
 
     public RCMRMT000003UV01QueryByParameter buildSearch() {
         RCMRMT000003UV01QueryByParameter parameter = new RCMRMT000003UV01QueryByParameter();
-        if (documentType != null) {
+        if (documentType != null) { // CONF-CDXMQ064
             parameter.getTemplateId().add(factory.createII("2.16.840.1.113883.3.277.100.20", documentType.name()));
         }
         if (clinicalDocumentEffectiveTime != null) {

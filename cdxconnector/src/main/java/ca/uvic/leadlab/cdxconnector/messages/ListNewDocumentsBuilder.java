@@ -2,8 +2,8 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListNewDocumentsBuilder extends MessageBuilder {
@@ -33,7 +33,7 @@ public class ListNewDocumentsBuilder extends MessageBuilder {
         MCCIIN100001UV01 request = new MCCIIN100001UV01(); // CONF-CDXSPR0001, CONF-CDXSPR0002
         request.setITSVersion("XML_1.0"); // CONF-CDXSPR0003
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId)); // CONF-CDXSPR0004, CONF-CDXSPR0005, CONF-CDXSPR0006
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // CONF-CDXSPR0007, CONF-CDXSPR0008
+        request.setCreationTime(factory.createTS(new Date())); // CONF-CDXSPR0007, CONF-CDXSPR0008
         request.setVersionCode(factory.createCS("Ballot2009May")); // CONF-CDXSPR0009, CONF-CDXSPR0010
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "MCCI_IN100001UV01")); // CONF-CDXSPR0011, CONF-CDXSPR0012, CONF-CDXSPR0013
         request.setProcessingCode(factory.createCS(ProcessingID.P.value())); // CONF-CDXSPR0014, CONF-CDXSPR0015

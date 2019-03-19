@@ -6,7 +6,7 @@ import org.hl7.v3.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -81,7 +81,7 @@ public class WSClientDocument extends WSClient {
     }
 
     public String searchDocumentByDate(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
-                                       ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
+                                       Date lowDate, Date highDate) throws ConnectorException {
         return searchDocument(locationId, new DocumentQueryParameterBuilder()
                 .clinicId(locationId)
                 .documentType(documentType)
@@ -89,7 +89,7 @@ public class WSClientDocument extends WSClient {
     }
 
     public String searchDocumentByEventTime(String locationId, DocumentQueryParameterBuilder.DocumentType documentType,
-                                            ZonedDateTime lowDate, ZonedDateTime highDate) throws ConnectorException {
+                                            Date lowDate, Date highDate) throws ConnectorException {
         return searchDocument(locationId, new DocumentQueryParameterBuilder()
                 .clinicId(locationId)
                 .documentType(documentType)

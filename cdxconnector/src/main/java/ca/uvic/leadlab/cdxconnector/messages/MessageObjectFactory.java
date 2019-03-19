@@ -2,10 +2,12 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MessageObjectFactory extends ObjectFactory {
+
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZ");
 
     public II createII(NullFlavor nullFlavor) {
         II id = createII();
@@ -34,9 +36,9 @@ public class MessageObjectFactory extends ObjectFactory {
         return ts;
     }
 
-    public TS createTS(ZonedDateTime value) {
+    public TS createTS(Date value) {
         TS ts = createTS();
-        ts.setValue(DateTimeFormatter.ofPattern("yyyyMMddHHmmZ").format(value));
+        ts.setValue(DATE_TIME_FORMAT.format(value));
         return ts;
     }
 
@@ -144,10 +146,11 @@ public class MessageObjectFactory extends ObjectFactory {
         return ivlts;
     }
 
-    public IVXBTS createIVXBTS(boolean inclusive, ZonedDateTime value) {
+    public IVXBTS createIVXBTS(boolean inclusive, Date value) {
         IVXBTS ivxbts = createIVXBTS();
         ivxbts.setInclusive(inclusive);
-        ivxbts.setValue(DateTimeFormatter.ofPattern("yyyyMMddHHmmZ").format(value));
+        ivxbts.setValue(DATE_TIME_FORMAT.format(value));
         return ivxbts;
     }
 }
+

@@ -2,7 +2,7 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class DocumentQueryParameterBuilder extends MessageBuilder {
 
@@ -33,8 +33,8 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder documentEffectiveTime(ZonedDateTime lowDate, boolean lowDateInclusive,
-                                                               ZonedDateTime highDate, boolean highDateInclusive) {
+    public DocumentQueryParameterBuilder documentEffectiveTime(Date lowDate, boolean lowDateInclusive,
+                                                               Date highDate, boolean highDateInclusive) {
         clinicalDocumentEffectiveTime = new RCMRMT000003UV01ClinicalDocumentEffectiveTime();
         clinicalDocumentEffectiveTime.setValue(factory.createIVLTS(
                 factory.createIVXBTS(lowDateInclusive, lowDate),
@@ -42,8 +42,8 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder eventEffectiveTime(ZonedDateTime lowDate, boolean lowDateInclusive,
-                                                            ZonedDateTime highDate, boolean highDateInclusive) {
+    public DocumentQueryParameterBuilder eventEffectiveTime(Date lowDate, boolean lowDateInclusive,
+                                                            Date highDate, boolean highDateInclusive) {
         serviceEventEffectiveTime = new RCMRMT000003UV01ServiceEventEffectiveTime();
         serviceEventEffectiveTime.setValue(factory.createIVLTS(
                 factory.createIVXBTS(lowDateInclusive, lowDate),

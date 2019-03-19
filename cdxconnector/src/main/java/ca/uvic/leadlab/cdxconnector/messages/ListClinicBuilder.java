@@ -2,7 +2,7 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class ListClinicBuilder extends MessageBuilder {
 
@@ -49,7 +49,7 @@ public class ListClinicBuilder extends MessageBuilder {
         PRPMIN406010UV01 request = new PRPMIN406010UV01(); // CONF-CDXPR050
         request.setITSVersion("XML_1.0");
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId));
-        request.setCreationTime(factory.createTS(ZonedDateTime.now()));
+        request.setCreationTime(factory.createTS(new Date()));
         request.setVersionCode(factory.createCS("2010Normative")); // CONF- CDXPR051
         // CONF- CDXPR052
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "PRPM_IN306010UV"));

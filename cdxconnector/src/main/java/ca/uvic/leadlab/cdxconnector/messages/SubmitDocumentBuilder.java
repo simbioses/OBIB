@@ -7,8 +7,8 @@ import org.hl7.v3.*;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SubmitDocumentBuilder extends MessageBuilder {
@@ -67,7 +67,7 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         // Transmission Wrapper
         RCMRIN000002UV01 request = new RCMRIN000002UV01(); // CONF-CDXOD001, CONF-CDXOD002, CONF-CDXOD003
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId)); // CONF-CDXOD004, CONF-CDXOD005
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // CONF-CDXOD007, CONF-CDXOD008
+        request.setCreationTime(factory.createTS(new Date())); // CONF-CDXOD007, CONF-CDXOD008
         request.setVersionCode(factory.createCS("Ballot2009May")); // CONF-CDXOD009, CONF-CDXOD010
         // CONF-CDXOD011, CONF-CDXOD012, CONF-CDXOD013
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "RCMR_IN000002UV01"));

@@ -2,8 +2,8 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SearchDocumentBuilder extends MessageBuilder {
@@ -40,7 +40,7 @@ public class SearchDocumentBuilder extends MessageBuilder {
         RCMRIN000029UV01 request = new RCMRIN000029UV01(); // CONF-CDXMQ012, CONF-CDXMQ013
         request.setITSVersion("XML_1.0"); // CONF-CDXMQ014
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId)); // CONF-CDXMQ015, CONF-CDXMQ016, CONF-CDXMQ017
-        request.setCreationTime(factory.createTS(ZonedDateTime.now())); // CONF-CDXMQ018, CONF-CDXMQ019
+        request.setCreationTime(factory.createTS(new Date())); // CONF-CDXMQ018, CONF-CDXMQ019
         request.setVersionCode(factory.createCS("Ballot2009May")); // CONF-CDXMQ020, CONF-CDXMQ021
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "RCMR_IN000029UV01")); // CONF-CDXMQ022, CONF-CDXMQ022, CONF-CDXMQ024
         request.setProcessingCode(factory.createCS(ProcessingID.P.value())); // CONF-CDXMQ025, CONF-CDXMQ026

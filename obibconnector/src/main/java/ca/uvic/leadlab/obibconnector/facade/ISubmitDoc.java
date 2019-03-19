@@ -2,9 +2,6 @@ package ca.uvic.leadlab.obibconnector.facade;
 
 public interface ISubmitDoc extends ISubmit {
 
-    enum AttachmentType {
-        PDF, IMAGE
-    }
 
     //ISubmitDoc documentType(String type);
 

@@ -1,5 +1,12 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.impl;
 
+import ca.uvic.leadlab.obibconnector.facade.IParticipant;
+import ca.uvic.leadlab.obibconnector.facade.IPerson;
+import ca.uvic.leadlab.obibconnector.facade.IRecipient;
+import ca.uvic.leadlab.obibconnector.facade.ISubmitDoc;
+import ca.uvic.leadlab.obibconnector.impl.ParticipantBuilder;
+import ca.uvic.leadlab.obibconnector.impl.PersonBuilder;
+import ca.uvic.leadlab.obibconnector.impl.RecipientBuilder;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 import com.google.gson.Gson;
 
@@ -13,35 +20,35 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public IPersonBuilder patient() {
+    public IPerson patient() {
         Patient patient = new Patient();
         document.setPatient(patient);
         return new PersonBuilder<>(this, patient);
     }
 
     @Override
-    public IParticipantBuilder author() {
+    public IParticipant author() {
         Author author = new Author();
         document.addAuthor(author);
         return new ParticipantBuilder<>(this, author);
     }
 
     @Override
-    public IRecipientBuilder recipient() {
+    public IRecipient recipient() {
         Recipient recipient = new Recipient();
         document.addRecipient(recipient);
         return new RecipientBuilder<>(this, recipient);
     }
 
     @Override
-    public IParticipantBuilder dataEnterer() {
+    public IParticipant dataEnterer() {
         DataEnterer dataEnterer = new DataEnterer();
         document.setDataEnterer(dataEnterer);
         return new ParticipantBuilder<>(this, dataEnterer);
     }
 
     @Override
-    public IParticipantBuilder participant() {
+    public IParticipant participant() {
         Participant participant = new Participant();
         document.addParticipant(participant);
         return new ParticipantBuilder<>(this, participant);

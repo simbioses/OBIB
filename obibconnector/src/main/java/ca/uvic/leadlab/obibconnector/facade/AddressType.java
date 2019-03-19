@@ -6,7 +6,7 @@ public enum AddressType {
     TEMPORARY("TEMP"),
     POSTAL_ADDRESS("PST");
 
-    String label;
+    public final String label;
 
     AddressType(String label) {
         this.label = label;

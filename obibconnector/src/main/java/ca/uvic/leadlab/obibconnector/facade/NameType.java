@@ -7,7 +7,7 @@ public enum NameType {
     PROFESSIONAL("C"),
     HEALTHCARE_CARD("HC");
 
-    String label;
+    public final String label;
 
     NameType(String label) {
         this.label = label;

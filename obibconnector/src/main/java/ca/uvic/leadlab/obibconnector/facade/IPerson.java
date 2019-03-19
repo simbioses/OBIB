@@ -2,7 +2,7 @@ package ca.uvic.leadlab.obibconnector.facade;
 
 import java.util.Date;
 
-public interface IPersonBuilder<R extends IPersonBuilder> extends IAnd {
+public interface IPerson<R extends IPerson> extends IAnd {
 
     R id(String id);
 

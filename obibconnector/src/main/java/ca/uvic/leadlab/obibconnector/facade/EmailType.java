@@ -4,7 +4,7 @@ public enum EmailType {
     HOME("H"),
     WORK("WP");
 
-    String label;
+    public final String label;
 
     EmailType(String label) {
         this.label = label;

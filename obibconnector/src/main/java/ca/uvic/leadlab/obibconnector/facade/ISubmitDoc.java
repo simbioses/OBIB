@@ -8,19 +8,19 @@ public interface ISubmitDoc extends ISubmit {
 
     //ISubmitDoc documentType(String type);
 
-    IPersonBuilder patient();
+    IPerson patient();
 
-    IParticipantBuilder author();
+    IParticipant author();
 
-    IRecipientBuilder recipient();
+    IRecipient recipient();
 
     //ICustodianBuilder custodian();
 
-    IParticipantBuilder dataEnterer();
+    IParticipant dataEnterer();
 
-    //IParticipantBuilder authenticator();
+    //IParticipant authenticator();
 
-    IParticipantBuilder participant();
+    IParticipant participant();
 
     ISubmitDoc content(String text);
 

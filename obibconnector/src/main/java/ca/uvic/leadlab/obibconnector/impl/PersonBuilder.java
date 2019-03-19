@@ -1,13 +1,13 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.impl;
 
+import ca.uvic.leadlab.obibconnector.facade.*;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Address;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Name;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Telecom;
 
 import java.util.Date;
 
-public class PersonBuilder<P extends IPerson, R extends IPersonBuilder> extends DocElement implements IPersonBuilder<R> {
+public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson, R extends IPerson> extends DocElement implements IPerson<R> {
 
     P person;
 

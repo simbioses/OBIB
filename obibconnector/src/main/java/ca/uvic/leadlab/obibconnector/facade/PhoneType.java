@@ -5,7 +5,7 @@ public enum PhoneType {
     WORK("WP"),
     MOBILE("M");
 
-    String label;
+    public final String label;
 
     PhoneType(String label) {
         this.label = label;

@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.send;
 
 public interface IRecipient extends IPerson<IRecipient> {
 

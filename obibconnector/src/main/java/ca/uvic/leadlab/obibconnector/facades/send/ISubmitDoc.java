@@ -1,4 +1,6 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.send;
+
+import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface ISubmitDoc extends ISubmit {
 

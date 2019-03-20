@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.receive;
 
 public interface IClinic {
 

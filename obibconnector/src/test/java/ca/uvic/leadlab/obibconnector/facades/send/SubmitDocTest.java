@@ -1,5 +1,7 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.send;
 
+import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import org.junit.Assert;
 import org.junit.Test;
 

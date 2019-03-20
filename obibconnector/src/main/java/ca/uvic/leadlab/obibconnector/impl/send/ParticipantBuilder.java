@@ -1,7 +1,7 @@
-package ca.uvic.leadlab.obibconnector.impl;
+package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facade.IParticipant;
-import ca.uvic.leadlab.obibconnector.facade.ISubmitDoc;
+import ca.uvic.leadlab.obibconnector.facades.send.IParticipant;
+import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson;
 
 import java.util.Date;

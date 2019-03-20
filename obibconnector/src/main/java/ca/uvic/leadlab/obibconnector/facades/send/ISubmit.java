@@ -1,7 +1,6 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.send;
 
 public interface ISubmit {
 
     String submit();
-
 }

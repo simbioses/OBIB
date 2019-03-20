@@ -24,7 +24,7 @@ public class ListClinicBuilder extends MessageBuilder {
         PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR059, CONF- CDXPR061
         query.getOrganizationID().add(factory.createPRPMMT406010UV01OrganizationID(root, extension));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR056
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -32,7 +32,7 @@ public class ListClinicBuilder extends MessageBuilder {
         PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR059, CONF- CDXPR060
         query.getOrganizationName().add(factory.createPRPMMT406010UV01OrganizationName(name));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR056
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -40,7 +40,7 @@ public class ListClinicBuilder extends MessageBuilder {
         PRPMMT406010UV01QueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR059, CONF- CDXPR062
         query.getOrganizationAddress().add(factory.createPRPMMT406010UV01OrganizationAddress(address));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR056
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -71,7 +71,10 @@ public class ListClinicBuilder extends MessageBuilder {
     }
 
     private PRPMMT406010UV01QueryByParameterPayload createParameterPayload() {
-        PRPMMT406010UV01QueryByParameterPayload parameterPayload = new PRPMMT406010UV01QueryByParameterPayload();
+        PRPMMT406010UV01QueryByParameterPayload parameterPayload = controlActProcess.getQueryByParameterPayload(); // CONF- CDXPR056
+        if (parameterPayload == null) {
+            parameterPayload = new PRPMMT406010UV01QueryByParameterPayload();
+        }
         parameterPayload.setStatusCode(factory.createCS(QueryStatusCode.NEW.value())); // CONF- CDXPR057, CONF- CDXPR058
         return parameterPayload;
     }

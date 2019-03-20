@@ -24,7 +24,7 @@ public class ListProviderBuilder extends MessageBuilder {
         PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR010, CONF- CDXPR012
         query.getProviderID().add(factory.createPRPMMT306010UVProviderID(root, extension));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -32,7 +32,7 @@ public class ListProviderBuilder extends MessageBuilder {
         PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR010, CONF- CDXPR011
         query.getProviderName().add(factory.createPRPMMT306010UVProviderName(name));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -40,7 +40,7 @@ public class ListProviderBuilder extends MessageBuilder {
         PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR010, CONF- CDXPR013
         query.getSdlcId().add(factory.createPRPMMT306010UVSdlcId(root, extension));
-        controlActProcess.setQueryByParameterPayload(query); // CONF- CDXPR007
+        controlActProcess.setQueryByParameterPayload(query);
         return this;
     }
 
@@ -71,7 +71,10 @@ public class ListProviderBuilder extends MessageBuilder {
     }
 
     private PRPMMT306010UVQueryByParameterPayload createParameterPayload() {
-        PRPMMT306010UVQueryByParameterPayload parameterPayload = new PRPMMT306010UVQueryByParameterPayload();
+        PRPMMT306010UVQueryByParameterPayload parameterPayload = controlActProcess.getQueryByParameterPayload(); // CONF- CDXPR007
+        if (parameterPayload == null) {
+            parameterPayload = new PRPMMT306010UVQueryByParameterPayload();
+        }
         parameterPayload.setStatusCode(factory.createCS(QueryStatusCode.NEW.value())); // CONF- CDXPR008, CONF- CDXPR009
         return parameterPayload;
     }

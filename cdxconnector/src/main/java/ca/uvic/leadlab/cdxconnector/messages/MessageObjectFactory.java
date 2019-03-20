@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class MessageObjectFactory extends ObjectFactory {
 
-    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZ");
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmssZ");
 
     public II createII(NullFlavor nullFlavor) {
         II id = createII();
@@ -86,14 +86,14 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public PRPMMT406010UV01OrganizationName createPRPMMT406010UV01OrganizationName(String value) {
-        PRPMMT406010UV01OrganizationName name = createPRPMMT406010UV01OrganizationName();
-        name.setValue(createEN(value));
+        PRPMMT406010UV01OrganizationName name = new PRPMMT406010UV01OrganizationName();
+        name.setValue(createEN(value)); // TODO write the content into <value> body
         return name;
     }
 
     public PRPMMT406010UV01OrganizationAddress createPRPMMT406010UV01OrganizationAddress(String value) {
         PRPMMT406010UV01OrganizationAddress address = createPRPMMT406010UV01OrganizationAddress();
-        address.setValue(createAD(value));
+        address.setValue(createAD(value)); // TODO write the content into <value> body
         return address;
     }
 
@@ -105,7 +105,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
         PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
-        providerName.setValue(createEN(value));
+        providerName.setValue(createEN(value)); // TODO write the content into <value> body
         return providerName;
     }
 
@@ -115,6 +115,12 @@ public class MessageObjectFactory extends ObjectFactory {
         return sdlcId;
     }
 
+    public ST createST(String content) {
+        ST st = createST();
+        st.getContent().add(content);
+        return st;
+    }
+
     public EN createEN(String content) {
         EN en = createEN();
         en.getDelimiterOrFamilyOrGiven().add(createENXP(content));
@@ -122,7 +128,7 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public ENXP createENXP(String content) {
-        ENXP enxp = createENXP();
+        ENXP enxp = createEnFamily();
         enxp.getContent().add(content);
         return enxp;
     }
@@ -134,7 +140,7 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public ADXP createADXP(String content) {
-        ADXP adxp = createADXP();
+        ADXP adxp = createAdxpStreetAddressLine();
         adxp.getContent().add(content);
         return adxp;
     }

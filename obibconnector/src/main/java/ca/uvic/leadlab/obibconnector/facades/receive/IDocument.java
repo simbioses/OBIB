@@ -1,4 +1,9 @@
-package ca.uvic.leadlab.obibconnector.facade;
+package ca.uvic.leadlab.obibconnector.facades.receive;
+
+import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
+import ca.uvic.leadlab.obibconnector.facades.send.IPerson;
+
+import java.util.Date;
 
 public interface IDocument {
 
@@ -17,7 +22,7 @@ public interface IDocument {
 
     String getCustodian();              // return name of custodian (that generated document)
 
-    IProvider   getPrimaryRecipient();
+    IProvider getPrimaryRecipient();
     IProvider[] getSecondaryRecipients(); // if present
 
     IProvider   getOrderingProvider();
@@ -34,12 +39,12 @@ public interface IDocument {
 
     String getPatientEncounterID();
 
-    String getAdmissionDate();
-    String getDischargeDate();
+    Date getAdmissionDate();
+    Date getDischargeDate();
 
     String getDischargeDisposition();
 
-    IProvider getParticipatingProviders();
+    IProvider[] getParticipatingProviders();
 
     String getContents();               // get the actual contents of the body of the document
 

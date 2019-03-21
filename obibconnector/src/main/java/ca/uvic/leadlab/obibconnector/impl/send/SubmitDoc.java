@@ -1,12 +1,10 @@
-package ca.uvic.leadlab.obibconnector.impl;
+package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facade.IParticipant;
-import ca.uvic.leadlab.obibconnector.facade.IPerson;
-import ca.uvic.leadlab.obibconnector.facade.IRecipient;
-import ca.uvic.leadlab.obibconnector.facade.ISubmitDoc;
-import ca.uvic.leadlab.obibconnector.impl.ParticipantBuilder;
-import ca.uvic.leadlab.obibconnector.impl.PersonBuilder;
-import ca.uvic.leadlab.obibconnector.impl.RecipientBuilder;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import ca.uvic.leadlab.obibconnector.facades.send.IParticipant;
+import ca.uvic.leadlab.obibconnector.facades.send.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.send.IRecipient;
+import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
 import com.google.gson.Gson;
 

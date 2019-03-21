@@ -1,6 +1,7 @@
-package ca.uvic.leadlab.obibconnector.impl;
+package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facade.*;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import ca.uvic.leadlab.obibconnector.facades.send.*;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Address;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Name;
 import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Telecom;
@@ -81,4 +82,6 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
         person.setTelecom(new Telecom(type.label, "email", email));
         return (R) this;
     }
+
+
 }

@@ -1,7 +1,7 @@
-package ca.uvic.leadlab.obibconnector.impl;
+package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facade.IAnd;
-import ca.uvic.leadlab.obibconnector.facade.ISubmitDoc;
+import ca.uvic.leadlab.obibconnector.facades.send.IAnd;
+import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

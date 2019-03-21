@@ -1,7 +1,7 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
-import ca.uvic.leadlab.obibconnector.facades.send.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
 
 import java.util.Date;
 
@@ -16,9 +16,9 @@ public interface IDocument {
 
     IPerson getPatient();
     IPerson getAuthor();                // return name of human author (if present)
-    String getAuthoringTime();          // return time of human authoring (if present)
-    String getAuthorDevice();           // return name of authoring device (if present)
-    String getAuthorDeviceTime();       // return time of device authoring (if present)
+    Date    getAuthoringTime();          // return time of human authoring (if present)
+    String  getAuthorDevice();           // return name of authoring device (if present)
+    Date    getAuthorDeviceTime();       // return time of device authoring (if present)
 
     String getCustodian();              // return name of custodian (that generated document)
 
@@ -30,7 +30,7 @@ public interface IDocument {
 
     String  getOrderID();               // the order ID for consultation notes is identical to their respective consultation requests
     String  getStatusCode();
-    String  getObservationDate();
+    Date  getObservationDate();
 
     String  getProcedureName();
     IProvider getProcedurePerformer();

@@ -23,7 +23,7 @@ public interface IPerson {
     PhoneType getPhoneType();
     String getPhoneNumber();
 
-    PhoneType getEmailType();
+    EmailType getEmailType();
     String getEmailAddress();
 
 }

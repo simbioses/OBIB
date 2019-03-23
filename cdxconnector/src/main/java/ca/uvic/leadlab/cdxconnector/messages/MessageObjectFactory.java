@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class MessageObjectFactory extends ObjectFactory {
 
-    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmssZ");
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
     public II createII(NullFlavor nullFlavor) {
         II id = createII();

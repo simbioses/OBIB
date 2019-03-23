@@ -1,15 +1,16 @@
 <codeTemplateLibrary version="3.7.0">
   <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
   <name>OBIB</name>
-  <revision>21</revision>
+  <revision>23</revision>
   <lastModified>
-    <time>1553204828702</time>
+    <time>1553289751634</time>
     <timezone>Etc/UTC</timezone>
   </lastModified>
   <description></description>
   <includeNewChannels>false</includeNewChannels>
   <enabledChannelIds>
     <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
+    <string>2375f320-7fd5-48cd-b3bb-53c22dab182b</string>
   </enabledChannelIds>
   <disabledChannelIds/>
   <codeTemplates>
@@ -23,10 +24,10 @@
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -66,10 +67,10 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -112,10 +113,10 @@ function buildCDAId(root, extension) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -162,10 +163,10 @@ function buildCDAName(use, family, given, prefix, sufix) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -197,10 +198,10 @@ function buildCDATelecom(use, value) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -227,10 +228,10 @@ function createErrorMessage(error) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -260,10 +261,10 @@ function formatCDAdataTime(dateTime) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -296,17 +297,17 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
     <codeTemplate version="3.7.0">
       <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
       <name>Parse CDA Address</name>
-      <revision>3</revision>
+      <revision>7</revision>
       <lastModified>
-        <time>1553130863123</time>
+        <time>1553295054988</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -320,6 +321,7 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 */
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
+	// addr[&apos;streetAddress&apos;] = cdaAddress.toString(); TODO parse street address
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
 		addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
 	}
@@ -349,10 +351,10 @@ function parseCDAAddress(cdaAddress) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -382,10 +384,10 @@ function parseCDAId(cdaID) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
@@ -424,10 +426,10 @@ function parseCDAName(cdaName) {
       </lastModified>
       <contextSet>
         <delegate>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>

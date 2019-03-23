@@ -16,7 +16,7 @@
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>1415</revision>
+      <revision>1420</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -109,7 +109,7 @@ channelMap.put(&apos;certPass&apos;, &apos;LEADlab&apos;); // TODO get from ??? 
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/SearchDocuments&apos;</name>
               <sequenceNumber>3</sequenceNumber>
               <enabled>true</enabled>
-              <behavior>REMOVE</behavior>
+              <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
                 <int>16</int>
               </metaDataIds>
@@ -1525,10 +1525,10 @@ try {
 
 	var queryParameter = new DocumentQueryParameterBuilder().documentType(DocumentQueryParameterBuilder.DocumentType.CDA);
 	if ($(&apos;effectiveTime_start&apos;) &amp;&amp; $(&apos;effectiveTime_end&apos;)) {
-		queryParameter.documentEffectiveTime($(&apos;effectiveTime_start&apos;), true, $(&apos;effectiveTime_end&apos;), true);
+		queryParameter.documentEffectiveTime(new Date($(&apos;effectiveTime_start&apos;)), true, new Date($(&apos;effectiveTime_end&apos;)), true);
 	}
 	if ($(&apos;eventTime_start&apos;) &amp;&amp; $(&apos;eventTime_end&apos;)) {
-		queryParameter.eventEffectiveTime($(&apos;eventTime_start&apos;), true, $(&apos;eventTime_end&apos;), true)
+		queryParameter.eventEffectiveTime(new Date($(&apos;eventTime_start&apos;)), true, new Date($(&apos;eventTime_end&apos;)), true)
 	}
 	if ($(&apos;clinicId&apos;)) {
 		queryParameter.clinicId($(&apos;clinicId&apos;))
@@ -4751,7 +4751,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1553294244271</time>
+            <time>1553304736305</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

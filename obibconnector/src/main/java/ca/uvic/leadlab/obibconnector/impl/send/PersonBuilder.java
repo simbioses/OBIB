@@ -72,13 +72,13 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
     }
 
     @Override
-    public R phone(PhoneType type, String number) {
+    public R phone(TelcoType type, String number) {
         person.setTelecom(new Telecom(type.label, "tel", number));
         return (R) this;
     }
 
     @Override
-    public R email(EmailType type, String email) {
+    public R email(TelcoType type, String email) {
         person.setTelecom(new Telecom(type.label, "email", email));
         return (R) this;
     }

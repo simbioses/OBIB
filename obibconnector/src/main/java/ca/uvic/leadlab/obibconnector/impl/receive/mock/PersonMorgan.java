@@ -1,17 +1,20 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.EmailType;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.PhoneType;
+import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PersonMorgan implements IPerson {
     @Override
-    public String getID() {
-        return "1235";
+    public IId[] getIDs() {
+        IId[] result = new IId[1];
+        result[0] = new IdMorgan();
+        return result;
     }
 
     @Override
@@ -70,22 +73,18 @@ public class PersonMorgan implements IPerson {
     }
 
     @Override
-    public PhoneType getPhoneType() {
-        return PhoneType.HOME;
+    public ITelco[]  getPhones() {
+        ITelco[] result = new ITelco[1];
+        result[0] = new  TelcoPhone555();
+        return result;
     }
 
-    @Override
-    public String getPhoneNumber() {
-        return "250-555-5642";
-    }
 
     @Override
-    public EmailType getEmailType() {
-        return EmailType.HOME;
+    public ITelco[] getEmails() {
+        ITelco[] result = new ITelco[1];
+        result[0] = new  TelcoEmailMe();
+        return result;
     }
 
-    @Override
-    public String getEmailAddress() {
-        return "morgan@me.org";
-    }
 }

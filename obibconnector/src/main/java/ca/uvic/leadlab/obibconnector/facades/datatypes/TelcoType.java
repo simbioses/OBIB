@@ -1,12 +1,13 @@
 package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
-public enum EmailType {
+public enum TelcoType {
     HOME("H"),
-    WORK("WP");
+    WORK("W"),
+    MOBILE("M");
 
     public final String label;
 
-    EmailType(String label) {
+    TelcoType(String label) {
         this.label = label;
     }
 }

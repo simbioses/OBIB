@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
+import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.IProvider;
 
 public class ProviderRaymond implements IProvider{
@@ -19,8 +20,11 @@ public class ProviderRaymond implements IProvider{
     }
 
     @Override
-    public String getID() {
-        return "RRUSK";
+    public IId[] getIDs() {
+
+        IId[] result = new IId[1];
+        result[0] = new IdRaymond();
+        return result;
     }
 
     @Override

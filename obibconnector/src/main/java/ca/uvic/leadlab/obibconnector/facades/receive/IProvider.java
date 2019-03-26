@@ -5,7 +5,7 @@ public interface IProvider {
     String getFirstName();
     String getLastName();
     String getPrefix();
-    String getID();
+    IId[] getIDs();
     String getClinicID();
     String getClinicName();
 

@@ -22,8 +22,8 @@ public interface IPerson<R extends IPerson> extends IAnd {
 
     R address(AddressType type, String streetAddress, String city, String province, String postalCode, String country);
 
-    R phone(PhoneType type, String number);
+    R phone(TelcoType type, String number);
 
-    R email(EmailType type, String email);
+    R email(TelcoType type, String email);
 
 }

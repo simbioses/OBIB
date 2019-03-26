@@ -5,7 +5,7 @@ import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface IPerson {
 
-    String getID();
+    IId[] getIDs();
 
     String getFirstName();
     String getLastName();
@@ -20,10 +20,8 @@ public interface IPerson {
     String getPostalCode();
     String getCountry();
 
-    PhoneType getPhoneType();
-    String getPhoneNumber();
+    ITelco[] getPhones();
 
-    EmailType getEmailType();
-    String getEmailAddress();
+    ITelco[] getEmails();
 
 }

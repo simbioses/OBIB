@@ -4,11 +4,11 @@ import ca.uvic.leadlab.obibconnector.facades.receive.*;
 
 public interface ISearchProviders {
 
-IProvider[] findByName(String name);
+IPerson[] findByName(String name);
 
-IProvider[] findByClinicID(String id);
+IPerson[] findByClinicID(String id);
 
-IProvider[] findByProviderID(String id);
+IPerson[] findByProviderID(String id);
 
 }
 

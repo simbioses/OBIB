@@ -22,18 +22,18 @@ public interface IDocument {
 
     String getCustodian();              // return name of custodian (that generated document)
 
-    IProvider getPrimaryRecipient();
-    IProvider[] getSecondaryRecipients(); // if present
+    IPerson getPrimaryRecipient();
+    IPerson[] getSecondaryRecipients(); // if present
 
-    IProvider   getOrderingProvider();
-    IProvider   getFamilyProvider();
+    IPerson   getOrderingProvider();
+    IPerson   getFamilyProvider();
 
     String  getOrderID();               // the order ID for consultation notes is identical to their respective consultation requests
     String  getStatusCode();
     Date  getObservationDate();
 
     String  getProcedureName();
-    IProvider getProcedurePerformer();
+    IPerson getProcedurePerformer();
 
     String getParentDocumentID();
 
@@ -44,7 +44,7 @@ public interface IDocument {
 
     String getDischargeDisposition();
 
-    IProvider[] getParticipatingProviders();
+    IPerson[] getParticipatingProviders();
 
     String getContents();               // get the actual contents of the body of the document
 

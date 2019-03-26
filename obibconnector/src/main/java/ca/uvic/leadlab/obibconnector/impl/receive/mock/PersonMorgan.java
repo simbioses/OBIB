@@ -28,6 +28,11 @@ public class PersonMorgan implements IPerson {
     }
 
     @Override
+    public String getPrefix() {
+        return null;
+    }
+
+    @Override
     public Gender getGender() {
         return Gender.MALE;
     }
@@ -85,6 +90,16 @@ public class PersonMorgan implements IPerson {
         ITelco[] result = new ITelco[1];
         result[0] = new  TelcoEmailMe();
         return result;
+    }
+
+    @Override
+    public String getClinicID() {
+        return null;
+    }
+
+    @Override
+    public String getClinicName() {
+        return null;
     }
 
 }

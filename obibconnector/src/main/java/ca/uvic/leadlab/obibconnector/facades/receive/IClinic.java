@@ -9,5 +9,5 @@ public interface IClinic {
     String getPostal();
     String getState();
 
-    IProvider getProvider();
+    IPerson getProvider();
 }

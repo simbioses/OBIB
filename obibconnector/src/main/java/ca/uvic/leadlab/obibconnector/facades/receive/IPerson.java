@@ -9,6 +9,7 @@ public interface IPerson {
 
     String getFirstName();
     String getLastName();
+    String getPrefix();
 
     Gender getGender();
 
@@ -23,5 +24,8 @@ public interface IPerson {
     ITelco[] getPhones();
 
     ITelco[] getEmails();
+
+    String getClinicID(); // empty for patients
+    String getClinicName(); // empty for patients
 
 }

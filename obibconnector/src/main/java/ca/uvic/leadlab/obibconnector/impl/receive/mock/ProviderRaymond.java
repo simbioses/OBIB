@@ -1,9 +1,13 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
+import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.receive.IId;
-import ca.uvic.leadlab.obibconnector.facades.receive.IProvider;
+import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
-public class ProviderRaymond implements IProvider{
+import java.util.Date;
+
+public class ProviderRaymond implements IPerson{
     @Override
     public String getFirstName() {
         return "Raymond";
@@ -12,6 +16,51 @@ public class ProviderRaymond implements IProvider{
     @Override
     public String getLastName() {
         return "Rusk";
+    }
+
+    @Override
+    public Gender getGender() {
+        return null;
+    }
+
+    @Override
+    public Date getBirthdate() {
+        return null;
+    }
+
+    @Override
+    public String getStreetAddress() {
+        return null;
+    }
+
+    @Override
+    public String getCity() {
+        return null;
+    }
+
+    @Override
+    public String getProvince() {
+        return null;
+    }
+
+    @Override
+    public String getPostalCode() {
+        return null;
+    }
+
+    @Override
+    public String getCountry() {
+        return null;
+    }
+
+    @Override
+    public ITelco[] getPhones() {
+        return new ITelco[0];
+    }
+
+    @Override
+    public ITelco[] getEmails() {
+        return new ITelco[0];
     }
 
     @Override

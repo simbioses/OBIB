@@ -2,7 +2,6 @@ package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
-import ca.uvic.leadlab.obibconnector.facades.receive.IProvider;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
 
 import java.text.SimpleDateFormat;
@@ -71,22 +70,22 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IProvider getPrimaryRecipient() {
+    public IPerson getPrimaryRecipient() {
         return new ProviderAdeshina();
     }
 
     @Override
-    public IProvider[] getSecondaryRecipients() {
+    public IPerson[] getSecondaryRecipients() {
         return null;
     }
 
     @Override
-    public IProvider getOrderingProvider() {
+    public IPerson getOrderingProvider() {
         return new ProviderRaymond();
     }
 
     @Override
-    public IProvider getFamilyProvider() {
+    public IPerson getFamilyProvider() {
         return null;
     }
 
@@ -121,7 +120,7 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IProvider getProcedurePerformer() {
+    public IPerson getProcedurePerformer() {
         return new ProviderRaymond();
     }
 
@@ -171,8 +170,8 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IProvider[] getParticipatingProviders() {
-        IProvider[] result = new IProvider[2];
+    public IPerson[] getParticipatingProviders() {
+        IPerson[] result = new IPerson[2];
         result[0] = new ProviderRaymond();
         result[1] = new ProviderAdeshina();
         return result;

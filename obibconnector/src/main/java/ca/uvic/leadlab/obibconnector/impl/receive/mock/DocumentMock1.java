@@ -189,7 +189,7 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public Byte[] getAttachment() {
+    public byte[] getAttachment() {
         return null;
     }
 

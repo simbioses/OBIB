@@ -1,5 +1,13 @@
 package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum AttachmentType {
-    PDF, RTF
+    PDF("PDF"),
+    RTF("RTF");
+
+
+    public final String label;
+
+    AttachmentType(String label) {
+        this.label = label;
+    }
 }

@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
+import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
 
@@ -183,12 +184,7 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public AttachmentType getAttachmentType() {
-        return null;
-    }
-
-    @Override
-    public byte[] getAttachment() {
+    public IAttachment[] getAttachments() {
         return null;
     }
 

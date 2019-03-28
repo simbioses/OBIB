@@ -8,13 +8,15 @@ import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PersonJens implements IPerson {
     @Override
-    public IId[] getIDs() {
-        IId[] result = new IId[1];
-        result[0] = new  IdJens();
+    public List<IId> getIDs() {
+        List<IId> result = new ArrayList<IId>();
+        result.add(new  IdJens());
         return result;
     }
 
@@ -79,17 +81,17 @@ public class PersonJens implements IPerson {
     }
 
     @Override
-    public ITelco[] getPhones() {
-        ITelco[] result = new ITelco[1];
-        result[0] = new  TelcoPhone555();
+    public List<ITelco> getPhones() {
+        List<ITelco> result = new ArrayList<ITelco>();
+        result.add(new  TelcoPhone555());
         return result;
     }
 
 
     @Override
-    public ITelco[] getEmails() {
-        ITelco[] result = new ITelco[1];
-        result[0] = new  TelcoEmailMe();
+    public List<ITelco> getEmails() {
+        List<ITelco> result = new ArrayList<ITelco>();
+        result.add(new  TelcoEmailMe());
         return result;
     }
 

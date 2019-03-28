@@ -1,7 +1,9 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
+import java.util.List;
+
 public interface IReceiveDoc {
-    String[] pollNewDocIDs();
+    List<String> pollNewDocIDs();
 
     IDocument retrieveDocument(String id) throws Exception;
 }

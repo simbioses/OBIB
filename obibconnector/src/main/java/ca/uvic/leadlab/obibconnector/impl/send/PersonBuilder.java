@@ -2,13 +2,13 @@ package ca.uvic.leadlab.obibconnector.impl.send;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import ca.uvic.leadlab.obibconnector.facades.send.*;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Address;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Name;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Telecom;
+import ca.uvic.leadlab.obibconnector.models.common.Address;
+import ca.uvic.leadlab.obibconnector.models.common.Name;
+import ca.uvic.leadlab.obibconnector.models.common.Telecom;
 
 import java.util.Date;
 
-public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson, R extends IPerson> extends DocElement implements IPerson<R> {
+public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.common.IPerson, R extends IPerson> extends DocElement implements IPerson<R> {
 
     P person;
 
@@ -19,31 +19,31 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
 
     @Override
     public R id(String id) {
-        person.setId(id);
+        person.addId(id);
         return (R) this;
     }
 
     @Override
     public R name(NameType type, String firstName, String lastName, String prefix, String suffix) {
-        person.setName(new Name(type.label, firstName, lastName, prefix, suffix));
+        person.addName(new Name(type.label, firstName, lastName, prefix, suffix));
         return (R) this;
     }
 
     @Override
     public R name(NameType type, String firstName, String lastName) {
-        person.setName(new Name(type.label, firstName, lastName, "", ""));
+        person.addName(new Name(type.label, firstName, lastName, "", ""));
         return (R) this;
     }
 
     @Override
     public R name(String firstName, String lastName, String prefix, String suffix) {
-        person.setName(new Name(NameType.LEGAL.label, firstName, lastName, prefix, suffix));
+        person.addName(new Name(NameType.LEGAL.label, firstName, lastName, prefix, suffix));
         return (R) this;
     }
 
     @Override
     public R name(String firstName, String lastName) {
-        person.setName(new Name(NameType.LEGAL.label, firstName, lastName, "", ""));
+        person.addName(new Name(NameType.LEGAL.label, firstName, lastName, "", ""));
         return (R) this;
     }
 
@@ -67,19 +67,19 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
 
     @Override
     public R address(AddressType type, String streetAddress, String city, String province, String postalCode, String country) {
-        person.setAddress(new Address(type.label, streetAddress, city, province, postalCode, country));
+        person.addAddress(new Address(type.label, streetAddress, city, province, postalCode, country));
         return (R) this;
     }
 
     @Override
     public R phone(TelcoType type, String number) {
-        person.setTelecom(new Telecom(type.label, "tel", number));
+        person.addTelecom(new Telecom(type.label, "tel", number));
         return (R) this;
     }
 
     @Override
     public R email(TelcoType type, String email) {
-        person.setTelecom(new Telecom(type.label, "email", email));
+        person.addTelecom(new Telecom(type.label, "email", email));
         return (R) this;
     }
 

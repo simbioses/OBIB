@@ -19,7 +19,7 @@ public class DocElement implements IAnd {
     }
 
     @Override
-    public String submit() {
+    public Object submit() {
         return submitDoc.submit();
     }
 }

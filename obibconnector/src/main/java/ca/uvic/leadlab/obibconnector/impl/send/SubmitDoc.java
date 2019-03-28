@@ -5,16 +5,16 @@ import ca.uvic.leadlab.obibconnector.facades.send.IParticipant;
 import ca.uvic.leadlab.obibconnector.facades.send.IPerson;
 import ca.uvic.leadlab.obibconnector.facades.send.IRecipient;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.*;
-import com.google.gson.Gson;
+import ca.uvic.leadlab.obibconnector.models.document.*;
 
 public class SubmitDoc implements ISubmitDoc {
 
-    ClinicalDocument document;
+    final ClinicalDocument document;
+    final String clinicId;
 
     public SubmitDoc(String clinicId) {
         this.document = new ClinicalDocument();
-        this.document.setLocationId(clinicId);
+        this.clinicId = clinicId;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public String submit() {
-        return new Gson().toJson(document); // TODO call REST Client
+    public Object submit() {
+        return document; // TODO call REST Client
     }
 }

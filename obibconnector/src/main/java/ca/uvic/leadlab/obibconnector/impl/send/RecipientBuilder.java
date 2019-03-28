@@ -2,8 +2,8 @@ package ca.uvic.leadlab.obibconnector.impl.send;
 
 import ca.uvic.leadlab.obibconnector.facades.send.IRecipient;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.ReceivedOrganization;
+import ca.uvic.leadlab.obibconnector.models.common.IPerson;
+import ca.uvic.leadlab.obibconnector.models.document.ReceivedOrganization;
 
 public class RecipientBuilder<P extends IPerson> extends PersonBuilder<P, IRecipient> implements IRecipient {
 

@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;

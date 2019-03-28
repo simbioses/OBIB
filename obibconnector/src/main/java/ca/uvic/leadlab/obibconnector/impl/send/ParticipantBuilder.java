@@ -2,7 +2,7 @@ package ca.uvic.leadlab.obibconnector.impl.send;
 
 import ca.uvic.leadlab.obibconnector.facades.send.IParticipant;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson;
+import ca.uvic.leadlab.obibconnector.models.common.IPerson;
 
 import java.util.Date;
 
@@ -14,13 +14,8 @@ public class ParticipantBuilder<P extends IPerson> extends PersonBuilder<P, IPar
 
     @Override
     public IParticipant participantTime(Date time) {
-        person.setTime(DATE_TIME_FORMATTER.format(time));
+        person.setTime(time);
         return this;
     }
 
-    @Override
-    public IParticipant participantTime(String year, String month, String day, String hour, String minute, String second, String timezone) {
-        person.setTime(year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "" + timezone);
-        return this;
-    }
 }

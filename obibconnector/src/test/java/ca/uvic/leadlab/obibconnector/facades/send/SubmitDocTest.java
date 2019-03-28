@@ -2,16 +2,18 @@ package ca.uvic.leadlab.obibconnector.facades.send;
 
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class SubmitDocTest {
 
     @Test
-    public void testSubmitDoc() {
-        String response = new SubmitDoc("11111")
+    public void testSubmitDoc() throws IOException {
+        Object response = new SubmitDoc("11111")
                     .patient()
                         .id("2222")
                         .name(NameType.LEGAL, "Joe", "Wine")
@@ -33,9 +35,11 @@ public class SubmitDocTest {
                         .name(NameType.LEGAL, "Joseph", "Cloud")
                         .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                         .phone(TelcoType.HOME, "250-111-1234")
+                .and().content("Document plain text")
                 .submit();
 
-        System.out.println(response);
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
     }

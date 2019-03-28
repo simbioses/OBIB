@@ -6,7 +6,9 @@ import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DocumentMock1 implements IDocument {
 
@@ -76,8 +78,8 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IPerson[] getSecondaryRecipients() {
-        return null;
+    public List<IPerson> getSecondaryRecipients() {
+        return new ArrayList<IPerson>();
     }
 
     @Override
@@ -171,10 +173,10 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IPerson[] getParticipatingProviders() {
-        IPerson[] result = new IPerson[2];
-        result[0] = new ProviderRaymond();
-        result[1] = new ProviderAdeshina();
+    public List<IPerson> getParticipatingProviders() {
+        List<IPerson> result = new ArrayList<>();
+        result.add(new ProviderRaymond());
+        result.add(new ProviderAdeshina());
         return result;
     }
 
@@ -184,8 +186,8 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IAttachment[] getAttachments() {
-        return null;
+    public List<IAttachment> getAttachments() {
+        return new ArrayList<IAttachment>();
     }
 
 

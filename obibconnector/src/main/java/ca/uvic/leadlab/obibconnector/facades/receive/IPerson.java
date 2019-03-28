@@ -1,11 +1,13 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
 import java.util.Date;
+import java.util.List;
+
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface IPerson {
 
-    IId[] getIDs();
+    List<IId> getIDs();
 
     String getFirstName();
     String getLastName();
@@ -21,9 +23,9 @@ public interface IPerson {
     String getPostalCode();
     String getCountry();
 
-    ITelco[] getPhones();
+    List<ITelco> getPhones();
 
-    ITelco[] getEmails();
+    List<ITelco> getEmails();
 
     String getClinicID(); // empty for patients
     String getClinicName(); // empty for patients

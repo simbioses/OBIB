@@ -5,7 +5,9 @@ import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProviderAdeshina implements IPerson{
     @Override
@@ -53,14 +55,20 @@ public class ProviderAdeshina implements IPerson{
         return null;
     }
 
-    @Override
-    public ITelco[] getPhones() {
-        return new ITelco[0];
-    }
 
     @Override
-    public ITelco[] getEmails() {
-        return new ITelco[0];
+    public List<ITelco> getPhones() {
+        List<ITelco> result = new ArrayList<ITelco>();
+        result.add(new  TelcoPhone555());
+        return result;
+    }
+
+
+    @Override
+    public List<ITelco> getEmails() {
+        List<ITelco> result = new ArrayList<ITelco>();
+        result.add(new  TelcoEmailMe());
+        return result;
     }
 
     @Override
@@ -69,9 +77,9 @@ public class ProviderAdeshina implements IPerson{
     }
 
     @Override
-    public IId[] getIDs() {
-        IId[] result = new IId[1];
-        result[0] = new IdAdeshina();
+    public List<IId> getIDs() {
+        List<IId> result = new ArrayList<IId>();
+        result.add(new IdAdeshina());
         return result;
     }
 

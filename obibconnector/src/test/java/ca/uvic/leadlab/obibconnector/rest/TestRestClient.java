@@ -16,13 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Date;
 
 public class TestRestClient {
 
     //@Test
-    public void testSubmitDocument() throws IOException {
+    public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ClinicalDocument document = (ClinicalDocument) new SubmitDoc("11111")
@@ -59,7 +58,7 @@ public class TestRestClient {
     }
 
     //@Test
-    public void testListDocument() throws IOException {
+    public void testListDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ListDocumentsResponse response = restClient.listDocument();
@@ -71,7 +70,7 @@ public class TestRestClient {
     }
 
     //@Test
-    public void testSearchDocument() throws IOException {
+    public void testSearchDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
@@ -84,7 +83,7 @@ public class TestRestClient {
     }
 
     //@Test
-    public void testGetDocument() throws IOException {
+    public void testGetDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
@@ -97,7 +96,7 @@ public class TestRestClient {
     }
 
     //@Test
-    public void testListClinics() throws IOException {
+    public void testListClinics() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ListClinicsResponse response = restClient.listClinics(SearchClinicCriteria.byClinicId("cdxpostprod-otca"));
@@ -109,7 +108,7 @@ public class TestRestClient {
     }
 
     //@Test
-    public void testListProviders() throws IOException {
+    public void testListProviders() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
         ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderId("93188"));

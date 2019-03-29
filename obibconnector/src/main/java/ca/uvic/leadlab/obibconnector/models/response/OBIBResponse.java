@@ -7,6 +7,10 @@ public abstract class OBIBResponse {
     private String message;
     private AckDetail ackDetail;
 
+    public boolean isOK() {
+        return "SUCCESS".equalsIgnoreCase(status);
+    }
+
     public String getStatus() {
         return status;
     }

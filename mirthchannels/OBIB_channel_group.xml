@@ -16,7 +16,7 @@
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>1557</revision>
+      <revision>1646</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -247,8 +247,8 @@ try {
                 <enabled>true</enabled>
                 <script>try {
 	var recipientId = [];
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;]); i++) {
-    		recipientId[i] = msg[&apos;recipient&apos;][i][&apos;id&apos;][0][&apos;id&apos;]; // TODO get only a specific type of ID ?
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipients&apos;]); i++) {
+    		recipientId[i] = msg[&apos;recipients&apos;][i][&apos;ids&apos;][0][&apos;code&apos;]; // TODO get only a specific type of ID ?
 	}
 	// store the recipients IDs, necessary to call &apos;send document service&apos;
 	channelMap.put(&apos;recipientId&apos;, validate(recipientId, &apos;&apos;, new Array()));
@@ -302,46 +302,46 @@ try {
 	var patientRole = tmp[&apos;recordTarget&apos;][&apos;patientRole&apos;];
 
 	// CONF-BC0048, CONF-BC0049, CONF-BC0050 TODO local or out of province PHN?
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;id&apos;]); i++) {
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;ids&apos;]); i++) {
 		// Insert IDs as first children of &apos;patientRole&apos;
-		patientRole.prependChild(buildCDAId(msg[&apos;patient&apos;][&apos;id&apos;][i][&apos;type&apos;], 
-								      msg[&apos;patient&apos;][&apos;id&apos;][i][&apos;id&apos;]));
+		patientRole.prependChild(buildCDAId(msg[&apos;patient&apos;][&apos;ids&apos;][i][&apos;type&apos;], 
+								      msg[&apos;patient&apos;][&apos;ids&apos;][i][&apos;code&apos;]));
 	}
 	
 	// CONF-BC0051: patientRole MAY contain zero or more [0..*] addr (address)
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;address&apos;]); i++) {
-		patientRole[&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;use&apos;], 
-										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;streetAddress&apos;], 
-										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;city&apos;], 
-										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;province&apos;], 
-										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;postalCode&apos;], 
-										 msg[&apos;patient&apos;][&apos;address&apos;][i][&apos;contry&apos;]);
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;addresses&apos;]); i++) {
+		patientRole[&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;use&apos;], 
+										 msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;streetAddress&apos;], 
+										 msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;city&apos;], 
+										 msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;province&apos;], 
+										 msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;postalCode&apos;], 
+										 msg[&apos;patient&apos;][&apos;addresses&apos;][i][&apos;contry&apos;]);
 	}
 	
 	// CONF-BC0052: patientRole MAY contain zero or more [0..*] telecom (address)
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;telecom&apos;]); i++) {
-		patientRole[&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;use&apos;], 
-										    msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;type&apos;], 
-										    msg[&apos;patient&apos;][&apos;telecom&apos;][i][&apos;value&apos;]);
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;telecoms&apos;]); i++) {
+		patientRole[&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;patient&apos;][&apos;telecoms&apos;][i][&apos;use&apos;], 
+										    msg[&apos;patient&apos;][&apos;telecoms&apos;][i][&apos;type&apos;], 
+										    msg[&apos;patient&apos;][&apos;telecoms&apos;][i][&apos;value&apos;]);
 	}
 	
 	// CONF-BC0053, CONF-BC0509
 	patientRole[&apos;patient&apos;] = new XML(&apos;&lt;patient classCode=&quot;PSN&quot;/&gt;&apos;);
 	
 	// CONF-BC0054: patient SHALL contain at least 1 [1..*] name
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;name&apos;]); i++) {  
-	  patientRole[&apos;patient&apos;][&apos;name&apos;][i] = buildCDAName(msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;use&apos;], 
-											 msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;family&apos;], 
-											 msg[&apos;patient&apos;][&apos;name&apos;][i][&apos;given&apos;], 
-											 msg[&apos;patient&apos;][&apos;name&apos;][0][&apos;prefix&apos;], 
-											 msg[&apos;patient&apos;][&apos;name&apos;][0][&apos;suffix&apos;]);
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;patient&apos;][&apos;names&apos;]); i++) {  
+	  patientRole[&apos;patient&apos;][&apos;name&apos;][i] = buildCDAName(msg[&apos;patient&apos;][&apos;names&apos;][i][&apos;use&apos;], 
+											 msg[&apos;patient&apos;][&apos;names&apos;][i][&apos;family&apos;], 
+											 msg[&apos;patient&apos;][&apos;names&apos;][i][&apos;given&apos;], 
+											 msg[&apos;patient&apos;][&apos;names&apos;][i][&apos;prefix&apos;], 
+											 msg[&apos;patient&apos;][&apos;names&apos;][i][&apos;suffix&apos;]);
 	}
 	
 	// CONF-BC0055
-	patientRole[&apos;patient&apos;][&apos;administrativeGenderCode&apos;][&apos;@code&apos;] = msg[&apos;patient&apos;][&apos;gender&apos;];
+	patientRole[&apos;patient&apos;][&apos;administrativeGenderCode&apos;][&apos;@code&apos;] = msg[&apos;patient&apos;][&apos;genderCode&apos;];
 	
 	// CONF-BC0056
-	patientRole[&apos;patient&apos;][&apos;birthTime&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;patient&apos;][&apos;dob&apos;]);
+	patientRole[&apos;patient&apos;][&apos;birthTime&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;patient&apos;][&apos;birthday&apos;]);
 	
 	// CONF-BC0057 TODO languageCommunication?
 } catch (e) {
@@ -358,48 +358,48 @@ try {
 	// Update the time for the fist author, who is the system author, fixed in the message template
 	tmp[&apos;author&apos;][0][&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(new Date());
 	
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;author&apos;]); i++) {
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;authors&apos;]); i++) {
 		// CONF-BC0058, CONF-BC0510
 	  	var author = new XML(&apos;&lt;author typeCode=&quot;AUT&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
 		
 	  	// CONF-BC0060
-	  	author[&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;author&apos;][i][&apos;time&apos;]);
+	  	author[&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;authors&apos;][i][&apos;time&apos;]);
 	
 	  	// CONF-BC0061, CONF-BC0511
 	  	author[&apos;assignedAuthor&apos;][&apos;@classCode&apos;] = &apos;ASSIGNED&apos;;
 	  	
 	  	// CONF-BC0062
-	  	for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;id&apos;]); j++) {
-			author[&apos;assignedAuthor&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;author&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
-										  		  msg[&apos;author&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
+	  	for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;authors&apos;][i][&apos;ids&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;authors&apos;][i][&apos;ids&apos;][j][&apos;type&apos;], 
+										  		  msg[&apos;authors&apos;][i][&apos;ids&apos;][j][&apos;code&apos;]);
 	  	}
 	  	
 	  	// CONF-BC0066: assignedAuthor MAY contain zero or more [0..*] addr (address)
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;address&apos;]); j++) {
-			author[&apos;assignedAuthor&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
-													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
-													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
-													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
-													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
-													    msg[&apos;author&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;authors&apos;][i][&apos;addresses&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;use&apos;], 
+													    msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;streetAddress&apos;], 
+													    msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;city&apos;], 
+													    msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;province&apos;], 
+													    msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;postalCode&apos;], 
+													    msg[&apos;authors&apos;][i][&apos;addresses&apos;][j][&apos;contry&apos;]);
 		}
 		
 		// CONF-BC0067: assignedAuthor MAY contain zero or more [0..*] telecom
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;author&apos;][i][&apos;telecom&apos;]); j++) {
-			author[&apos;assignedAuthor&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
-														  msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
-														  msg[&apos;author&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;authors&apos;][i][&apos;telecoms&apos;]); j++) {
+			author[&apos;assignedAuthor&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;authors&apos;][i][&apos;telecoms&apos;][j][&apos;use&apos;], 
+														  msg[&apos;authors&apos;][i][&apos;telecoms&apos;][j][&apos;type&apos;], 
+														  msg[&apos;authors&apos;][i][&apos;telecoms&apos;][j][&apos;value&apos;]);
 		}
 		
 		// CONF-BC0512
 		var assignedPerson = new XML(&apos;&lt;assignedPerson classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot;/&gt;&apos;);
 	
 	  	// CONF-BC0068
-	  	assignedPerson[&apos;name&apos;] = buildCDAName(msg[&apos;author&apos;][i][&apos;name&apos;][&apos;use&apos;], 
-	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;family&apos;], 
-	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;given&apos;], 
-	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
-	  								   msg[&apos;author&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
+	  	assignedPerson[&apos;name&apos;] = buildCDAName(msg[&apos;authors&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+	  								   msg[&apos;authors&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+	  								   msg[&apos;authors&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+	  								   msg[&apos;authors&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+	  								   msg[&apos;authors&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
 		
 		// CONF-BC0065
 		author[&apos;assignedAuthor&apos;][&apos;assignedPerson&apos;] = assignedPerson;
@@ -426,7 +426,7 @@ try {
 	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;id&apos;] = buildCDAId(&quot;2.16.840.1.113883.3.277.100.2&quot;, $(&apos;locationId&apos;));
 	
 	// CONF-BC0087 TODO ? contain zero or one [0..1] name
-	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;name&apos;] = new XML(&apos;&lt;name&gt;Oscar Test Clinic A&lt;/name&apos;); // TODO get from locationId
+	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;name&apos;] = new XML(&apos;&lt;name&gt;Oscar Test Clinic A&lt;/name&gt;&apos;); // TODO get from locationId
 } catch (e) {
     logger.error(&apos;Error on Transformer &quot;Custodian&quot;: &apos; + e);
 }</script>
@@ -437,59 +437,61 @@ try {
                 <enabled>true</enabled>
                 <script>try {
 	// 4.2.4. Information Recipient - Optional - 0..*
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;]); i++) {
-		// CONF-BC0070
-		var recipient = new XML(&apos;&lt;informationRecipient /&gt;&apos;);
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;recipients&apos;]); i++) {
+		// CONF-BC0070 (Insert &apos;informationRecipients&apos; after &apos;custodian&apos;)
+		var recipient = createSegmentAfter(&apos;informationRecipient&apos;, tmp[&apos;custodian&apos;]);
 	
 	  	// CONF-BC0071
-	  	recipient[&apos;@typeCode&apos;] = (i == 0) ? &apos;PRCP&apos; : &apos;TRC&apos;;
+	  	recipient[&apos;@typeCode&apos;] = msg[&apos;recipients&apos;][i][&apos;typeCode&apos;];
 	
 	  	// CONF-BC0072, CONF-BC0074
 	  	recipient[&apos;intendedRecipient&apos;] = new XML(&apos;&lt;intendedRecipient classCode=&quot;ASSIGNED&quot;/&gt;&apos;);
 
 		// CONF-BC0073, CONF-BC0075, CONF-BC0076
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;id&apos;]); j++) {
-			recipient[&apos;intendedRecipient&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;recipient&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
-										  		        msg[&apos;recipient&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipients&apos;][i][&apos;ids&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;recipients&apos;][i][&apos;ids&apos;][j][&apos;type&apos;], 
+										  		        msg[&apos;recipients&apos;][i][&apos;ids&apos;][j][&apos;code&apos;]);
 	  	}
 	  	
 	  	// CONF-BC0077: intendedRecipient MAY contain zero or more [0..*] addr
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;address&apos;]); j++) {
-			recipient[&apos;intendedRecipient&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
-												       		msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
-													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
-													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
-													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
-													       	msg[&apos;recipient&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipients&apos;][i][&apos;addresses&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;use&apos;], 
+												       		msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;streetAddress&apos;], 
+													       	msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;city&apos;], 
+													       	msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;province&apos;], 
+													       	msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;postalCode&apos;], 
+													       	msg[&apos;recipients&apos;][i][&apos;addresses&apos;][j][&apos;contry&apos;]);
 		}
 		
 		// CONF-BC0078: intendedRecipient MAY contain zero or more [0..*] telecom
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipient&apos;][i][&apos;telecom&apos;]); j++) {
-			recipient[&apos;intendedRecipient&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
-															   msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
-															   msg[&apos;recipient&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;recipients&apos;][i][&apos;telecoms&apos;]); j++) {
+			recipient[&apos;intendedRecipient&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;recipients&apos;][i][&apos;telecoms&apos;][j][&apos;use&apos;], 
+															   msg[&apos;recipients&apos;][i][&apos;telecoms&apos;][j][&apos;type&apos;], 
+															   msg[&apos;recipients&apos;][i][&apos;telecoms&apos;][j][&apos;value&apos;]);
 		}
 	
 		// CONF-BC0079
 		var recipientName = new XML(&apos;&lt;informationRecipient classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot; /&gt;&apos;);
-	  	recipientName[&apos;name&apos;] = buildCDAName(msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;use&apos;], 
-	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;family&apos;], 
-	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;given&apos;], 
-									  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
-	  								  msg[&apos;recipient&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
+	  	recipientName[&apos;name&apos;] = buildCDAName(msg[&apos;recipients&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+	  								  msg[&apos;recipients&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+	  								  msg[&apos;recipients&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+									  msg[&apos;recipients&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+	  								  msg[&apos;recipients&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
 		recipient[&apos;intendedRecipient&apos;][&apos;informationRecipient&apos;] = recipientName;
 	
 		// CONF-BC0080: intendedRecipient MAY contain zero or one [0..1] receivedOrganization
-		if (msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;]) {
+		if (msg[&apos;recipients&apos;][i][&apos;receivedOrganization&apos;]) {
 			var receivedOrganization = new XML(&apos;&lt;receivedOrganization /&gt;&apos;);
-			receivedOrganization[&apos;id&apos;] = buildCDAId(msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;id&apos;][&apos;type&apos;], 
-							  		          msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;id&apos;][&apos;id&apos;]);
-			receivedOrganization[&apos;name&apos;] = msg[&apos;recipient&apos;][i][&apos;receivedOrganization&apos;][&apos;name&apos;];
+
+			var orgazination = msg[&apos;recipients&apos;][i][&apos;receivedOrganization&apos;];
+			
+			for (var j = 0; j &lt; getArrayOrXmlLength(orgazination[&apos;ids&apos;]); j++) { // CONF-BC0545
+				receivedOrganization[&apos;id&apos;][j] = buildCDAId(orgazination[&apos;ids&apos;][j][&apos;type&apos;], 
+							  		                  orgazination[&apos;ids&apos;][j][&apos;code&apos;]);
+		  	}
+			receivedOrganization[&apos;name&apos;] = orgazination[&apos;name&apos;]; // CONF-BC0081
 			recipient[&apos;intendedRecipient&apos;][&apos;receivedOrganization&apos;] = receivedOrganization;
 		}
-		
-		// Insert informationRecipients after &apos;custodian&apos;
-		tmp.insertChildAfter(tmp[&apos;custodian&apos;], recipient);
 	}
 } catch (e) {
     logger.error(&apos;Error on Transformer &quot;Information Recipient&quot;: &apos; + e);
@@ -499,40 +501,42 @@ try {
                 <name>Data Enterer</name>
                 <sequenceNumber>6</sequenceNumber>
                 <enabled>true</enabled>
-                <script>/*try { TODO ? This participation is where the transcriptionist...
-	// 4.2.7. Data Enterer - Optional - 0..1
-	
+                <script>try {
+	// 4.2.7. Data Enterer - Optional - 0..1	
 	// CONF-BC0088: MAY contain zero or one [0..1] dataEnterer
 	if (msg[&apos;dataEnterer&apos;]) {
-		// CONF-BC0516
-		var dataEnterer = new XML(&apos;&lt;dataEnterer typeCode=&quot;ENT&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
+		// CONF-BC0516 (Insert &apos;dataEnterer&apos; before &apos;inFulfillmentOf&apos;) 
+		var dataEnterer = createSegmentBefore(&apos;dataEnterer&apos;, tmp[&apos;inFulfillmentOf&apos;]);
+		dataEnterer[&apos;@typeCode&apos;] = &apos;ENT&apos;;
+		dataEnterer[&apos;@contextControlCode&apos;] = &apos;OP&apos;;
 	
-		// CONF-BC0090
-		dataEnterer[&apos;assignedEntity&apos;][&apos;classCode&apos;] = &quot;ASSIGNED&quot;;
+		// CONF-BC0090, CONF-BC0517
+		dataEnterer[&apos;assignedEntity&apos;][&apos;@classCode&apos;] = &quot;ASSIGNED&quot;;
 	
 		// CONF-BC0550
 		dataEnterer[&apos;time&apos;][&apos;@value&apos;] = formatCDAdataTime(msg[&apos;dataEnterer&apos;][&apos;time&apos;]);
 	
 		// CONF-BC0091: assignedEntity SHOULD contain zero or one [0..1] id, which MAY be a local identifier
 		if (msg[&apos;dataEnterer&apos;][&apos;id&apos;]) {
-			dataEnterer[&apos;assignedEntity&apos;][&apos;id&apos;] = buildCDAId(null, msg[&apos;dataEnterer&apos;][&apos;id&apos;]);
+			dataEnterer[&apos;assignedEntity&apos;][&apos;id&apos;] = buildCDAId(msg[&apos;dataEnterer&apos;][&apos;ids&apos;][j][&apos;type&apos;], 
+										  		    msg[&apos;dataEnterer&apos;][&apos;ids&apos;][j][&apos;code&apos;]);
 		}
 	  
 	  	// CONF-BC0092: assignedEntity MAY contain zero or more [0..*] addr elements
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;address&apos;]); j++) {
-			dataEnterer[&apos;assignedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;use&apos;], 
-													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;streetAddress&apos;], 
-													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;city&apos;], 
-													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;province&apos;], 
-													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;postalCode&apos;], 
-													    	    msg[&apos;dataEnterer&apos;][&apos;address&apos;][j][&apos;contry&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;addresses&apos;]); j++) {
+			dataEnterer[&apos;assignedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;use&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;streetAddress&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;city&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;province&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;postalCode&apos;], 
+													    	    msg[&apos;dataEnterer&apos;][&apos;addresses&apos;][j][&apos;contry&apos;]);
 		}
 		
 		// CONF-BC0093: assignedEntity MAY contain zero or more [0..*] telecom elements
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;telecom&apos;]); j++) {
-			dataEnterer[&apos;assignedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;use&apos;], 
-														       msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;type&apos;], 
-														       msg[&apos;dataEnterer&apos;][&apos;telecom&apos;][j][&apos;value&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;dataEnterer&apos;][&apos;telecoms&apos;]); j++) {
+			dataEnterer[&apos;assignedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;dataEnterer&apos;][&apos;telecoms&apos;][j][&apos;use&apos;], 
+														       msg[&apos;dataEnterer&apos;][&apos;telecoms&apos;][j][&apos;type&apos;], 
+														       msg[&apos;dataEnterer&apos;][&apos;telecoms&apos;][j][&apos;value&apos;]);
 		}
 	
 		// CONF-BC0094: assignedEntity SHOULD contain zero or one [0..1]
@@ -549,12 +553,10 @@ try {
 		
 			dataEnterer[&apos;assignedEntity&apos;][&apos;assignedPerson&apos;] = assignedPerson;
 		}
-		
-		tmp[&apos;dataEnterer&apos;] = dataEnterer; // TODO insert it at?
 	}
 } catch (e) {
     logger.error(&apos;Error on Transformer &quot;Data Enterer&quot;: &apos; + e);
-} */</script>
+}</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.0">
                 <name>Authenticator</name>
@@ -570,55 +572,54 @@ try {
                 <enabled>true</enabled>
                 <script>try { 
 	// 4.2.9. Generic Participant - Optional - 0..*
-	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;participant&apos;]); i++) {
-		// CONF-8504, CONF-8505
-		var participant = new XML(&apos;&lt;participant typeCode=&quot;IND&quot; contextControlCode=&quot;OP&quot; /&gt;&apos;);
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;participants&apos;]); i++) {
+		// CONF-8504 (Insert &apos;participant&apos; before &apos;inFulfillmentOf&apos;) 
+		var participant = createSegmentBefore(&apos;participant&apos;, tmp[&apos;inFulfillmentOf&apos;]);
+		
+		// CONF-8505
+		participant[&apos;@typeCode&apos;] = msg[&apos;participants&apos;][i][&apos;typeCode&apos;];
+		participant[&apos;@contextControlCode&apos;] = &apos;OP&apos;;
 	
 		// CONF-8506
-		participant[&apos;functionCode&apos;] = new XML(&apos;&lt;functionCode code=&quot;&apos; + msg[&apos;participant&apos;][i][&apos;functionCode&apos;] + &apos;&quot; \
+		participant[&apos;functionCode&apos;] = new XML(&apos;&lt;functionCode code=&quot;&apos; + msg[&apos;participants&apos;][i][&apos;functionCode&apos;] + &apos;&quot; \
 										codeSystem=&quot;2.16.840.1.113883.2.20.3.88&quot; \
 									     codeSystemName=&quot;HL7ParticipationFunction&quot; displayName=&quot;Primary Care Physician&quot; /&gt;&apos;);
 	
 		// CONF-8507
 		participant[&apos;associatedEntity&apos;][&apos;@classCode&apos;] = &quot;PROV&quot;;
+
+		// CONF-BC0097, CONF-BC0098, CONF-BC0099
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participants&apos;][i][&apos;ids&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;participants&apos;][i][&apos;ids&apos;][j][&apos;type&apos;], 
+										  		         msg[&apos;participants&apos;][i][&apos;ids&apos;][j][&apos;code&apos;]);
+	  	}
 	
 		// CONF-8508, CONF-BC0519
 		participant[&apos;associatedEntity&apos;][&apos;associatedPerson&apos;] = new XML(&apos;&lt;associatedPerson classCode=&quot;PSN&quot; determinerCode=&quot;INSTANCE&quot; /&gt;&apos;);
 	
-		// TODO ? For use in British Columbia, the following constraints apply to the participation:
-		
-		// CONF-BC0097, CONF-BC0098, CONF-BC0099
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;id&apos;]); j++) {
-			participant[&apos;associatedEntity&apos;][&apos;id&apos;][j] = buildCDAId(msg[&apos;participant&apos;][i][&apos;id&apos;][j][&apos;type&apos;], 
-										  		         msg[&apos;participant&apos;][i][&apos;id&apos;][j][&apos;id&apos;]);
-	  	}
-	
 		// CONF-BC0101: associatedEntity MAY contain zero or more [0..*] addr
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;address&apos;]); j++) {
-			participant[&apos;associatedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;use&apos;], 
-															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;streetAddress&apos;], 
-															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;city&apos;], 
-															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;province&apos;], 
-															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;postalCode&apos;], 
-															 msg[&apos;participant&apos;][i][&apos;address&apos;][j][&apos;contry&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participants&apos;][i][&apos;addresses&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;addr&apos;][i] = buildCDAAddress(msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;use&apos;], 
+															 msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;streetAddress&apos;], 
+															 msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;city&apos;], 
+															 msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;province&apos;], 
+															 msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;postalCode&apos;], 
+															 msg[&apos;participants&apos;][i][&apos;addresses&apos;][j][&apos;contry&apos;]);
 		}
 		
 		// CONF-BC0102: associatedEntity MAY contain zero or more [0..*] telecom
-		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participant&apos;][i][&apos;telecom&apos;]); j++) {
-			participant[&apos;associatedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;use&apos;], 
-															    msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;type&apos;], 
-															    msg[&apos;participant&apos;][i][&apos;telecom&apos;][j][&apos;value&apos;]);
+		for (var j = 0; j &lt; getArrayOrXmlLength(msg[&apos;participants&apos;][i][&apos;telecoms&apos;]); j++) {
+			participant[&apos;associatedEntity&apos;][&apos;telecom&apos;][i] = buildCDATelecom(msg[&apos;participants&apos;][i][&apos;telecoms&apos;][j][&apos;use&apos;], 
+															    msg[&apos;participants&apos;][i][&apos;telecoms&apos;][j][&apos;type&apos;], 
+															    msg[&apos;participants&apos;][i][&apos;telecoms&apos;][j][&apos;value&apos;]);
 		}
 	
 		// CONF-BC0100
-		participant[&apos;associatedEntity&apos;][&apos;associatedPerson&apos;][&apos;name&apos;] = buildCDAName(msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;use&apos;], 
-																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;family&apos;], 
-																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;given&apos;], 
-																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
-																     msg[&apos;participant&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
-	
-		// Insert participant after &apos;informationRecipient&apos;
-		tmp.insertChildAfter(tmp[&apos;informationRecipient&apos;], participant);
+		participant[&apos;associatedEntity&apos;][&apos;associatedPerson&apos;][&apos;name&apos;] = buildCDAName(msg[&apos;participants&apos;][i][&apos;name&apos;][&apos;use&apos;], 
+																     msg[&apos;participants&apos;][i][&apos;name&apos;][&apos;family&apos;], 
+																     msg[&apos;participants&apos;][i][&apos;name&apos;][&apos;given&apos;], 
+																     msg[&apos;participants&apos;][i][&apos;name&apos;][&apos;prefix&apos;], 
+																     msg[&apos;participants&apos;][i][&apos;name&apos;][&apos;suffix&apos;]);
 	}
 } catch (e) {
     logger.error(&apos;Error on Transformer &quot;Generic Participant&quot;: &apos; + e);
@@ -690,75 +691,64 @@ try {
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             </elements>
-            <inboundTemplate encoding="base64">ewogICJlZmZlY3RpdmVUaW1lIjogIiIsDQogICJwYXRpZW50IjogewogICAgImlkIjogIiIsCiAg
-ICAiYWRkcmVzcyI6IFt7CiAgICAgICJ1c2UiOiAiIiwNCiAgICAgICJzdHJlZXRBZGRyZXNzIjog
-IiIsDQogICAgICAiY2l0eSI6ICIiLA0KICAgICAgInByb3ZpbmNlIjogIiIsDQogICAgICAicG9z
-dGFsQ29kZSI6ICIiLA0KICAgICAgImNvdW50cnkiOiAiIg0KICAgIH1dLA0KICAgICJ0ZWxlY29t
-IjogW3sKICAgICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAg
-InZhbHVlIjogIigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAg
-ICAgICAgInR5cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNv
-bSIKICAgIH1dLAogICAgIm5hbWUiOiBbewogICAgICAidXNlIjogIkwiLA0KICAgICAgImdpdmVu
-IjogWyJKZW5zIl0sDQogICAgICAiZmFtaWx5IjogIldlYmVyIiwKICAgICAgInByZWZpeCI6ICJE
-ciIsCiAgICAgICJzdWZmaXgiOiAiIg0KICAgIH1dLA0KICAgICJnZW5kZXIiOiAiTSIsDQogICAg
-ImRvYiI6ICIyMDE5LTAyLTA4Ig0KICB9LA0KICAiYXV0aG9yIjogW3sKICAgICJ0aW1lIjogIjIw
-MTktMDItMDhUMTk6MDA6MzE6MDArMDA6MDAiLA0KICAgICJpZCI6ICI5ODc2NTQzMjEiLAogICAg
-ImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAi
-MTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJv
-dmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3Vu
-dHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIkgi
-LAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjogIigyNTApNzIxLTg3OTci
-CiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5cGUiOiAiZW1haWwiLAog
-ICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiB7
-CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMiXSwNCiAgICAgICJmYW1p
-bHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAgInN1ZmZpeCI6ICIiDQog
-ICAgfQ0KICB9XSwKICAicmVjaXBpZW50IjogW3sKICAgICJpZCI6ICI5ODc2NTQzMjEiLAogICAg
-ImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0cmVldEFkZHJlc3MiOiAi
-MTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3JpYSIsDQogICAgICAicHJv
-dmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3IiwNCiAgICAgICJjb3Vu
-dHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIkgi
-LAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjogIigyNTApNzIxLTg3OTci
-CiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5cGUiOiAiZW1haWwiLAog
-ICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1dLAogICAgIm5hbWUiOiB7
-CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMiXSwNCiAgICAgICJmYW1p
-bHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAgInN1ZmZpeCI6ICIiDQog
-ICAgfSwKICAgICJyZWNlaXZlZE9yZ2FuaXphdGlvbiI6ewogICAgICAiaWQiOiAiMTIzNDEyMzQx
-MjM0IiwKICAgICAgIm5hbWUiOiAiT3JnYW5pemF0aW9uIE5hbWUiCiAgICB9IA0KICB9XSwKICAi
-Y3VzdG9kaWFuIjogew0KICAgICJpZCI6IFt7CiAgICAgICJ0eXBlIjoiMi4xNi44NDAuMS4xMTM4
-ODMuMy4yNzcuMTAwLjIiLAogICAgICAiaWQiOiJjZHhwb3N0cHJvZC1vdGNhIgogICAgfV0sCiAg
-ICAibmFtZSI6ICJPc2NhciBUZXN0IENsaW5pYyBBIgogIH0sCiAgImRhdGFFbnRlcmVyIjogewog
-ICAgInRpbWUiOiAiMjAxOS0wMi0wOFQxOTowMDozMTowMCswMDowMCIsCiAgICAiaWQiOiIxMjM0
-MTIzNCIsDQogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0cmVl
-dEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3JpYSIs
-DQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3IiwN
-CiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAgICAg
-ICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjogIigy
-NTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5cGUi
-OiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1dLAog
-ICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMiXSwN
-CiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAgInN1
-ZmZpeCI6ICIiDQogICAgfQ0KICB9LA0KICAiYXV0aGVudGljYXRvciI6IFt7CiAgICAiaWQiOiIx
-MjM0MTIzNCIsDQogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0
-cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3Jp
-YSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3
-IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAg
-ICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjog
-IigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5
-cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1d
-LAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMi
-XSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAg
-InN1ZmZpeCI6ICIiDQogICAgfQ0KICB9XSwKICAicGFydGljaXBhbnQiOiBbewogICAgImlkIjoi
-MTIzNDEyMzQiLAogICAgImFkZHJlc3MiOiBbewogICAgICAidXNlIjogIkgiLA0KICAgICAgInN0
-cmVldEFkZHJlc3MiOiAiMTc3NSBGb3J0IFN0cmVldCIsDQogICAgICAiY2l0eSI6ICJWaWN0b3Jp
-YSIsDQogICAgICAicHJvdmluY2UiOiAiQkMiLA0KICAgICAgInBvc3RhbENvZGUiOiAiVjg5MDE3
-IiwNCiAgICAgICJjb3VudHJ5IjogIkNBIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sKICAg
-ICAgICAidXNlIjogIkgiLAogICAgICAgICJ0eXBlIjogInRlbCIsCiAgICAgICAgInZhbHVlIjog
-IigyNTApNzIxLTg3OTciCiAgICAgIH0sewogICAgICAgICJ1c2UiOiAiSCIsCiAgICAgICAgInR5
-cGUiOiAiZW1haWwiLAogICAgICAgICJ2YWx1ZSI6ICJwYXRpZW50QGVtYWlsLmNvbSIKICAgIH1d
-LAogICAgIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAiTCIsDQogICAgICAiZ2l2ZW4iOiBbIkplbnMi
-XSwNCiAgICAgICJmYW1pbHkiOiAiV2ViZXIiLAogICAgICAicHJlZml4IjogIkRyIiwKICAgICAg
-InN1ZmZpeCI6ICIiDQogICAgfQ0KICB9XSwNCiAgIm5vblhNTEJvZHkiOiB7CiAgICAibWVkaWFU
-eXBlIjogInRleHQvcGxhaW4iLAogICAgImNvbnRlbnQiOiAiVGhpcyBwYXRpZW50IHdhcyByZWZl
-cmVkIHRvIHlvdSIKICB9DQp9DQ==</inboundTemplate>
+            <inboundTemplate encoding="base64">ewogICJkb2N1bWVudElEIjogIiIsCiAgInRlbXBsYXRlIjogewoJInRlbXBsYXRlSUQiOiAiIiwK
+ICAgICJ0ZW1wbGF0ZU5hbWUiOiAiIgogIH0sCiAgImxvaW5jIjogewogICAgImxvaW5jQ29kZSI6
+ICIiLAogICAgImRpc3BsYXlOYW1lIjogIiIKICB9LAogICJlZmZlY3RpdmVUaW1lIjogIiIsDQog
+ICJ0aXRsZSI6ICIiLAogICJwYXRpZW50IjogewogICAgImlkcyI6IFt7CgkJImNvZGUiOiAiIiwK
+CQkidHlwZSI6ICIiCgl9XSwKICAgICJhZGRyZXNzZXMiOiBbewogICAgICAidXNlIjogIiIsDQog
+ICAgICAic3RyZWV0QWRkcmVzcyI6ICIiLA0KICAgICAgImNpdHkiOiAiIiwNCiAgICAgICJwcm92
+aW5jZSI6ICIiLA0KICAgICAgInBvc3RhbENvZGUiOiAiIiwNCiAgICAgICJjb3VudHJ5IjogIiIN
+CiAgICB9XSwNCiAgICAidGVsZWNvbXMiOiBbewogICAgICAgICJ1c2UiOiAiIiwKICAgICAgICAi
+dHlwZSI6ICIiLAogICAgICAgICJ2YWx1ZSI6ICIiCiAgICB9XSwKICAgICJuYW1lcyI6IFt7CiAg
+ICAgICJ1c2UiOiAiIiwNCiAgICAgICJnaXZlbiI6IFsiIl0sDQogICAgICAiZmFtaWx5IjogIiIs
+CiAgICAgICJwcmVmaXgiOiAiIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfV0sDQogICAgImdl
+bmRlckNvZGUiOiAiIiwNCiAgICAiYmlydGhkYXkiOiAiIg0KICB9LA0KICAiYXV0aG9ycyI6IFt7
+CiAgICAiaWRzIjogW3sKCQkiY29kZSI6ICIiLAoJCSJ0eXBlIjogIiIKCX1dLAoJIm5hbWUiOiB7
+CiAgICAgICJ1c2UiOiAiIiwNCiAgICAgICJnaXZlbiI6IFsiIl0sDQogICAgICAiZmFtaWx5Ijog
+IiIsCiAgICAgICJwcmVmaXgiOiAiIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfSwKICAgICJh
+ZGRyZXNzZXMiOiBbewogICAgICAidXNlIjogIiIsDQogICAgICAic3RyZWV0QWRkcmVzcyI6ICIi
+LA0KICAgICAgImNpdHkiOiAiIiwNCiAgICAgICJwcm92aW5jZSI6ICIiLA0KICAgICAgInBvc3Rh
+bENvZGUiOiAiIiwNCiAgICAgICJjb3VudHJ5IjogIiINCiAgICB9XSwNCiAgICAidGVsZWNvbSI6
+IFt7CiAgICAgICAgInVzZSI6ICIiLAogICAgICAgICJ0eXBlIjogIiIsCiAgICAgICAgInZhbHVl
+IjogIiIKICAgIH1dLAogICAgInRpbWUiOiAiIiwKCSJzb2Z0d2FyZSI6IHsKCQkibmFtZSI6ICIi
+LAoJCSJjb2RlIjogIiIKCX0KICB9XSwKICAicmVjaXBpZW50cyI6IFt7CiAgICAiaWRzIjogW3sK
+CQkiY29kZSI6ICIiLAoJCSJ0eXBlIjogIiIKCX1dLAoJIm5hbWUiOiB7CiAgICAgICJ1c2UiOiAi
+IiwNCiAgICAgICJnaXZlbiI6IFsiIl0sDQogICAgICAiZmFtaWx5IjogIiIsCiAgICAgICJwcmVm
+aXgiOiAiIiwKICAgICAgInN1ZmZpeCI6ICIiDQogICAgfSwKICAgICJhZGRyZXNzZXMiOiBbewog
+ICAgICAidXNlIjogIiIsDQogICAgICAic3RyZWV0QWRkcmVzcyI6ICIiLA0KICAgICAgImNpdHki
+OiAiIiwNCiAgICAgICJwcm92aW5jZSI6ICIiLA0KICAgICAgInBvc3RhbENvZGUiOiAiIiwNCiAg
+ICAgICJjb3VudHJ5IjogIiINCiAgICB9XSwNCiAgICAidGVsZWNvbSI6IFt7CiAgICAgICAgInVz
+ZSI6ICIiLAogICAgICAgICJ0eXBlIjogIiIsCiAgICAgICAgInZhbHVlIjogIiIKICAgIH1dLAoJ
+InR5cGVDb2RlIjogIiIsCiAgICAicmVjZWl2ZWRPcmdhbml6YXRpb24iOnsKICAgICAgCSJpZHMi
+OiBbewoJCQkiY29kZSI6ICIiLAoJCQkidHlwZSI6ICIiCgkJfV0sCgkJIm5hbWUiOiAiIgogICAg
+fSANCiAgfV0sCiAgImN1c3RvZGlhbiI6IHsNCiAgICAiaWQiOiBbewogICAgICAidHlwZSI6IiIs
+CiAgICAgICJjb2RlIjoiIgogICAgfV0sCiAgICAibmFtZSI6ICIiCiAgfSwKICAiZGF0YUVudGVy
+ZXIiOiB7CiAgICAiaWQiOiBbewogICAgICAidHlwZSI6IiIsCiAgICAgICJjb2RlIjoiIgogICAg
+fV0sCiAgICAibmFtZSI6IHsKICAgICAgInVzZSI6ICIiLA0KICAgICAgImdpdmVuIjogWyIiXSwN
+CiAgICAgICJmYW1pbHkiOiAiIiwKICAgICAgInByZWZpeCI6ICIiLAogICAgICAic3VmZml4Ijog
+IiINCiAgICB9LAogICAgImFkZHJlc3NlcyI6IFt7CiAgICAgICJ1c2UiOiAiIiwNCiAgICAgICJz
+dHJlZXRBZGRyZXNzIjogIiIsDQogICAgICAiY2l0eSI6ICIiLA0KICAgICAgInByb3ZpbmNlIjog
+IiIsDQogICAgICAicG9zdGFsQ29kZSI6ICIiLA0KICAgICAgImNvdW50cnkiOiAiIg0KICAgIH1d
+LA0KICAgICJ0ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIiIsCiAgICAgICAgInR5cGUiOiAi
+IiwKICAgICAgICAidmFsdWUiOiAiIgogICAgfV0sCgkidGltZSI6ICIiCiAgfSwNCiAgImF1dGhl
+bnRpY2F0b3JzIjogW3sKICAgICJpZHMiOiBbewoJCSJjb2RlIjogIiIsCgkJInR5cGUiOiAiIgoJ
+fV0sCgkibmFtZSI6IHsKICAgICAgInVzZSI6ICIiLA0KICAgICAgImdpdmVuIjogWyIiXSwNCiAg
+ICAgICJmYW1pbHkiOiAiIiwKICAgICAgInByZWZpeCI6ICIiLAogICAgICAic3VmZml4IjogIiIN
+CiAgICB9LAogICAgImFkZHJlc3NlcyI6IFt7CiAgICAgICJ1c2UiOiAiIiwNCiAgICAgICJzdHJl
+ZXRBZGRyZXNzIjogIiIsDQogICAgICAiY2l0eSI6ICIiLA0KICAgICAgInByb3ZpbmNlIjogIiIs
+DQogICAgICAicG9zdGFsQ29kZSI6ICIiLA0KICAgICAgImNvdW50cnkiOiAiIg0KICAgIH1dLA0K
+ICAgICJ0ZWxlY29tIjogW3sKICAgICAgICAidXNlIjogIiIsCiAgICAgICAgInR5cGUiOiAiIiwK
+ICAgICAgICAidmFsdWUiOiAiIgogICAgfV0KICB9XSwKICAicGFydGljaXBhbnRzIjogW3sKICAg
+ICJpZHMiOiBbewoJCSJjb2RlIjogIiIsCgkJInR5cGUiOiAiIgoJfV0sCgkibmFtZSI6IHsKICAg
+ICAgInVzZSI6ICIiLA0KICAgICAgImdpdmVuIjogWyIiXSwNCiAgICAgICJmYW1pbHkiOiAiIiwK
+ICAgICAgInByZWZpeCI6ICIiLAogICAgICAic3VmZml4IjogIiINCiAgICB9LAogICAgImFkZHJl
+c3NlcyI6IFt7CiAgICAgICJ1c2UiOiAiIiwNCiAgICAgICJzdHJlZXRBZGRyZXNzIjogIiIsDQog
+ICAgICAiY2l0eSI6ICIiLA0KICAgICAgInByb3ZpbmNlIjogIiIsDQogICAgICAicG9zdGFsQ29k
+ZSI6ICIiLA0KICAgICAgImNvdW50cnkiOiAiIg0KICAgIH1dLA0KICAgICJ0ZWxlY29tIjogW3sK
+ICAgICAgICAidXNlIjogIiIsCiAgICAgICAgInR5cGUiOiAiIiwKICAgICAgICAidmFsdWUiOiAi
+IgogICAgfV0sCgkidHlwZUNvZGUiOiAiIiwKCSJmdW5jdGlvbkNvZGUiOiAiIgogIH1dLA0KICAi
+bm9uWE1MQm9keSI6IHsKICAgICJtZWRpYVR5cGUiOiAidGV4dC9wbGFpbiIsCiAgICAiY29udGVu
+dCI6ICJUaGlzIHBhdGllbnQgd2FzIHJlZmVyZWQgdG8geW91IgogIH0NCn0N</inboundTemplate>
             <outboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPENsaW5pY2FsRG9jdW1lbnQg
 eG1sbnM9InVybjpobDctb3JnOnYzIiB4bWxuczpiY2NkYT0idXJuOmJjY2RhIiB4bWxuczpuczA9
 Imh0dHA6Ly9taWNyb3NvZnQuY29tL0hlYWx0aENhcmUvSEw3LzJYIiB4bWxuczp4YWxhbj0iaHR0
@@ -4689,7 +4679,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1553728500916</time>
+            <time>1553902881569</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -4700,9 +4690,9 @@ return;</undeployScript>
           <codeTemplateLibrary version="3.7.0">
             <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
             <name>OBIB</name>
-            <revision>25</revision>
+            <revision>26</revision>
             <lastModified>
-              <time>1553639408693</time>
+              <time>1553901707406</time>
               <timezone>Etc/UTC</timezone>
             </lastModified>
             <description></description>
@@ -4805,9 +4795,9 @@ function buildCDAId(root, extension) {
               <codeTemplate version="3.7.0">
                 <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
                 <name>Build CDA Name</name>
-                <revision>12</revision>
+                <revision>13</revision>
                 <lastModified>
-                  <time>1553723244950</time>
+                  <time>1553895164932</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -4845,7 +4835,7 @@ function buildCDAName(use, family, given, prefix, suffix) {
   	if (prefix) { // CONF-BC0035
   		name[&apos;prefix&apos;] = prefix;
   	}
-  	if (sufix) { // CONF-BC0036
+  	if (suffix) { // CONF-BC0036
   		name[&apos;suffix&apos;] = suffix;
   	}
   	return name;
@@ -4855,9 +4845,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
               <codeTemplate version="3.7.0">
                 <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
                 <name>Build CDA Telecom</name>
-                <revision>7</revision>
+                <revision>11</revision>
                 <lastModified>
-                  <time>1552676615842</time>
+                  <time>1553898011696</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -4874,14 +4864,14 @@ function buildCDAName(use, family, given, prefix, suffix) {
                   <code>/**
 	Build a XML telecom tag
 
-	@param {String} use - 
-	@param {String} value - 
+	@param {String} use - &apos;H&apos; = home, &apos;W&apos; = work, &apos;M&apos; = mobile
+	@param {String} type - &apos;tel&apos; or &apos;email&apos;
+	@param {String} value - number of telefone or email address
 	@return {Object} return the XML telecom tag
 */
-function buildCDATelecom(use, value) {
+function buildCDATelecom(use, type, value) {
 	var telecom = new XML(&quot;&lt;telecom/&gt;&quot;);
   	telecom[&apos;@use&apos;] = use;
-  	var type = &apos;tel&apos;; // TODO get from &apos;email regex&apos;
   	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
   	return telecom;
 }</code>
@@ -5181,6 +5171,43 @@ function parseCDATelecom(cdaTelecom) {
 	telecom[&apos;value&apos;] = telParts[1];
 	return telecom;
 }</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>f1de696c-f547-49ae-8225-f7e40ed2c87c</id>
+                <name>Template 1</name>
+                <revision>2</revision>
+                <lastModified>
+                  <time>1553901709819</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Create a new segment and insert it before the target segment.
+	
+	@param {String} name - The name of the segment to create.
+	@param {String} segment - The existing segment that the new segment will be inserted before.
+	@return {String} return The existing segment that the new segment will be inserted after.
+*/
+function createSegmentBefore(name, segment) {
+	var msgObj = segment;
+   	while (msgObj.parent() != undefined) { 
+		msgObj = msgObj.parent(); 
+	}
+     msgObj.insertChildBefore(segment[0], new XML(&apos;&lt;&apos; + name + &apos;&gt;&lt;/&apos; + name + &apos;&gt;&apos;));
+   	return msgObj.child(segment[0].childIndex() - 1);
+}
+</code>
                 </properties>
               </codeTemplate>
             </codeTemplates>
@@ -5826,9 +5853,9 @@ return;</undeployScript>
           <codeTemplateLibrary version="3.7.0">
             <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
             <name>OBIB</name>
-            <revision>25</revision>
+            <revision>26</revision>
             <lastModified>
-              <time>1553639408693</time>
+              <time>1553901707406</time>
               <timezone>Etc/UTC</timezone>
             </lastModified>
             <description></description>
@@ -5931,9 +5958,9 @@ function buildCDAId(root, extension) {
               <codeTemplate version="3.7.0">
                 <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
                 <name>Build CDA Name</name>
-                <revision>12</revision>
+                <revision>13</revision>
                 <lastModified>
-                  <time>1553723244950</time>
+                  <time>1553895164932</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -5971,7 +5998,7 @@ function buildCDAName(use, family, given, prefix, suffix) {
   	if (prefix) { // CONF-BC0035
   		name[&apos;prefix&apos;] = prefix;
   	}
-  	if (sufix) { // CONF-BC0036
+  	if (suffix) { // CONF-BC0036
   		name[&apos;suffix&apos;] = suffix;
   	}
   	return name;
@@ -5981,9 +6008,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
               <codeTemplate version="3.7.0">
                 <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
                 <name>Build CDA Telecom</name>
-                <revision>7</revision>
+                <revision>11</revision>
                 <lastModified>
-                  <time>1552676615842</time>
+                  <time>1553898011696</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -6000,14 +6027,14 @@ function buildCDAName(use, family, given, prefix, suffix) {
                   <code>/**
 	Build a XML telecom tag
 
-	@param {String} use - 
-	@param {String} value - 
+	@param {String} use - &apos;H&apos; = home, &apos;W&apos; = work, &apos;M&apos; = mobile
+	@param {String} type - &apos;tel&apos; or &apos;email&apos;
+	@param {String} value - number of telefone or email address
 	@return {Object} return the XML telecom tag
 */
-function buildCDATelecom(use, value) {
+function buildCDATelecom(use, type, value) {
 	var telecom = new XML(&quot;&lt;telecom/&gt;&quot;);
   	telecom[&apos;@use&apos;] = use;
-  	var type = &apos;tel&apos;; // TODO get from &apos;email regex&apos;
   	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
   	return telecom;
 }</code>
@@ -6307,6 +6334,43 @@ function parseCDATelecom(cdaTelecom) {
 	telecom[&apos;value&apos;] = telParts[1];
 	return telecom;
 }</code>
+                </properties>
+              </codeTemplate>
+              <codeTemplate version="3.7.0">
+                <id>f1de696c-f547-49ae-8225-f7e40ed2c87c</id>
+                <name>Template 1</name>
+                <revision>2</revision>
+                <lastModified>
+                  <time>1553901709819</time>
+                  <timezone>Etc/UTC</timezone>
+                </lastModified>
+                <contextSet>
+                  <delegate>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                  </delegate>
+                </contextSet>
+                <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+                  <type>FUNCTION</type>
+                  <code>/**
+	Create a new segment and insert it before the target segment.
+	
+	@param {String} name - The name of the segment to create.
+	@param {String} segment - The existing segment that the new segment will be inserted before.
+	@return {String} return The existing segment that the new segment will be inserted after.
+*/
+function createSegmentBefore(name, segment) {
+	var msgObj = segment;
+   	while (msgObj.parent() != undefined) { 
+		msgObj = msgObj.parent(); 
+	}
+     msgObj.insertChildBefore(segment[0], new XML(&apos;&lt;&apos; + name + &apos;&gt;&lt;/&apos; + name + &apos;&gt;&apos;));
+   	return msgObj.child(segment[0].childIndex() - 1);
+}
+</code>
                 </properties>
               </codeTemplate>
             </codeTemplates>

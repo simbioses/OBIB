@@ -1,9 +1,9 @@
 <codeTemplateLibrary version="3.7.0">
   <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
   <name>OBIB</name>
-  <revision>25</revision>
+  <revision>26</revision>
   <lastModified>
-    <time>1553639408693</time>
+    <time>1553901707406</time>
     <timezone>Etc/UTC</timezone>
   </lastModified>
   <description></description>
@@ -106,9 +106,9 @@ function buildCDAId(root, extension) {
     <codeTemplate version="3.7.0">
       <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
       <name>Build CDA Name</name>
-      <revision>12</revision>
+      <revision>13</revision>
       <lastModified>
-        <time>1553723244950</time>
+        <time>1553895164932</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
@@ -146,7 +146,7 @@ function buildCDAName(use, family, given, prefix, suffix) {
   	if (prefix) { // CONF-BC0035
   		name[&apos;prefix&apos;] = prefix;
   	}
-  	if (sufix) { // CONF-BC0036
+  	if (suffix) { // CONF-BC0036
   		name[&apos;suffix&apos;] = suffix;
   	}
   	return name;
@@ -156,9 +156,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
     <codeTemplate version="3.7.0">
       <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
       <name>Build CDA Telecom</name>
-      <revision>7</revision>
+      <revision>11</revision>
       <lastModified>
-        <time>1552676615842</time>
+        <time>1553898011696</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
@@ -175,14 +175,14 @@ function buildCDAName(use, family, given, prefix, suffix) {
         <code>/**
 	Build a XML telecom tag
 
-	@param {String} use - 
-	@param {String} value - 
+	@param {String} use - &apos;H&apos; = home, &apos;W&apos; = work, &apos;M&apos; = mobile
+	@param {String} type - &apos;tel&apos; or &apos;email&apos;
+	@param {String} value - number of telefone or email address
 	@return {Object} return the XML telecom tag
 */
-function buildCDATelecom(use, value) {
+function buildCDATelecom(use, type, value) {
 	var telecom = new XML(&quot;&lt;telecom/&gt;&quot;);
   	telecom[&apos;@use&apos;] = use;
-  	var type = &apos;tel&apos;; // TODO get from &apos;email regex&apos;
   	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
   	return telecom;
 }</code>
@@ -482,6 +482,43 @@ function parseCDATelecom(cdaTelecom) {
 	telecom[&apos;value&apos;] = telParts[1];
 	return telecom;
 }</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.0">
+      <id>f1de696c-f547-49ae-8225-f7e40ed2c87c</id>
+      <name>Template 1</name>
+      <revision>2</revision>
+      <lastModified>
+        <time>1553901709819</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Create a new segment and insert it before the target segment.
+	
+	@param {String} name - The name of the segment to create.
+	@param {String} segment - The existing segment that the new segment will be inserted before.
+	@return {String} return The existing segment that the new segment will be inserted after.
+*/
+function createSegmentBefore(name, segment) {
+	var msgObj = segment;
+   	while (msgObj.parent() != undefined) { 
+		msgObj = msgObj.parent(); 
+	}
+     msgObj.insertChildBefore(segment[0], new XML(&apos;&lt;&apos; + name + &apos;&gt;&lt;/&apos; + name + &apos;&gt;&apos;));
+   	return msgObj.child(segment[0].childIndex() - 1);
+}
+</code>
       </properties>
     </codeTemplate>
   </codeTemplates>

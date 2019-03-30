@@ -1,6 +1,8 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+
 public interface ISubmit {
 
-    Object submit();
+    String submit() throws OBIBException;
 }

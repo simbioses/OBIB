@@ -1,12 +1,14 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
-import ca.uvic.leadlab.obibconnector.facades.receive.*;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+
+import java.util.List;
 
 public interface ISearchClinic {
 
-    IClinic[] findByName(String name);
+    List<IClinic> findByName(String name) throws OBIBException;
 
-    IClinic[] findByID(String id);
+    List<IClinic> findByID(String id) throws OBIBException;
 
-    IClinic[] findByAddress(String id);
+    List<IClinic> findByAddress(String address) throws OBIBException;
 }

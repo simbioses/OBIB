@@ -1,15 +1,10 @@
 package ca.uvic.leadlab.obibconnector.impl.send;
 
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.send.IAnd;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 public class DocElement implements IAnd {
-
-    static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-    static final DateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
 
     ISubmitDoc submitDoc;
 
@@ -19,7 +14,7 @@ public class DocElement implements IAnd {
     }
 
     @Override
-    public Object submit() {
+    public String submit() throws OBIBException {
         return submitDoc.submit();
     }
 }

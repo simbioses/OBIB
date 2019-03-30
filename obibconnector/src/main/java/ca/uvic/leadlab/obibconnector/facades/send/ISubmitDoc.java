@@ -4,22 +4,21 @@ import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface ISubmitDoc extends ISubmit {
 
+    IPatient patient();
 
-    //ISubmitDoc documentType(String type);
-
-    IPerson patient();
-
-    IParticipant author();
+    IAuthor author();
 
     IRecipient recipient();
 
     //ICustodianBuilder custodian();
 
-    IParticipant dataEnterer();
+    IDataEnterer dataEnterer();
 
-    //IParticipant authenticator();
+    //IAuthenticator authenticator();
 
     IParticipant participant();
+
+    ISubmitDoc documentType(String type);
 
     ISubmitDoc content(String text);
 

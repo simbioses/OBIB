@@ -1,7 +1,8 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
+
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.receive.IId;
-import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
 import java.text.SimpleDateFormat;
@@ -9,22 +10,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PersonOscar implements IPerson {
+public class PatientMorgan implements IPatient {
     @Override
     public List<IId> getIDs() {
-        List<IId> result = new ArrayList<IId>();
-        result.add(new IdOscar());
+        List<IId> result = new ArrayList<>();
+        result.add(new IdMorgan());
         return result;
     }
 
     @Override
     public String getFirstName() {
-        return "Oscar";
+        return "Morgan";
     }
 
     @Override
     public String getLastName() {
-        return "Costa";
+        return "Price";
     }
 
     @Override
@@ -44,7 +45,7 @@ public class PersonOscar implements IPerson {
         Date result = null;
 
         try {
-            sdf.parse("03-03-1903");
+            sdf.parse("02-02-1902");
         } catch (Exception e) {
             // should never happen
         }
@@ -77,7 +78,6 @@ public class PersonOscar implements IPerson {
         return "CA";
     }
 
-
     @Override
     public List<ITelco> getPhones() {
         List<ITelco> result = new ArrayList<ITelco>();
@@ -91,15 +91,5 @@ public class PersonOscar implements IPerson {
         List<ITelco> result = new ArrayList<ITelco>();
         result.add(new  TelcoEmailMe());
         return result;
-    }
-
-    @Override
-    public String getClinicID() {
-        return null;
-    }
-
-    @Override
-    public String getClinicName() {
-        return null;
     }
 }

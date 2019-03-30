@@ -5,7 +5,7 @@ import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
 public class TelcoPhone555 implements ca.uvic.leadlab.obibconnector.facades.receive.ITelco {
 
     @Override
-    public TelcoType getType() {
+    public TelcoType getTelcoType() {
         return TelcoType.HOME;
     }
 

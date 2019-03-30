@@ -1,7 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
-import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 
 import java.util.Date;
 import java.util.List;
@@ -12,29 +11,30 @@ public interface IDocument {
     String getTemplateName();           // return display name for template ID
     String getDocumentID();             // GUID of document
     String getLoincCode();              // LOINC code of document type
-    String getLoingCodeDisplayName();   // display name for LOINC code
+    String getLoincCodeDisplayName();   // display name for LOINC code
     String getTitle();
 
-    IPerson getPatient();
-    IPerson getAuthor();                // return name of human author (if present)
+    IPatient getPatient();
+
+    IProvider getAuthor();                // return name of human author (if present)
     Date    getAuthoringTime();          // return time of human authoring (if present)
     String  getAuthorDevice();           // return name of authoring device (if present)
     Date    getAuthorDeviceTime();       // return time of device authoring (if present)
 
-    String getCustodian();              // return name of custodian (that generated document)
+    String getCustodianName();              // return name of custodian (that generated document)
 
-    IPerson getPrimaryRecipient();
-    List<IPerson> getSecondaryRecipients(); // if present
+    IProvider getPrimaryRecipient();
+    List<IProvider> getSecondaryRecipients(); // if present
 
-    IPerson   getOrderingProvider();
-    IPerson   getFamilyProvider();
+    IProvider getOrderingProvider();
+    IProvider getFamilyProvider();
 
     String  getOrderID();               // the order ID for consultation notes is identical to their respective consultation requests
     String  getStatusCode();
     Date  getObservationDate();
 
     String  getProcedureName();
-    IPerson getProcedurePerformer();
+    IProvider getProcedurePerformer();
 
     String getParentDocumentID();
 
@@ -45,7 +45,7 @@ public interface IDocument {
 
     String getDischargeDisposition();
 
-    List<IPerson> getParticipatingProviders();
+    List<IProvider> getParticipatingProviders();
 
     String getContents();               // get the actual contents of the body of the document
 

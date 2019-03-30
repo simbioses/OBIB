@@ -1,11 +1,11 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
-import java.util.Date;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.ParticipantType;
 
 public interface IParticipant extends IPerson<IParticipant> {
 
-    IParticipant participantTime(Date time);
+    IParticipant typeCode(ParticipantType type);
 
-    IParticipant participantTime(String year, String month, String day, String hour, String minute, String second, String timezone);
+    IParticipant functionCode(String code);
 
 }

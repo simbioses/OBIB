@@ -1,16 +1,18 @@
 package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
-import ca.uvic.leadlab.obibconnector.facades.send.*;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Address;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Name;
-import ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.Telecom;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.AddressType;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.NameType;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
+import ca.uvic.leadlab.obibconnector.facades.send.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
+import ca.uvic.leadlab.obibconnector.models.common.Address;
+import ca.uvic.leadlab.obibconnector.models.common.Name;
+import ca.uvic.leadlab.obibconnector.models.common.Person;
+import ca.uvic.leadlab.obibconnector.models.common.Telecom;
 
-import java.util.Date;
+public abstract class PersonBuilder<P extends Person, R extends IPerson> extends DocElement implements IPerson<R> {
 
-public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBConnectorEntities.IPerson, R extends IPerson> extends DocElement implements IPerson<R> {
-
-    P person;
+    final P person;
 
     PersonBuilder(ISubmitDoc submitDoc, P person) {
         this.submitDoc = submitDoc;
@@ -48,24 +50,6 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
     }
 
     @Override
-    public R gender(Gender gender) {
-        person.setGender(gender.label);
-        return (R) this;
-    }
-
-    @Override
-    public R birthday(Date date) {
-        person.setDob(DATE_FORMATTER.format(date));
-        return (R) this;
-    }
-
-    @Override
-    public R birthday(String year, String month, String day) {
-        person.setDob(year + "-" + month + "-" + day);
-        return (R) this;
-    }
-
-    @Override
     public R address(AddressType type, String streetAddress, String city, String province, String postalCode, String country) {
         person.setAddress(new Address(type.label, streetAddress, city, province, postalCode, country));
         return (R) this;
@@ -82,6 +66,4 @@ public class PersonBuilder<P extends ca.uvic.leadlab.obibconnector.models.OBIBCo
         person.setTelecom(new Telecom(type.label, "email", email));
         return (R) this;
     }
-
-
 }

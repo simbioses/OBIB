@@ -1,9 +1,9 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.AttachmentType;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
-import ca.uvic.leadlab.obibconnector.facades.receive.IPerson;
+import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
+import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public String getLoingCodeDisplayName() {
+    public String getLoincCodeDisplayName() {
         return "History & Physical Note";
     }
 
@@ -43,13 +43,13 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IPerson getPatient() {
-        return new PersonJens();
+    public IPatient getPatient() {
+        return new PatientJens();
     }
 
     @Override
-    public IPerson getAuthor() {
-        return new PersonMorgan();
+    public IProvider getAuthor() {
+        return new ProviderRaymond();
     }
 
     @Override
@@ -68,27 +68,27 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public String getCustodian() {
+    public String getCustodianName() {
         return "Interior Health Authority";
     }
 
     @Override
-    public IPerson getPrimaryRecipient() {
+    public IProvider getPrimaryRecipient() {
         return new ProviderAdeshina();
     }
 
     @Override
-    public List<IPerson> getSecondaryRecipients() {
-        return new ArrayList<IPerson>();
+    public List<IProvider> getSecondaryRecipients() {
+        return new ArrayList<>();
     }
 
     @Override
-    public IPerson getOrderingProvider() {
+    public IProvider getOrderingProvider() {
         return new ProviderRaymond();
     }
 
     @Override
-    public IPerson getFamilyProvider() {
+    public IProvider getFamilyProvider() {
         return null;
     }
 
@@ -123,7 +123,7 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public IPerson getProcedurePerformer() {
+    public IProvider getProcedurePerformer() {
         return new ProviderRaymond();
     }
 
@@ -173,8 +173,8 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
-    public List<IPerson> getParticipatingProviders() {
-        List<IPerson> result = new ArrayList<>();
+    public List<IProvider> getParticipatingProviders() {
+        List<IProvider> result = new ArrayList<>();
         result.add(new ProviderRaymond());
         result.add(new ProviderAdeshina());
         return result;

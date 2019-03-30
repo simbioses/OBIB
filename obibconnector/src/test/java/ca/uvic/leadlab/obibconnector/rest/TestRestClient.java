@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.AddressType;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.NameType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
@@ -24,30 +25,38 @@ public class TestRestClient {
     public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
-        ClinicalDocument document = (ClinicalDocument) new SubmitDoc("11111")
+        ClinicalDocument document = ((SubmitDoc) new SubmitDoc("11111")
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
+                    .gender(Gender.MALE)
+                    .birthday("1980", "08", "19")
                 .and().author()
                     .id("3333")
-                    .participantTime(new Date())
+                    .time(new Date())
                     .name(NameType.LEGAL, "Joseph", "Cloud")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
                 .and().recipient()
+                    .primary()
                     .id("4444")
                     .name(NameType.LEGAL, "Joseph", "Cloud")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
-                .and().participant()
-                    .id("555")
+                .and().recipient()
+                    .id("6666")
                     .name(NameType.LEGAL, "Joseph", "Cloud")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
-                .and().content("Plain text document content")
-                .submit();
+                .and().participant()
+                    .id("5555")
+                    .name(NameType.LEGAL, "Joseph", "Cloud")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                .and().content("Plain text document content"))
+                .getDocument();
 
         SubmitDocumentResponse response = restClient.submitCDA(document);
 

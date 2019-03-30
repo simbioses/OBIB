@@ -1,18 +1,37 @@
-package ca.uvic.leadlab.obibconnector.models.document;
+package ca.uvic.leadlab.obibconnector.models.registry;
 
 import ca.uvic.leadlab.obibconnector.models.common.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Patient extends Person {
+public class Provider extends Person {
 
+    private String status;
+    private String typeCode;
     private List<Id> ids = new ArrayList<>();
-    private List<Name> names = new ArrayList<>();
+    private Name name;
     private List<Address> addresses = new ArrayList<>();
     private List<Telecom> telecoms = new ArrayList<>();
-    private String genderCode;
-    private String birthday;
+    private List<Clinic> clinics = new ArrayList<>();
+
+    @JsonIgnore
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
 
     public List<Id> getIds() {
         return ids;
@@ -30,20 +49,13 @@ public class Patient extends Person {
         this.ids.add(new Id(id, null));
     }
 
-    public List<Name> getNames() {
-        return names;
-    }
-
-    public void setNames(List<Name> names) {
-        this.names = names;
+    public Name getName() {
+        return name;
     }
 
     @Override
     public void setName(Name name) {
-        if (this.names == null) {
-            this.names = new ArrayList<>();
-        }
-        this.names.add(name);
+        this.name = name;
     }
 
     public List<Address> getAddresses() {
@@ -78,19 +90,13 @@ public class Patient extends Person {
         this.telecoms.add(telecom);
     }
 
-    public String getGenderCode() {
-        return genderCode;
+    @JsonIgnore
+    public List<Clinic> getClinics() {
+        return clinics;
     }
 
-    public void setGenderCode(String genderCode) {
-        this.genderCode = genderCode;
+    public void setClinics(List<Clinic> clinics) {
+        this.clinics = clinics;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
 }

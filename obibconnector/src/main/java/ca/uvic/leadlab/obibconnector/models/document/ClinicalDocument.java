@@ -1,46 +1,50 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
+import ca.uvic.leadlab.obibconnector.models.common.Loinc;
+import ca.uvic.leadlab.obibconnector.models.common.Template;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class  ClinicalDocument {
 
-    private String templateId;
-    private String id;
-    private String code;
+    private String documentId;
+    private Template template;
+    private Loinc loinc;
     private Date effectiveTime;
+    private String title;
     private Patient patient;
-    private List<Author> author;
-    private List<Recipient> recipient;
+    private List<Author> authors = new ArrayList<>();
+    private List<Recipient> recipients = new ArrayList<>();
     private Custodian custodian;
     private DataEnterer dataEnterer;
-    private List<Authenticator> authenticator;
-    private List<Participant> participant;
+    private List<Authenticator> authenticators = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>();
     private NonXMLBody nonXMLBody;
 
-    public String getTemplateId() {
-        return templateId;
+    public String getDocumentId() {
+        return documentId;
     }
 
-    public void setTemplateId(String templateId) {
-        this.templateId = templateId;
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
-    public String getId() {
-        return id;
+    public Template getTemplate() {
+        return template;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTemplate(Template template) {
+        this.template = template;
     }
 
-    public String getCode() {
-        return code;
+    public Loinc getLoinc() {
+        return loinc;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLoinc(Loinc loinc) {
+        this.loinc = loinc;
     }
 
     public Date getEffectiveTime() {
@@ -51,6 +55,14 @@ public class  ClinicalDocument {
         this.effectiveTime = effectiveTime;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Patient getPatient() {
         return patient;
     }
@@ -59,34 +71,34 @@ public class  ClinicalDocument {
         this.patient = patient;
     }
 
-    public List<Author> getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(List<Author> author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public void addAuthor(Author author) {
-        if (this.author == null) {
-            this.author = new ArrayList<>();
+        if (this.authors == null) {
+            this.authors = new ArrayList<>();
         }
-        this.author.add(author);
+        this.authors.add(author);
     }
 
-    public List<Recipient> getRecipient() {
-        return recipient;
+    public List<Recipient> getRecipients() {
+        return recipients;
     }
 
-    public void setRecipient(List<Recipient> recipient) {
-        this.recipient = recipient;
+    public void setRecipients(List<Recipient> recipients) {
+        this.recipients = recipients;
     }
 
     public void addRecipient(Recipient recipient) {
-        if (this.recipient == null) {
-            this.recipient = new ArrayList<>();
+        if (this.recipients == null) {
+            this.recipients = new ArrayList<>();
         }
-        this.recipient.add(recipient);
+        this.recipients.add(recipient);
     }
 
     public Custodian getCustodian() {
@@ -105,27 +117,27 @@ public class  ClinicalDocument {
         this.dataEnterer = dataEnterer;
     }
 
-    public List<Authenticator> getAuthenticator() {
-        return authenticator;
+    public List<Authenticator> getAuthenticators() {
+        return authenticators;
     }
 
-    public void setAuthenticator(List<Authenticator> authenticator) {
-        this.authenticator = authenticator;
+    public void setAuthenticators(List<Authenticator> authenticators) {
+        this.authenticators = authenticators;
     }
 
-    public List<Participant> getParticipant() {
-        return participant;
+    public List<Participant> getParticipants() {
+        return participants;
     }
 
-    public void setParticipant(List<Participant> participant) {
-        this.participant = participant;
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
     public void addParticipant(Participant participant) {
-        if (this.participant == null) {
-            this.participant = new ArrayList<>();
+        if (this.participants == null) {
+            this.participants = new ArrayList<>();
         }
-        this.participant.add(participant);
+        this.participants.add(participant);
     }
 
     public NonXMLBody getNonXMLBody() {

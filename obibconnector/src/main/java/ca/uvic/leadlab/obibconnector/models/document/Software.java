@@ -5,6 +5,14 @@ public class Software {
     private String name;
     private String code;
 
+    public Software() {
+    }
+
+    public Software(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }

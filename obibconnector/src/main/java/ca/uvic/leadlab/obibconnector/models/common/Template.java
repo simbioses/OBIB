@@ -2,22 +2,30 @@ package ca.uvic.leadlab.obibconnector.models.common;
 
 public class Template {
 
-    private String id;
-    private String label;
+    private String templateId;
+    private String templateName;
 
-    public String getId() {
-        return id;
+    public Template() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Template(String templateId, String templateName) {
+        this.templateId = templateId;
+        this.templateName = templateName;
     }
 
-    public String getLabel() {
-        return label;
+    public String getTemplateId() {
+        return templateId;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
     }
 }

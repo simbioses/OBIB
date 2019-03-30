@@ -7,7 +7,7 @@ public class Name {
 
     private String use;
     private String family;
-    private List<String> given;
+    private List<String> given = new ArrayList<>();
     private String prefix;
     private String suffix;
 

@@ -15,6 +15,10 @@ public class Telecom {
         this.value = value;
     }
 
+    public boolean isPhone() {
+        return "tel".equalsIgnoreCase(type);
+    }
+
     public String getUse() {
         return use;
     }

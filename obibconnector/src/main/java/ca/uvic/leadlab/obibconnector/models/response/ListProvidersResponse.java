@@ -1,12 +1,13 @@
 package ca.uvic.leadlab.obibconnector.models.response;
 
-import ca.uvic.leadlab.obibconnector.models.provider.Provider;
+import ca.uvic.leadlab.obibconnector.models.registry.Provider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListProvidersResponse extends OBIBResponse {
 
-    private List<Provider> providers;
+    private List<Provider> providers = new ArrayList<>();
 
     public List<Provider> getProviders() {
         return providers;

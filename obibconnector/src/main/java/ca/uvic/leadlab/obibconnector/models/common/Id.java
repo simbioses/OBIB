@@ -2,23 +2,23 @@ package ca.uvic.leadlab.obibconnector.models.common;
 
 public class Id {
 
-    private String id;
+    private String code;
     private String type;
 
     public Id() {
     }
 
-    public Id(String id, String type) {
-        this.id = id;
+    public Id(String code, String type) {
+        this.code = code;
         this.type = type;
     }
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getType() {

@@ -1,20 +1,20 @@
-package ca.uvic.leadlab.obibconnector.models.clinic;
+package ca.uvic.leadlab.obibconnector.models.registry;
 
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.common.Template;
-import ca.uvic.leadlab.obibconnector.models.provider.Provider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Clinic {
 
     private String status;
-    private List<Id> id;
+    private List<Id> ids = new ArrayList<>();
     private String name;
     private Address address;
-    private List<Provider> providers;
-    private List<Template> templates;
+    private List<Provider> providers = new ArrayList<>();
+    private List<Template> templates = new ArrayList<>();
 
     public String getStatus() {
         return status;
@@ -24,12 +24,12 @@ public class Clinic {
         this.status = status;
     }
 
-    public List<Id> getId() {
-        return id;
+    public List<Id> getIds() {
+        return ids;
     }
 
-    public void setId(List<Id> id) {
-        this.id = id;
+    public void setIds(List<Id> ids) {
+        this.ids = ids;
     }
 
     public String getName() {

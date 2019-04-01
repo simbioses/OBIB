@@ -11,8 +11,9 @@ public class SubmitDocTest {
 
     //@Test
     public void testSubmitDoc() throws Exception {
-        String response = new SubmitDoc("11111")
-                        .patient()
+        ISubmitDoc submitDoc = new SubmitDoc("cdxpostprod-otca");
+
+        String response = submitDoc.patient()
                             .id("2222")
                             .name(NameType.LEGAL, "Joe", "Wine")
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
@@ -38,5 +39,6 @@ public class SubmitDocTest {
 
         Assert.assertNotNull(response);
     }
+
 
 }

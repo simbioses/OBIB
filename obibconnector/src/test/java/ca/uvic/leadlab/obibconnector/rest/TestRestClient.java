@@ -25,7 +25,7 @@ public class TestRestClient {
     public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient("cdxpostprod-otca");
 
-        ClinicalDocument document = ((SubmitDoc) new SubmitDoc("11111")
+        ClinicalDocument document = ((SubmitDoc) new SubmitDoc("cdxpostprod-otca")
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")

@@ -12,7 +12,6 @@ import org.glassfish.jersey.client.ClientProperties;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 public class RestClient implements IOscarInformation {
@@ -40,8 +39,7 @@ public class RestClient implements IOscarInformation {
     private static Properties setupProperties() {
         Properties properties = new Properties();
         try {
-            String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-            properties.load(new FileInputStream(path + "obibconnector.properties"));
+            properties.load(RestClient.class.getResourceAsStream("/obibconnector.properties"));
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this exception
         }

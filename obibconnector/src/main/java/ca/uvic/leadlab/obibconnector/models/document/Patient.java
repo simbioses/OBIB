@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
 import ca.uvic.leadlab.obibconnector.models.common.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Patient extends Person {
         this.ids = ids;
     }
 
+    @JsonIgnore
     @Override
     public void setId(String id) {
         if (this.ids == null) {
@@ -38,6 +40,7 @@ public class Patient extends Person {
         this.names = names;
     }
 
+    @JsonIgnore
     @Override
     public void setName(Name name) {
         if (this.names == null) {
@@ -54,6 +57,7 @@ public class Patient extends Person {
         this.addresses = addresses;
     }
 
+    @JsonIgnore
     @Override
     public void setAddress(Address address) {
         if (this.addresses == null) {
@@ -70,6 +74,7 @@ public class Patient extends Person {
         this.telecoms = telecoms;
     }
 
+    @JsonIgnore
     @Override
     public void setTelecom(Telecom telecom) {
         if (this.telecoms == null) {

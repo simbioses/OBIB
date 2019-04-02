@@ -45,7 +45,7 @@ public class PatientMorgan implements IPatient {
         Date result = null;
 
         try {
-            sdf.parse("02-02-1902");
+            result = sdf.parse("02-02-1902");
         } catch (Exception e) {
             // should never happen
         }

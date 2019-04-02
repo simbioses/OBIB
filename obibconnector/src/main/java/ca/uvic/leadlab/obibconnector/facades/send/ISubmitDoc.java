@@ -4,6 +4,8 @@ import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface ISubmitDoc extends ISubmit {
 
+    ISubmitDoc newDoc();
+
     IPatient patient();
 
     IAuthor author();

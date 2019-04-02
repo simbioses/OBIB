@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
+import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IReceiveDoc;
@@ -15,8 +16,8 @@ public class ReceiveDoc implements IReceiveDoc {
 
     private final IOscarInformation services;
 
-    public ReceiveDoc(String obibURL, String clinicId) {
-        this.services = new RestClient(obibURL, clinicId);
+    public ReceiveDoc(Config conf) {
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
     }
 
     @Override

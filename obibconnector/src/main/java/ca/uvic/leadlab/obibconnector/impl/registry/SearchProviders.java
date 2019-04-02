@@ -23,30 +23,42 @@ public class SearchProviders implements ISearchProviders {
 
     @Override
     public List<IProvider> findByName(String name) throws OBIBException {
-        return null; // TODO implement
+        try {
+            return listProviders(SearchProviderCriteria.byProviderName(name));
+        } catch (OBIBRequestException e) {
+            throw new OBIBException("Error finding providers by name.", e);
+        }
     }
 
     @Override
     public List<IProvider> findByClinicID(String id) throws OBIBException {
-        return null; // TODO implement
+        try {
+            return listProviders(SearchProviderCriteria.byClinicId(id));
+        } catch (OBIBRequestException e) {
+            throw new OBIBException("Error finding providers by clinic id.", e);
+        }
     }
 
     @Override
     public List<IProvider> findByProviderID(String id) throws OBIBException {
         try {
-            ListProvidersResponse response = services.listProviders(SearchProviderCriteria.byProviderId(id));
-
-            if (!response.isOK()) {
-                throw new OBIBException(response.getMessage());
-            }
-
-            List<IProvider> providers = new ArrayList<>();
-            for (ca.uvic.leadlab.obibconnector.models.registry.Provider provider : response.getProviders()){
-                providers.add(new Provider(provider));
-            }
-            return providers;
+            return listProviders(SearchProviderCriteria.byProviderId(id));
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error finding providers by id.", e);
         }
+    }
+
+    private List<IProvider> listProviders(SearchProviderCriteria searchProviderCriteria) throws OBIBRequestException {
+        ListProvidersResponse response = services.listProviders(searchProviderCriteria);
+
+        if (!response.isOK()) {
+            throw new OBIBRequestException(response.getMessage());
+        }
+
+        List<IProvider> providers = new ArrayList<>();
+        for (ca.uvic.leadlab.obibconnector.models.registry.Provider provider : response.getProviders()){
+            providers.add(new Provider(provider));
+        }
+        return providers;
     }
 }

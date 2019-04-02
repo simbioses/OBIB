@@ -6,9 +6,21 @@ public class SearchProviderCriteria {
     private String providerId;
     private String providerName;
 
+    public static SearchProviderCriteria byClinicId(String clinicId) {
+        SearchProviderCriteria criteria = new SearchProviderCriteria();
+        criteria.clinicId = clinicId;
+        return criteria;
+    }
+
     public static SearchProviderCriteria byProviderId(String providerId) {
         SearchProviderCriteria criteria = new SearchProviderCriteria();
         criteria.providerId = providerId;
+        return criteria;
+    }
+
+    public static SearchProviderCriteria byProviderName(String providerName) {
+        SearchProviderCriteria criteria = new SearchProviderCriteria();
+        criteria.providerName = providerName;
         return criteria;
     }
 

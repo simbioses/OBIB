@@ -12,6 +12,18 @@ public class SearchClinicCriteria {
         return criteria;
     }
 
+    public static SearchClinicCriteria byClinicName(String clinicName) {
+        SearchClinicCriteria criteria = new SearchClinicCriteria();
+        criteria.clinicName = clinicName;
+        return criteria;
+    }
+
+    public static SearchClinicCriteria byClinicAddress(String clinicAddress) {
+        SearchClinicCriteria criteria = new SearchClinicCriteria();
+        criteria.clinicAddress = clinicAddress;
+        return criteria;
+    }
+
     public String getClinicId() {
         return clinicId;
     }

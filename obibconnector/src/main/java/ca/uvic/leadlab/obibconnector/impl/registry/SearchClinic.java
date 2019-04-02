@@ -22,31 +22,43 @@ public class SearchClinic implements ISearchClinic {
     }
 
     @Override
-    public List<IClinic> findByName(String name) {
-        return new ArrayList<>(); // TODO implement
+    public List<IClinic> findByName(String name) throws OBIBException {
+        try {
+            return listClinics(SearchClinicCriteria.byClinicName(name));
+        } catch (OBIBRequestException e) {
+            throw new OBIBException("Error finding clinics by address.", e);
+        }
     }
 
     @Override
     public List<IClinic> findByID(String id) throws OBIBException {
         try {
-            ListClinicsResponse response = services.listClinics(SearchClinicCriteria.byClinicId(id));
-
-            if (!response.isOK()) {
-                throw new OBIBException(response.getMessage());
-            }
-
-            List<IClinic> clinics = new ArrayList<>();
-            for (ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic : response.getClinics()){
-                clinics.add(new Clinic(clinic));
-            }
-            return clinics;
+            return listClinics(SearchClinicCriteria.byClinicId(id));
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error finding clinics by id.", e);
         }
     }
 
     @Override
-    public List<IClinic> findByAddress(String address) {
-        return new ArrayList<>(); // TODO implement
+    public List<IClinic> findByAddress(String address) throws OBIBException {
+        try {
+            return listClinics(SearchClinicCriteria.byClinicAddress(address));
+        } catch (OBIBRequestException e) {
+            throw new OBIBException("Error finding clinics by address.", e);
+        }
+    }
+
+    private List<IClinic> listClinics(SearchClinicCriteria searchClinicCriteria) throws OBIBRequestException {
+        ListClinicsResponse response = services.listClinics(searchClinicCriteria);
+
+        if (!response.isOK()) {
+            throw new OBIBRequestException(response.getMessage());
+        }
+
+        List<IClinic> clinics = new ArrayList<>();
+        for (ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic : response.getClinics()){
+            clinics.add(new Clinic(clinic));
+        }
+        return clinics;
     }
 }

@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.registry;
 
+import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.facades.registry.ISearchProviders;
@@ -16,8 +17,8 @@ public class SearchProviders implements ISearchProviders {
 
     private final IOscarInformation services;
 
-    public SearchProviders(String obibURL, String clinicId) {
-        this.services = new RestClient(obibURL, clinicId);
+    public SearchProviders(Config conf) {
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
     }
 
     @Override

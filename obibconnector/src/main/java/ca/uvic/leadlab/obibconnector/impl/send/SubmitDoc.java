@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.send;
 
+import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import ca.uvic.leadlab.obibconnector.facades.send.*;
@@ -14,12 +15,17 @@ public class SubmitDoc implements ISubmitDoc {
 
     private final IOscarInformation services;
 
-    private final ClinicalDocument document;
+    private  ClinicalDocument document;
 
-    public SubmitDoc(String obibURL, String clinicId) {
-        this.services = new RestClient(obibURL, clinicId);
+    public SubmitDoc(Config conf) {
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
 
+    }
+
+    @Override
+    public ISubmitDoc newDoc() {
         this.document = new ClinicalDocument();
+        return this;
     }
 
     @Override

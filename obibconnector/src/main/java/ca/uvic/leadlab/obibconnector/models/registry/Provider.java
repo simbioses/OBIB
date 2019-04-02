@@ -41,6 +41,7 @@ public class Provider extends Person {
         this.ids = ids;
     }
 
+    @JsonIgnore
     @Override
     public void setId(String id) {
         if (this.ids == null) {
@@ -66,6 +67,7 @@ public class Provider extends Person {
         this.addresses = addresses;
     }
 
+    @JsonIgnore
     @Override
     public void setAddress(Address address) {
         if (this.addresses == null) {
@@ -82,6 +84,7 @@ public class Provider extends Person {
         this.telecoms = telecoms;
     }
 
+    @JsonIgnore
     @Override
     public void setTelecom(Telecom telecom) {
         if (this.telecoms == null) {

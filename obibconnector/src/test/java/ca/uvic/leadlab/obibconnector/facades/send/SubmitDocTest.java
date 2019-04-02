@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
+import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import org.junit.Assert;
@@ -7,12 +8,13 @@ import org.junit.Test;
 
 import java.util.Date;
 
-public class SubmitDocTest {
+public class SubmitDocTest extends FacadesBaseTest {
 
     //@Test
     public void testSubmitDoc() throws Exception {
-        String response = new SubmitDoc("11111")
-                        .patient()
+        ISubmitDoc submitDoc = new SubmitDoc(obibUrl, clinicId);
+
+        String response = submitDoc.patient()
                             .id("2222")
                             .name(NameType.LEGAL, "Joe", "Wine")
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
@@ -38,5 +40,6 @@ public class SubmitDocTest {
 
         Assert.assertNotNull(response);
     }
+
 
 }

@@ -26,7 +26,7 @@ public class WSClientClinic extends WSClient {
 
             // CONF-CDXPR62a: If clinicID is present, then organizationName and organizationAddress SHALL NOT be present.
             if (StringUtils.isNotBlank(clinicId)) {
-                builder.queryById("2.16.840.1.113883.3.277.100.2", locationId); // CONF-CDXPR061
+                builder.queryById("2.16.840.1.113883.3.277.100.2", clinicId); // CONF-CDXPR061
             } else {
                 if (StringUtils.isNotBlank(clinicName)) {
                     builder.queryByName(clinicName); // CONF-CDXPR060

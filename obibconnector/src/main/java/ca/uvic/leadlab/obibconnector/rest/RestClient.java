@@ -5,14 +5,12 @@ import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchProviderCriteria;
 import ca.uvic.leadlab.obibconnector.models.response.*;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 public class RestClient implements IOscarInformation {
@@ -31,17 +29,18 @@ public class RestClient implements IOscarInformation {
 
     private static final Client client = setupRestClient();
 
+    private final String obibURL;
     private final String locationId;
 
-    public RestClient(String locationId) {
+    public RestClient(String obibURL, String locationId) {
+        this.obibURL = obibURL;
         this.locationId = locationId;
     }
 
     private static Properties setupProperties() {
         Properties properties = new Properties();
         try {
-            String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-            properties.load(new FileInputStream(path + "obibconnector.properties"));
+            properties.load(RestClient.class.getResourceAsStream("/obibconnector.properties"));
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this exception
         }
@@ -50,10 +49,14 @@ public class RestClient implements IOscarInformation {
 
     private static Client setupRestClient() {
         ClientConfig config = new ClientConfig()
-                .register(new JacksonJsonProvider())
-                .setProperty(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
-                .setProperty(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
-        return ClientFactory.newClient(config);
+                //.register(new JacksonJsonProvider())
+                .property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
+                .property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
+        return ClientBuilder.newClient(config);
+    }
+
+    private String getServicesURL() {
+        return (obibURL != null && !obibURL.isEmpty()) ? obibURL : SERVICES_BASE_URL;
     }
 
     /**
@@ -68,7 +71,7 @@ public class RestClient implements IOscarInformation {
      */
     private <T, R extends OBIBResponse> R doRequest(String path, T requestEntity, Class<R> responseEntity) throws OBIBRequestException {
         try {
-            Response response = client.target(SERVICES_BASE_URL)
+            Response response = client.target(getServicesURL())
                     .path(path)
                     .request(MediaType.APPLICATION_JSON)
                     .header("locationId", locationId)

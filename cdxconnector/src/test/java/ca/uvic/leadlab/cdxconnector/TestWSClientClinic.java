@@ -17,4 +17,30 @@ public class TestWSClientClinic {
         Assert.assertNotNull(response);
         System.out.println(response);
     }
+
+    //@Test
+    public void testListClinicsByName() throws Exception {
+
+        WSClientClinic client = new WSClientClinic("https://servicestest.bccdx.ca",
+                "cdxpostprod-otca", "VMK31",
+                getClass().getClassLoader().getResource("LEADlab_Keystore.jks").getFile(), "LEADlab");
+
+        String response = client.listClinics("cdxpostprod-otca", "", "Oscar", "");
+
+        Assert.assertNotNull(response);
+        System.out.println(response);
+    }
+
+    //@Test
+    public void testListClinicsByAddress() throws Exception {
+
+        WSClientClinic client = new WSClientClinic("https://servicestest.bccdx.ca",
+                "cdxpostprod-otca", "VMK31",
+                getClass().getClassLoader().getResource("LEADlab_Keystore.jks").getFile(), "LEADlab");
+
+        String response = client.listClinics("cdxpostprod-otca", "", "", "Test Ave");
+
+        Assert.assertNotNull(response);
+        System.out.println(response);
+    }
 }

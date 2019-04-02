@@ -87,13 +87,13 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT406010UV01OrganizationName createPRPMMT406010UV01OrganizationName(String value) {
         PRPMMT406010UV01OrganizationName name = new PRPMMT406010UV01OrganizationName();
-        name.setValue(createEN(value)); // TODO write the content into <value> body
+        name.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
         return name;
     }
 
     public PRPMMT406010UV01OrganizationAddress createPRPMMT406010UV01OrganizationAddress(String value) {
         PRPMMT406010UV01OrganizationAddress address = createPRPMMT406010UV01OrganizationAddress();
-        address.setValue(createAD(value)); // TODO write the content into <value> body
+        address.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
         return address;
     }
 
@@ -105,7 +105,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
         PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
-        providerName.setValue(createEN(value)); // TODO write the content into <value> body
+        providerName.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
         return providerName;
     }
 

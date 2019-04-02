@@ -30,9 +30,11 @@ public class RestClient implements IOscarInformation {
 
     private static final Client client = setupRestClient();
 
+    private final String obibURL;
     private final String locationId;
 
-    public RestClient(String locationId) {
+    public RestClient(String obibURL, String locationId) {
+        this.obibURL = obibURL;
         this.locationId = locationId;
     }
 
@@ -54,6 +56,10 @@ public class RestClient implements IOscarInformation {
         return ClientFactory.newClient(config);
     }
 
+    private String getServicesURL() {
+        return (obibURL != null && !obibURL.isEmpty()) ? obibURL : SERVICES_BASE_URL;
+    }
+
     /**
      * Do a POST request
      *
@@ -66,7 +72,7 @@ public class RestClient implements IOscarInformation {
      */
     private <T, R extends OBIBResponse> R doRequest(String path, T requestEntity, Class<R> responseEntity) throws OBIBRequestException {
         try {
-            Response response = client.target(SERVICES_BASE_URL)
+            Response response = client.target(getServicesURL())
                     .path(path)
                     .request(MediaType.APPLICATION_JSON)
                     .header("locationId", locationId)

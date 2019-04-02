@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
+import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.impl.receive.ReceiveDoc;
 import org.junit.Assert;
@@ -7,11 +8,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class ReceiveDocTest {
+public class ReceiveDocTest extends FacadesBaseTest {
 
     //@Test
     public void testPollNewDocIDs() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc("cdxpostprod-otca");
+        IReceiveDoc receiveDoc = new ReceiveDoc(obibUrl, clinicId);
 
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
@@ -20,7 +21,7 @@ public class ReceiveDocTest {
 
     //@Test(expected = OBIBException.class)
     public void testPollNewDocIDsError() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc("_XYZXZYXZYXZY_");
+        IReceiveDoc receiveDoc = new ReceiveDoc(obibUrl, "__Wrong_ID");
 
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
@@ -29,7 +30,7 @@ public class ReceiveDocTest {
 
     //@Test
     public void testRetrieveDocument() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc("cdxpostprod-otca");
+        IReceiveDoc receiveDoc = new ReceiveDoc(obibUrl, clinicId);
 
         IDocument document = receiveDoc.retrieveDocument("2b0d8260-0c20-e911-a96a-0050568c55a6");
 
@@ -39,9 +40,9 @@ public class ReceiveDocTest {
 
     //@Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc("cdxpostprod-otca");
+        IReceiveDoc receiveDoc = new ReceiveDoc(obibUrl, clinicId);
 
-        IDocument document = receiveDoc.retrieveDocument("_XYZXZYXZYXZY_");
+        IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 
         //Assert.assertNull(document);
     }

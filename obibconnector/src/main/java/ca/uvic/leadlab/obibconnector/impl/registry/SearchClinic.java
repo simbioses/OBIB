@@ -14,10 +14,10 @@ import java.util.List;
 
 public class SearchClinic implements ISearchClinic {
 
-    private final String clinicId;
+    private final IOscarInformation services;
 
-    public SearchClinic(String clinicId) {
-        this.clinicId = clinicId;
+    public SearchClinic(String obibURL, String clinicId) {
+        this.services = new RestClient(obibURL, clinicId);
     }
 
     @Override
@@ -28,8 +28,7 @@ public class SearchClinic implements ISearchClinic {
     @Override
     public List<IClinic> findByID(String id) throws OBIBException {
         try {
-            IOscarInformation client = new RestClient(clinicId);
-            ListClinicsResponse response = client.listClinics(SearchClinicCriteria.byClinicId(id));
+            ListClinicsResponse response = services.listClinics(SearchClinicCriteria.byClinicId(id));
 
             if (!response.isOK()) {
                 throw new OBIBException(response.getMessage());

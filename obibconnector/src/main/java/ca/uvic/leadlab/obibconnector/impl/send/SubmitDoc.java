@@ -12,12 +12,14 @@ import ca.uvic.leadlab.obibconnector.rest.RestClient;
 
 public class SubmitDoc implements ISubmitDoc {
 
-    private final ClinicalDocument document;
-    private final String clinicId;
+    private final IOscarInformation services;
 
-    public SubmitDoc(String clinicId) {
+    private final ClinicalDocument document;
+
+    public SubmitDoc(String obibURL, String clinicId) {
+        this.services = new RestClient(obibURL, clinicId);
+
         this.document = new ClinicalDocument();
-        this.clinicId = clinicId;
     }
 
     @Override
@@ -77,8 +79,7 @@ public class SubmitDoc implements ISubmitDoc {
     @Override
     public String submit() throws OBIBException {
         try {
-            IOscarInformation client = new RestClient(clinicId);
-            SubmitDocumentResponse response = client.submitCDA(document);
+            SubmitDocumentResponse response = services.submitCDA(document);
 
             if (!response.isOK()) {
                 throw new OBIBException(response.getMessage());

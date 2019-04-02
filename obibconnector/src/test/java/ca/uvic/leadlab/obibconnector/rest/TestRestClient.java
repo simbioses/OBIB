@@ -21,11 +21,14 @@ import java.util.Date;
 
 public class TestRestClient {
 
+    protected String obibUrl = "http://192.168.100.101:8081";
+    protected String clinicId = "cdxpostprod-otca";
+
     //@Test
     public void testSubmitDocument() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
-        ClinicalDocument document = ((SubmitDoc) new SubmitDoc("cdxpostprod-otca")
+        ClinicalDocument document = ((SubmitDoc) new SubmitDoc(obibUrl, clinicId)
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")
@@ -68,7 +71,7 @@ public class TestRestClient {
 
     //@Test
     public void testListDocument() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.listDocument();
 
@@ -80,7 +83,7 @@ public class TestRestClient {
 
     //@Test
     public void testSearchDocument() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
                 .byClinicId("cdxpostprod-otca"));
@@ -93,7 +96,7 @@ public class TestRestClient {
 
     //@Test
     public void testGetDocument() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
                 .byDocumentId("2b0d8260-0c20-e911-a96a-0050568c55a6"));
@@ -106,7 +109,7 @@ public class TestRestClient {
 
     //@Test
     public void testListClinics() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListClinicsResponse response = restClient.listClinics(SearchClinicCriteria.byClinicId("cdxpostprod-otca"));
 
@@ -118,7 +121,7 @@ public class TestRestClient {
 
     //@Test
     public void testListProviders() throws Exception {
-        IOscarInformation restClient = new RestClient("cdxpostprod-otca");
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderId("93188"));
 

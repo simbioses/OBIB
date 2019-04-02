@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
+import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.impl.registry.SearchProviders;
 import org.junit.Assert;
@@ -7,11 +8,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class SearchProvidesTest {
+public class SearchProvidesTest extends FacadesBaseTest {
 
     //@Test
     public void testFindByProviderId() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders("cdxpostprod-otca");
+        ISearchProviders searchProviders = new SearchProviders(obibUrl, clinicId);
 
         List<IProvider> providers = searchProviders.findByProviderID("93188");
 
@@ -20,9 +21,9 @@ public class SearchProvidesTest {
 
     //@Test(expected = OBIBException.class)
     public void testFindByProviderIdError() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders("cdxpostprod-otca");
+        ISearchProviders searchProviders = new SearchProviders(obibUrl, clinicId);
 
-        List<IProvider> providers = searchProviders.findByProviderID("_XYXYXYXZ_");
+        List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
 
         //Assert.assertNull(providers);
     }

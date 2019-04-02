@@ -13,17 +13,16 @@ import java.util.List;
 
 public class ReceiveDoc implements IReceiveDoc {
 
-    private final String clinicId;
+    private final IOscarInformation services;
 
-    public ReceiveDoc(String clinicId) {
-        this.clinicId = clinicId;
+    public ReceiveDoc(String obibURL, String clinicId) {
+        this.services = new RestClient(obibURL, clinicId);
     }
 
     @Override
     public List<String> pollNewDocIDs() throws OBIBException {
         try {
-            IOscarInformation client = new RestClient(clinicId);
-            ListDocumentsResponse response = client.listDocument();
+            ListDocumentsResponse response = services.listDocument();
 
             if (!response.isOK()) {
                 throw new OBIBException(response.getMessage());
@@ -38,8 +37,7 @@ public class ReceiveDoc implements IReceiveDoc {
     @Override
     public IDocument retrieveDocument(String id) throws OBIBException {
         try {
-            IOscarInformation client = new RestClient(clinicId);
-            ListDocumentsResponse response = client.getDocument(SearchDocumentCriteria.byDocumentId(id));
+            ListDocumentsResponse response = services.getDocument(SearchDocumentCriteria.byDocumentId(id));
 
             if (!response.isOK()) {
                 throw new OBIBException(response.getMessage());

@@ -12,7 +12,7 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     //@Test
     public void testFindByProviderId() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(obibUrl, clinicId);
+        ISearchProviders searchProviders = new SearchProviders(config);
 
         List<IProvider> providers = searchProviders.findByProviderID("93188");
 
@@ -21,7 +21,7 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     //@Test(expected = OBIBException.class)
     public void testFindByProviderIdError() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(obibUrl, clinicId);
+        ISearchProviders searchProviders = new SearchProviders(config);
 
         List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
 

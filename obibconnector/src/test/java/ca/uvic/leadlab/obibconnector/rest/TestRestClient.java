@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
+import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.AddressType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.NameType;
@@ -24,11 +25,23 @@ public class TestRestClient {
     protected String obibUrl = "http://192.168.100.101:8081";
     protected String clinicId = "cdxpostprod-otca";
 
+    Config config = new Config() {
+        @Override
+        public String getUrl() {
+            return obibUrl;
+        }
+
+        @Override
+        public String getClinicId() {
+            return clinicId;
+        }
+    };
+
     //@Test
     public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
-        ClinicalDocument document = ((SubmitDoc) new SubmitDoc(obibUrl, clinicId)
+        ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config)
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")

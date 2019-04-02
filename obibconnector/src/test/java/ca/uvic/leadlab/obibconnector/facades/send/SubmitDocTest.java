@@ -12,7 +12,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     //@Test
     public void testSubmitDoc() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(obibUrl, clinicId);
+        ISubmitDoc submitDoc = new SubmitDoc(config);
 
         String response = submitDoc.patient()
                             .id("2222")

@@ -5,7 +5,6 @@ import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchProviderCriteria;
 import ca.uvic.leadlab.obibconnector.models.response.*;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
@@ -50,10 +49,10 @@ public class RestClient implements IOscarInformation {
 
     private static Client setupRestClient() {
         ClientConfig config = new ClientConfig()
-                .register(new JacksonJsonProvider())
-                .setProperty(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
-                .setProperty(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
-        return ClientFactory.newClient(config);
+                //.register(new JacksonJsonProvider())
+                .property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
+                .property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
+        return ClientBuilder.newClient(config);
     }
 
     private String getServicesURL() {

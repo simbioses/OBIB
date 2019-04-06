@@ -18,17 +18,46 @@ return;</string>
     <string>Deploy</string>
     <string>// This script executes once for each deploy or redeploy task
 // You only have access to the globalMap here to persist data
+logger.debug(&quot;Global Scripts: Deploy&quot;);
 
-/*********** Verification global variables ***********/
-
+/*********** Verify global variables ***********/
 globalMap.put(&apos;CDASchema&apos;, &apos;CDA.xsd&apos;);
 if (!new Packages.java.io.File($(&apos;custom-lib&apos;) + &apos;CDA_with_BcCdaExtensions/&apos; + globalMap.get(&apos;CDASchema&apos;)).exists()) {
-	logger.error(&apos;GLOBAL Scripts: CDA.xsd schema cannot be found, channels will not work correctly.&apos;);
+	logger.error(&apos;Global Scripts: CDA.xsd schema cannot be found, channels will not work correctly.&apos;);
 }
 
 globalMap.put(&apos;CDAProperties&apos;, &apos;CDA.properties&apos;);
 if (!new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)).exists()) {
-	logger.error(&apos;GLOBAL Scripts: CDAProperties cannot be found, channels will not work correctly.&apos;);
+	logger.error(&apos;Global Scripts: CDAProperties cannot be found, channels will not work correctly.&apos;);
+}
+
+
+/*********** Load CDA properties ***********/
+var properties = new Packages.java.util.Properties();
+var fileProp = new Packages.java.io.FileInputStream(new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)));
+
+properties.load(fileProp);
+globalMap.globalVariableMap.putAll(properties);
+fileProp.close();
+logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &quot;&apos; CDA properties.&quot;);
+
+
+/*********** Load CDX Ids from database ***********/
+try {
+	dbConn = getDBConnection();
+
+	var count = 0;
+	var result = dbConn.executeCachedQuery(&apos;SELECT * FROM cdx_id;&apos;);
+	while (result &amp;&amp; result.next()) {
+		globalMap.put(result.getString(&apos;extension&apos;), result.getString(&apos;name&apos;));
+		count++;
+	}
+	result.close();
+	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX ids.&quot;);
+	
+	dbConn.close();
+} catch(err) {
+	logger.error(&apos;Global Scripts: Erro connecting to database. &apos; + err);
 }
 
 return;</string>

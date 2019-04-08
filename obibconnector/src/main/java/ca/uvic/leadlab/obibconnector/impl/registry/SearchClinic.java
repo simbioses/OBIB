@@ -26,7 +26,7 @@ public class SearchClinic implements ISearchClinic {
         try {
             return listClinics(SearchClinicCriteria.byClinicName(name));
         } catch (OBIBRequestException e) {
-            throw new OBIBException("Error finding clinics by address.", e);
+            throw new OBIBException("Error finding clinics by name.", e);
         }
     }
 

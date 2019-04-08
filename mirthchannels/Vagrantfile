@@ -108,7 +108,7 @@ description "Mirth Connect Service"
 start on vagrant-mounted
 
 script
-  /vagrant/mirthconnect-3.7.0.b2399-unix/./mcservice start
+  /vagrant/Mirth\\ Connect/./mcservice start
 end script
 EOF
   SHELL

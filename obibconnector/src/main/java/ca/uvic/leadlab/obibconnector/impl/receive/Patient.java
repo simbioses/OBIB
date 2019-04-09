@@ -2,9 +2,9 @@ package ca.uvic.leadlab.obibconnector.impl.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
-import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Name;
 import ca.uvic.leadlab.obibconnector.models.common.Telecom;
@@ -16,6 +16,8 @@ import java.util.List;
 public class Patient implements IPatient {
 
     private final ca.uvic.leadlab.obibconnector.models.document.Patient patient;
+
+    private String ID;
 
     private String firstName;
     private String lastName;
@@ -32,6 +34,8 @@ public class Patient implements IPatient {
 
     Patient(ca.uvic.leadlab.obibconnector.models.document.Patient patient) {
         this.patient = patient;
+
+        ID = ImplHelper.getDefaultPatientId(patient.getIds());
 
         if (!patient.getNames().isEmpty()) {
             Name name = patient.getNames().get(0);
@@ -59,8 +63,8 @@ public class Patient implements IPatient {
     }
 
     @Override
-    public List<IId> getIDs() {
-        return null;
+    public String getID() {
+        return ID;
     }
 
     @Override

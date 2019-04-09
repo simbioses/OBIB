@@ -7,7 +7,7 @@ import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 
 public interface IPatient {
 
-    List<IId> getIDs();
+    String getID();
 
     String getFirstName();
     String getLastName();

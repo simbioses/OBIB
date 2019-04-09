@@ -11,11 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 public class PatientOscar implements IPatient {
+
     @Override
-    public List<IId> getIDs() {
-        List<IId> result = new ArrayList<>();
-        result.add(new IdOscar());
-        return result;
+    public String getID() {
+        return "45678";
     }
 
     @Override

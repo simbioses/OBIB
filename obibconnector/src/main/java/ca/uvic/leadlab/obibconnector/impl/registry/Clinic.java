@@ -2,6 +2,7 @@ package ca.uvic.leadlab.obibconnector.impl.registry;
 
 import ca.uvic.leadlab.obibconnector.facades.registry.IClinic;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 
 public class Clinic implements IClinic {
 
@@ -19,15 +20,15 @@ public class Clinic implements IClinic {
     Clinic(ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic) {
         this.clinic = clinic;
 
-        if (!clinic.getIds().isEmpty()) {
-            ID = clinic.getIds().get(0).getCode();
-        }
+        ID = ImplHelper.getDefaultClinicId(clinic.getIds());
+
         if (clinic.getAddress() != null) {
             streetAddress = clinic.getAddress().getStreetAddress();
             city = clinic.getAddress().getCity();
             postalCode = clinic.getAddress().getPostalCode();
             province = clinic.getAddress().getProvince();
         }
+
         if (!clinic.getProviders().isEmpty()) {
             provider = new Provider(clinic.getProviders().get(0));
         }

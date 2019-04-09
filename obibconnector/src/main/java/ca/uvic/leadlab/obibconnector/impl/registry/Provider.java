@@ -1,8 +1,8 @@
 package ca.uvic.leadlab.obibconnector.impl.registry;
 
-import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.impl.receive.Telco;
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Telecom;
@@ -13,6 +13,8 @@ import java.util.List;
 public class Provider implements IProvider {
 
     private final ca.uvic.leadlab.obibconnector.models.registry.Provider provider;
+
+    private String ID;
 
     private String firstName;
     private String lastName;
@@ -32,6 +34,8 @@ public class Provider implements IProvider {
 
     public Provider(ca.uvic.leadlab.obibconnector.models.registry.Provider provider) {
         this.provider = provider;
+
+        ID = ImplHelper.getDefaultProviderId(provider.getIds());
 
         if (provider.getName() != null) {
             firstName = provider.getName().getGiven().get(0);
@@ -65,8 +69,8 @@ public class Provider implements IProvider {
     }
 
     @Override
-    public List<IId> getIDs() {
-        return null;
+    public String getID() {
+        return ID;
     }
 
     @Override

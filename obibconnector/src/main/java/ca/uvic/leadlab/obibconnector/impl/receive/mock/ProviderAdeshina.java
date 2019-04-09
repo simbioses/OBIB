@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProviderAdeshina implements IProvider {
+
+    @Override
+    public String getID() {
+        return "34567";
+    }
+
     @Override
     public String getFirstName() {
         return "Adeshina";
@@ -62,13 +68,6 @@ public class ProviderAdeshina implements IProvider {
     @Override
     public String getPrefix() {
         return "Dr";
-    }
-
-    @Override
-    public List<IId> getIDs() {
-        List<IId> result = new ArrayList<IId>();
-        result.add(new IdAdeshina());
-        return result;
     }
 
     @Override

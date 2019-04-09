@@ -1,13 +1,12 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
-import ca.uvic.leadlab.obibconnector.facades.receive.IId;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 
 import java.util.List;
 
 public interface IProvider {
 
-    List<IId> getIDs();
+    String getID();
 
     String getFirstName();
     String getLastName();

@@ -1,5 +1,7 @@
 create schema OBIB_DB collate utf8_general_ci;
 
+use OBIB_DB;
+
 create table cdx_id
 (
 	id int auto_increment

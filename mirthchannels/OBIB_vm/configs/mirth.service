@@ -1,0 +1,21 @@
+[Unit]
+Description=Mirth Connect Deamon
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=forking
+
+#User=mirth
+#Group=mirth
+
+ExecStart=${MIRTH_ROOT}/mcservice start
+ExecStop=${MIRTH_ROOT}/mcservice stop
+ExecRestart=${MIRTH_ROOT}/mcservice restart
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=60
+
+

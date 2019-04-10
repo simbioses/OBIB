@@ -91,7 +91,7 @@ public class SubmitDoc implements ISubmitDoc {
                 throw new OBIBException(response.getMessage());
             }
 
-            return response.getDocumentId();
+            return response.getDocument();
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error submitting document.", e);
         }

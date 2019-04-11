@@ -76,9 +76,13 @@ public class Document implements IDocument {
         for (Participant participant : document.getParticipants()) {
             participatingProviders.add(new Provider(participant));
         }
-        if (document.getNonXMLBody() != null && MediaType.isPlainText(document.getNonXMLBody().getMediaType())) {
-            contents = document.getNonXMLBody().getContent();
-        }
+        // TODO return document body
+        // if (document.getNonXMLBody() != null && MediaType.isPlainText(document.getNonXMLBody().getMediaType())) {
+        //    contents = document.getNonXMLBody().getContent();
+        // }
+        // TODO return attachment
+
+        contents = document.getCdaXML(); // raw CDA XML
     }
 
     @Override

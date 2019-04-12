@@ -1,12 +1,12 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.MediaType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.RecipientType;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.impl.registry.Provider;
 import ca.uvic.leadlab.obibconnector.models.document.Author;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
@@ -40,10 +40,15 @@ public class Document implements IDocument {
     private List<IProvider> secondaryRecipients = new ArrayList<>();
 
     private List<IProvider> participatingProviders = new ArrayList<>();
+
+    private List<IAttachment> attachments = new ArrayList<>();
+
     private String contents;
 
-    Document(ClinicalDocument document) {
+    Document(ClinicalDocument document,
+             List<ca.uvic.leadlab.obibconnector.models.document.Attachment> attachmentList) {
         this.document = document;
+
         if (document.getTemplate() != null) {
             templateID = document.getTemplate().getTemplateId();
             templateName = document.getTemplate().getTemplateName();
@@ -76,11 +81,20 @@ public class Document implements IDocument {
         for (Participant participant : document.getParticipants()) {
             participatingProviders.add(new Provider(participant));
         }
+
         // TODO return document body
         // if (document.getNonXMLBody() != null && MediaType.isPlainText(document.getNonXMLBody().getMediaType())) {
         //    contents = document.getNonXMLBody().getContent();
         // }
-        // TODO return attachment
+
+        if (attachmentList != null) { // attachments
+            for (ca.uvic.leadlab.obibconnector.models.document.Attachment attachment : attachmentList) {
+                if (!ImplHelper.checkAttachment(attachment.getContent(), attachment.getHash())) {
+                    // TODO log check error
+                }
+                attachments.add(new Attachment(attachment.getMediaType(), "", attachment.getContent()));
+            }
+        }
 
         contents = document.getCdaXML(); // raw CDA XML
     }
@@ -227,6 +241,6 @@ public class Document implements IDocument {
 
     @Override
     public List<IAttachment> getAttachments() {
-        return null;
+        return attachments;
     }
 }

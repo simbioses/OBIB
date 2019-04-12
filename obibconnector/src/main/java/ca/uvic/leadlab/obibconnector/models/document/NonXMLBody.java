@@ -2,7 +2,7 @@ package ca.uvic.leadlab.obibconnector.models.document;
 
 public class NonXMLBody {
 
-    private String content;
+    private String content; // also utilized as reference for attachment
     private String mediaType;
 
     public NonXMLBody() {

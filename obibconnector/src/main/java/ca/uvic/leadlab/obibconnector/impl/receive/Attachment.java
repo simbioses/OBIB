@@ -5,18 +5,28 @@ import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 
 public class Attachment implements IAttachment {
 
+    private AttachmentType type;
+    private String reference;
+    private byte[] content;
+
+    Attachment(String mediaType, String reference, byte[] content) {
+        this.type = AttachmentType.fromMediaType(mediaType);
+        this.reference = reference;
+        this.content = content;
+    }
+
     @Override
     public AttachmentType getType() {
-        return null;
+        return type;
     }
 
     @Override
     public String getReference() {
-        return null;
+        return reference;
     }
 
     @Override
     public byte[] getContent() {
-        return new byte[0];
+        return content;
     }
 }

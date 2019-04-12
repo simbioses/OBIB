@@ -6,6 +6,7 @@ import org.hl7.v3.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -16,11 +17,15 @@ public class WSClientDocument extends WSClient {
         super(baseUrl, username, password, certPath, certPass);
     }
 
-    public String submitDocument(String locationId, String document, String... receiversIds) throws ConnectorException {
+    public String submitDocument(String locationId, String document, List<DocumentAttachment> attachments,
+                                 String... receiversIds) throws ConnectorException {
         try {
             SubmitDocumentBuilder documentBuilder = new SubmitDocumentBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
                     .sender(locationId) // ID Of requestor
                     .document(UUID.randomUUID().toString(), document);
+            for (DocumentAttachment attachment : attachments) { // Attachments
+                documentBuilder.attachment(attachment);
+            }
             for (String receiverId : receiversIds) { // Ids of receivers
                 documentBuilder.receiver(receiverId);
             }

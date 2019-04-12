@@ -101,6 +101,11 @@ public class Document implements IDocument {
     }
 
     @Override
+    public int getVersion() {
+        return 1; // todo, Oscar, please implement me
+    }
+
+    @Override
     public String getLoincCode() {
         return loincCode;
     }

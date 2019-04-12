@@ -10,6 +10,8 @@ public interface IDocument {
     String getTemplateID();
     String getTemplateName();           // return display name for template ID
     String getDocumentID();             // GUID of document
+    int    getVersion();
+    String getSetId();
     String getLoincCode();              // LOINC code of document type
     String getLoincCodeDisplayName();   // display name for LOINC code
     String getTitle();
@@ -20,6 +22,7 @@ public interface IDocument {
     Date    getAuthoringTime();          // return time of human authoring (if present)
     String  getAuthorDevice();           // return name of authoring device (if present)
     Date    getAuthorDeviceTime();       // return time of device authoring (if present)
+    Date    getEffectiveTime();
 
     String getCustodianName();              // return name of custodian (that generated document)
 
@@ -47,7 +50,7 @@ public interface IDocument {
 
     List<IProvider> getParticipatingProviders();
 
-    String getContents();               // get the actual contents of the body of the document
+    String getContents();               // get the xml of the document
 
     List<IAttachment> getAttachments();
 

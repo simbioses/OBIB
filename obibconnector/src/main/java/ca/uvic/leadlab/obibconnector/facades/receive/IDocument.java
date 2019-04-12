@@ -47,7 +47,7 @@ public interface IDocument {
 
     List<IProvider> getParticipatingProviders();
 
-    String getContents();               // get the actual contents of the body of the document
+    String getContents();               // get the xml of the document
 
     List<IAttachment> getAttachments();
 

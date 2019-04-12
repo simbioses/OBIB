@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ac1dd32-73ec-4463-8400-013526517419" name="Default Changelist" comment="changed all arrays to ArrayList types">
-      <change afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/Config.java" afterDir="false" />
+    <list default="true" id="0ac1dd32-73ec-4463-8400-013526517419" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/AttachmentPDF.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obibconnector/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/ISubmitDoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/ISubmitDoc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/ReceiveDoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/ReceiveDoc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchClinic.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchClinic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchProviders.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchProviders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java" beforeDir="false" afterPath="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,28 +18,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/pom.xml">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/datatypes/Gender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+            <state relative-caret-position="38">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="48" column="15" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="47" column="21" selection-start-line="47" selection-start-column="21" selection-end-line="47" selection-end-column="21" />
+            <state relative-caret-position="912">
+              <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,17 +41,51 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="47" column="21" selection-start-line="47" selection-start-column="21" selection-end-line="47" selection-end-column="21" />
+            <state relative-caret-position="532">
+              <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="662">
+              <caret line="511" column="37" selection-start-line="511" selection-start-column="37" selection-end-line="511" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#28968#28981#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/Attachment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/AttachmentPDF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ProviderAdeshina.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="78" selection-start-line="78" selection-end-line="83" />
+            <state relative-caret-position="342">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,22 +94,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/ReceiveDoc.java">
+        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IId.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="19" column="72" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="72" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="76">
+              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -97,15 +107,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="114">
               <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchProviders.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -141,7 +142,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/registry/ISearchClinic.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/ISubmit.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/IAnd.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/test/java/ca/uvic/leadlab/obibconnector/facade/SubmitDocTest.java" />
@@ -172,7 +172,6 @@
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IClinic.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/registry/ISearchProviders.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IAttachment.java" />
-        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IPerson.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IReceiveDoc.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PersonMorgan.java" />
@@ -181,17 +180,19 @@
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ProviderAdeshina.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ProviderRaymond.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ReceiveDocMock.java" />
-        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/config.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/ReceiveDoc.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchProviders.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchClinic.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/ISubmitDoc.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java" />
-        <option value="$PROJECT_DIR$/obibconnector/pom.xml" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java" />
         <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java" />
+        <option value="$PROJECT_DIR$/obibconnector/pom.xml" />
+        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java" />
+        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java" />
+        <option value="$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/AttachmentPDF.java" />
       </list>
     </option>
   </component>
@@ -211,6 +212,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -380,13 +382,18 @@
             <path>
               <item name="OBIB" type="b2602c69:ProjectViewProjectNode" />
               <item name="OBIB" type="462c0819:PsiDirectoryNode" />
+              <item name="obibconnector" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OBIB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OBIB" type="462c0819:PsiDirectoryNode" />
               <item name="TestOscarMirthRestClient" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -400,9 +407,10 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/cdxconnector" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="PsiViewer.ProjectComponent">
     <option name="HIGHLIGHT" value="false" />
@@ -413,18 +421,22 @@
     <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="ca.uvic.leadlab.obibconnector.impl.receive.mock" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/obibconnector/target" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="ca.uvic.leadlab.obibconnector.facades" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/obibconnector" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ca.uvic.leadlab.obibconnector.impl.receive.mock" />
       <recent name="ca.uvic.leadlab.obibconnector.impl.receive" />
       <recent name="ca.uvic.leadlab.obibconnector.facades.receive" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/obibconnector" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ca.uvic.leadlab.obibconnector.impl.receive.mock" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -506,7 +518,10 @@
       <workItem from="1553805604831" duration="2600000" />
       <workItem from="1554009316221" duration="1254000" />
       <workItem from="1554140582791" duration="478000" />
-      <workItem from="1554230923406" duration="3474000" />
+      <workItem from="1554230923406" duration="6326000" />
+      <workItem from="1554652200712" duration="247000" />
+      <workItem from="1554755070058" duration="3086000" />
+      <workItem from="1555020638999" duration="4164000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor project name obibconnector">
       <created>1552607969142</created>
@@ -606,16 +621,24 @@
       <option name="project" value="LOCAL" />
       <updated>1553972842878</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="changed obibconnector to allow it to be managed as spring bean">
+      <created>1554240930315</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1554240930315</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59550000" />
+    <option name="totallyTimeSpent" value="69899000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24969475" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24969475" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -635,7 +658,7 @@
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5005342" side_tool="true" weight="0.4978903" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49946582" visible="true" weight="0.14081633" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="12" sideWeight="0.49946582" visible="true" weight="0.14081633" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" id="Palette" order="2" />
@@ -670,34 +693,14 @@
     <MESSAGE value="modified IReceive interface to allow for multiple attachments" />
     <MESSAGE value="changed all arrays to ArrayList types" />
     <MESSAGE value="updated POM" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated POM" />
+    <MESSAGE value="changed obibconnector to allow it to be managed as spring bean" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed obibconnector to allow it to be managed as spring bean" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/DocElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/ISubmit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/IAnd.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/datatypes/Gender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -827,13 +830,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IProvider.java" />
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/registry/ISearchProviders.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/datatypes/AttachmentType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -849,13 +845,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IClinic.java" />
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IId.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IReceiveDoc.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -923,30 +912,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2508">
-          <caret line="189" column="44" selection-start-line="189" selection-start-column="44" selection-end-line="189" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/send/IPerson.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -978,17 +947,89 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchClinic.java">
+    <entry file="file://$PROJECT_DIR$/obibconnector/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
+        <state relative-caret-position="1311">
+          <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/ReceiveDoc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="19" column="72" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="72" />
+        <state relative-caret-position="95">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/registry/ISearchProviders.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="6" selection-start-line="6" selection-end-line="14" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="47" column="15" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/datatypes/Gender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ProviderAdeshina.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/facades/receive/IId.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -999,48 +1040,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/send/SubmitDoc.java">
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/registry/SearchClinic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+        <state relative-caret-position="152">
+          <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/Attachment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/DocumentMock1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="662">
+          <caret line="511" column="37" selection-start-line="511" selection-start-column="37" selection-end-line="511" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#28968#28981#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/pom.xml">
+    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/AttachmentPDF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientJens.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="48" column="15" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientMorgan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="47" column="21" selection-start-line="47" selection-start-column="21" selection-end-line="47" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/PatientOscar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="47" column="21" selection-start-line="47" selection-start-column="21" selection-end-line="47" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/obibconnector/src/main/java/ca/uvic/leadlab/obibconnector/impl/receive/mock/ProviderAdeshina.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="78" selection-start-line="78" selection-end-line="83" />
+        <state relative-caret-position="304">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1053,10 +1081,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>unnamed</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>

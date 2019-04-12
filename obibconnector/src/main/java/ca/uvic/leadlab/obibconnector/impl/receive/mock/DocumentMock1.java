@@ -33,6 +33,11 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
+    public String getSetId() {
+        return "1";
+    }
+
+    @Override
     public String getLoincCode() {
         return "34117-2";
     }
@@ -70,6 +75,12 @@ public class DocumentMock1 implements IDocument {
     @Override
     public Date getAuthorDeviceTime() {
         return new Date(5000);
+    }
+
+    @Override
+    public Date getEffectiveTime() {
+
+            return new Date(5000);
     }
 
     @Override

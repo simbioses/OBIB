@@ -106,6 +106,11 @@ public class Document implements IDocument {
     }
 
     @Override
+    public String getSetId() {
+        return null; // todo, Oscar, please implement me
+    }
+
+    @Override
     public String getLoincCode() {
         return loincCode;
     }
@@ -143,6 +148,11 @@ public class Document implements IDocument {
     @Override
     public Date getAuthorDeviceTime() {
         return authorDeviceTime;
+    }
+
+    @Override
+    public Date getEffectiveTime() {
+        return null; // todo - please implement me
     }
 
     @Override

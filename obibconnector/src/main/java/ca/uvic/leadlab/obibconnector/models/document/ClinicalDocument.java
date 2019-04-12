@@ -22,6 +22,7 @@ public class  ClinicalDocument {
     private List<Authenticator> authenticators = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
     private NonXMLBody nonXMLBody;
+    private String cdaXML;
 
     public String getDocumentId() {
         return documentId;
@@ -146,5 +147,13 @@ public class  ClinicalDocument {
 
     public void setNonXMLBody(NonXMLBody nonXMLBody) {
         this.nonXMLBody = nonXMLBody;
+    }
+
+    public String getCdaXML() {
+        return cdaXML;
+    }
+
+    public void setCdaXML(String cdaXML) {
+        this.cdaXML = cdaXML;
     }
 }

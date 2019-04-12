@@ -16,7 +16,7 @@
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>14</revision>
+      <revision>20</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -1954,6 +1954,7 @@ try {
 			
 			if (chResponse.status === SENT) {
 				tmp[&apos;documents&apos;][i] = JSON.parse(chResponse.message);
+				tmp[&apos;documents&apos;][i][&apos;cdaXML&apos;] = target[&apos;text&apos;].toString();
 			} else {
 				throw &apos;Error parsing CDA Document &apos; + chResponse.statusMessage;
 			}
@@ -4847,7 +4848,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1554936895534</time>
+            <time>1555022224051</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -4858,9 +4859,9 @@ return;</undeployScript>
           <codeTemplateLibrary version="3.7.1">
             <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
             <name>OBIB</name>
-            <revision>1</revision>
+            <revision>2</revision>
             <lastModified>
-              <time>1554867669766</time>
+              <time>1555020864280</time>
               <timezone>Etc/UTC</timezone>
             </lastModified>
             <description></description>
@@ -4883,10 +4884,10 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -4926,10 +4927,10 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -4972,10 +4973,10 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5022,10 +5023,10 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5057,10 +5058,10 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5095,21 +5096,21 @@ function buildDocumentStorageMessage(locationId, documentId, messageType, messag
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>CHANNEL_DEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>CHANNEL_DEPLOY</contextType>
                     <contextType>CHANNEL_ATTACHMENT</contextType>
-                    <contextType>CHANNEL_PREPROCESSOR</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5139,10 +5140,10 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5169,10 +5170,10 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5206,10 +5207,10 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5239,10 +5240,10 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5274,17 +5275,17 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>1</revision>
+                <revision>6</revision>
                 <lastModified>
-                  <time>1554867669953</time>
+                  <time>1555022130719</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -5299,13 +5300,16 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
-	var strtAddr = cdaAddress.toString().match(/.+?(?=&lt;delimiter\/&gt;)/);
+	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
-		addr[&apos;streetAddress&apos;] = strtAddr[0]; 
+		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
 	}
 	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
-	for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
-		addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+	if (cdaAddress[&apos;delimiter&apos;]) {
+		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
+			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+		}
+		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
 	}
 	if (cdaAddress[&apos;city&apos;]) {
 		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
@@ -5334,10 +5338,10 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5367,10 +5371,10 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5400,10 +5404,10 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5433,10 +5437,10 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5475,10 +5479,10 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -5509,7 +5513,7 @@ function parseCDATelecom(cdaTelecom) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>1</revision>
+      <revision>5</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -5673,8 +5677,8 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 
 		if (assignedAuthor[&apos;addr&apos;]) {
 			author[&apos;addresses&apos;] = [];
-			for (var i = 0; i &lt; getArrayOrXmlLength(assignedAuthor[&apos;addr&apos;]); i++) {
-				author[&apos;addresses&apos;][i] = parseCDAAddress(assignedAuthor[&apos;addr&apos;][i]);
+			for (var j = 0; j &lt; getArrayOrXmlLength(assignedAuthor[&apos;addr&apos;]); j++) {
+				author[&apos;addresses&apos;][j] = parseCDAAddress(assignedAuthor[&apos;addr&apos;][j]);
 			}
 		}
 		
@@ -5797,158 +5801,147 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 	// Text
 	var text = msg[&apos;component&apos;][&apos;nonXMLBody&apos;][&apos;text&apos;];
 	tmp[&apos;nonXMLBody&apos;][&apos;mediaType&apos;] = text[&apos;@mediaType&apos;].toString();
-	tmp[&apos;nonXMLBody&apos;][&apos;content&apos;] = text[&apos;@representation&apos;].toString()
+	if (text[&apos;@representation&apos;] &amp;&amp; text[&apos;@representation&apos;].toString() === &apos;TXT&apos;) { // CONF-BC0011: Plain Text
+		tmp[&apos;nonXMLBody&apos;][&apos;content&apos;] = text.toString();
+	} else { // Attachments
+		tmp[&apos;nonXMLBody&apos;][&apos;content&apos;] = text[&apos;reference&apos;][&apos;@value&apos;].toString();
+	}
 } catch(e) {
 	logger.error(&quot;Error on &apos;Parse Text&apos;: &quot; + e);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             </elements>
-            <inboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjw/eG1sLXN0eWxlc2hlZXQg
-dHlwZT0idGV4dC94c2wiIGhyZWY9IkNEQS54c2wiPz4NCjxDbGluaWNhbERvY3VtZW50IHhtbG5z
-PSJ1cm46aGw3LW9yZzp2MyIgeG1sbnM6YmNjZGE9InVybjpiY2NkYSIgeG1sbnM6bnMwPSJodHRw
-Oi8vbWljcm9zb2Z0LmNvbS9IZWFsdGhDYXJlL0hMNy8yWCIgeG1sbnM6eGFsYW49Imh0dHA6Ly94
-bWwuYXBhY2hlLm9yZy94c2x0IiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1M
-U2NoZW1hLWluc3RhbmNlIiBjbGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iPg0KICA8
-cmVhbG1Db2RlIGNvZGU9IkNBLUJDIiAvPg0KICA8dHlwZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEz
-ODgzLjEuMyIgZXh0ZW5zaW9uPSJQT0NEX0hEMDAwMDQwIiBhc3NpZ25pbmdBdXRob3JpdHlOYW1l
-PSJITDcgQ0RBIFIyIiAvPg0KICA8dGVtcGxhdGVJZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4z
-LjE4MTguMTAuMS41IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJlMmUgUmVmZXJyYWwgKFVuc3Ry
-dWN0dXJlZCkiIC8+DQogIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMyIg
-ZXh0ZW5zaW9uPSI2MWExYTM4Ny00MDhiLTRlNWMtYmUyNC0xOTc2YWNlMWMyODAiIGFzc2lnbmlu
-Z0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWNhbCBEb2N1bWVudCBJRCIgLz4NCiAgPGNvZGUgY29k
-ZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIiBjb2RlPSI1NzEzMy0xIiBjb2RlU3lzdGVt
-TmFtZT0iTE9JTkMgQ29kZSIgZGlzcGxheU5hbWU9IlJlZmVycmFsIG5vdGUiIC8+DQogIDx0aXRs
-ZT5SZWZlcnJhbCBOb3RlPC90aXRsZT4NCiAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMzE0
-MTkwMy0wNzAwIiAvPg0KICA8Y29uZmlkZW50aWFsaXR5Q29kZSBjb2RlPSJOIiBjb2RlU3lzdGVt
-PSIyLjE2Ljg0MC4xLjExMzg4My41LjI1IiBjb2RlU3lzdGVtTmFtZT0iQ29uZmlkZW50aWFsaXR5
-IiAvPg0KICA8bGFuZ3VhZ2VDb2RlIGNvZGU9ImVuLUNBIiAvPg0KICANCiAgPHJlY29yZFRhcmdl
-dCB0eXBlQ29kZT0iUkNUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIj4NCiAgICA8cGF0aWVudFJv
-bGUgY2xhc3NDb2RlPSJQQVQiPg0KICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjQu
-NTAiIGV4dGVuc2lvbj0iOTY5ODY1MDI2NyIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgUGF0
-aWVudCBIZWFsdGggTnVtYmVyIiAvPg0KICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgz
-LjMuMjc3LjEuNzMiIGV4dGVuc2lvbj0iQTAwMDAwMDI1IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1l
-PSJJSEEgUGF0aWVudCBFTVIgTnVtYmVyIiAvPg0KICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEu
-MTEzODgzLjMuMjc3LjEuNzEiIGV4dGVuc2lvbj0iRUswMDAwMDAzNiIgYXNzaWduaW5nQXV0aG9y
-aXR5TmFtZT0iSUhBIFBhdGllbnQgVW5pdCBOdW1iZXIiIC8+DQogICAgICA8YWRkciB1c2U9Ikgi
-Pg0KICAgICAgICA3NzE1IFJveWUgU3ENCiAgICAgICAgPGRlbGltaXRlciAvPg0KICAgICAgICA8
-Y2l0eT5MaW9ucyBCYXk8L2NpdHk+DQogICAgICAgIDxzdGF0ZT5DQS1CQzwvc3RhdGU+DQogICAg
-ICAgIDxwb3N0YWxDb2RlPlYwTiAwQTI8L3Bvc3RhbENvZGU+DQogICAgICA8L2FkZHI+DQogICAg
-ICA8dGVsZWNvbSB1c2U9IkgiIHZhbHVlPSJ0ZWw6MjUwLTEyMy00NTY3IiAvPg0KICAgICAgPHBh
-dGllbnQgY2xhc3NDb2RlPSJQU04iPg0KICAgICAgICA8bmFtZSB1c2U9IkwiPg0KICAgICAgICAg
-IDxmYW1pbHk+SWhjdXJyZW5jZTwvZmFtaWx5Pg0KICAgICAgICAgIDxnaXZlbj5QbGlzPC9naXZl
-bj4NCiAgICAgICAgPC9uYW1lPg0KICAgICAgICA8YWRtaW5pc3RyYXRpdmVHZW5kZXJDb2RlIGNv
-ZGU9IkYiIC8+DQogICAgICAgIDxiaXJ0aFRpbWUgdmFsdWU9IjE5NTgwMjI0IiAvPg0KICAgICAg
-PC9wYXRpZW50Pg0KICAgIDwvcGF0aWVudFJvbGU+DQogIDwvcmVjb3JkVGFyZ2V0Pg0KICANCiAg
-PGF1dGhvciB0eXBlQ29kZT0iQVVUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIj4NCiAgICA8dGlt
-ZSB2YWx1ZT0iMjAxOTAzMTQxOTAzLTA3MDAiIC8+DQogICAgPGFzc2lnbmVkQXV0aG9yIGNsYXNz
-Q29kZT0iQVNTSUdORUQiPg0KICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3
-LjEuNjEiIGV4dGVuc2lvbj0iUExJRiIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1lZGl0
-ZWNoIElEIiAvPg0KICAgICAgPGFzc2lnbmVkUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1p
-bmVyQ29kZT0iSU5TVEFOQ0UiPg0KICAgICAgICA8bmFtZSB1c2U9IkwiPg0KICAgICAgICAgIDxw
-cmVmaXg+RHI8L3ByZWZpeD4NCiAgICAgICAgICA8ZmFtaWx5PlBsaXM8L2ZhbWlseT4NCiAgICAg
-ICAgICA8Z2l2ZW4+RmFtaWx5PC9naXZlbj4NCiAgICAgICAgPC9uYW1lPg0KICAgICAgPC9hc3Np
-Z25lZFBlcnNvbj4NCiAgICA8L2Fzc2lnbmVkQXV0aG9yPg0KICA8L2F1dGhvcj4NCiAgPGF1dGhv
-ciB0eXBlQ29kZT0iQVVUIiBjb250ZXh0Q29udHJvbENvZGU9Ik9QIj4NCiAgICA8dGltZSB2YWx1
-ZT0iMjAxOTAzMTQxOTAzLTA3MDAiIC8+DQogICAgPGFzc2lnbmVkQXV0aG9yIGNsYXNzQ29kZT0i
-QVNTSUdORUQiPg0KICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIiAvPg0KICAgICAgPGFzc2lnbmVk
-QXV0aG9yaW5nRGV2aWNlPg0KICAgICAgICA8c29mdHdhcmVOYW1lIGNvZGU9IkNEWEFQUCIgY29k
-ZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS4xMiIgY29kZVN5c3RlbU5hbWU9IklI
-QSBTb2Z0d2FyZSBDb2RlIiBkaXNwbGF5TmFtZT0iQ0RYIFNhbXBsZSBBcHAiIC8+DQogICAgICA8
-L2Fzc2lnbmVkQXV0aG9yaW5nRGV2aWNlPg0KICAgIDwvYXNzaWduZWRBdXRob3I+DQogIDwvYXV0
-aG9yPg0KDQogIDxjdXN0b2RpYW4gdHlwZUNvZGU9IkNTVCI+DQogICAgPGFzc2lnbmVkQ3VzdG9k
-aWFuIGNsYXNzQ29kZT0iQVNTSUdORUQiPg0KICAgICAgPHJlcHJlc2VudGVkQ3VzdG9kaWFuT3Jn
-YW5pemF0aW9uIGNsYXNzQ29kZT0iT1JHIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPg0KICAg
-ICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiIGV4dGVuc2lvbj0i
-Y2R4cG9zdHByb2Qtb3RjYSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBSZWdp
-c3RyeSBJRCIgLz4NCiAgICAgICAgPG5hbWU+T3NjYXIgVGVzdCBDbGluaWMgQTwvbmFtZT4NCiAg
-ICAgIDwvcmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24+DQogICAgPC9hc3NpZ25lZEN1
-c3RvZGlhbj4NCiAgPC9jdXN0b2RpYW4+DQoNCiAgPGluZm9ybWF0aW9uUmVjaXBpZW50IHR5cGVD
-b2RlPSJQUkNQIj4NCiAgICA8aW50ZW5kZWRSZWNpcGllbnQgY2xhc3NDb2RlPSJBU1NJR05FRCI+
-DQogICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy40MC4yLjExIiBleHRlbnNpb249
-IjkzMTg4IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJCQyBNaW5pc3RyeSBQcmFjdGl0aW9uZXIg
-SUQiIC8+DQogICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS42MSIgZXh0
-ZW5zaW9uPSJQTElTSUhMVSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhBIE1lZGl0ZWNoIElE
-IiAvPg0KICAgICAgPGluZm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1p
-bmVyQ29kZT0iSU5TVEFOQ0UiPg0KICAgICAgICA8bmFtZSB1c2U9IkwiPg0KICAgICAgICAgIDxw
-cmVmaXg+RHIuPC9wcmVmaXg+DQogICAgICAgICAgPGZhbWlseT5QbGlzaWhiPC9mYW1pbHk+DQog
-ICAgICAgICAgPGdpdmVuPkx1Y2l1czwvZ2l2ZW4+DQogICAgICAgIDwvbmFtZT4NCiAgICAgIDwv
-aW5mb3JtYXRpb25SZWNpcGllbnQ+DQogICAgICA8cmVjZWl2ZWRPcmdhbml6YXRpb24+DQogICAg
-ICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMiIgZXh0ZW5zaW9uPSJj
-ZHhwb3N0cHJvZC1vdGNhIiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJDRFggQ2xpbmljIFJlZ2lz
-dHJ5IElEIiAvPg0KICAgICAgICA8bmFtZT5Pc2NhciBUZXN0IENsaW5pYyBBPC9uYW1lPg0KICAg
-ICAgPC9yZWNlaXZlZE9yZ2FuaXphdGlvbj4NCiAgICA8L2ludGVuZGVkUmVjaXBpZW50Pg0KICA8
-L2luZm9ybWF0aW9uUmVjaXBpZW50Pg0KICA8aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNvZGU9
-IlRSQyI+DQogICAgPGludGVuZGVkUmVjaXBpZW50IGNsYXNzQ29kZT0iQVNTSUdORUQiPg0KICAg
-ICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuNDAuMi4xMSIgZXh0ZW5zaW9uPSI5MzE5
-NCIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVyIElEIiAv
-Pg0KICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEuNjEiIGV4dGVuc2lv
-bj0iUExJU0lITk8iIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRpdGVjaCBJRCIgLz4N
-CiAgICAgIDxpbmZvcm1hdGlvblJlY2lwaWVudCBjbGFzc0NvZGU9IlBTTiIgZGV0ZXJtaW5lckNv
-ZGU9IklOU1RBTkNFIj4NCiAgICAgICAgPG5hbWUgdXNlPSJMIj4NCiAgICAgICAgICA8cHJlZml4
-PkRyLjwvcHJlZml4Pg0KICAgICAgICAgIDxmYW1pbHk+UGxpc2loZzwvZmFtaWx5Pg0KICAgICAg
-ICAgIDxnaXZlbj5Ob2VsPC9naXZlbj4NCiAgICAgICAgPC9uYW1lPg0KICAgICAgPC9pbmZvcm1h
-dGlvblJlY2lwaWVudD4NCiAgICAgIDxyZWNlaXZlZE9yZ2FuaXphdGlvbj4NCiAgICAgICAgPGlk
-IHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjMuMjc3LjEwMC4yIiBleHRlbnNpb249ImNkeHBvc3Rw
-cm9kLW90Y2EiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQi
-IC8+DQogICAgICAgIDxuYW1lPk9zY2FyIFRlc3QgQ2xpbmljIEE8L25hbWU+DQogICAgICA8L3Jl
-Y2VpdmVkT3JnYW5pemF0aW9uPg0KICAgIDwvaW50ZW5kZWRSZWNpcGllbnQ+DQogIDwvaW5mb3Jt
-YXRpb25SZWNpcGllbnQ+DQoNCiAgPHBhcnRpY2lwYW50IHR5cGVDb2RlPSJSRUYiIGNvbnRleHRD
-b250cm9sQ29kZT0iT1AiPg0KICAgIDxmdW5jdGlvbkNvZGUgY29kZVN5c3RlbT0iMi4xNi44NDAu
-MS4xMTM4ODMuMi4yMC4zLjg3IiBjb2RlPSJPUkQiIGNvZGVTeXN0ZW1OYW1lPSJITDdQYXJ0aWNp
-cGF0aW9uRnVuY3Rpb24iIGRpc3BsYXlOYW1lPSJPcmRlcmluZyBQcm92aWRlciIgLz4NCiAgICA8
-YXNzb2NpYXRlZEVudGl0eSBjbGFzc0NvZGU9IlBST1YiPg0KICAgICAgPGlkIHJvb3Q9IjIuMTYu
-ODQwLjEuMTEzODgzLjMuMjc3LjEuNjEiIGV4dGVuc2lvbj0iUExJRiIgYXNzaWduaW5nQXV0aG9y
-aXR5TmFtZT0iSUhBIE1lZGl0ZWNoIElEIiAvPg0KICAgICAgPGFzc29jaWF0ZWRQZXJzb24gY2xh
-c3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+DQogICAgICAgIDxuYW1lIHVz
-ZT0iTCI+DQogICAgICAgICAgPHByZWZpeD5EcjwvcHJlZml4Pg0KICAgICAgICAgIDxmYW1pbHk+
-UGxpczwvZmFtaWx5Pg0KICAgICAgICAgIDxnaXZlbj5GYW1pbHk8L2dpdmVuPg0KICAgICAgICA8
-L25hbWU+DQogICAgICA8L2Fzc29jaWF0ZWRQZXJzb24+DQogICAgPC9hc3NvY2lhdGVkRW50aXR5
-Pg0KICA8L3BhcnRpY2lwYW50Pg0KDQogIDxpbkZ1bGZpbGxtZW50T2YgdHlwZUNvZGU9IkZMRlMi
-Pg0KICAgIDxvcmRlciBjbGFzc0NvZGU9IkVOQyIgbW9vZENvZGU9IlJRTyI+DQogICAgICA8aWQg
-bnVsbEZsYXZvcj0iVU5LIiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJPcmRlciBJRCIgLz4NCiAg
-ICA8L29yZGVyPg0KICA8L2luRnVsZmlsbG1lbnRPZj4NCiAgDQogIDxkb2N1bWVudGF0aW9uT2Yg
-dHlwZUNvZGU9IkRPQyI+DQogICAgPHNlcnZpY2VFdmVudCBjbGFzc0NvZGU9IkFDVCIgbW9vZENv
-ZGU9IkVWTiIgbnVsbEZsYXZvcj0iVU5LIj4NCiAgICAgIDxjb2RlIC8+DQogICAgICA8ZWZmZWN0
-aXZlVGltZSB2YWx1ZT0iMjAxOTAzMTQxOTAzLTA3MDAiIC8+DQogICAgICA8cGVyZm9ybWVyIHR5
-cGVDb2RlPSJQUFJGIj4NCiAgICAgICAgPGFzc2lnbmVkRW50aXR5IGNsYXNzQ29kZT0iQVNTSUdO
-RUQiPg0KICAgICAgICAgIDxpZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEiIGV4
-dGVuc2lvbj0iOTMxODgiIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkJDIE1pbmlzdHJ5IFByYWN0
-aXRpb25lciBJRCIgLz4NCiAgICAgICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4y
-NzcuMS42MSIgZXh0ZW5zaW9uPSJQTElTSUhMVSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iSUhB
-IE1lZGl0ZWNoIElEIiAvPg0KICAgICAgICAgIDxhc3NpZ25lZFBlcnNvbiBjbGFzc0NvZGU9IlBT
-TiIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4NCiAgICAgICAgICAgIDxuYW1lIHVzZT0iTCI+
-DQogICAgICAgICAgICAgIDxwcmVmaXg+RHIuPC9wcmVmaXg+DQogICAgICAgICAgICAgIDxmYW1p
-bHk+UGxpc2loYjwvZmFtaWx5Pg0KICAgICAgICAgICAgICA8Z2l2ZW4+THVjaXVzPC9naXZlbj4N
-CiAgICAgICAgICAgIDwvbmFtZT4NCiAgICAgICAgICA8L2Fzc2lnbmVkUGVyc29uPg0KICAgICAg
-ICA8L2Fzc2lnbmVkRW50aXR5Pg0KICAgICAgPC9wZXJmb3JtZXI+DQogICAgICA8c3RhdHVzQ29k
-ZSB4bWxucz0idXJuOmJjY2RhIiBjb2RlPSJzaWduZWQiIC8+DQogICAgPC9zZXJ2aWNlRXZlbnQ+
-DQogIDwvZG9jdW1lbnRhdGlvbk9mPg0KICANCiAgPGNvbXBvbmVudE9mIHR5cGVDb2RlPSJDT01Q
-Ij4NCiAgICA8ZW5jb21wYXNzaW5nRW5jb3VudGVyIGNsYXNzQ29kZT0iRU5DIiBtb29kQ29kZT0i
-RVZOIj4NCiAgICAgIDxpZCBudWxsRmxhdm9yPSJVTksiIC8+DQogICAgICA8ZWZmZWN0aXZlVGlt
-ZSB2YWx1ZT0iMjAxOTAzMTQxOTAzLTA3MDAiIC8+DQogICAgICA8ZW5jb3VudGVyUGFydGljaXBh
-bnQgdHlwZUNvZGU9IkNPTiI+DQogICAgICAgIDxhc3NpZ25lZEVudGl0eSBjbGFzc0NvZGU9IkFT
-U0lHTkVEIj4NCiAgICAgICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy40MC4yLjEx
-IiBleHRlbnNpb249IjkzMTk1IiBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJCQyBNaW5pc3RyeSBQ
-cmFjdGl0aW9uZXIgSUQiIC8+DQogICAgICAgICAgPGlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgz
-LjMuMjc3LjEuNjEiIGV4dGVuc2lvbj0iUExJU0lISE8iIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9
-IklIQSBNZWRpdGVjaCBJRCIgLz4NCiAgICAgICAgICA8YXNzaWduZWRQZXJzb24gY2xhc3NDb2Rl
-PSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+DQogICAgICAgICAgICA8bmFtZSB1c2U9
-IkwiPg0KICAgICAgICAgICAgICA8cHJlZml4PkRyLjwvcHJlZml4Pg0KICAgICAgICAgICAgICA8
-ZmFtaWx5PlBsaXNpaGg8L2ZhbWlseT4NCiAgICAgICAgICAgICAgPGdpdmVuPkhvbWVyPC9naXZl
-bj4NCiAgICAgICAgICAgIDwvbmFtZT4NCiAgICAgICAgICA8L2Fzc2lnbmVkUGVyc29uPg0KICAg
-ICAgICA8L2Fzc2lnbmVkRW50aXR5Pg0KICAgICAgPC9lbmNvdW50ZXJQYXJ0aWNpcGFudD4NCiAg
-ICAgIDxsb2NhdGlvbj4NCiAgICAgICAgPGhlYWx0aENhcmVGYWNpbGl0eSBjbGFzc0NvZGU9IlNE
-TE9DIj4NCiAgICAgICAgICA8aWQgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIi
-IGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQ0RY
-IENsaW5pYyBSZWdpc3RyeSBJRCIgLz4NCiAgICAgICAgICA8bG9jYXRpb24gZGV0ZXJtaW5lckNv
-ZGU9IklOU1RBTkNFIiBjbGFzc0NvZGU9IlBMQyI+DQogICAgICAgICAgICA8bmFtZT5Pc2NhciBU
-ZXN0IENsaW5pYyBBPC9uYW1lPg0KICAgICAgICAgIDwvbG9jYXRpb24+DQogICAgICAgIDwvaGVh
-bHRoQ2FyZUZhY2lsaXR5Pg0KICAgICAgPC9sb2NhdGlvbj4NCiAgICA8L2VuY29tcGFzc2luZ0Vu
-Y291bnRlcj4NCiAgPC9jb21wb25lbnRPZj4NCiAgDQogIDxjb21wb25lbnQgdHlwZUNvZGU9IkNP
-TVAiPg0KICAgIDxub25YTUxCb2R5Pg0KICAgICAgPHRleHQgbWVkaWFUeXBlPSJ0ZXh0L3BsYWlu
-IiByZXByZXNlbnRhdGlvbj0iVFhUIj5TYW1wbGUgUmVmZXJyYWwgdGVzdCBhZ2FpbjwvdGV4dD4N
-CiAgICA8L25vblhNTEJvZHk+DQogIDwvY29tcG9uZW50Pg0KPC9DbGluaWNhbERvY3VtZW50Pg==
-</inboundTemplate>
+            <inboundTemplate encoding="base64">PENsaW5pY2FsRG9jdW1lbnQgeG1sbnM9InVybjpobDctb3JnOnYzIiB4bWxuczpiY2NkYT0idXJu
+OmJjY2RhIiB4bWxuczpuczA9Imh0dHA6Ly9taWNyb3NvZnQuY29tL0hlYWx0aENhcmUvSEw3LzJY
+IiB4bWxuczp4YWxhbj0iaHR0cDovL3htbC5hcGFjaGUub3JnL3hzbHQiIHhtbG5zOnhzaT0iaHR0
+cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIGNsYXNzQ29kZT0iRE9DQ0xJ
+TiIgbW9vZENvZGU9IkVWTiI+CiAgICA8cmVhbG1Db2RlIGNvZGU9IkNBLUJDIi8+CiAgICA8dHlw
+ZUlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkhMNyBDREEgUjIiIGV4dGVuc2lvbj0iUE9DRF9I
+RDAwMDA0MCIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMS4zIi8+CiAgICA8dGVtcGxhdGVJZCBh
+c3NpZ25pbmdBdXRob3JpdHlOYW1lPSJlMmUgUmVmZXJyYWwgKFVuc3RydWN0dXJlZCkiIHJvb3Q9
+IjIuMTYuODQwLjEuMTEzODgzLjMuMTgxOC4xMC4xLjUiLz4KICAgIDxpZCBhc3NpZ25pbmdBdXRo
+b3JpdHlOYW1lPSJDRFggQ2xpbmljYWwgRG9jdW1lbnQgSUQiIGV4dGVuc2lvbj0iNDVhNzViN2Ut
+NWNiMS00ZDAwLWFiN2YtYjc4NzJkZTQ3NTQ5IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3
+Ny4xMDAuMyIvPgogICAgPGNvZGUgY29kZT0iNTcxMzMtMSIgY29kZVN5c3RlbT0iMi4xNi44NDAu
+MS4xMTM4ODMuNi4xIiBjb2RlU3lzdGVtTmFtZT0iTE9JTkMgQ29kZSIgZGlzcGxheU5hbWU9IlJl
+ZmVycmFsIG5vdGUiLz4KICAgIDx0aXRsZT5SZWZlcnJhbCBOb3RlPC90aXRsZT4KICAgIDxlZmZl
+Y3RpdmVUaW1lIHZhbHVlPSIyMDE5MDMxNDE5MDMtMDcwMCIvPgogICAgPGNvbmZpZGVudGlhbGl0
+eUNvZGUgY29kZT0iTiIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNS4yNSIgY29kZVN5
+c3RlbU5hbWU9IkNvbmZpZGVudGlhbGl0eSIvPgogICAgPGxhbmd1YWdlQ29kZSBjb2RlPSJlbi1D
+QSIvPgogICAgPHJlY29yZFRhcmdldCBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0i
+UkNUIj4KICAgICAgICA8cGF0aWVudFJvbGUgY2xhc3NDb2RlPSJQQVQiPgogICAgICAgICAgICA8
+aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgUGF0aWVudCBIZWFsdGggTnVtYmVyIiBleHRl
+bnNpb249Ijk2OTg2NTAyNjciIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjQuNTAiLz4KICAgICAg
+ICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBQYXRpZW50IEVNUiBOdW1iZXIi
+IGV4dGVuc2lvbj0iQTAwMDAwMDI1IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjcz
+Ii8+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEgUGF0aWVudCBV
+bml0IE51bWJlciIgZXh0ZW5zaW9uPSJFSzAwMDAwMDM2IiByb290PSIyLjE2Ljg0MC4xLjExMzg4
+My4zLjI3Ny4xLjcxIi8+CiAgICAgICAgICAgIDxhZGRyIHVzZT0iSCI+NzcxNSBSb3llIFNxPGRl
+bGltaXRlci8+CiAgICAgICAgICAgICAgICA8Y2l0eT5MaW9ucyBCYXk8L2NpdHk+CiAgICAgICAg
+ICAgICAgICA8c3RhdGU+Q0EtQkM8L3N0YXRlPgogICAgICAgICAgICAgICAgPHBvc3RhbENvZGU+
+VjBOIDBBMjwvcG9zdGFsQ29kZT4KICAgICAgICAgICAgPC9hZGRyPgogICAgICAgICAgICA8dGVs
+ZWNvbSB1c2U9IkgiIHZhbHVlPSJ0ZWw6MjUwLTEyMy00NTY3Ii8+CiAgICAgICAgICAgIDxwYXRp
+ZW50IGNsYXNzQ29kZT0iUFNOIj4KICAgICAgICAgICAgICAgIDxuYW1lIHVzZT0iTCI+CiAgICAg
+ICAgICAgICAgICAgICAgPGZhbWlseT5JaGN1cnJlbmNlPC9mYW1pbHk+CiAgICAgICAgICAgICAg
+ICAgICAgPGdpdmVuPlBsaXM8L2dpdmVuPgogICAgICAgICAgICAgICAgPC9uYW1lPgogICAgICAg
+ICAgICAgICAgPGFkbWluaXN0cmF0aXZlR2VuZGVyQ29kZSBjb2RlPSJGIi8+CiAgICAgICAgICAg
+ICAgICA8YmlydGhUaW1lIHZhbHVlPSIxOTU4MDIyNCIvPgogICAgICAgICAgICA8L3BhdGllbnQ+
+CiAgICAgICAgPC9wYXRpZW50Um9sZT4KICAgIDwvcmVjb3JkVGFyZ2V0PgogICAgPGF1dGhvciBj
+b250ZXh0Q29udHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0iQVVUIj4KICAgICAgICA8dGltZSB2YWx1
+ZT0iMjAxOTAzMTQxOTAzLTA3MDAiLz4KICAgICAgICA8YXNzaWduZWRBdXRob3IgY2xhc3NDb2Rl
+PSJBU1NJR05FRCI+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEg
+TWVkaXRlY2ggSUQiIGV4dGVuc2lvbj0iUExJRiIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4y
+NzcuMS42MSIvPgogICAgICAgICAgICA8YXNzaWduZWRQZXJzb24gY2xhc3NDb2RlPSJQU04iIGRl
+dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8bmFtZSB1c2U9IkwiPgog
+ICAgICAgICAgICAgICAgICAgIDxwcmVmaXg+RHI8L3ByZWZpeD4KICAgICAgICAgICAgICAgICAg
+ICA8ZmFtaWx5PlBsaXM8L2ZhbWlseT4KICAgICAgICAgICAgICAgICAgICA8Z2l2ZW4+RmFtaWx5
+PC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgICAgPC9hc3NpZ25lZFBl
+cnNvbj4KICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgPC9hdXRob3I+CiAgICA8YXV0aG9y
+IGNvbnRleHRDb250cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJBVVQiPgogICAgICAgIDx0aW1lIHZh
+bHVlPSIyMDE5MDMxNDE5MDMtMDcwMCIvPgogICAgICAgIDxhc3NpZ25lZEF1dGhvciBjbGFzc0Nv
+ZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAg
+ICAgIDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZT4KICAgICAgICAgICAgICAgIDxzb2Z0d2FyZU5h
+bWUgY29kZT0iQ0RYQVBQIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjEy
+IiBjb2RlU3lzdGVtTmFtZT0iSUhBIFNvZnR3YXJlIENvZGUiIGRpc3BsYXlOYW1lPSJDRFggU2Ft
+cGxlIEFwcCIvPgogICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yaW5nRGV2aWNlPgogICAgICAg
+IDwvYXNzaWduZWRBdXRob3I+CiAgICA8L2F1dGhvcj4KICAgIDxjdXN0b2RpYW4gdHlwZUNvZGU9
+IkNTVCI+CiAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIGNsYXNzQ29kZT0iQVNTSUdORUQiPgog
+ICAgICAgICAgICA8cmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24gY2xhc3NDb2RlPSJP
+UkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8aWQgYXNzaWdu
+aW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBSZWdpc3RyeSBJRCIgZXh0ZW5zaW9uPSJjZHhw
+b3N0cHJvZC1vdGNhIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMiIvPgogICAg
+ICAgICAgICAgICAgPG5hbWU+T3NjYXIgVGVzdCBDbGluaWMgQTwvbmFtZT4KICAgICAgICAgICAg
+PC9yZXByZXNlbnRlZEN1c3RvZGlhbk9yZ2FuaXphdGlvbj4KICAgICAgICA8L2Fzc2lnbmVkQ3Vz
+dG9kaWFuPgogICAgPC9jdXN0b2RpYW4+CiAgICA8aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNv
+ZGU9IlBSQ1AiPgogICAgICAgIDxpbnRlbmRlZFJlY2lwaWVudCBjbGFzc0NvZGU9IkFTU0lHTkVE
+Ij4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkJDIE1pbmlzdHJ5IFBy
+YWN0aXRpb25lciBJRCIgZXh0ZW5zaW9uPSI5MzE5NCIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMu
+My40MC4yLjExIi8+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEg
+TWVkaXRlY2ggSUQiIGV4dGVuc2lvbj0iUExJU0lITk8iIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgz
+LjMuMjc3LjEuNjEiLz4KICAgICAgICAgICAgPGluZm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29k
+ZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgPG5hbWUg
+dXNlPSJMIj4KICAgICAgICAgICAgICAgICAgICA8cHJlZml4PkRyLjwvcHJlZml4PgogICAgICAg
+ICAgICAgICAgICAgIDxmYW1pbHk+UGxpc2loZzwvZmFtaWx5PgogICAgICAgICAgICAgICAgICAg
+IDxnaXZlbj5Ob2VsPC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgICAg
+PC9pbmZvcm1hdGlvblJlY2lwaWVudD4KICAgICAgICAgICAgPHJlY2VpdmVkT3JnYW5pemF0aW9u
+PgogICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMg
+UmVnaXN0cnkgSUQiIGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAu
+MS4xMTM4ODMuMy4yNzcuMTAwLjIiLz4KICAgICAgICAgICAgICAgIDxuYW1lPk9zY2FyIFRlc3Qg
+Q2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgIDwvcmVjZWl2ZWRPcmdhbml6YXRpb24+CiAgICAg
+ICAgPC9pbnRlbmRlZFJlY2lwaWVudD4KICAgIDwvaW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICA8
+aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNvZGU9IlRSQyI+CiAgICAgICAgPGludGVuZGVkUmVj
+aXBpZW50IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0
+aG9yaXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVyIElEIiBleHRlbnNpb249IjkzMTkz
+IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEiLz4KICAgICAgICAgICAgPGlkIGFz
+c2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRpdGVjaCBJRCIgZXh0ZW5zaW9uPSJQTElTSUhN
+SSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS42MSIvPgogICAgICAgICAgICA8aW5m
+b3JtYXRpb25SZWNpcGllbnQgY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5D
+RSI+CiAgICAgICAgICAgICAgICA8bmFtZSB1c2U9IkwiPgogICAgICAgICAgICAgICAgICAgIDxw
+cmVmaXg+RHIuPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhmPC9m
+YW1pbHk+CiAgICAgICAgICAgICAgICAgICAgPGdpdmVuPk1pa2VsPC9naXZlbj4KICAgICAgICAg
+ICAgICAgIDwvbmFtZT4KICAgICAgICAgICAgPC9pbmZvcm1hdGlvblJlY2lwaWVudD4KICAgICAg
+ICAgICAgPHJlY2VpdmVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICAgICAgPGlkIGFzc2lnbmlu
+Z0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQiIGV4dGVuc2lvbj0iY2R4cG9z
+dHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiLz4KICAgICAg
+ICAgICAgICAgIDxuYW1lPk9zY2FyIFRlc3QgQ2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgIDwv
+cmVjZWl2ZWRPcmdhbml6YXRpb24+CiAgICAgICAgPC9pbnRlbmRlZFJlY2lwaWVudD4KICAgIDwv
+aW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICA8cGFydGljaXBhbnQgY29udGV4dENvbnRyb2xDb2Rl
+PSJPUCIgdHlwZUNvZGU9IlJFRiI+CiAgICAgICAgPGZ1bmN0aW9uQ29kZSBjb2RlPSJPUkQiIGNv
+ZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjIuMjAuMy44NyIgY29kZVN5c3RlbU5hbWU9IkhM
+N1BhcnRpY2lwYXRpb25GdW5jdGlvbiIgZGlzcGxheU5hbWU9Ik9yZGVyaW5nIFByb3ZpZGVyIi8+
+CiAgICAgICAgPGFzc29jaWF0ZWRFbnRpdHkgY2xhc3NDb2RlPSJQUk9WIj4KICAgICAgICAgICAg
+PGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRpdGVjaCBJRCIgZXh0ZW5zaW9uPSJQ
+TElGIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjYxIi8+CiAgICAgICAgICAgIDxh
+c3NvY2lhdGVkUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0Ui
+PgogICAgICAgICAgICAgICAgPG5hbWUgdXNlPSJMIj4KICAgICAgICAgICAgICAgICAgICA8cHJl
+Zml4PkRyPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzPC9mYW1pbHk+
+CiAgICAgICAgICAgICAgICAgICAgPGdpdmVuPkZhbWlseTwvZ2l2ZW4+CiAgICAgICAgICAgICAg
+ICA8L25hbWU+CiAgICAgICAgICAgIDwvYXNzb2NpYXRlZFBlcnNvbj4KICAgICAgICA8L2Fzc29j
+aWF0ZWRFbnRpdHk+CiAgICA8L3BhcnRpY2lwYW50PgogICAgPGluRnVsZmlsbG1lbnRPZiB0eXBl
+Q29kZT0iRkxGUyI+CiAgICAgICAgPG9yZGVyIGNsYXNzQ29kZT0iRU5DIiBtb29kQ29kZT0iUlFP
+Ij4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9Ik9yZGVyIElEIiBudWxs
+Rmxhdm9yPSJVTksiLz4KICAgICAgICA8L29yZGVyPgogICAgPC9pbkZ1bGZpbGxtZW50T2Y+CiAg
+ICA8ZG9jdW1lbnRhdGlvbk9mIHR5cGVDb2RlPSJET0MiPgogICAgICAgIDxzZXJ2aWNlRXZlbnQg
+Y2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2RlPSJFVk4iIG51bGxGbGF2b3I9IlVOSyI+CiAgICAgICAg
+ICAgIDxjb2RlLz4KICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMzE0MTkw
+My0wNzAwIi8+CiAgICAgICAgICAgIDxzdGF0dXNDb2RlIHhtbG5zPSJ1cm46YmNjZGEiIGNvZGU9
+ImFwcGVuZGVkIi8+CiAgICAgICAgPC9zZXJ2aWNlRXZlbnQ+CiAgICA8L2RvY3VtZW50YXRpb25P
+Zj4KICAgIDxjb21wb25lbnRPZiB0eXBlQ29kZT0iQ09NUCI+CiAgICAgICAgPGVuY29tcGFzc2lu
+Z0VuY291bnRlciBjbGFzc0NvZGU9IkVOQyIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgIDxp
+ZCBudWxsRmxhdm9yPSJVTksiLz4KICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIw
+MTkwMzE0MTkwMy0wNzAwIi8+CiAgICAgICAgICAgIDxsb2NhdGlvbj4KICAgICAgICAgICAgICAg
+IDxoZWFsdGhDYXJlRmFjaWxpdHkgY2xhc3NDb2RlPSJTRExPQyI+CiAgICAgICAgICAgICAgICAg
+ICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQiIGV4
+dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcu
+MTAwLjIiLz4KICAgICAgICAgICAgICAgICAgICA8bG9jYXRpb24gY2xhc3NDb2RlPSJQTEMiIGRl
+dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1lPk9z
+Y2FyIFRlc3QgQ2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgICAgICAgICAgPC9sb2NhdGlvbj4K
+ICAgICAgICAgICAgICAgIDwvaGVhbHRoQ2FyZUZhY2lsaXR5PgogICAgICAgICAgICA8L2xvY2F0
+aW9uPgogICAgICAgIDwvZW5jb21wYXNzaW5nRW5jb3VudGVyPgogICAgPC9jb21wb25lbnRPZj4K
+ICAgIDxjb21wb25lbnQgdHlwZUNvZGU9IkNPTVAiPgogICAgICAgIDxub25YTUxCb2R5PgogICAg
+ICAgICAgICA8dGV4dCBtZWRpYVR5cGU9InRleHQvcGxhaW4iIHJlcHJlc2VudGF0aW9uPSJUWFQi
+Pk5FVyBSRUZFUkFMIFRFU1Q8L3RleHQ+CiAgICAgICAgPC9ub25YTUxCb2R5PgogICAgPC9jb21w
+b25lbnQ+CjwvQ2xpbmljYWxEb2N1bWVudD4K</inboundTemplate>
             <outboundTemplate encoding="base64">ewogICJkb2N1bWVudElkIjogIiIsCiAgInRlbXBsYXRlIjogewoJInRlbXBsYXRlSWQiOiAiIiwK
 CSJ0ZW1wbGF0ZU5hbWUiOiAiIgogIH0sCiAgImxvaW5jIjogewoJImxvaW5jQ29kZSI6ICIiLAoJ
 ImRpc3BsYXlOYW1lIjogIiIKICB9LAogICJlZmZlY3RpdmVUaW1lIjogIiIsDQogICJwYXRpZW50
@@ -6149,7 +6142,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1554505978667</time>
+            <time>1555020528099</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -6160,9 +6153,9 @@ return;</undeployScript>
           <codeTemplateLibrary version="3.7.1">
             <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
             <name>OBIB</name>
-            <revision>1</revision>
+            <revision>2</revision>
             <lastModified>
-              <time>1554867669766</time>
+              <time>1555020864280</time>
               <timezone>Etc/UTC</timezone>
             </lastModified>
             <description></description>
@@ -6185,10 +6178,10 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6228,10 +6221,10 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6274,10 +6267,10 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6324,10 +6317,10 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6359,10 +6352,10 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6397,21 +6390,21 @@ function buildDocumentStorageMessage(locationId, documentId, messageType, messag
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>CHANNEL_DEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>CHANNEL_DEPLOY</contextType>
                     <contextType>CHANNEL_ATTACHMENT</contextType>
-                    <contextType>CHANNEL_PREPROCESSOR</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6441,10 +6434,10 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6471,10 +6464,10 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6508,10 +6501,10 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6541,10 +6534,10 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6576,17 +6569,17 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>1</revision>
+                <revision>6</revision>
                 <lastModified>
-                  <time>1554867669953</time>
+                  <time>1555022130719</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -6601,13 +6594,16 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
-	var strtAddr = cdaAddress.toString().match(/.+?(?=&lt;delimiter\/&gt;)/);
+	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
-		addr[&apos;streetAddress&apos;] = strtAddr[0]; 
+		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
 	}
 	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
-	for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
-		addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+	if (cdaAddress[&apos;delimiter&apos;]) {
+		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
+			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+		}
+		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
 	}
 	if (cdaAddress[&apos;city&apos;]) {
 		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
@@ -6636,10 +6632,10 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6669,10 +6665,10 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6702,10 +6698,10 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6735,10 +6731,10 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6777,10 +6773,10 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7257,9 +7253,9 @@ return;</undeployScript>
           <codeTemplateLibrary version="3.7.1">
             <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
             <name>OBIB</name>
-            <revision>1</revision>
+            <revision>2</revision>
             <lastModified>
-              <time>1554867669766</time>
+              <time>1555020864280</time>
               <timezone>Etc/UTC</timezone>
             </lastModified>
             <description></description>
@@ -7282,10 +7278,10 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7325,10 +7321,10 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7371,10 +7367,10 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7421,10 +7417,10 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7456,10 +7452,10 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7494,21 +7490,21 @@ function buildDocumentStorageMessage(locationId, documentId, messageType, messag
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>CHANNEL_DEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>CHANNEL_DEPLOY</contextType>
                     <contextType>CHANNEL_ATTACHMENT</contextType>
-                    <contextType>CHANNEL_PREPROCESSOR</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7538,10 +7534,10 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7568,10 +7564,10 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7605,10 +7601,10 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7638,10 +7634,10 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7673,17 +7669,17 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>1</revision>
+                <revision>6</revision>
                 <lastModified>
-                  <time>1554867669953</time>
+                  <time>1555022130719</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                   </delegate>
                 </contextSet>
@@ -7698,13 +7694,16 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
-	var strtAddr = cdaAddress.toString().match(/.+?(?=&lt;delimiter\/&gt;)/);
+	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
-		addr[&apos;streetAddress&apos;] = strtAddr[0]; 
+		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
 	}
 	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
-	for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
-		addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+	if (cdaAddress[&apos;delimiter&apos;]) {
+		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
+			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+		}
+		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
 	}
 	if (cdaAddress[&apos;city&apos;]) {
 		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
@@ -7733,10 +7732,10 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7766,10 +7765,10 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7799,10 +7798,10 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7832,10 +7831,10 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7874,10 +7873,10 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">

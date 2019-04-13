@@ -2,6 +2,7 @@ package ca.uvic.leadlab.cdxconnector.messages;
 
 import org.hl7.v3.*;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,8 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         if (attachments == null) {
             attachments = new ArrayList<>();
         }
-        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(), attachment.getHash()));
+        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(),
+                DatatypeConverter.parseBase64Binary(attachment.getHash())));
         return this;
     }
 
@@ -84,11 +86,11 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         return ed;
     }
 
-    private ED createAttachmentText(MediaType mediaType, byte[] content, byte[] hash) {
+    private ED createAttachmentText(MediaType mediaType, String content, byte[] hash) {
         ED ed = new ED();
         // TODO ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
-        ed.setIntegrityCheck(hash); // CONF-CDXOD066
-        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
+        //ed.setIntegrityCheck(hash); // CONF-CDXOD066
+        //ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
         ed.setMediaType(mediaType.value()); // CONF-CDXOD068
         ed.getContent().add(content); // CONF-CDXOD069
         return ed;

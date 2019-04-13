@@ -23,8 +23,10 @@ public class WSClientDocument extends WSClient {
             SubmitDocumentBuilder documentBuilder = new SubmitDocumentBuilder(UUID.randomUUID().toString()) // Unique Message ID (GUID)
                     .sender(locationId) // ID Of requestor
                     .document(UUID.randomUUID().toString(), document);
-            for (DocumentAttachment attachment : attachments) { // Attachments
-                documentBuilder.attachment(attachment);
+            if (attachments != null) { // Attachments
+                for (DocumentAttachment attachment : attachments) {
+                    documentBuilder.attachment(attachment);
+                }
             }
             for (String receiverId : receiversIds) { // Ids of receivers
                 documentBuilder.receiver(receiverId);

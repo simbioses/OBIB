@@ -5,14 +5,14 @@ import org.hl7.v3.MediaType;
 public class DocumentAttachment {
 
     private String type;
-    private byte[] content;
-    private byte[] hash;
+    private String content;
+    private String hash;
     private String reference;
 
     public DocumentAttachment() {
     }
 
-    public DocumentAttachment(String type, byte[] content, byte[] hash, String reference) {
+    public DocumentAttachment(String type, String content, String hash, String reference) {
         this.type = type;
         this.content = content;
         this.hash = hash;
@@ -27,19 +27,19 @@ public class DocumentAttachment {
         this.type = type;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public byte[] getHash() {
+    public String getHash() {
         return hash;
     }
 
-    public void setHash(byte[] hash) {
+    public void setHash(String hash) {
         this.hash = hash;
     }
 

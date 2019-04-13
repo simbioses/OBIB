@@ -13,6 +13,7 @@ import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
 import ca.uvic.leadlab.obibconnector.models.document.Participant;
 import ca.uvic.leadlab.obibconnector.models.document.Recipient;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

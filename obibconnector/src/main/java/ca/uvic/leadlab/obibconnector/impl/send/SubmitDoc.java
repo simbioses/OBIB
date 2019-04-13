@@ -14,6 +14,8 @@ import ca.uvic.leadlab.obibconnector.rest.IOscarInformation;
 import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 import ca.uvic.leadlab.obibconnector.rest.RestClient;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class SubmitDoc implements ISubmitDoc {
 
     private final IOscarInformation services;
@@ -78,10 +80,13 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public ISubmitDoc attach(AttachmentType type, Byte[] data) {
-        //document.setNonXMLBody(new NonXMLBody(data, type));
-        //return this;
-        throw new UnsupportedOperationException("Not implemented, yet.");
+    public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
+        document.setNonXMLBody(new NonXMLBody(reference, type.mediaType)); // TODO multiple attachments?
+        document.addAttachment(new Attachment(ImplHelper.calculateHash(data),
+                type.mediaType,
+                DatatypeConverter.printBase64Binary(data),
+                reference));
+        return this;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 
 public interface ISubmitDoc extends ISubmit {
 
@@ -24,6 +25,6 @@ public interface ISubmitDoc extends ISubmit {
 
     ISubmitDoc content(String text);
 
-    ISubmitDoc attach(AttachmentType type, Byte[] data);
+    ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException;
 
 }

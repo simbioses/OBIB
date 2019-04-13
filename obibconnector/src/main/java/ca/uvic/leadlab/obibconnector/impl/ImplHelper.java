@@ -41,27 +41,6 @@ public abstract class ImplHelper {
         return ""; // TODO what if there is no default id type?
     }
 
-    public static boolean checkAttachment(byte[] content, String hash) {
-        if (CHECK_ALGORITHM == null) {
-            return true; // does not validate if there is no algorithm specified
-        }
-        try {
-            MessageDigest md = MessageDigest.getInstance(CHECK_ALGORITHM);
-
-            byte[] contentDigest = md.digest(content);
-            StringBuilder sb = new StringBuilder();
-            for (byte b : contentDigest) {
-                sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-            }
-            String contentHash = sb.toString();
-
-            return contentHash.equals(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace(); // TODO log this exception
-            return true; // does not fails the process on error
-        }
-    }
-
     public static String getDefaultClinicId(List<Id> clinicIds) {
         return getIdByType(clinicIds, DEFAULT_CLINIC_ID_TYPE);
     }
@@ -72,5 +51,28 @@ public abstract class ImplHelper {
 
     public static String getDefaultPatientId(List<Id> patientIds) {
         return getIdByType(patientIds, DEFAULT_PATIENT_ID_TYPE);
+    }
+
+    public static boolean checkAttachment(String content, String hash) {
+        try {
+            MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
+
+            byte[] contentHash = md.digest(DatatypeConverter.parseBase64Binary(content));
+
+            return Arrays.equals(contentHash, DatatypeConverter.parseBase64Binary(hash));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace(); // TODO log this exception
+            return true; // does not fails the process on error
+        }
+    }
+
+    public static String calculateHash(byte[] content) throws OBIBException {
+        try {
+            MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
+
+            return DatatypeConverter.printBase64Binary(md.digest(content));
+        } catch (NoSuchAlgorithmException e) {
+            throw new OBIBException("Error calculating attachment hash.", e);
+        }
     }
 }

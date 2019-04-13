@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
+import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.common.Loinc;
 import ca.uvic.leadlab.obibconnector.models.common.Template;
 
@@ -24,6 +25,7 @@ public class  ClinicalDocument {
     private List<Authenticator> authenticators = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
     private NonXMLBody nonXMLBody;
+    private List<Attachment> attachments;
     private String cdaXML;
 
     public String getDocumentId() {
@@ -165,6 +167,21 @@ public class  ClinicalDocument {
 
     public void setNonXMLBody(NonXMLBody nonXMLBody) {
         this.nonXMLBody = nonXMLBody;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    public void addAttachment(Attachment attachment) {
+        if (this.attachments == null) {
+            this.attachments = new ArrayList<>();
+        }
+        this.attachments.add(attachment);
     }
 
     public String getCdaXML() {

@@ -41,7 +41,7 @@ var properties = new Packages.java.util.Properties();
 var fileProp = new Packages.java.io.FileInputStream(new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)));
 
 properties.load(fileProp);
-globalMap.globalVariableMap.putAll(properties);
+globalMap.putAll(properties);
 fileProp.close();
 logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &quot;&apos; CDA properties.&quot;);
 

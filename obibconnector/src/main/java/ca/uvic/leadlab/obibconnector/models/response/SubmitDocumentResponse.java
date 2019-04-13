@@ -1,9 +1,11 @@
 package ca.uvic.leadlab.obibconnector.models.response;
 
+import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
+
 public class SubmitDocumentResponse extends OBIBResponse {
 
     private String documentId;
-    private String document;
+    private ClinicalDocument document;
 
     public String getDocumentId() {
         return documentId;
@@ -13,11 +15,11 @@ public class SubmitDocumentResponse extends OBIBResponse {
         this.documentId = documentId;
     }
 
-    public String getDocument() {
+    public ClinicalDocument getDocument() {
         return document;
     }
 
-    public void setDocument(String document) {
+    public void setDocument(ClinicalDocument document) {
         this.document = document;
     }
 }

@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
+import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     public void testSubmitDoc() throws Exception {
         ISubmitDoc submitDoc = new SubmitDoc(config);
 
-        String response = submitDoc.newDoc()
+        IDocument response = submitDoc.newDoc()
                         .patient()
                             .id("2222")
                             .name(NameType.LEGAL, "Joe", "Wine")
@@ -27,6 +28,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                             .phone(TelcoType.HOME, "250-111-1234")
                         .and().recipient()
+                            .primary()
                             .id("4444")
                             .name(NameType.LEGAL, "Joseph", "Cloud")
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")

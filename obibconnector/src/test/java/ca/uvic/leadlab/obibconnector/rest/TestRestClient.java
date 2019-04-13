@@ -42,6 +42,7 @@ public class TestRestClient {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config)
+                .newDoc()
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")

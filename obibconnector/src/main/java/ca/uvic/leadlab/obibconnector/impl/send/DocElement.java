@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.impl.send;
 
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.send.IAnd;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 
@@ -14,7 +15,7 @@ public class DocElement implements IAnd {
     }
 
     @Override
-    public String submit() throws OBIBException {
+    public IDocument submit() throws OBIBException {
         return submitDoc.submit();
     }
 }

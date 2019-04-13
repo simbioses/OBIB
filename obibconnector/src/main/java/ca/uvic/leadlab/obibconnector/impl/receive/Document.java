@@ -47,6 +47,10 @@ public class Document implements IDocument {
 
     private String contents;
 
+    public Document(ClinicalDocument document) {
+        this(document, null);
+    }
+
     Document(ClinicalDocument document,
              List<ca.uvic.leadlab.obibconnector.models.document.Attachment> attachmentList) {
         this.document = document;
@@ -97,7 +101,8 @@ public class Document implements IDocument {
                 if (!ImplHelper.checkAttachment(attachment.getContent(), attachment.getHash())) {
                     // TODO log check error
                 }
-                attachments.add(new Attachment(attachment.getMediaType(), "", attachment.getContent()));
+                attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),
+                        DatatypeConverter.parseBase64Binary(attachment.getContent())));
             }
         }
 

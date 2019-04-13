@@ -1,9 +1,12 @@
 package ca.uvic.leadlab.obibconnector.impl;
 
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 
+import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,11 +14,11 @@ public abstract class ImplHelper {
 
     private static final Properties properties = setupProperties();
 
-    private static final String CHECK_ALGORITHM = properties.getProperty("obib.attachment.check.algorithm");
+    private static final String HASH_ALGORITHM = properties.getProperty("obib.attachment.hash.algorithm");
 
-    private static final String DEFAULT_CLINIC_ID_TYPE = properties.getProperty("obib.default.clinic.id.type");
-    private static final String DEFAULT_PROVIDER_ID_TYPE = properties.getProperty("obib.default.provider.id.type");
-    private static final String DEFAULT_PATIENT_ID_TYPE = properties.getProperty("obib.default.patient.id.type");
+    public static final String DEFAULT_CLINIC_ID_TYPE = properties.getProperty("obib.default.clinic.id.type");
+    public static final String DEFAULT_PROVIDER_ID_TYPE = properties.getProperty("obib.default.provider.id.type");
+    public static final String DEFAULT_PATIENT_ID_TYPE = properties.getProperty("obib.default.patient.id.type");
 
     private static Properties setupProperties() {
         Properties properties = new Properties();

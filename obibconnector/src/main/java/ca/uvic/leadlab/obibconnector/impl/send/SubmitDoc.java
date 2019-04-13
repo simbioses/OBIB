@@ -3,7 +3,10 @@ package ca.uvic.leadlab.obibconnector.impl.send;
 import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.send.*;
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
+import ca.uvic.leadlab.obibconnector.impl.receive.Document;
 import ca.uvic.leadlab.obibconnector.models.common.Template;
 import ca.uvic.leadlab.obibconnector.models.document.*;
 import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
@@ -15,11 +18,10 @@ public class SubmitDoc implements ISubmitDoc {
 
     private final IOscarInformation services;
 
-    private  ClinicalDocument document;
+    private ClinicalDocument document;
 
     public SubmitDoc(Config conf) {
         this.services = new RestClient(conf.getUrl(), conf.getClinicId());
-
     }
 
     @Override
@@ -71,7 +73,7 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc content(String text) {
-        document.setNonXMLBody(new NonXMLBody(text, "text/plain"));
+        document.setNonXMLBody(new NonXMLBody(text, MediaType.TEXT.mediaType));
         return this;
     }
 
@@ -83,7 +85,7 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public String submit() throws OBIBException {
+    public IDocument submit() throws OBIBException {
         try {
             SubmitDocumentResponse response = services.submitCDA(document);
 
@@ -91,7 +93,7 @@ public class SubmitDoc implements ISubmitDoc {
                 throw new OBIBException(response.getMessage());
             }
 
-            return response.getDocument();
+            return new Document(response.getDocument());
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error submitting document.", e);
         }

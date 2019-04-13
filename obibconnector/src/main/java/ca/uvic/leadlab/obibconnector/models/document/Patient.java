@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
+import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.models.common.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,7 +30,7 @@ public class Patient extends Person {
         if (this.ids == null) {
             this.ids = new ArrayList<>();
         }
-        this.ids.add(new Id(id, null));
+        this.ids.add(new Id(id, ImplHelper.DEFAULT_CLINIC_ID_TYPE));
     }
 
     public List<Name> getNames() {

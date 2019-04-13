@@ -27,6 +27,8 @@ public class Document implements IDocument {
     private String loincCode;
     private String loincCodeDisplayName;
 
+    private String setId;
+
     private IPatient patient;
 
     private IProvider author;
@@ -56,6 +58,9 @@ public class Document implements IDocument {
         if (document.getLoinc() != null) {
             loincCode = document.getLoinc().getLoincCode();
             loincCodeDisplayName = document.getLoinc().getDisplayName();
+        }
+        if (document.getSetId() != null) {
+            setId = document.getSetId().getCode();
         }
         patient = new Patient(document.getPatient());
         for (Author docAuthor : document.getAuthors()) {
@@ -116,12 +121,12 @@ public class Document implements IDocument {
 
     @Override
     public int getVersion() {
-        return 1; // todo, Oscar, please implement me
+        return document.getVersionNumber();
     }
 
     @Override
     public String getSetId() {
-        return null; // todo, Oscar, please implement me
+        return setId;
     }
 
     @Override
@@ -166,7 +171,7 @@ public class Document implements IDocument {
 
     @Override
     public Date getEffectiveTime() {
-        return null; // todo - please implement me
+        return document.getEffectiveTime();
     }
 
     @Override

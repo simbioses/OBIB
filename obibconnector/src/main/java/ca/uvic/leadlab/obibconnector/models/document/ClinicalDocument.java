@@ -14,6 +14,8 @@ public class  ClinicalDocument {
     private Loinc loinc;
     private Date effectiveTime;
     private String title;
+    private Integer versionNumber;
+    private Id setId;
     private Patient patient;
     private List<Author> authors = new ArrayList<>();
     private List<Recipient> recipients = new ArrayList<>();
@@ -62,6 +64,22 @@ public class  ClinicalDocument {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getVersionNumber() {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(Integer versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public Id getSetId() {
+        return setId;
+    }
+
+    public void setSetId(Id setId) {
+        this.setId = setId;
     }
 
     public Patient getPatient() {

@@ -21,7 +21,7 @@ public interface ISubmitDoc extends ISubmit {
 
     IParticipant participant();
 
-    ISubmitDoc documentType(String type);
+    ISubmitDoc documentType(DocumentType type);
 
     ISubmitDoc content(String text);
 

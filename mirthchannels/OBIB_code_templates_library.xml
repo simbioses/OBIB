@@ -25,11 +25,11 @@
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -68,11 +68,11 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -114,11 +114,11 @@ function buildCDAId(root, extension) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -164,11 +164,11 @@ function buildCDAName(use, family, given, prefix, suffix) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -199,11 +199,11 @@ function buildCDATelecom(use, type, value) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -238,21 +238,21 @@ function buildDocumentStorageMessage(locationId, documentId, messageType, messag
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>GLOBAL_DEPLOY</contextType>
-          <contextType>CHANNEL_DEPLOY</contextType>
-          <contextType>CHANNEL_POSTPROCESSOR</contextType>
-          <contextType>CHANNEL_BATCH</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>CHANNEL_PREPROCESSOR</contextType>
-          <contextType>GLOBAL_UNDEPLOY</contextType>
-          <contextType>GLOBAL_POSTPROCESSOR</contextType>
-          <contextType>CHANNEL_UNDEPLOY</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>CHANNEL_ATTACHMENT</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>CHANNEL_ATTACHMENT</contextType>
+          <contextType>GLOBAL_UNDEPLOY</contextType>
+          <contextType>CHANNEL_POSTPROCESSOR</contextType>
+          <contextType>GLOBAL_DEPLOY</contextType>
+          <contextType>GLOBAL_POSTPROCESSOR</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>CHANNEL_BATCH</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>GLOBAL_PREPROCESSOR</contextType>
+          <contextType>CHANNEL_UNDEPLOY</contextType>
+          <contextType>CHANNEL_PREPROCESSOR</contextType>
+          <contextType>CHANNEL_DEPLOY</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -281,11 +281,11 @@ function getDBConnection() {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -311,11 +311,11 @@ function createErrorMessage(error) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -348,11 +348,11 @@ function createSegmentBefore(name, segment) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -381,11 +381,11 @@ function formatCDAdataTime(dateTime) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -417,18 +417,18 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
     <codeTemplate version="3.7.1">
       <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
       <name>Parse CDA Address</name>
-      <revision>6</revision>
+      <revision>8</revision>
       <lastModified>
-        <time>1555022130719</time>
+        <time>1555361908339</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -441,6 +441,7 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 */
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
+	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
 	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
@@ -479,11 +480,11 @@ function parseCDAAddress(cdaAddress) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -512,11 +513,11 @@ function parseCDADateTime(cdaDateTime) {
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -538,18 +539,18 @@ function parseCDADateTimeToDB(cdaDateTime) {
     <codeTemplate version="3.7.1">
       <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
       <name>Parse CDA ID</name>
-      <revision>1</revision>
+      <revision>2</revision>
       <lastModified>
-        <time>1554867669846</time>
+        <time>1555364121338</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -562,8 +563,12 @@ function parseCDADateTimeToDB(cdaDateTime) {
 */
 function parseCDAId(cdaID) {
 	var id = {};
-	id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
-	id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	if (cdaID[&apos;@extension&apos;]) {
+		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
+	}
+	if (cdaID[&apos;@root&apos;]) {
+		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	}
 	return id;
 }</code>
       </properties>
@@ -571,18 +576,18 @@ function parseCDAId(cdaID) {
     <codeTemplate version="3.7.1">
       <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
       <name>Parse CDA Name</name>
-      <revision>1</revision>
+      <revision>3</revision>
       <lastModified>
-        <time>1554867670060</time>
+        <time>1555361900552</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -595,6 +600,7 @@ function parseCDAId(cdaID) {
 */
 function parseCDAName(cdaName) {
 	var name = {};
+	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
 	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
 	name[&apos;given&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
@@ -613,18 +619,18 @@ function parseCDAName(cdaName) {
     <codeTemplate version="3.7.1">
       <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
       <name>Parse CDA Telecom</name>
-      <revision>1</revision>
+      <revision>3</revision>
       <lastModified>
-        <time>1554867670879</time>
+        <time>1555361904298</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
         <delegate>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
           <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
       <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -637,7 +643,7 @@ function parseCDAName(cdaName) {
 */
 function parseCDATelecom(cdaTelecom) {
 	var telecom = {};
-	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;];
+	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
 	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
 	telecom[&apos;type&apos;] = telParts[0];	
 	telecom[&apos;value&apos;] = telParts[1];

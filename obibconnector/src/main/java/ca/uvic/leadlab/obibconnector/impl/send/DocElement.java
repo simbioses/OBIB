@@ -5,9 +5,13 @@ import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.send.IAnd;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
 
-public class DocElement implements IAnd {
+public abstract class DocElement implements IAnd {
 
-    ISubmitDoc submitDoc;
+    private final ISubmitDoc submitDoc;
+
+    DocElement(ISubmitDoc submitDoc) {
+        this.submitDoc = submitDoc;
+    }
 
     @Override
     public ISubmitDoc and() {

@@ -42,7 +42,10 @@ public class SubmitDocTest extends FacadesBaseTest {
                             .name(NameType.LEGAL, "Joseph", "Cloud")
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                             .phone(TelcoType.HOME, "250-111-1234")
-                    .and().content("Document plain text")
+                        .and().inFulfillmentOf()
+                            .id("")
+                            .statusCode(OrderStatus.COMPLETED)
+                        .and().content("Document plain text")
                     .submit();
 
         Assert.assertNotNull(response);

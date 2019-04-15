@@ -15,7 +15,7 @@ public abstract class PersonBuilder<P extends Person, R extends IPerson> extends
     final P person;
 
     PersonBuilder(ISubmitDoc submitDoc, P person) {
-        this.submitDoc = submitDoc;
+        super(submitDoc);
         this.person = person;
     }
 

@@ -68,9 +68,16 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public ISubmitDoc documentType(String type) {
-        document.setTemplate(new Template(type, ""));
+    public ISubmitDoc documentType(DocumentType type) {
+        document.setTemplate(new Template(type.code, type.label));
         return null;
+    }
+
+    @Override
+    public IOrder inFulfillmentOf() {
+        Order order = new Order();
+        document.addOrder(order);
+        return new OrderBuilder(this, order);
     }
 
     @Override

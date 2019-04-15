@@ -24,6 +24,7 @@ public class  ClinicalDocument {
     private DataEnterer dataEnterer;
     private List<Authenticator> authenticators = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
     private NonXMLBody nonXMLBody;
     private List<Attachment> attachments;
     private String cdaXML;
@@ -159,6 +160,21 @@ public class  ClinicalDocument {
             this.participants = new ArrayList<>();
         }
         this.participants.add(participant);
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order) {
+        if (this.orders == null) {
+            this.orders = new ArrayList<>();
+        }
+        this.orders.add(order);
     }
 
     public NonXMLBody getNonXMLBody() {

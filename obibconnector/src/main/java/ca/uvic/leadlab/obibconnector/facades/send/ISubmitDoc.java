@@ -23,6 +23,8 @@ public interface ISubmitDoc extends ISubmit {
 
     ISubmitDoc documentType(DocumentType type);
 
+    IOrder inFulfillmentOf();
+
     ISubmitDoc content(String text);
 
     ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException;

@@ -44,7 +44,7 @@ public class ReceiveDoc implements IReceiveDoc {
                 throw new OBIBException(response.getMessage());
             }
 
-            return new Document(response.getDocument(), response.getAttachments());
+            return new Document(response.getDocument());
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error listing new documents.", e);
         }

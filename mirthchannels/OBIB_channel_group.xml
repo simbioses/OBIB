@@ -16,7 +16,7 @@
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>155</revision>
+      <revision>159</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -2070,7 +2070,7 @@ try {
                 <script>try {
 	if (responseStatus === SENT) { // process only SENT messages
 		if (msg[&apos;attachmentText&apos;]) { // Attachment list, CONF-CDXMCR103
-			tmp[&apos;attachments&apos;] = [];
+			tmp[&apos;documents&apos;][0][&apos;attachments&apos;] = [];
 			for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;attachmentText&apos;]); i++) { 
 				var attachmentText = getArrayOrXmlLength(msg[&apos;attachmentText&apos;])[i];
 
@@ -2079,8 +2079,9 @@ try {
 				attachment[&apos;hash&apos;] = attachmentText[&apos;@integrityCheck&apos;].toString(); // CONF-CDXMCR105
 				attachment[&apos;mediaType&apos;] = attachmentText[&apos;@mediaType&apos;].toString(); // CONF-CDXMCR107
 				attachment[&apos;content&apos;] = attachmentText.toString(); // CONF-CDXMCR108
-				
-				tmp[&apos;attachments&apos;][i] = attachment;
+
+				// Save the attachment in the first and only returned document
+				tmp[&apos;documents&apos;][0][&apos;attachments&apos;][i] = attachment; 
 			}
 		}
 	}
@@ -4972,7 +4973,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1555353616597</time>
+            <time>1555366328234</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -5399,9 +5400,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>6</revision>
+                <revision>8</revision>
                 <lastModified>
-                  <time>1555022130719</time>
+                  <time>1555361908339</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -5423,6 +5424,7 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 */
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
+	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
 	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
@@ -5520,9 +5522,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
                 <name>Parse CDA ID</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1554867669846</time>
+                  <time>1555364121338</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -5544,8 +5546,12 @@ function parseCDADateTimeToDB(cdaDateTime) {
 */
 function parseCDAId(cdaID) {
 	var id = {};
-	id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
-	id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	if (cdaID[&apos;@extension&apos;]) {
+		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
+	}
+	if (cdaID[&apos;@root&apos;]) {
+		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	}
 	return id;
 }</code>
                 </properties>
@@ -5553,9 +5559,9 @@ function parseCDAId(cdaID) {
               <codeTemplate version="3.7.1">
                 <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
                 <name>Parse CDA Name</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670060</time>
+                  <time>1555361900552</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -5577,6 +5583,7 @@ function parseCDAId(cdaID) {
 */
 function parseCDAName(cdaName) {
 	var name = {};
+	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
 	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
 	name[&apos;given&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
@@ -5595,9 +5602,9 @@ function parseCDAName(cdaName) {
               <codeTemplate version="3.7.1">
                 <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
                 <name>Parse CDA Telecom</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670879</time>
+                  <time>1555361904298</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -5619,7 +5626,7 @@ function parseCDAName(cdaName) {
 */
 function parseCDATelecom(cdaTelecom) {
 	var telecom = {};
-	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;];
+	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
 	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
 	telecom[&apos;type&apos;] = telParts[0];	
 	telecom[&apos;value&apos;] = telParts[1];
@@ -5637,7 +5644,7 @@ function parseCDATelecom(cdaTelecom) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>13</revision>
+      <revision>46</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -5726,7 +5733,7 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
           <transformer version="3.7.1">
             <elements>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>Parse RecordTarget (Patient)</name>
+                <name>Parse Header Attributes</name>
                 <sequenceNumber>0</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
@@ -5742,7 +5749,25 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 	tmp[&apos;loinc&apos;][&apos;displayName&apos;] = msg[&apos;code&apos;][&apos;@displayName&apos;].toString();
 	
 	tmp[&apos;effectiveTime&apos;] = parseCDADateTime(msg[&apos;effectiveTime&apos;][&apos;@value&apos;].toString());
+	
+	tmp[&apos;title&apos;] = msg[&apos;title&apos;].toString();
 
+	if (msg[&apos;versionNumber&apos;]) {
+		tmp[&apos;versionNumber&apos;] = msg[&apos;versionNumber&apos;].toString();
+	}
+	
+	if (msg[&apos;setId&apos;]) {
+		tmp[&apos;setId&apos;] = parseCDAId(msg[&apos;setId&apos;]);
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Parse Header Attributes&apos;: &quot; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse RecordTarget (Patient)</name>
+                <sequenceNumber>1</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
 	// RecordTarget (Patient)
 	var patientRole = msg[&apos;recordTarget&apos;][&apos;patientRole&apos;];
 	
@@ -5783,10 +5808,11 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Parse Authors</name>
-                <sequenceNumber>1</sequenceNumber>
+                <sequenceNumber>2</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	// Authors
+	tmp[&apos;authors&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;author&apos;]); i++) {
 		var author = {};
 		
@@ -5830,12 +5856,15 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Parse Information Recipients</name>
-                <sequenceNumber>2</sequenceNumber>
+                <sequenceNumber>3</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	// Information Recipients
+	tmp[&apos;recipients&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;informationRecipient&apos;]); i++) {
 		var recipient = {};
+		
+		recipient[&apos;typeCode&apos;] = msg[&apos;informationRecipient&apos;][i][&apos;@typeCode&apos;].toString()
 		
 		var intendedRecipient = msg[&apos;informationRecipient&apos;][i][&apos;intendedRecipient&apos;];
 
@@ -5863,11 +5892,16 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 		// Received Organization
 		if (intendedRecipient[&apos;receivedOrganization&apos;]) {
 			var organization = {};
+
+			var receivedOrganization = intendedRecipient[&apos;receivedOrganization&apos;];
+			
 			organization[&apos;ids&apos;] = [];
-			for (var j = 0; j &lt; getArrayOrXmlLength(intendedRecipient[&apos;receivedOrganization&apos;][&apos;id&apos;]); j++) {
-				organization[&apos;ids&apos;][j] = parseCDAId(intendedRecipient[&apos;receivedOrganization&apos;][&apos;id&apos;][j]);
+			for (var j = 0; j &lt; getArrayOrXmlLength(receivedOrganization[&apos;id&apos;]); j++) {
+				organization[&apos;ids&apos;][j] = parseCDAId(receivedOrganization[&apos;id&apos;][j]);
 			}
-			organization[&apos;name&apos;] = intendedRecipient[&apos;receivedOrganization&apos;][&apos;name&apos;].toString();
+			
+			organization[&apos;name&apos;] = receivedOrganization[&apos;name&apos;].toString();
+			
 			recipient[&apos;receivedOrganization&apos;] = organization;
 		}
 		
@@ -5878,14 +5912,82 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse Custodian</name>
+                <sequenceNumber>4</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// Custodian
+	var custodian = {};
+
+	var representedCustodian = msg[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;];
+
+	custodian[&apos;id&apos;] = parseCDAId(representedCustodian[&apos;id&apos;]);
+
+	custodian[&apos;name&apos;] = representedCustodian[&apos;name&apos;].toString();
+	
+	tmp[&apos;custodian&apos;] = custodian;
+} catch(e) {
+	logger.error(&quot;Error on &apos;Parse Custodian&apos;: &quot; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse Data Enterer</name>
+                <sequenceNumber>5</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// Data Enterer
+	if (msg[&apos;dataEnterer&apos;]) {
+		var dataEnterer = {};
+		
+		dataEnterer[&apos;time&apos;] = parseCDADateTime(msg[&apos;dataEnterer&apos;][&apos;time&apos;][&apos;@value&apos;].toString());
+
+		var assignedEntity = msg[&apos;dataEnterer&apos;][&apos;assignedEntity&apos;];
+
+		if (assignedEntity[&apos;id&apos;]) {
+			dataEnterer[&apos;id&apos;] = parseCDAId(assignedEntity[&apos;id&apos;]);
+		}
+
+		if (assignedEntity[&apos;addr&apos;]) {
+			dataEnterer[&apos;addresses&apos;] = [];
+			for (var j = 0; j &lt; getArrayOrXmlLength(assignedEntity[&apos;addr&apos;]); j++) {
+				dataEnterer[&apos;addresses&apos;][j] = parseCDAAddress(assignedEntity[&apos;addr&apos;][j]);
+			}
+		}
+		
+		if (assignedEntity[&apos;telecom&apos;]) {
+			dataEnterer[&apos;telecoms&apos;] = [];
+			for (var j = 0; j &lt; getArrayOrXmlLength(assignedEntity[&apos;telecom&apos;]); j++) {
+				dataEnterer[&apos;telecoms&apos;][j] = parseCDATelecom(assignedEntity[&apos;telecom&apos;][j]);
+			}
+		}
+
+		if (assignedEntity[&apos;assignedPerson&apos;]) {
+			dataEnterer[&apos;name&apos;] = parseCDAName(assignedEntity[&apos;assignedPerson&apos;][&apos;name&apos;]);
+		}
+		
+		tmp[&apos;dataEnterer&apos;] = dataEnterer;
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Parse Data Enterer&apos;: &quot; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse Authenticators</name>
+                <sequenceNumber>6</sequenceNumber>
+                <enabled>true</enabled>
+                <script>// TODO Authenticators</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Parse Participants</name>
-                <sequenceNumber>3</sequenceNumber>
+                <sequenceNumber>7</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	// Participants
+	tmp[&apos;participants&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;participant&apos;]); i++) {
 		var participant = {};
-		
+
+		participant[&apos;typeCode&apos;] = msg[&apos;participant&apos;][i][&apos;@typeCode&apos;].toString();
 		participant[&apos;functionCode&apos;] = msg[&apos;participant&apos;][i][&apos;functionCode&apos;][&apos;@code&apos;].toString();
 		
 		var associatedEntity = msg[&apos;participant&apos;][i][&apos;associatedEntity&apos;];
@@ -5918,16 +6020,44 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse Orders</name>
+                <sequenceNumber>8</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// Orders
+	tmp[&apos;orders&apos;] = [];
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;inFulfillmentOf&apos;]); i++) {
+		var order = {};
+
+		var inFulfillmentOf = msg[&apos;inFulfillmentOf&apos;][i];
+
+		if (inFulfillmentOf[&apos;order&apos;][&apos;id&apos;][&apos;@extension&apos;]) {
+			order[&apos;id&apos;] = inFulfillmentOf[&apos;order&apos;][&apos;id&apos;][&apos;@extension&apos;].toString();
+		}
+
+		// order[&apos;statusCode&apos;] = TODO ?
+		
+		tmp[&apos;orders&apos;][i] = order;
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Parse Orders&apos;: &quot; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Parse Text</name>
-                <sequenceNumber>4</sequenceNumber>
+                <sequenceNumber>9</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	// Text
 	var text = msg[&apos;component&apos;][&apos;nonXMLBody&apos;][&apos;text&apos;];
+	
 	tmp[&apos;nonXMLBody&apos;][&apos;mediaType&apos;] = text[&apos;@mediaType&apos;].toString();
-	if (text[&apos;@representation&apos;] &amp;&amp; text[&apos;@representation&apos;].toString() === &apos;TXT&apos;) { // CONF-BC0011: Plain Text
+	
+	if (text[&apos;@representation&apos;] &amp;&amp; text[&apos;@representation&apos;].toString() === &apos;TXT&apos;) { 
+		// Plain Text
 		tmp[&apos;nonXMLBody&apos;][&apos;content&apos;] = text.toString();
-	} else { // Attachments
+	} else { 
+		// Attachment reference
 		tmp[&apos;nonXMLBody&apos;][&apos;content&apos;] = text[&apos;reference&apos;][&apos;@value&apos;].toString();
 	}
 } catch(e) {
@@ -5939,191 +6069,134 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 OmJjY2RhIiB4bWxuczpuczA9Imh0dHA6Ly9taWNyb3NvZnQuY29tL0hlYWx0aENhcmUvSEw3LzJY
 IiB4bWxuczp4YWxhbj0iaHR0cDovL3htbC5hcGFjaGUub3JnL3hzbHQiIHhtbG5zOnhzaT0iaHR0
 cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIGNsYXNzQ29kZT0iRE9DQ0xJ
-TiIgbW9vZENvZGU9IkVWTiI+CiAgICA8cmVhbG1Db2RlIGNvZGU9IiIvPgogICAgPHR5cGVJZCBh
-c3NpZ25pbmdBdXRob3JpdHlOYW1lPSIiIGV4dGVuc2lvbj0iIiByb290PSIiLz4KICAgIDx0ZW1w
-bGF0ZUlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IiIgcm9vdD0iIi8+CiAgICA8aWQgYXNzaWdu
-aW5nQXV0aG9yaXR5TmFtZT0iIiBleHRlbnNpb249IiIgcm9vdD0iIi8+CiAgICA8Y29kZSBjb2Rl
-PSIiIGNvZGVTeXN0ZW09IiIgY29kZVN5c3RlbU5hbWU9IiIgZGlzcGxheU5hbWU9IiIvPgogICAg
-PHRpdGxlPjwvdGl0bGU+CiAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iIi8+CiAgICA8Y29uZmlk
-ZW50aWFsaXR5Q29kZSBjb2RlPSIiIGNvZGVTeXN0ZW09IiIgY29kZVN5c3RlbU5hbWU9IiIvPgog
-ICAgPGxhbmd1YWdlQ29kZSBjb2RlPSIiLz4KCiAgICA8cmVjb3JkVGFyZ2V0IGNvbnRleHRDb250
-cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJSQ1QiPgogICAgICAgIDxwYXRpZW50Um9sZSBjbGFzc0Nv
-ZGU9IlBBVCI+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSIiIGV4dGVu
-c2lvbj0iIiByb290PSIiLz4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9
-IiIgZXh0ZW5zaW9uPSIiIHJvb3Q9IiIvPgogICAgICAgICAgICA8YWRkciB1c2U9IiI+PGRlbGlt
-aXRlci8+CiAgICAgICAgICAgICAgICA8Y2l0eT48L2NpdHk+CiAgICAgICAgICAgICAgICA8c3Rh
-dGU+PC9zdGF0ZT4KICAgICAgICAgICAgICAgIDxwb3N0YWxDb2RlPjwvcG9zdGFsQ29kZT4KICAg
-ICAgICAgICAgPC9hZGRyPgogICAgICAgICAgICA8dGVsZWNvbSB1c2U9IiIgdmFsdWU9IiIvPgog
-ICAgICAgICAgICA8cGF0aWVudCBjbGFzc0NvZGU9IiI+CiAgICAgICAgICAgICAgICA8bmFtZSB1
-c2U9IiI+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT48L2ZhbWlseT4KICAgICAgICAgICAg
-ICAgICAgICA8Z2l2ZW4+PC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAg
-ICAgICAgIDxhZG1pbmlzdHJhdGl2ZUdlbmRlckNvZGUgY29kZT0iIi8+CiAgICAgICAgICAgICAg
-ICA8YmlydGhUaW1lIHZhbHVlPSIiLz4KICAgICAgICAgICAgPC9wYXRpZW50PgogICAgICAgIDwv
-cGF0aWVudFJvbGU+CiAgICA8L3JlY29yZFRhcmdldD4KCiAgICA8YXV0aG9yIGNvbnRleHRDb250
-cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJBVVQiPgogICAgICAgIDx0aW1lIHZhbHVlPSIiLz4KICAg
-ICAgICA8YXNzaWduZWRBdXRob3IgY2xhc3NDb2RlPSIiPgogICAgICAgICAgICA8aWQgYXNzaWdu
-aW5nQXV0aG9yaXR5TmFtZT0iIiBleHRlbnNpb249IiIgcm9vdD0iIi8+CgkJCTxpZCBhc3NpZ25p
-bmdBdXRob3JpdHlOYW1lPSIiIGV4dGVuc2lvbj0iIiByb290PSIiLz4KICAgICAgICAgICAgPGFz
-c2lnbmVkUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgog
-ICAgICAgICAgICAgICAgPG5hbWUgdXNlPSIiPgogICAgICAgICAgICAgICAgICAgIDxwcmVmaXg+
-PC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT48L2ZhbWlseT4KICAgICAgICAg
-ICAgICAgICAgICA8Z2l2ZW4+PC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAg
-ICAgICAgPC9hc3NpZ25lZFBlcnNvbj4KICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgPC9h
-dXRob3I+CiAgICA8YXV0aG9yIGNvbnRleHRDb250cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJBVVQi
-PgogICAgICAgIDx0aW1lIHZhbHVlPSIiLz4KICAgICAgICA8YXNzaWduZWRBdXRob3IgY2xhc3ND
-b2RlPSJBU1NJR05FRCI+CiAgICAgICAgICAgIDxpZCBudWxsRmxhdm9yPSJOQSIvPgogICAgICAg
-ICAgICA8YXNzaWduZWRBdXRob3JpbmdEZXZpY2U+CiAgICAgICAgICAgICAgICA8c29mdHdhcmVO
-YW1lIGNvZGU9IiIgY29kZVN5c3RlbT0iIiBjb2RlU3lzdGVtTmFtZT0iIiBkaXNwbGF5TmFtZT0i
-Ii8+CiAgICAgICAgICAgIDwvYXNzaWduZWRBdXRob3JpbmdEZXZpY2U+CiAgICAgICAgPC9hc3Np
-Z25lZEF1dGhvcj4KICAgIDwvYXV0aG9yPgoKICAgIDxjdXN0b2RpYW4gdHlwZUNvZGU9IkNTVCI+
-CiAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAg
-ICAgICA8cmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24gY2xhc3NDb2RlPSJPUkciIGRl
-dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0
-aG9yaXR5TmFtZT0iIiBleHRlbnNpb249IiIgcm9vdD0iIi8+CiAgICAgICAgICAgICAgICA8bmFt
-ZT48L25hbWU+CiAgICAgICAgICAgIDwvcmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24+
-CiAgICAgICAgPC9hc3NpZ25lZEN1c3RvZGlhbj4KICAgIDwvY3VzdG9kaWFuPgoKICAgIDxpbmZv
-cm1hdGlvblJlY2lwaWVudCB0eXBlQ29kZT0iUFJDUCI+CiAgICAgICAgPGludGVuZGVkUmVjaXBp
-ZW50IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9y
-aXR5TmFtZT0iIiBleHRlbnNpb249IiIgcm9vdD0iIi8+CiAgICAgICAgICAgIDxpZCBhc3NpZ25p
-bmdBdXRob3JpdHlOYW1lPSIiIGV4dGVuc2lvbj0iIiByb290PSIiLz4KICAgICAgICAgICAgPGlu
-Zm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFO
-Q0UiPgogICAgICAgICAgICAgICAgPG5hbWUgdXNlPSIiPgogICAgICAgICAgICAgICAgICAgIDxw
-cmVmaXg+PC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT48L2ZhbWlseT4KICAg
-ICAgICAgICAgICAgICAgICA8Z2l2ZW4+PC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4K
-ICAgICAgICAgICAgPC9pbmZvcm1hdGlvblJlY2lwaWVudD4KICAgICAgICAgICAgPHJlY2VpdmVk
-T3JnYW5pemF0aW9uPgogICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9
-IiIgZXh0ZW5zaW9uPSIiIHJvb3Q9IiIvPgogICAgICAgICAgICAgICAgPG5hbWU+PC9uYW1lPgog
-ICAgICAgICAgICA8L3JlY2VpdmVkT3JnYW5pemF0aW9uPgogICAgICAgIDwvaW50ZW5kZWRSZWNp
-cGllbnQ+CiAgICA8L2luZm9ybWF0aW9uUmVjaXBpZW50PgogICAgPGluZm9ybWF0aW9uUmVjaXBp
-ZW50IHR5cGVDb2RlPSJUUkMiPgogICAgICAgIDxpbnRlbmRlZFJlY2lwaWVudCBjbGFzc0NvZGU9
-IkFTU0lHTkVEIj4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IiIgZXh0
-ZW5zaW9uPSIiIHJvb3Q9IiIvPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFt
-ZT0iIiBleHRlbnNpb249IiIgcm9vdD0iIi8+CiAgICAgICAgICAgIDxpbmZvcm1hdGlvblJlY2lw
-aWVudCBjbGFzc0NvZGU9IlBTTiIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAg
-ICAgICAgIDxuYW1lIHVzZT0iIj4KICAgICAgICAgICAgICAgICAgICA8cHJlZml4PjwvcHJlZml4
-PgogICAgICAgICAgICAgICAgICAgIDxmYW1pbHk+PC9mYW1pbHk+CiAgICAgICAgICAgICAgICAg
-ICAgPGdpdmVuPjwvZ2l2ZW4+CiAgICAgICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAgIDwv
-aW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICAgICAgICAgIDxyZWNlaXZlZE9yZ2FuaXphdGlvbj4K
-ICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSIiIGV4dGVuc2lvbj0i
-IiByb290PSIiLz4KICAgICAgICAgICAgICAgIDxuYW1lPjwvbmFtZT4KICAgICAgICAgICAgPC9y
-ZWNlaXZlZE9yZ2FuaXphdGlvbj4KICAgICAgICA8L2ludGVuZGVkUmVjaXBpZW50PgogICAgPC9p
-bmZvcm1hdGlvblJlY2lwaWVudD4KCiAgICA8cGFydGljaXBhbnQgY29udGV4dENvbnRyb2xDb2Rl
-PSJPUCIgdHlwZUNvZGU9IlJFRiI+CiAgICAgICAgPGZ1bmN0aW9uQ29kZSBjb2RlPSIiIGNvZGVT
-eXN0ZW09IiIgY29kZVN5c3RlbU5hbWU9IiIgZGlzcGxheU5hbWU9IiIvPgogICAgICAgIDxhc3Nv
-Y2lhdGVkRW50aXR5IGNsYXNzQ29kZT0iUFJPViI+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdB
-dXRob3JpdHlOYW1lPSIiIGV4dGVuc2lvbj0iIiByb290PSIiLz4KCQkJPGlkIGFzc2lnbmluZ0F1
-dGhvcml0eU5hbWU9IiIgZXh0ZW5zaW9uPSIiIHJvb3Q9IiIvPgoJCQk8YXNzb2NpYXRlZFBlcnNv
-biBjbGFzc0NvZGU9IlBTTiIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAg
-ICAgIDxuYW1lIHVzZT0iIj4KICAgICAgICAgICAgICAgICAgICA8cHJlZml4PjwvcHJlZml4Pgog
-ICAgICAgICAgICAgICAgICAgIDxmYW1pbHk+PC9mYW1pbHk+CiAgICAgICAgICAgICAgICAgICAg
-PGdpdmVuPjwvZ2l2ZW4+CiAgICAgICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAgIDwvYXNz
-b2NpYXRlZFBlcnNvbj4KICAgICAgICA8L2Fzc29jaWF0ZWRFbnRpdHk+CiAgICA8L3BhcnRpY2lw
-YW50PgoJPHBhcnRpY2lwYW50IGNvbnRleHRDb250cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJSRUYi
-PgogICAgICAgIDxmdW5jdGlvbkNvZGUgY29kZT0iIiBjb2RlU3lzdGVtPSIiIGNvZGVTeXN0ZW1O
-YW1lPSIiIGRpc3BsYXlOYW1lPSIiLz4KICAgICAgICA8YXNzb2NpYXRlZEVudGl0eSBjbGFzc0Nv
-ZGU9IlBST1YiPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iIiBleHRl
-bnNpb249IiIgcm9vdD0iIi8+CgkJCTxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSIiIGV4dGVu
-c2lvbj0iIiByb290PSIiLz4KCQkJPGFzc29jaWF0ZWRQZXJzb24gY2xhc3NDb2RlPSJQU04iIGRl
-dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8bmFtZSB1c2U9IiI+CiAg
-ICAgICAgICAgICAgICAgICAgPHByZWZpeD48L3ByZWZpeD4KICAgICAgICAgICAgICAgICAgICA8
-ZmFtaWx5PjwvZmFtaWx5PgogICAgICAgICAgICAgICAgICAgIDxnaXZlbj48L2dpdmVuPgogICAg
-ICAgICAgICAgICAgPC9uYW1lPgogICAgICAgICAgICA8L2Fzc29jaWF0ZWRQZXJzb24+CiAgICAg
-ICAgPC9hc3NvY2lhdGVkRW50aXR5PgogICAgPC9wYXJ0aWNpcGFudD4KCiAgICA8aW5GdWxmaWxs
-bWVudE9mIHR5cGVDb2RlPSJGTEZTIj4KICAgICAgICA8b3JkZXIgY2xhc3NDb2RlPSJFTkMiIG1v
-b2RDb2RlPSJSUU8iPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iT3Jk
-ZXIgSUQiIG51bGxGbGF2b3I9IlVOSyIvPgogICAgICAgIDwvb3JkZXI+CiAgICA8L2luRnVsZmls
-bG1lbnRPZj4KCiAgICA8ZG9jdW1lbnRhdGlvbk9mIHR5cGVDb2RlPSJET0MiPgogICAgICAgIDxz
-ZXJ2aWNlRXZlbnQgY2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2RlPSJFVk4iIG51bGxGbGF2b3I9IlVO
-SyI+CiAgICAgICAgICAgIDxjb2RlLz4KICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9
-IiIvPgogICAgICAgICAgICA8c3RhdHVzQ29kZSB4bWxucz0idXJuOmJjY2RhIiBjb2RlPSJhcHBl
-bmRlZCIvPgogICAgICAgIDwvc2VydmljZUV2ZW50PgogICAgPC9kb2N1bWVudGF0aW9uT2Y+Cgog
-ICAgPGNvbXBvbmVudE9mIHR5cGVDb2RlPSJDT01QIj4KICAgICAgICA8ZW5jb21wYXNzaW5nRW5j
-b3VudGVyIGNsYXNzQ29kZT0iRU5DIiBtb29kQ29kZT0iRVZOIj4KICAgICAgICAgICAgPGlkIG51
-bGxGbGF2b3I9IlVOSyIvPgogICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iIi8+CiAg
-ICAgICAgICAgIDxsb2NhdGlvbj4KICAgICAgICAgICAgICAgIDxoZWFsdGhDYXJlRmFjaWxpdHkg
-Y2xhc3NDb2RlPSJTRExPQyI+CiAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhv
-cml0eU5hbWU9IiIgZXh0ZW5zaW9uPSIiIHJvb3Q9IiIvPgogICAgICAgICAgICAgICAgICAgIDxs
-b2NhdGlvbiBjbGFzc0NvZGU9IlBMQyIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAg
-ICAgICAgICAgICAgICAgICAgPG5hbWU+PC9uYW1lPgogICAgICAgICAgICAgICAgICAgIDwvbG9j
-YXRpb24+CiAgICAgICAgICAgICAgICA8L2hlYWx0aENhcmVGYWNpbGl0eT4KICAgICAgICAgICAg
-PC9sb2NhdGlvbj4KICAgICAgICA8L2VuY29tcGFzc2luZ0VuY291bnRlcj4KICAgIDwvY29tcG9u
-ZW50T2Y+CgogICAgPGNvbXBvbmVudCB0eXBlQ29kZT0iQ09NUCI+CiAgICAgICAgPG5vblhNTEJv
-ZHk+CiAgICAgICAgICAgIDx0ZXh0IG1lZGlhVHlwZT0idGV4dC9wbGFpbiIgcmVwcmVzZW50YXRp
-b249IlRYVCI+PC90ZXh0PgogICAgICAgIDwvbm9uWE1MQm9keT4KICAgIDwvY29tcG9uZW50Pgo8
-L0NsaW5pY2FsRG9jdW1lbnQ+Cg==</inboundTemplate>
-            <outboundTemplate encoding="base64">ewogICJkb2N1bWVudElkIjoiIiwKICAidGVtcGxhdGUiOnsKICAgICJ0ZW1wbGF0ZUlkIjoiIiwK
-ICAgICJ0ZW1wbGF0ZU5hbWUiOiIiCiAgfSwKICAibG9pbmMiOnsKICAgICJsb2luY0NvZGUiOiIi
-LAogICAgImRpc3BsYXlOYW1lIjoiIgogIH0sCiAgImVmZmVjdGl2ZVRpbWUiOiIiLAogICJ0aXRs
-ZSI6IiIsCiAgInBhdGllbnQiOnsKICAgICJpZHMiOlsKICAgICAgewogICAgICAgICJjb2RlIjoi
-IiwKICAgICAgICAidHlwZSI6IiIKICAgICAgfQogICAgXSwKICAgICJhZGRyZXNzZXMiOlsKICAg
-ICAgewogICAgICAgICJ1c2UiOiIiLAogICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAg
-ICAiY2l0eSI6IiIsCiAgICAgICAgInByb3ZpbmNlIjoiIiwKICAgICAgICAicG9zdGFsQ29kZSI6
-IiIsCiAgICAgICAgImNvdW50cnkiOiIiCiAgICAgIH0KICAgIF0sCiAgICAidGVsZWNvbXMiOlsK
-ICAgICAgewogICAgICAgICJ1c2UiOiIiLAogICAgICAgICJ0eXBlIjoiIiwKICAgICAgICAidmFs
-dWUiOiIiCiAgICAgIH0KICAgIF0sCiAgICAibmFtZXMiOlsKICAgICAgewogICAgICAgICJ1c2Ui
-OiIiLAogICAgICAgICJnaXZlbiI6WwogICAgICAgICAgIiIKICAgICAgICBdLAogICAgICAgICJm
-YW1pbHkiOiIiLAogICAgICAgICJwcmVmaXgiOiIiLAogICAgICAgICJzdWZmaXgiOiIiCiAgICAg
-IH0KICAgIF0sCiAgICAiZ2VuZGVyQ29kZSI6IiIsCiAgICAiYmlydGhkYXkiOiIiCiAgfSwKICAi
-YXV0aG9ycyI6WwogICAgewogICAgICAidGltZSI6IiIsCiAgICAgICJpZHMiOlsKICAgICAgICB7
-CiAgICAgICAgICAiY29kZSI6IiIsCiAgICAgICAgICAidHlwZSI6IiIKICAgICAgICB9CiAgICAg
-IF0sCiAgICAgICJhZGRyZXNzZXMiOlsKICAgICAgICB7CiAgICAgICAgICAidXNlIjoiIiwKICAg
-ICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAgICAgICJjaXR5IjoiIiwKICAgICAgICAg
-ICJwcm92aW5jZSI6IiIsCiAgICAgICAgICAicG9zdGFsQ29kZSI6IiIsCiAgICAgICAgICAiY291
-bnRyeSI6IiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ0ZWxlY29tcyI6WwogICAgICAgIHsK
-ICAgICAgICAgICJ1c2UiOiIiLAogICAgICAgICAgInR5cGUiOiIiLAogICAgICAgICAgInZhbHVl
-IjoiIgogICAgICAgIH0KICAgICAgXSwKICAgICAgIm5hbWUiOnsKICAgICAgICAidXNlIjoiIiwK
-ICAgICAgICAiZ2l2ZW4iOlsKICAgICAgICAgICIiCiAgICAgICAgXSwKICAgICAgICAiZmFtaWx5
-IjoiIiwKICAgICAgICAicHJlZml4IjoiIiwKICAgICAgICAic3VmZml4IjoiIgogICAgICB9LAog
-ICAgICAic29mdHdhcmUiOnsKICAgICAgICAibmFtZSI6IiIsCiAgICAgICAgImNvZGUiOiIiCiAg
-ICAgIH0KICAgIH0KICBdLAogICJyZWNpcGllbnRzIjpbCiAgICB7CiAgICAgICJpZHMiOlsKICAg
-ICAgICB7CiAgICAgICAgICAiY29kZSI6IiIsCiAgICAgICAgICAidHlwZSI6IiIKICAgICAgICB9
-CiAgICAgIF0sCiAgICAgICJhZGRyZXNzZXMiOlsKICAgICAgICB7CiAgICAgICAgICAidXNlIjoi
-IiwKICAgICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAgICAgICJjaXR5IjoiIiwKICAg
-ICAgICAgICJwcm92aW5jZSI6IiIsCiAgICAgICAgICAicG9zdGFsQ29kZSI6IiIsCiAgICAgICAg
-ICAiY291bnRyeSI6IiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ0ZWxlY29tcyI6WwogICAg
-ICAgIHsKICAgICAgICAgICJ1c2UiOiIiLAogICAgICAgICAgInR5cGUiOiIiLAogICAgICAgICAg
-InZhbHVlIjoiIgogICAgICAgIH0KICAgICAgXSwKICAgICAgIm5hbWUiOnsKICAgICAgICAidXNl
-IjoiIiwKICAgICAgICAiZ2l2ZW4iOlsKICAgICAgICAgICIiCiAgICAgICAgXSwKICAgICAgICAi
-ZmFtaWx5IjoiIiwKICAgICAgICAicHJlZml4IjoiIiwKICAgICAgICAic3VmZml4IjoiIgogICAg
-ICB9LAogICAgICAidHlwZUNvZGUiOiIiLAogICAgICAicmVjZWl2ZWRPcmdhbml6YXRpb24iOnsK
-ICAgICAgICAiaWRzIjpbCiAgICAgICAgICB7CiAgICAgICAgICAgICJjb2RlIjoiIiwKICAgICAg
-ICAgICAgInR5cGUiOiIiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAibmFtZSI6IiIK
-ICAgICAgfQogICAgfQogIF0sCiAgImN1c3RvZGlhbiI6ewogICAgImlkIjp7CiAgICAgICJjb2Rl
-IjoiIiwKICAgICAgInR5cGUiOiIiCiAgICB9LAogICAgIm5hbWUiOiIiCiAgfSwKICAiZGF0YUVu
-dGVyZXIiOnsKICAgICJ0aW1lIjoiIiwKICAgICJpZCI6ewogICAgICAiY29kZSI6IiIsCiAgICAg
-ICJ0eXBlIjoiIgogICAgfSwKICAgICJhZGRyZXNzZXMiOlsKICAgICAgewogICAgICAgICJ1c2Ui
-OiIiLAogICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAgICAiY2l0eSI6IiIsCiAgICAg
-ICAgInByb3ZpbmNlIjoiIiwKICAgICAgICAicG9zdGFsQ29kZSI6IiIsCiAgICAgICAgImNvdW50
-cnkiOiIiCiAgICAgIH0KICAgIF0sCiAgICAidGVsZWNvbXMiOlsKICAgICAgewogICAgICAgICJ1
-c2UiOiIiLAogICAgICAgICJ0eXBlIjoiIiwKICAgICAgICAidmFsdWUiOiIiCiAgICAgIH0KICAg
-IF0sCiAgICAibmFtZSI6ewogICAgICAidXNlIjoiIiwKICAgICAgImdpdmVuIjpbCiAgICAgICAg
-IiIKICAgICAgXSwKICAgICAgImZhbWlseSI6IiIsCiAgICAgICJwcmVmaXgiOiIiLAogICAgICAi
-c3VmZml4IjoiIgogICAgfQogIH0sCiAgImF1dGhlbnRpY2F0b3JzIjpbCiAgICB7CiAgICAgICJp
-ZHMiOlsKICAgICAgICB7CiAgICAgICAgICAiY29kZSI6IiIsCiAgICAgICAgICAidHlwZSI6IiIK
-ICAgICAgICB9CiAgICAgIF0sCiAgICAgICJhZGRyZXNzZXMiOlsKICAgICAgICB7CiAgICAgICAg
-ICAidXNlIjoiIiwKICAgICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAgICAgICJjaXR5
-IjoiIiwKICAgICAgICAgICJwcm92aW5jZSI6IiIsCiAgICAgICAgICAicG9zdGFsQ29kZSI6IiIs
-CiAgICAgICAgICAiY291bnRyeSI6IiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ0ZWxlY29t
-cyI6WwogICAgICAgIHsKICAgICAgICAgICJ1c2UiOiIiLAogICAgICAgICAgInR5cGUiOiIiLAog
-ICAgICAgICAgInZhbHVlIjoiIgogICAgICAgIH0KICAgICAgXSwKICAgICAgIm5hbWUiOnsKICAg
-ICAgICAidXNlIjoiIiwKICAgICAgICAiZ2l2ZW4iOlsKICAgICAgICAgICIiCiAgICAgICAgXSwK
-ICAgICAgICAiZmFtaWx5IjoiIiwKICAgICAgICAicHJlZml4IjoiIiwKICAgICAgICAic3VmZml4
-IjoiIgogICAgICB9CiAgICB9CiAgXSwKICAicGFydGljaXBhbnRzIjpbCiAgICB7CiAgICAgICJp
-ZHMiOlsKICAgICAgICB7CiAgICAgICAgICAiY29kZSI6IiIsCiAgICAgICAgICAidHlwZSI6IiIK
-ICAgICAgICB9CiAgICAgIF0sCiAgICAgICJhZGRyZXNzZXMiOlsKICAgICAgICB7CiAgICAgICAg
-ICAidXNlIjoiIiwKICAgICAgICAgICJzdHJlZXRBZGRyZXNzIjoiIiwKICAgICAgICAgICJjaXR5
-IjoiIiwKICAgICAgICAgICJwcm92aW5jZSI6IiIsCiAgICAgICAgICAicG9zdGFsQ29kZSI6IiIs
-CiAgICAgICAgICAiY291bnRyeSI6IiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ0ZWxlY29t
-cyI6WwogICAgICAgIHsKICAgICAgICAgICJ1c2UiOiIiLAogICAgICAgICAgInR5cGUiOiIiLAog
-ICAgICAgICAgInZhbHVlIjoiIgogICAgICAgIH0KICAgICAgXSwKICAgICAgIm5hbWUiOnsKICAg
-ICAgICAidXNlIjoiIiwKICAgICAgICAiZ2l2ZW4iOlsKICAgICAgICAgICIiCiAgICAgICAgXSwK
-ICAgICAgICAiZmFtaWx5IjoiIiwKICAgICAgICAicHJlZml4IjoiIiwKICAgICAgICAic3VmZml4
-IjoiIgogICAgICB9LAogICAgICAidHlwZUNvZGUiOiIiLAogICAgICAiZnVuY3Rpb25Db2RlIjoi
-IgogICAgfQogIF0sCiAgIm9yZGVycyI6WwogICAgewogICAgICAiaWQiOiIiLAogICAgICAic3Rh
-dHVzQ29kZSI6IiIKICAgIH0KICBdLAogICJub25YTUxCb2R5Ijp7CiAgICAibWVkaWFUeXBlIjoi
-IiwKICAgICJjb250ZW50IjoiIgogIH0sCiAgImF0dGFjaG1lbnRzIjpbCiAgICB7CiAgICAgICJt
-ZWRpYVR5cGUiOiIiLAogICAgICAiY29udGVudCI6IiIsCiAgICAgICJoYXNoIjoiIiwKICAgICAg
-InJlZmVyZW5jZSI6IiIKICAgIH0KICBdCn0=</outboundTemplate>
+TiIgbW9vZENvZGU9IkVWTiI+CiAgICA8cmVhbG1Db2RlIGNvZGU9IkNBLUJDIi8+CiAgICA8dHlw
+ZUlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkhMNyBDREEgUjIiIGV4dGVuc2lvbj0iUE9DRF9I
+RDAwMDA0MCIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMS4zIi8+CiAgICA8dGVtcGxhdGVJZCBh
+c3NpZ25pbmdBdXRob3JpdHlOYW1lPSJlMmUgUmVmZXJyYWwgKFVuc3RydWN0dXJlZCkiIHJvb3Q9
+IjIuMTYuODQwLjEuMTEzODgzLjMuMTgxOC4xMC4xLjUiLz4KICAgIDxpZCBhc3NpZ25pbmdBdXRo
+b3JpdHlOYW1lPSJDRFggQ2xpbmljYWwgRG9jdW1lbnQgSUQiIGV4dGVuc2lvbj0iNDVhNzViN2Ut
+NWNiMS00ZDAwLWFiN2YtYjc4NzJkZTQ3NTQ5IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3
+Ny4xMDAuMyIvPgogICAgPGNvZGUgY29kZT0iNTcxMzMtMSIgY29kZVN5c3RlbT0iMi4xNi44NDAu
+MS4xMTM4ODMuNi4xIiBjb2RlU3lzdGVtTmFtZT0iTE9JTkMgQ29kZSIgZGlzcGxheU5hbWU9IlJl
+ZmVycmFsIG5vdGUiLz4KICAgIDx0aXRsZT5SZWZlcnJhbCBOb3RlPC90aXRsZT4KICAgIDxlZmZl
+Y3RpdmVUaW1lIHZhbHVlPSIyMDE5MDMxNDE5MDMtMDcwMCIvPgogICAgPGNvbmZpZGVudGlhbGl0
+eUNvZGUgY29kZT0iTiIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNS4yNSIgY29kZVN5
+c3RlbU5hbWU9IkNvbmZpZGVudGlhbGl0eSIvPgogICAgPGxhbmd1YWdlQ29kZSBjb2RlPSJlbi1D
+QSIvPgogICAgPHJlY29yZFRhcmdldCBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0i
+UkNUIj4KICAgICAgICA8cGF0aWVudFJvbGUgY2xhc3NDb2RlPSJQQVQiPgogICAgICAgICAgICA8
+aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iQkMgUGF0aWVudCBIZWFsdGggTnVtYmVyIiBleHRl
+bnNpb249Ijk2OTg2NTAyNjciIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjQuNTAiLz4KICAgICAg
+ICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBQYXRpZW50IEVNUiBOdW1iZXIi
+IGV4dGVuc2lvbj0iQTAwMDAwMDI1IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjcz
+Ii8+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEgUGF0aWVudCBV
+bml0IE51bWJlciIgZXh0ZW5zaW9uPSJFSzAwMDAwMDM2IiByb290PSIyLjE2Ljg0MC4xLjExMzg4
+My4zLjI3Ny4xLjcxIi8+CiAgICAgICAgICAgIDxhZGRyIHVzZT0iSCI+NzcxNSBSb3llIFNxPGRl
+bGltaXRlci8+CiAgICAgICAgICAgICAgICA8Y2l0eT5MaW9ucyBCYXk8L2NpdHk+CiAgICAgICAg
+ICAgICAgICA8c3RhdGU+Q0EtQkM8L3N0YXRlPgogICAgICAgICAgICAgICAgPHBvc3RhbENvZGU+
+VjBOIDBBMjwvcG9zdGFsQ29kZT4KICAgICAgICAgICAgPC9hZGRyPgogICAgICAgICAgICA8dGVs
+ZWNvbSB1c2U9IkgiIHZhbHVlPSJ0ZWw6MjUwLTEyMy00NTY3Ii8+CiAgICAgICAgICAgIDxwYXRp
+ZW50IGNsYXNzQ29kZT0iUFNOIj4KICAgICAgICAgICAgICAgIDxuYW1lIHVzZT0iTCI+CiAgICAg
+ICAgICAgICAgICAgICAgPGZhbWlseT5JaGN1cnJlbmNlPC9mYW1pbHk+CiAgICAgICAgICAgICAg
+ICAgICAgPGdpdmVuPlBsaXM8L2dpdmVuPgogICAgICAgICAgICAgICAgPC9uYW1lPgogICAgICAg
+ICAgICAgICAgPGFkbWluaXN0cmF0aXZlR2VuZGVyQ29kZSBjb2RlPSJGIi8+CiAgICAgICAgICAg
+ICAgICA8YmlydGhUaW1lIHZhbHVlPSIxOTU4MDIyNCIvPgogICAgICAgICAgICA8L3BhdGllbnQ+
+CiAgICAgICAgPC9wYXRpZW50Um9sZT4KICAgIDwvcmVjb3JkVGFyZ2V0PgogICAgPGF1dGhvciBj
+b250ZXh0Q29udHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0iQVVUIj4KICAgICAgICA8dGltZSB2YWx1
+ZT0iMjAxOTAzMTQxOTAzLTA3MDAiLz4KICAgICAgICA8YXNzaWduZWRBdXRob3IgY2xhc3NDb2Rl
+PSJBU1NJR05FRCI+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEg
+TWVkaXRlY2ggSUQiIGV4dGVuc2lvbj0iUExJRiIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4y
+NzcuMS42MSIvPgogICAgICAgICAgICA8YXNzaWduZWRQZXJzb24gY2xhc3NDb2RlPSJQU04iIGRl
+dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8bmFtZSB1c2U9IkwiPgog
+ICAgICAgICAgICAgICAgICAgIDxwcmVmaXg+RHI8L3ByZWZpeD4KICAgICAgICAgICAgICAgICAg
+ICA8ZmFtaWx5PlBsaXM8L2ZhbWlseT4KICAgICAgICAgICAgICAgICAgICA8Z2l2ZW4+RmFtaWx5
+PC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgICAgPC9hc3NpZ25lZFBl
+cnNvbj4KICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yPgogICAgPC9hdXRob3I+CiAgICA8YXV0aG9y
+IGNvbnRleHRDb250cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJBVVQiPgogICAgICAgIDx0aW1lIHZh
+bHVlPSIyMDE5MDMxNDE5MDMtMDcwMCIvPgogICAgICAgIDxhc3NpZ25lZEF1dGhvciBjbGFzc0Nv
+ZGU9IkFTU0lHTkVEIj4KICAgICAgICAgICAgPGlkIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAg
+ICAgIDxhc3NpZ25lZEF1dGhvcmluZ0RldmljZT4KICAgICAgICAgICAgICAgIDxzb2Z0d2FyZU5h
+bWUgY29kZT0iQ0RYQVBQIiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjEy
+IiBjb2RlU3lzdGVtTmFtZT0iSUhBIFNvZnR3YXJlIENvZGUiIGRpc3BsYXlOYW1lPSJDRFggU2Ft
+cGxlIEFwcCIvPgogICAgICAgICAgICA8L2Fzc2lnbmVkQXV0aG9yaW5nRGV2aWNlPgogICAgICAg
+IDwvYXNzaWduZWRBdXRob3I+CiAgICA8L2F1dGhvcj4KICAgIDxjdXN0b2RpYW4gdHlwZUNvZGU9
+IkNTVCI+CiAgICAgICAgPGFzc2lnbmVkQ3VzdG9kaWFuIGNsYXNzQ29kZT0iQVNTSUdORUQiPgog
+ICAgICAgICAgICA8cmVwcmVzZW50ZWRDdXN0b2RpYW5Pcmdhbml6YXRpb24gY2xhc3NDb2RlPSJP
+UkciIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICA8aWQgYXNzaWdu
+aW5nQXV0aG9yaXR5TmFtZT0iQ0RYIENsaW5pYyBSZWdpc3RyeSBJRCIgZXh0ZW5zaW9uPSJjZHhw
+b3N0cHJvZC1vdGNhIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xMDAuMiIvPgogICAg
+ICAgICAgICAgICAgPG5hbWU+T3NjYXIgVGVzdCBDbGluaWMgQTwvbmFtZT4KICAgICAgICAgICAg
+PC9yZXByZXNlbnRlZEN1c3RvZGlhbk9yZ2FuaXphdGlvbj4KICAgICAgICA8L2Fzc2lnbmVkQ3Vz
+dG9kaWFuPgogICAgPC9jdXN0b2RpYW4+CiAgICA8aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNv
+ZGU9IlBSQ1AiPgogICAgICAgIDxpbnRlbmRlZFJlY2lwaWVudCBjbGFzc0NvZGU9IkFTU0lHTkVE
+Ij4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkJDIE1pbmlzdHJ5IFBy
+YWN0aXRpb25lciBJRCIgZXh0ZW5zaW9uPSI5MzE5NCIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMu
+My40MC4yLjExIi8+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJJSEEg
+TWVkaXRlY2ggSUQiIGV4dGVuc2lvbj0iUExJU0lITk8iIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgz
+LjMuMjc3LjEuNjEiLz4KICAgICAgICAgICAgPGluZm9ybWF0aW9uUmVjaXBpZW50IGNsYXNzQ29k
+ZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICAgICAgPG5hbWUg
+dXNlPSJMIj4KICAgICAgICAgICAgICAgICAgICA8cHJlZml4PkRyLjwvcHJlZml4PgogICAgICAg
+ICAgICAgICAgICAgIDxmYW1pbHk+UGxpc2loZzwvZmFtaWx5PgogICAgICAgICAgICAgICAgICAg
+IDxnaXZlbj5Ob2VsPC9naXZlbj4KICAgICAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgICAg
+PC9pbmZvcm1hdGlvblJlY2lwaWVudD4KICAgICAgICAgICAgPHJlY2VpdmVkT3JnYW5pemF0aW9u
+PgogICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMg
+UmVnaXN0cnkgSUQiIGV4dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAu
+MS4xMTM4ODMuMy4yNzcuMTAwLjIiLz4KICAgICAgICAgICAgICAgIDxuYW1lPk9zY2FyIFRlc3Qg
+Q2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgIDwvcmVjZWl2ZWRPcmdhbml6YXRpb24+CiAgICAg
+ICAgPC9pbnRlbmRlZFJlY2lwaWVudD4KICAgIDwvaW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICA8
+aW5mb3JtYXRpb25SZWNpcGllbnQgdHlwZUNvZGU9IlRSQyI+CiAgICAgICAgPGludGVuZGVkUmVj
+aXBpZW50IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0
+aG9yaXR5TmFtZT0iQkMgTWluaXN0cnkgUHJhY3RpdGlvbmVyIElEIiBleHRlbnNpb249IjkzMTkz
+IiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjQwLjIuMTEiLz4KICAgICAgICAgICAgPGlkIGFz
+c2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRpdGVjaCBJRCIgZXh0ZW5zaW9uPSJQTElTSUhN
+SSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMS42MSIvPgogICAgICAgICAgICA8aW5m
+b3JtYXRpb25SZWNpcGllbnQgY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5D
+RSI+CiAgICAgICAgICAgICAgICA8bmFtZSB1c2U9IkwiPgogICAgICAgICAgICAgICAgICAgIDxw
+cmVmaXg+RHIuPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzaWhmPC9m
+YW1pbHk+CiAgICAgICAgICAgICAgICAgICAgPGdpdmVuPk1pa2VsPC9naXZlbj4KICAgICAgICAg
+ICAgICAgIDwvbmFtZT4KICAgICAgICAgICAgPC9pbmZvcm1hdGlvblJlY2lwaWVudD4KICAgICAg
+ICAgICAgPHJlY2VpdmVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICAgICAgPGlkIGFzc2lnbmlu
+Z0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQiIGV4dGVuc2lvbj0iY2R4cG9z
+dHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcuMTAwLjIiLz4KICAgICAg
+ICAgICAgICAgIDxuYW1lPk9zY2FyIFRlc3QgQ2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgIDwv
+cmVjZWl2ZWRPcmdhbml6YXRpb24+CiAgICAgICAgPC9pbnRlbmRlZFJlY2lwaWVudD4KICAgIDwv
+aW5mb3JtYXRpb25SZWNpcGllbnQ+CiAgICA8cGFydGljaXBhbnQgY29udGV4dENvbnRyb2xDb2Rl
+PSJPUCIgdHlwZUNvZGU9IlJFRiI+CiAgICAgICAgPGZ1bmN0aW9uQ29kZSBjb2RlPSJPUkQiIGNv
+ZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjIuMjAuMy44NyIgY29kZVN5c3RlbU5hbWU9IkhM
+N1BhcnRpY2lwYXRpb25GdW5jdGlvbiIgZGlzcGxheU5hbWU9Ik9yZGVyaW5nIFByb3ZpZGVyIi8+
+CiAgICAgICAgPGFzc29jaWF0ZWRFbnRpdHkgY2xhc3NDb2RlPSJQUk9WIj4KICAgICAgICAgICAg
+PGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IklIQSBNZWRpdGVjaCBJRCIgZXh0ZW5zaW9uPSJQ
+TElGIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4zLjI3Ny4xLjYxIi8+CiAgICAgICAgICAgIDxh
+c3NvY2lhdGVkUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0Ui
+PgogICAgICAgICAgICAgICAgPG5hbWUgdXNlPSJMIj4KICAgICAgICAgICAgICAgICAgICA8cHJl
+Zml4PkRyPC9wcmVmaXg+CiAgICAgICAgICAgICAgICAgICAgPGZhbWlseT5QbGlzPC9mYW1pbHk+
+CiAgICAgICAgICAgICAgICAgICAgPGdpdmVuPkZhbWlseTwvZ2l2ZW4+CiAgICAgICAgICAgICAg
+ICA8L25hbWU+CiAgICAgICAgICAgIDwvYXNzb2NpYXRlZFBlcnNvbj4KICAgICAgICA8L2Fzc29j
+aWF0ZWRFbnRpdHk+CiAgICA8L3BhcnRpY2lwYW50PgogICAgPGluRnVsZmlsbG1lbnRPZiB0eXBl
+Q29kZT0iRkxGUyI+CiAgICAgICAgPG9yZGVyIGNsYXNzQ29kZT0iRU5DIiBtb29kQ29kZT0iUlFP
+Ij4KICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9Ik9yZGVyIElEIiBudWxs
+Rmxhdm9yPSJVTksiLz4KICAgICAgICA8L29yZGVyPgogICAgPC9pbkZ1bGZpbGxtZW50T2Y+CiAg
+ICA8ZG9jdW1lbnRhdGlvbk9mIHR5cGVDb2RlPSJET0MiPgogICAgICAgIDxzZXJ2aWNlRXZlbnQg
+Y2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2RlPSJFVk4iIG51bGxGbGF2b3I9IlVOSyI+CiAgICAgICAg
+ICAgIDxjb2RlLz4KICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIwMTkwMzE0MTkw
+My0wNzAwIi8+CiAgICAgICAgICAgIDxzdGF0dXNDb2RlIHhtbG5zPSJ1cm46YmNjZGEiIGNvZGU9
+ImFwcGVuZGVkIi8+CiAgICAgICAgPC9zZXJ2aWNlRXZlbnQ+CiAgICA8L2RvY3VtZW50YXRpb25P
+Zj4KICAgIDxjb21wb25lbnRPZiB0eXBlQ29kZT0iQ09NUCI+CiAgICAgICAgPGVuY29tcGFzc2lu
+Z0VuY291bnRlciBjbGFzc0NvZGU9IkVOQyIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgIDxp
+ZCBudWxsRmxhdm9yPSJVTksiLz4KICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWUgdmFsdWU9IjIw
+MTkwMzE0MTkwMy0wNzAwIi8+CiAgICAgICAgICAgIDxsb2NhdGlvbj4KICAgICAgICAgICAgICAg
+IDxoZWFsdGhDYXJlRmFjaWxpdHkgY2xhc3NDb2RlPSJTRExPQyI+CiAgICAgICAgICAgICAgICAg
+ICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkNEWCBDbGluaWMgUmVnaXN0cnkgSUQiIGV4
+dGVuc2lvbj0iY2R4cG9zdHByb2Qtb3RjYSIgcm9vdD0iMi4xNi44NDAuMS4xMTM4ODMuMy4yNzcu
+MTAwLjIiLz4KICAgICAgICAgICAgICAgICAgICA8bG9jYXRpb24gY2xhc3NDb2RlPSJQTEMiIGRl
+dGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1lPk9z
+Y2FyIFRlc3QgQ2xpbmljIEE8L25hbWU+CiAgICAgICAgICAgICAgICAgICAgPC9sb2NhdGlvbj4K
+ICAgICAgICAgICAgICAgIDwvaGVhbHRoQ2FyZUZhY2lsaXR5PgogICAgICAgICAgICA8L2xvY2F0
+aW9uPgogICAgICAgIDwvZW5jb21wYXNzaW5nRW5jb3VudGVyPgogICAgPC9jb21wb25lbnRPZj4K
+ICAgIDxjb21wb25lbnQgdHlwZUNvZGU9IkNPTVAiPgogICAgICAgIDxub25YTUxCb2R5PgogICAg
+ICAgICAgICA8dGV4dCBtZWRpYVR5cGU9InRleHQvcGxhaW4iIHJlcHJlc2VudGF0aW9uPSJUWFQi
+Pk5FVyBSRUZFUkFMIFRFU1Q8L3RleHQ+CiAgICAgICAgPC9ub25YTUxCb2R5PgogICAgPC9jb21w
+b25lbnQ+CjwvQ2xpbmljYWxEb2N1bWVudD4K</inboundTemplate>
+            <outboundTemplate encoding="base64">e30=</outboundTemplate>
             <inboundDataType>HL7V3</inboundDataType>
             <outboundDataType>JSON</outboundDataType>
             <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.1">
@@ -6267,7 +6340,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1555352619155</time>
+            <time>1555370474828</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -6694,9 +6767,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>6</revision>
+                <revision>8</revision>
                 <lastModified>
-                  <time>1555022130719</time>
+                  <time>1555361908339</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -6718,6 +6791,7 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 */
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
+	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
 	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
@@ -6815,9 +6889,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
                 <name>Parse CDA ID</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1554867669846</time>
+                  <time>1555364121338</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -6839,8 +6913,12 @@ function parseCDADateTimeToDB(cdaDateTime) {
 */
 function parseCDAId(cdaID) {
 	var id = {};
-	id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
-	id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	if (cdaID[&apos;@extension&apos;]) {
+		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
+	}
+	if (cdaID[&apos;@root&apos;]) {
+		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	}
 	return id;
 }</code>
                 </properties>
@@ -6848,9 +6926,9 @@ function parseCDAId(cdaID) {
               <codeTemplate version="3.7.1">
                 <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
                 <name>Parse CDA Name</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670060</time>
+                  <time>1555361900552</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -6872,6 +6950,7 @@ function parseCDAId(cdaID) {
 */
 function parseCDAName(cdaName) {
 	var name = {};
+	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
 	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
 	name[&apos;given&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
@@ -6890,9 +6969,9 @@ function parseCDAName(cdaName) {
               <codeTemplate version="3.7.1">
                 <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
                 <name>Parse CDA Telecom</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670879</time>
+                  <time>1555361904298</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -6914,7 +6993,7 @@ function parseCDAName(cdaName) {
 */
 function parseCDATelecom(cdaTelecom) {
 	var telecom = {};
-	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;];
+	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
 	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
 	telecom[&apos;type&apos;] = telParts[0];	
 	telecom[&apos;value&apos;] = telParts[1];
@@ -7794,9 +7873,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
               <codeTemplate version="3.7.1">
                 <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
                 <name>Parse CDA Address</name>
-                <revision>6</revision>
+                <revision>8</revision>
                 <lastModified>
-                  <time>1555022130719</time>
+                  <time>1555361908339</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -7818,6 +7897,7 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 */
 function parseCDAAddress(cdaAddress) {
 	var addr = {};
+	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
 	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
 	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
 	if (strtAddr) {
@@ -7915,9 +7995,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
                 <name>Parse CDA ID</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1554867669846</time>
+                  <time>1555364121338</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -7939,8 +8019,12 @@ function parseCDADateTimeToDB(cdaDateTime) {
 */
 function parseCDAId(cdaID) {
 	var id = {};
-	id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
-	id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	if (cdaID[&apos;@extension&apos;]) {
+		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
+	}
+	if (cdaID[&apos;@root&apos;]) {
+		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	}
 	return id;
 }</code>
                 </properties>
@@ -7948,9 +8032,9 @@ function parseCDAId(cdaID) {
               <codeTemplate version="3.7.1">
                 <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
                 <name>Parse CDA Name</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670060</time>
+                  <time>1555361900552</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -7972,6 +8056,7 @@ function parseCDAId(cdaID) {
 */
 function parseCDAName(cdaName) {
 	var name = {};
+	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
 	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
 	name[&apos;given&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
@@ -7990,9 +8075,9 @@ function parseCDAName(cdaName) {
               <codeTemplate version="3.7.1">
                 <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
                 <name>Parse CDA Telecom</name>
-                <revision>1</revision>
+                <revision>3</revision>
                 <lastModified>
-                  <time>1554867670879</time>
+                  <time>1555361904298</time>
                   <timezone>Etc/UTC</timezone>
                 </lastModified>
                 <contextSet>
@@ -8014,7 +8099,7 @@ function parseCDAName(cdaName) {
 */
 function parseCDATelecom(cdaTelecom) {
 	var telecom = {};
-	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;];
+	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
 	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
 	telecom[&apos;type&apos;] = telParts[0];	
 	telecom[&apos;value&apos;] = telParts[1];

@@ -1,10 +1,7 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
 import ca.uvic.leadlab.obibconnector.facades.Config;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.AddressType;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.NameType;
-import ca.uvic.leadlab.obibconnector.facades.datatypes.TelcoType;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
@@ -22,10 +19,11 @@ import java.util.Date;
 
 public class TestRestClient {
 
-    protected String obibUrl = "http://192.168.100.101:8081";
-    protected String clinicId = "cdxpostprod-otca";
+    private ObjectMapper mapper = new ObjectMapper();
+    private String obibUrl = "http://192.168.100.101:8081";
+    private String clinicId = "cdxpostprod-otca";
 
-    Config config = new Config() {
+    private Config config = new Config() {
         @Override
         public String getUrl() {
             return obibUrl;
@@ -72,12 +70,13 @@ public class TestRestClient {
                     .name(NameType.LEGAL, "Joseph", "Cloud")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
+                .and().inFulfillmentOf()
+                    .id("1111")
                 .and().content("Plain text document content"))
                 .getDocument();
+        System.out.println(mapper.writeValueAsString(document));
 
         SubmitDocumentResponse response = restClient.submitCDA(document);
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -88,8 +87,6 @@ public class TestRestClient {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.listDocument();
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -101,8 +98,6 @@ public class TestRestClient {
 
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
                 .byClinicId("cdxpostprod-otca"));
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -114,8 +109,6 @@ public class TestRestClient {
 
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
                 .byDocumentId("2b0d8260-0c20-e911-a96a-0050568c55a6"));
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -126,8 +119,6 @@ public class TestRestClient {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListClinicsResponse response = restClient.listClinics(SearchClinicCriteria.byClinicId("cdxpostprod-otca"));
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -138,8 +129,6 @@ public class TestRestClient {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderId("93188"));
-
-        ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);

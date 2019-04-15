@@ -24,6 +24,8 @@ public class SubmitDocTest extends FacadesBaseTest {
                             .name(NameType.LEGAL, "Joe", "Wine")
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                             .phone(TelcoType.HOME, "250-111-1234")
+                            .birthday("1980", "01", "01")
+                            .gender(Gender.MALE)
                         .and().author()
                             .id("3333")
                             .time(new Date())
@@ -43,8 +45,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                             .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                             .phone(TelcoType.HOME, "250-111-1234")
                         .and().inFulfillmentOf()
-                            .id("")
-                            .statusCode(OrderStatus.COMPLETED)
+                            .id("1111")
                         .and().content("Document plain text")
                     .submit();
 

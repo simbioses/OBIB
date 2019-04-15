@@ -10,7 +10,6 @@ import java.util.List;
 public class Provider extends Person {
 
     private String status;
-    private String typeCode;
     private List<Id> ids = new ArrayList<>();
     private Name name;
     private List<Address> addresses = new ArrayList<>();
@@ -24,14 +23,6 @@ public class Provider extends Person {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
     }
 
     public List<Id> getIds() {

@@ -5644,7 +5644,7 @@ function parseCDATelecom(cdaTelecom) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>43</revision>
+      <revision>46</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -5751,6 +5751,14 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 	tmp[&apos;effectiveTime&apos;] = parseCDADateTime(msg[&apos;effectiveTime&apos;][&apos;@value&apos;].toString());
 	
 	tmp[&apos;title&apos;] = msg[&apos;title&apos;].toString();
+
+	if (msg[&apos;versionNumber&apos;]) {
+		tmp[&apos;versionNumber&apos;] = msg[&apos;versionNumber&apos;].toString();
+	}
+	
+	if (msg[&apos;setId&apos;]) {
+		tmp[&apos;setId&apos;] = parseCDAId(msg[&apos;setId&apos;]);
+	}
 } catch(e) {
 	logger.error(&quot;Error on &apos;Parse Header Attributes&apos;: &quot; + e);
 }</script>
@@ -5978,7 +5986,8 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 	tmp[&apos;participants&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;participant&apos;]); i++) {
 		var participant = {};
-		
+
+		participant[&apos;typeCode&apos;] = msg[&apos;participant&apos;][i][&apos;@typeCode&apos;].toString();
 		participant[&apos;functionCode&apos;] = msg[&apos;participant&apos;][i][&apos;functionCode&apos;][&apos;@code&apos;].toString();
 		
 		var associatedEntity = msg[&apos;participant&apos;][i][&apos;associatedEntity&apos;];
@@ -6331,7 +6340,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1555365184069</time>
+            <time>1555370474828</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

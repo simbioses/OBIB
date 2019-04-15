@@ -16,5 +16,7 @@ INSERT INTO OBIB_DB.cdx_id (id, root, extension, name) VALUES (15, null, '2.16.8
 INSERT INTO OBIB_DB.cdx_id (id, root, extension, name) VALUES (16, null, '2.16.840.1.113883.3.1818.10.1.2', 'Generic Episodic Document');
 
 
-INSERT INTO OBIB_DB.clinic_credential (clinic_id, clinic_username, clinic_password, certificate_file, certificate_password) VALUES ('cdxpostprod-obctc', 'cdxpostprod-obctc', '2LsTebRe', 'LEADlab_Keystore.jks', 'LEADlab');
-INSERT INTO OBIB_DB.clinic_credential (clinic_id, clinic_username, clinic_password, certificate_file, certificate_password) VALUES ('cdxpostprod-otca', 'cdxpostprod-otca', 'VMK31', 'LEADlab_Keystore.jks', 'LEADlab');
+INSERT INTO OBIB_DB.clinic_credential (clinic_id, clinic_name, clinic_username, clinic_password, certificate_file, certificate_password) 
+  VALUES ('cdxpostprod-obctc', 'Oscar Test Clinic C', 'cdxpostprod-obctc', '2LsTebRe', 'LEADlab_Keystore.jks', 'LEADlab');
+INSERT INTO OBIB_DB.clinic_credential (clinic_id, clinic_name, clinic_username, clinic_password, certificate_file, certificate_password) 
+  VALUES ('cdxpostprod-otca', 'Oscar Test Clinic A', 'cdxpostprod-otca', 'VMK31', 'LEADlab_Keystore.jks', 'LEADlab');

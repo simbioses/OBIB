@@ -15,6 +15,7 @@ create table clinic_credential
 (
 	clinic_id varchar(36) not null
 		primary key,
+	clinic_name varchar(200) null,
 	clinic_username varchar(100) not null,
 	clinic_password varchar(100) not null,
 	certificate_file varchar(100) null,

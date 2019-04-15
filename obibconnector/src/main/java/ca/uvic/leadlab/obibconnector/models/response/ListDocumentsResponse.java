@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.obibconnector.models.response;
 
-import ca.uvic.leadlab.obibconnector.models.document.Attachment;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 public class ListDocumentsResponse extends OBIBResponse {
 
     private List<ClinicalDocument> documents = new ArrayList<>();
-    private List<Attachment> attachments = new ArrayList<>();
 
     public List<String> getDocumentIds() {
         List<String> ids = new ArrayList<>();
@@ -32,13 +30,5 @@ public class ListDocumentsResponse extends OBIBResponse {
 
     public void setDocuments(List<ClinicalDocument> documents) {
         this.documents = documents;
-    }
-
-    public List<Attachment> getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
     }
 }

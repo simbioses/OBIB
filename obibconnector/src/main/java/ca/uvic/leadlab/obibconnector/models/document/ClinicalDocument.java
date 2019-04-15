@@ -26,7 +26,7 @@ public class  ClinicalDocument {
     private List<Participant> participants = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     private NonXMLBody nonXMLBody;
-    private List<Attachment> attachments;
+    private List<Attachment> attachments = new ArrayList<>();
     private String cdaXML;
 
     public String getDocumentId() {

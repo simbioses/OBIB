@@ -49,11 +49,6 @@ public class Document implements IDocument {
     private String contents;
 
     public Document(ClinicalDocument document) {
-        this(document, null);
-    }
-
-    Document(ClinicalDocument document,
-             List<ca.uvic.leadlab.obibconnector.models.document.Attachment> attachmentList) {
         this.document = document;
 
         if (document.getTemplate() != null) {
@@ -97,8 +92,8 @@ public class Document implements IDocument {
         //    contents = document.getNonXMLBody().getContent();
         // }
 
-        if (attachmentList != null) { // attachments
-            for (ca.uvic.leadlab.obibconnector.models.document.Attachment attachment : attachmentList) {
+        if (document.getAttachments() != null) { // attachments
+            for (ca.uvic.leadlab.obibconnector.models.document.Attachment attachment : document.getAttachments()) {
                 if (!ImplHelper.checkAttachment(attachment.getContent(), attachment.getHash())) {
                     // TODO log check error
                 }

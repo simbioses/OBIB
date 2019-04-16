@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DocumentMock1 implements IDocument {
+public class DocumentMock2 implements IDocument {
 
     @Override
     public String getTemplateID() {
@@ -29,7 +29,7 @@ public class DocumentMock1 implements IDocument {
 
     @Override
     public int getVersion() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DocumentMock1 implements IDocument {
     @Override
     public Date getEffectiveTime() {
 
-            return new Date(5000);
+            return new Date(6000);
     }
 
     @Override
@@ -216,7 +216,7 @@ public class DocumentMock1 implements IDocument {
                 "\t<languageCode code=\"en-CA\"/>\n" +
                 "\t<!-- ==== Document versioning Information ==== -->\n" +
                 "\t<setId root=\"2.16.840.1.113883.3.277.3.4.2\" extension=\"bba5c335-01d2-4439-880f-feb464fdcbac\" assigningAuthorityName=\"Clinical Document Revision Number\"/>\n" +
-                "\t<versionNumber value=\"1\" />\t\n" +
+                "\t<versionNumber value=\"2\" />\t\n" +
                 "\t<!-- ==== Patient Information ==== -->\n" +
                 "\t<recordTarget typeCode=\"RCT\" contextControlCode=\"OP\">\n" +
                 "\t\t<patientRole classCode=\"PAT\">\n" +
@@ -229,7 +229,7 @@ public class DocumentMock1 implements IDocument {
                 "\t\t\t<telecom use=\"H\" value=\"tel:111-1111\"/>\n" +
                 "\t\t\t<patient classCode=\"PSN\" determinerCode=\"INSTANCE\">\n" +
                 "\t\t\t\t<name use=\"L\">\n" +
-                "\t\t\t\t\t<family>Ihhendrickson</family>\n" +
+                "\t\t\t\t\t<family>Muller</family>\n" +
                 "\t\t\t\t\t<given>Plis</given>\n" +
                 "\t\t\t\t</name>\n" +
                 "\t\t\t\t<administrativeGenderCode code=\"M\"/>\n" +

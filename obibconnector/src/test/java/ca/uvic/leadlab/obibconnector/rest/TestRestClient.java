@@ -108,7 +108,7 @@ public class TestRestClient {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
-                .byDocumentId("2b0d8260-0c20-e911-a96a-0050568c55a6"));
+                .byDocumentId("ad0007b5-c846-e911-a96a-0050568c55a6"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);

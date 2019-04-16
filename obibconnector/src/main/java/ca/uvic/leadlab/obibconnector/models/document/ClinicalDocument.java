@@ -11,6 +11,7 @@ import java.util.List;
 public class  ClinicalDocument {
 
     private String documentId;
+    private Type type;
     private Template template;
     private Loinc loinc;
     private Date effectiveTime;
@@ -35,6 +36,14 @@ public class  ClinicalDocument {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public Template getTemplate() {

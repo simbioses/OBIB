@@ -19,15 +19,15 @@ public abstract class WSUtil {
     public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
         if (logger.isLoggable(Level.FINEST)) {
             logger.finest(message);
-            logger.finest(parseObject(obj));
+            logger.finest(parseObject(obj, true));
         }
     }
 
-    public static String parseObject(Object obj) throws ConnectorException {
+    public static String parseObject(Object obj, boolean formattedOutput) throws ConnectorException {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
 
             StringWriter writer = new StringWriter();
             marshaller.marshal(obj, writer);
@@ -35,6 +35,13 @@ public abstract class WSUtil {
             return writer.toString();
         } catch (JAXBException e) {
             throw new ConnectorException("Error parsing object", e);
+        }
+    }
+
+    public static void validateObjectSize(Object obj) throws ConnectorException {
+        String objStr = parseObject(obj, false);
+        if (objStr.length() > 3145728) { // 3 MB
+            throw new ConnectorException("Error: The total size of the message is bigger than 3 MB.");
         }
     }
 

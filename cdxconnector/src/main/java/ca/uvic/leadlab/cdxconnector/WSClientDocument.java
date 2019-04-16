@@ -33,6 +33,8 @@ public class WSClientDocument extends WSClient {
             }
             RCMRIN000002UV01 request = documentBuilder.build();
 
+            WSUtil.validateObjectSize(request);
+
             WSUtil.logObject(LOGGER, "\nSubmit Document Request:\n", request);
 
             BizTalkServiceInstance documentService = createCDASubmitService();
@@ -40,7 +42,7 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nSubmit Document Response:\n", response);
 
-            return WSUtil.parseObject(response);
+            return WSUtil.parseObject(response, false);
         } catch (MessageBuilderException e) {
             LOGGER.log(Level.SEVERE, "Error submitting document", e);
             throw new ConnectorException("Error submitting document", e);
@@ -71,7 +73,7 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nList New Documents Response:\n", response);
 
-            return WSUtil.parseObject(response);
+            return WSUtil.parseObject(response, false);
         } catch (MessageBuilderException e) {
             LOGGER.log(Level.SEVERE, "Error listing new documents", e);
             throw new ConnectorException("Error listing new documents", e);
@@ -94,7 +96,7 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
 
-            return WSUtil.parseObject(response);
+            return WSUtil.parseObject(response, false);
         } catch (MessageBuilderException e) {
             LOGGER.log(Level.SEVERE, "Error searching documents", e);
             throw new ConnectorException("Error searching documents", e);
@@ -118,7 +120,7 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nGet Document Response:\n", response);
 
-            return WSUtil.parseObject(response);
+            return WSUtil.parseObject(response, false);
         } catch (MessageBuilderException e) {
             LOGGER.log(Level.SEVERE, "Error getting documents", e);
             throw new ConnectorException("Error getting documents", e);

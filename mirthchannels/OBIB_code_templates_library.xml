@@ -1,9 +1,9 @@
 <codeTemplateLibrary version="3.7.1">
   <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
   <name>OBIB</name>
-  <revision>2</revision>
+  <revision>4</revision>
   <lastModified>
-    <time>1555020864280</time>
+    <time>1555375694259</time>
     <timezone>Etc/UTC</timezone>
   </lastModified>
   <description></description>
@@ -229,6 +229,36 @@ function buildDocumentStorageMessage(locationId, documentId, messageType, messag
       </properties>
     </codeTemplate>
     <codeTemplate version="3.7.1">
+      <id>d55c3c9d-e151-4034-9d14-35f86a4a58f1</id>
+      <name>Check Segment</name>
+      <revision>1</revision>
+      <lastModified>
+        <time>1555374958037</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+        </delegate>
+      </contextSet>
+      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+        <type>FUNCTION</type>
+        <code>/**
+	Verify that the segment exists.
+
+	@param {Object} segment - 
+	@return {boolean} return true if the segment exists
+*/
+function segmentExist(segment) {
+	return getArrayOrXmlLength(segment) &gt; 0;
+}</code>
+      </properties>
+    </codeTemplate>
+    <codeTemplate version="3.7.1">
       <id>bcd2a30d-111f-4fd3-9724-0e9a2e7dfe50</id>
       <name>Create DatabaseConnection</name>
       <revision>1</revision>
@@ -417,9 +447,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
     <codeTemplate version="3.7.1">
       <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
       <name>Parse CDA Address</name>
-      <revision>8</revision>
+      <revision>9</revision>
       <lastModified>
-        <time>1555361908339</time>
+        <time>1555375694267</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
@@ -448,22 +478,22 @@ function parseCDAAddress(cdaAddress) {
 		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
 	}
 	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
-	if (cdaAddress[&apos;delimiter&apos;]) {
+	if (segmentExist(cdaAddress[&apos;delimiter&apos;])) {
 		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
 			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
 		}
 		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
 	}
-	if (cdaAddress[&apos;city&apos;]) {
+	if (segmentExist(cdaAddress[&apos;city&apos;])) {
 		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
 	}
-	if (cdaAddress[&apos;province&apos;]) {
+	if (segmentExist(cdaAddress[&apos;province&apos;])) {
 		addr[&apos;province&apos;] = cdaAddress[&apos;state&apos;].toString();
 	}
-	if (cdaAddress[&apos;postalCode&apos;]) {
+	if (segmentExist(cdaAddress[&apos;postalCode&apos;])) {
 		addr[&apos;postalCode&apos;] = cdaAddress[&apos;postalCode&apos;].toString();
 	}
-	if (cdaAddress[&apos;country&apos;]) {
+	if (segmentExist(cdaAddress[&apos;country&apos;])) {
 		addr[&apos;country&apos;] = cdaAddress[&apos;country&apos;].toString();
 	}
 	return addr;
@@ -576,9 +606,9 @@ function parseCDAId(cdaID) {
     <codeTemplate version="3.7.1">
       <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
       <name>Parse CDA Name</name>
-      <revision>3</revision>
+      <revision>4</revision>
       <lastModified>
-        <time>1555361900552</time>
+        <time>1555375737766</time>
         <timezone>Etc/UTC</timezone>
       </lastModified>
       <contextSet>
@@ -606,10 +636,10 @@ function parseCDAName(cdaName) {
 	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
 		name[&apos;given&apos;][i] = cdaName[&apos;given&apos;][i].toString();
 	}
-	if (cdaName[&apos;prefix&apos;]) {
+	if (segmentExist(cdaName[&apos;prefix&apos;])) {
 		name[&apos;prefix&apos;] = cdaName[&apos;prefix&apos;].toString();
 	}
-	if (cdaName[&apos;suffix&apos;]) {
+	if (segmentExist(cdaName[&apos;suffix&apos;])) {
 		name[&apos;suffix&apos;] = cdaName[&apos;suffix&apos;].toString();
 	}
 	return name;

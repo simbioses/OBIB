@@ -104,7 +104,8 @@
                         <configuration>
                             <alias>ROOT</alias>
                             <file>${basedir}/certs/IHA_Root_CA(1).txt</file>
-                            <keystore>${basedir}/certs/IHA_Truststore.jks</keystore>
+                            <keystore>${basedir}/certs/IHA_Truststore.pfx</keystore>
+                            <storetype>pkcs12</storetype>
                             <storepass>LEADlab</storepass>
                             <trustcacerts>true</trustcacerts>
                             <noprompt>true</noprompt>
@@ -121,7 +122,8 @@
                         <configuration>
                             <alias>CA2</alias>
                             <file>${basedir}/certs/IHA_Issuing_CA2(1).txt</file>
-                            <keystore>${basedir}/certs/IHA_Truststore.jks</keystore>
+                            <keystore>${basedir}/certs/IHA_Truststore.pfx</keystore>
+                            <storetype>pkcs12</storetype>
                             <storepass>LEADlab</storepass>
                             <trustcacerts>true</trustcacerts>
                             <noprompt>true</noprompt>
@@ -138,27 +140,10 @@
                         <configuration>
                             <alias>CA1</alias>
                             <file>${basedir}/certs/IHA_Issuing_CA1(1).txt</file>
-                            <keystore>${basedir}/certs/IHA_Truststore.jks</keystore>
+                            <keystore>${basedir}/certs/IHA_Truststore.pfx</keystore>
+                            <storetype>pkcs12</storetype>
                             <storepass>LEADlab</storepass>
                             <trustcacerts>true</trustcacerts>
-                            <noprompt>true</noprompt>
-                            <skipIfExist>true</skipIfExist>
-                        </configuration>
-                    </execution>
-                    <!-- Client certificate -->
-                    <execution>
-                        <id>import-client-certificate</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>importKeystore</goal>
-                        </goals>
-                        <configuration>
-                            <srckeystore>${basedir}/certs/LEADlab_IHA_cert.pfx</srckeystore>
-                            <srcstoretype>PKCS12</srcstoretype>
-                            <srcstorepass>LEADlab</srcstorepass>
-                            <destkeystore>${basedir}/certs/LEADlab_Keystore.jks</destkeystore>
-                            <deststoretype>JKS</deststoretype>
-                            <deststorepass>LEADlab</deststorepass>
                             <noprompt>true</noprompt>
                             <skipIfExist>true</skipIfExist>
                         </configuration>
@@ -181,11 +166,11 @@
                             <properties>
                                 <property>
                                     <name>javax.net.ssl.keyStore</name>
-                                    <value>${basedir}/certs/LEADlab_Keystore.jks</value>
+                                    <value>${basedir}/certs/LEADlab_IHA_cert.pfx</value>
                                 </property>
                                 <property>
                                     <name>javax.net.ssl.keyStoreType</name>
-                                    <value>jks</value>
+                                    <value>pkcs12</value>
                                 </property>
                                 <property>
                                     <name>javax.net.ssl.keyStorePassword</name>

@@ -16,7 +16,7 @@
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>217</revision>
+      <revision>399</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -94,26 +94,25 @@ try {
 	result.close()
 } catch (e) {
 	logger.error(&quot;Error on &apos;Get Clinic Credentials&apos;: &quot; + e);
-}</script>
-            </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
-            <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-              <name>Verify Clinic Credentials</name>
-              <sequenceNumber>1</sequenceNumber>
-              <enabled>true</enabled>
-              <script>var error = &quot;&quot;;
-
-// Verify if the clinic is registered
-if (!channelMap.get(&apos;locationId&apos;)) {
-	error += &quot;The clinic is not registered in the OBD Connector. &quot;;
 }
 
-// Verify if the certificate path is right
+/* Validate the clinic credentials */
+var error = &quot;&quot;;
+
+// Is the clinic properly registered?
+if (!channelMap.get(&apos;locationId&apos;) || !channelMap.get(&apos;locationName&apos;) 
+|| !channelMap.get(&apos;username&apos;) || !channelMap.get(&apos;password&apos;)
+|| !channelMap.get(&apos;certPath&apos;) || !channelMap.get(&apos;certPass&apos;)) {
+	error += &quot;The clinic is not correctly registered within OBIB. &quot;;
+}
+
+// Does the certificate file exist?
 if (!new Packages.java.io.File(&quot;&quot; + channelMap.get(&apos;certPath&apos;)).exists()) {
-	error += &quot;Clinic certificate cannot be found. &quot;;
+	error += &quot;The clinic certificate cannot be found. &quot;;
 }
 
 if (error.length &gt; 0) {
-	logger.error(&quot;Error on &apos;Verify Clinic Credentials&apos;: &quot; + error);  // log the error
+	logger.error(error);  // log the error
 	
 	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(error)); // create the response
 	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
@@ -123,7 +122,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/SubmitCDA&apos;</name>
-              <sequenceNumber>2</sequenceNumber>
+              <sequenceNumber>1</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -137,7 +136,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListDocuments&apos;</name>
-              <sequenceNumber>3</sequenceNumber>
+              <sequenceNumber>2</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -151,7 +150,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/SearchDocuments&apos;</name>
-              <sequenceNumber>4</sequenceNumber>
+              <sequenceNumber>3</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -165,7 +164,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/GetDocument&apos;</name>
-              <sequenceNumber>5</sequenceNumber>
+              <sequenceNumber>4</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -179,7 +178,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListClinics&apos;</name>
-              <sequenceNumber>6</sequenceNumber>
+              <sequenceNumber>5</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -193,7 +192,7 @@ if (error.length &gt; 0) {
             </com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep>
             <com.mirth.connect.plugins.destinationsetfilter.DestinationSetFilterStep version="3.7.1">
               <name>Filter destination(s) if &quot;sourceMap.get(&apos;contextPath&apos;)&quot; equals &apos;/ListProviders&apos;</name>
-              <sequenceNumber>7</sequenceNumber>
+              <sequenceNumber>6</sequenceNumber>
               <enabled>true</enabled>
               <behavior>REMOVE_ALL_EXCEPT</behavior>
               <metaDataIds>
@@ -304,26 +303,45 @@ try {
           <transformer version="3.7.1">
             <elements>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>Store Receivers</name>
+                <name>Get Receivers</name>
                 <sequenceNumber>0</sequenceNumber>
                 <enabled>true</enabled>
-                <script>try {
+                <script>logger.debug(&apos;Get Receivers&apos;);
+
+try {
 	var receivers = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;receivers&apos;]); i++) {
     		receivers[i] = msg[&apos;receivers&apos;][i];
 	}
 	
 	// store the receivers, necessary to call &apos;send document service&apos;
-	channelMap.put(&apos;receivers&apos;, validate(receivers, &apos;&apos;, new Array()));
+	channelMap.put(&apos;receivers&apos;, receivers);
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Store Receivers&quot;: &apos; + e);
+    logger.error(&apos;Error on &quot;Get Receivers&quot;: &apos; + e);
+}
+
+/* Validate the receivers */
+var receivers = channelMap.get(&apos;receivers&apos;);
+
+// Is there at least one receiver?
+if (!receivers || receivers.length &lt; 1) {
+	var error = &apos;It is necessary at least one receiver to submit a document.&apos;
+	logger.error(error);  // log the error
+	
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(error)); // create the response
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+
+	throw error; // stop the processing
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Header Attributes</name>
                 <sequenceNumber>1</sequenceNumber>
                 <enabled>true</enabled>
-                <script>try {
+                <script>// Initialize a channel map variable to store any error during the document building
+channelMap.put(&apos;CDABuildErrors&apos;, &apos;&apos;);
+
+try {
 	// 4.1. Header Attributes
 	
 	// CONF-BC0001, CONF-BC0502, CONF-BC0002, CONF-BC0003, CONF-BC0004, CONF-BC0005 (fixed in the message template)
@@ -350,7 +368,9 @@ try {
 	
 	// ClinicalDocument/languageCode CONF-BC0029, CONF-BC0030 (fixed in the message template)
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Header Attributes&quot;: &apos; + e);
+	var error = &apos;Error on &quot;Header Attributes&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -410,7 +430,9 @@ try {
 	
 	// CONF-BC0057 TODO languageCommunication?
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Record Target&quot;: &apos; + e);
+	var error = &apos;Error on &quot;Record Target&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -478,7 +500,9 @@ try {
 		// CONF-BC0513, CONF-BC0069 (fixed in the template)
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Author&quot;: &apos; + e);
+	var error = &apos;Error on &quot;Author&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -496,7 +520,9 @@ try {
 	// CONF-BC0087 TODO ? contain zero or one [0..1] name
 	tmp[&apos;custodian&apos;][&apos;assignedCustodian&apos;][&apos;representedCustodianOrganization&apos;][&apos;name&apos;] = $(&apos;locationName&apos;);
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Custodian&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Custodian&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -565,7 +591,9 @@ try {
 		}
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Information Recipient&quot;: &apos; + e);
+	var error = &apos;Error on &quot;Information Recipient&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -629,7 +657,9 @@ try {
 		}
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Data Enterer&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Data Enterer&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -699,7 +729,9 @@ try {
 																     msgParticipant[&apos;name&apos;][&apos;suffix&apos;]);
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Generic Participant&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Generic Participant&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -731,7 +763,9 @@ try {
 		//}
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Order&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Order&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -754,7 +788,9 @@ try {
 		tmp[&apos;component&apos;][&apos;nonXMLBody&apos;][&apos;text&apos;][&apos;reference&apos;] = new XML(&apos;&lt;reference value=&quot;&apos; + msgNonXMLBody[&apos;content&apos;] + &apos;&quot;/&gt;&apos;);
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Document Body&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Document Body&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
@@ -775,44 +811,55 @@ try {
 		channelMap.put(&apos;attachments&apos;, attachments);
 	}
 } catch (e) {
-    logger.error(&apos;Error on Transformer &quot;Attachments&quot;: &apos; + e);
+    	var error = &apos;Error on &quot;Attachments&quot;: &apos; + e;
+    	logger.error(error); // log the error and concatenate it in the channel map variable
+    	channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - &apos; + error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>CDA Schema Validation</name>
+                <name>Document Validation</name>
                 <sequenceNumber>12</sequenceNumber>
                 <enabled>true</enabled>
-                <script>try {
+                <script>logger.debug(&quot;Document Validation&quot;);
+
+/* Validate the CDA using the XML Schemas */
+try {
+	// build the XML with correct namespaces
 	default xml namespace = &quot;urn:hl7-org:v3&quot;;
-	
 	var msgValidate = new XML(tmp.toString());
 	msgValidate.addNamespace(new Namespace(&apos;xsi&apos;,&apos;http://www.w3.org/2001/XMLSchema -instance&apos;));
-	
+
+	// get the validator using the xml schemas
 	var factory = new Packages.javax.xml.validation.SchemaFactory.newInstance(&apos;http://www.w3.org/2001/XMLSchema&apos;);
-	
-	var schemaLocation = new Packages.java.io.File( $(&apos;custom-lib&apos;) + &apos;CDA_with_BcCdaExtensions/&apos; + globalMap.get(&apos;CDASchema&apos;) );
+	var schemaLocation = new Packages.java.io.File($(&apos;custom-lib&apos;) + &apos;CDA_with_BcCdaExtensions/&apos; + globalMap.get(&apos;CDASchema&apos;));
 	var schema = factory.newSchema(schemaLocation);
-	
 	var validator = schema.newValidator();
-	
+
+	// transform the xml into a stream
 	var reader = new java.io.StringReader(msgValidate);
 	var source = new Packages.javax.xml.transform.stream.StreamSource(reader);
-	
-	var validationResult = false;
-	var errorString = &apos;&apos;;
-	
+
+	// validate the stream
 	try {
 		validator.validate(source);
-		validationResult = true;
-	} catch(err) {
-		logger.error(&quot;Error validating CDA XML&quot; + err);
-		errorString = err.message.replace(&apos;org.xml.sax.SAXParseException:&apos;,&apos;&apos;).replace(/(&quot;|&apos;)/g, &apos;&apos;);
-	} finally {
-		channelMap.put(&apos;schemaValidationError&apos;, errorString);
-		channelMap.put(&apos;schemaValidationPassed&apos;, validationResult);
+	} catch(e) {
+		logger.error(&apos;CDA XML validation errors: &apos; + e);
+		var strError = e.message.replace(&apos;org.xml.sax.SAXParseException:&apos;,&apos;&apos;).replace(/(&quot;|&apos;)/g, &apos;&apos;);
+		channelMap.put(&apos;CDABuildErrors&apos;, channelMap.get(&apos;CDABuildErrors&apos;) + &apos;\n - CDA XML validation errors: &apos; + strError);
 	}
 } catch(e) {
-	logger.error(&apos;Error on Transformer &quot;CDA Schema Validation&quot;: &apos; + e);
+	logger.error(&apos;Error validating the CDA XML: &apos; + e);
+}
+
+/* Verify if there was any error in the document building */
+var errors = &apos;&apos; + channelMap.get(&apos;CDABuildErrors&apos;); // convert to string to validate through length
+if (errors.length &gt; 0) {
+	logger.error(&apos;Returning CDA building errors.&apos;); // log the error
+	
+	responseMap.put(&apos;responseMessage&apos;, createErrorMessage(errors)); // create the response
+	responseMap.put(&apos;responseStatus&apos;, &apos;500&apos;);
+
+	throw errors; // stop the processing
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             </elements>
@@ -4967,7 +5014,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1555609533237</time>
+            <time>1555627485003</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

@@ -28,6 +28,7 @@ public class  ClinicalDocument {
     private List<Order> orders = new ArrayList<>();
     private NonXMLBody nonXMLBody;
     private List<Attachment> attachments = new ArrayList<>();
+    private List<String> receivers = new ArrayList<>();
     private String cdaXML;
 
     public String getDocumentId() {
@@ -207,6 +208,21 @@ public class  ClinicalDocument {
             this.attachments = new ArrayList<>();
         }
         this.attachments.add(attachment);
+    }
+
+    public List<String> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<String> receivers) {
+        this.receivers = receivers;
+    }
+
+    public void addReceiver(String receiverId) {
+        if (this.receivers == null) {
+            this.receivers = new ArrayList<>();
+        }
+        this.receivers.add(receiverId);
     }
 
     public String getCdaXML() {

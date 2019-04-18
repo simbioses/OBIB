@@ -16,7 +16,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     //@Test
     public void testSubmitDoc() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(config);
+        ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
 
         IDocument response = submitDoc.newDoc()
                         .patient()
@@ -46,7 +46,9 @@ public class SubmitDocTest extends FacadesBaseTest {
                             .phone(TelcoType.HOME, "250-111-1234")
                         .and().inFulfillmentOf()
                             .id("1111")
-                        .and().content("Document plain text")
+                        .and()
+                            .receiverId(clinicIdA)
+                            .content("Document plain text")
                     .submit();
 
         Assert.assertNotNull(response);
@@ -54,7 +56,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     //@Test
     public void testSubmitDocWithAttachment() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(config);
+        ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
 
         IDocument response = submitDoc.newDoc()
                 .patient()
@@ -82,7 +84,9 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .name(NameType.LEGAL, "Joseph", "Cloud")
                     .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                     .phone(TelcoType.HOME, "250-111-1234")
-                .and().attach(AttachmentType.PDF, "logo.pdf", DatatypeConverter.parseBase64Binary(base64Pdf))
+                .and()
+                    .receiverId(clinicIdA)
+                    .attach(AttachmentType.PDF, "logo.pdf", DatatypeConverter.parseBase64Binary(base64Pdf))
                 .submit();
 
         Assert.assertNotNull(response);

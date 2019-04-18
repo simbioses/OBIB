@@ -96,6 +96,12 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
+    public ISubmitDoc receiverId(String receiverId) {
+        document.addReceiver(receiverId);
+        return this;
+    }
+
+    @Override
     public IDocument submit() throws OBIBException {
         try {
             SubmitDocumentResponse response = services.submitCDA(document);

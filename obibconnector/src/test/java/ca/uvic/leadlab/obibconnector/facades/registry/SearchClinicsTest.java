@@ -12,16 +12,16 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     //@Test
     public void testFindById() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
+        ISearchClinic searchClinic = new SearchClinic(configClinicC);
 
-        List<IClinic> clinics = searchClinic.findByID(clinicId);
+        List<IClinic> clinics = searchClinic.findByID(clinicIdA);
 
         Assert.assertNotNull(clinics);
     }
 
     //@Test(expected = OBIBException.class)
     public void testFindByIdError() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
+        ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
         List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
 

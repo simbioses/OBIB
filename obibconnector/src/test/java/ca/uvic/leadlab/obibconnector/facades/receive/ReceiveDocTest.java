@@ -13,7 +13,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     //@Test
     public void testPollNewDocIDs() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
+        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
@@ -41,7 +41,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     //@Test
     public void testRetrieveDocument() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
+        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
         IDocument document = receiveDoc.retrieveDocument("ad0007b5-c846-e911-a96a-0050568c55a6");
 
@@ -51,7 +51,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     //@Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
+        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
         IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 

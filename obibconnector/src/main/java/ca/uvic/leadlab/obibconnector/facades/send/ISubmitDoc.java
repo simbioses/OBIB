@@ -29,4 +29,6 @@ public interface ISubmitDoc extends ISubmit {
 
     ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException;
 
+    ISubmitDoc receiverId(String receiverId);
+
 }

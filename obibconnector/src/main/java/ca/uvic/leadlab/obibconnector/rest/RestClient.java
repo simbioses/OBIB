@@ -17,7 +17,6 @@ public class RestClient implements IOscarInformation {
 
     private static final Properties properties = setupProperties();
 
-    private static final String SERVICES_BASE_URL = properties.getProperty("obib.services.base.uri");
     private static final String SUBMIT_CDA_PATH = properties.getProperty("obib.submitcda.path");
     private static final String LIST_DOCUMENTS_PATH = properties.getProperty("obib.listdocuments.path");
     private static final String SEARCH_DOCUMENT_PATH = properties.getProperty("obib.searchdocument.path");
@@ -56,7 +55,7 @@ public class RestClient implements IOscarInformation {
     }
 
     private String getServicesURL() {
-        return (obibURL != null && !obibURL.isEmpty()) ? obibURL : SERVICES_BASE_URL;
+        return obibURL;
     }
 
     /**

@@ -30,7 +30,7 @@ public class Patient extends Person {
         if (this.ids == null) {
             this.ids = new ArrayList<>();
         }
-        this.ids.add(new Id(id, ImplHelper.DEFAULT_CLINIC_ID_TYPE));
+        this.ids.add(new Id(id, ImplHelper.DEFAULT_PATIENT_ID_TYPE));
     }
 
     public List<Name> getNames() {

@@ -72,7 +72,9 @@ public class TestRestClient {
                     .phone(TelcoType.HOME, "250-111-1234")
                 .and().inFulfillmentOf()
                     .id("1111")
-                .and().content("Plain text document content"))
+                .and()
+                    .receiverId("cdxpostprod-obctc")
+                    .content("Plain text document content"))
                 .getDocument();
         System.out.println(mapper.writeValueAsString(document));
 

@@ -27,4 +27,22 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
         //Assert.assertNull(clinics);
     }
+
+    //@Test
+    public void testFindByName() throws Exception {
+        ISearchClinic searchClinic = new SearchClinic(configClinicC);
+
+        List<IClinic> clinics = searchClinic.findByName("oscar");
+
+        Assert.assertNotNull(clinics);
+    }
+
+    //@Test
+    public void testFindByAddress() throws Exception {
+        ISearchClinic searchClinic = new SearchClinic(configClinicC);
+
+        List<IClinic> clinics = searchClinic.findByAddress("Kelowna");
+
+        Assert.assertNotNull(clinics);
+    }
 }

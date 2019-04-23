@@ -27,4 +27,23 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
         //Assert.assertNull(providers);
     }
+
+    //@Test
+    public void testFindByName() throws Exception {
+        ISearchProviders searchProviders = new SearchProviders(configClinicA);
+
+        List<IProvider> providers = searchProviders.findByName("a");
+
+        Assert.assertNotNull(providers);
+    }
+
+    //@Test(expected = OBIBException.class) /* CDX return: "Provider clinic ID cannot be the only parameter. Please use Clinic Search instead." */
+    public void testFindByClinicID() throws Exception {
+        ISearchProviders searchProviders = new SearchProviders(configClinicA);
+
+        List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
+
+        Assert.assertNotNull(providers);
+    }
+
 }

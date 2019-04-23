@@ -6,6 +6,7 @@ import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.impl.receive.Telco;
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Telecom;
+import ca.uvic.leadlab.obibconnector.models.registry.Clinic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +39,15 @@ public class Provider implements IProvider {
         ID = ImplHelper.getDefaultProviderId(provider.getIds());
 
         if (provider.getName() != null) {
-            firstName = provider.getName().getGiven().get(0);
+            for (String given : provider.getName().getGiven()) {
+                firstName = String.format("%s %s", firstName, given); // Concatenates the first name
+            }
             lastName = provider.getName().getFamily();
             prefix = provider.getName().getPrefix();
         }
 
         if (!provider.getAddresses().isEmpty()) {
-            Address address = provider.getAddresses().get(0);
+            Address address = provider.getAddresses().get(0); // Get the first address
             streetAddress = address.getStreetAddress();
             city = address.getCity();
             province = address.getProvince();
@@ -61,10 +64,11 @@ public class Provider implements IProvider {
         }
 
         if (!provider.getClinics().isEmpty()) {
-            if (!provider.getClinics().get(0).getIds().isEmpty()) {
-                clinicID = provider.getClinics().get(0).getIds().get(0).getCode();
+            Clinic providerClinic = provider.getClinics().get(0); // Get the first clinic
+            if (!providerClinic.getIds().isEmpty()) {
+                clinicID = providerClinic.getIds().get(0).getCode();
             }
-            clinicName = provider.getClinics().get(0).getName();
+            clinicName = providerClinic.getName();
         }
     }
 

@@ -24,7 +24,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"patient\": {\n    \"id\": [{\n      \"type\":\"2.16.840.1.113883.4.50\",\n      \"id\":\"9698650267\"\n    },{\n      \"type\":\"2.16.840.1.113883.3.277.1.73\",\n      \"id\":\"A00000025\"\n    },{\n      \"type\":\"2.16.840.1.113883.3.277.1.71\",\n      \"id\":\"EK00000036\"\n    }],\n    \"address\": [{\n      \"use\": \"H\",\n      \"streetAddress\": \"7715 Roye Sq\",\n      \"city\": \"Lions Bay\",\n      \"province\": \"CA-BC\",\n      \"postalCode\": \"V0N 0A2\"\n    }],\n    \"telecom\": [{\n        \"use\": \"H\",\n        \"type\": \"tel\",\n        \"value\": \"250-123-4567\"\n    }],\n    \"name\": [{\n      \"use\": \"L\",\n      \"given\": [\"Plis\"],\n      \"family\": \"Ihcurrence\"\n    }],\n    \"gender\": \"F\",\n    \"dob\": \"1958-02-24\"\n  },\n  \"author\": {\n    \"time\":\"2019-03-13T12:03:00-0700\",\n    \"id\": [{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLIF\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Family\"],\n      \"family\": \"Plis\",\n      \"prefix\": \"Dr\"\n    }\n  },\n  \"recipient\": [{\n    \"id\": [{\n      \"type\":\"2.16.840.1.113883.3.40.2.11\",\n      \"id\":\"93188\"\n    },{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLISIHLU\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Lucius\"],\n      \"family\": \"Plisihb\",\n      \"prefix\": \"Dr.\"\n    },\n    \"receivedOrganization\":{\n      \"id\": [{\n        \"type\":\"2.16.840.1.113883.3.277.100.2\",\n        \"id\":\"cdxpostprod-otca\"\n      }],\n      \"name\": \"Organization Name\"\n    }\n  },{\n    \"id\": [{\n      \"type\":\"2.16.840.1.113883.3.40.2.11\",\n      \"id\":\"93190\"\n    },{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLISIHNO\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Noel\"],\n      \"family\": \"Plisihd\",\n      \"prefix\": \"Dr\"\n    },\n    \"receivedOrganization\":{\n      \"id\": [{\n        \"type\":\"2.16.840.1.113883.3.277.100.2\",\n        \"id\":\"cdxpostprod-otca\"\n      }],\n      \"name\": \"Organization Name\"\n    }\n  }],\n  \"participant\": [{\n    \"functionCode\":\"ORD\",\n    \"id\": [{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLIF\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Noel\"],\n      \"family\": \"Plisihd\",\n      \"prefix\": \"Dr\"\n    }\n  }],\n  \"nonXMLBody\": {\n    \"mediaType\": \"text/plain\",\n    \"content\": \"This patient was refered to you\"\n  }\n}"
+					"raw": "{\n  \"patient\": {\n    \"ids\": [{\n      \"type\":\"2.16.840.1.113883.4.50\",\n      \"id\":\"9698650267\"\n    }],\n    \"addresses\": [{\n      \"use\": \"H\",\n      \"streetAddress\": \"7715 Roye Sq\",\n      \"city\": \"Lions Bay\",\n      \"province\": \"CA-BC\",\n      \"postalCode\": \"V0N 0A2\"\n    }],\n    \"telecoms\": [{\n        \"use\": \"H\",\n        \"type\": \"tel\",\n        \"value\": \"250-123-4567\"\n    }],\n    \"names\": [{\n      \"use\": \"L\",\n      \"given\": [\"Plis\"],\n      \"family\": \"Ihcurrence\"\n    }],\n    \"gender\": \"F\",\n    \"dob\": \"1958-02-24\"\n  },\n  \"author\": {\n    \"time\":\"2019-03-13T12:03:00-0700\",\n    \"ids\": [{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLIF\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Family\"],\n      \"family\": \"Plis\",\n      \"prefix\": \"Dr\"\n    }\n  },\n  \"recipient\": [{\n    \"ids\": [{\n      \"type\":\"2.16.840.1.113883.3.40.2.11\",\n      \"id\":\"93188\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Lucius\"],\n      \"family\": \"Plisihb\",\n      \"prefix\": \"Dr.\"\n    },\n    \"receivedOrganization\":{\n      \"ids\": [{\n        \"type\":\"2.16.840.1.113883.3.277.100.2\",\n        \"id\":\"cdxpostprod-otca\"\n      }],\n      \"name\": \"Organization Name\"\n    }\n  },{\n    \"ids\": [{\n      \"type\":\"2.16.840.1.113883.3.40.2.11\",\n      \"id\":\"93190\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Noel\"],\n      \"family\": \"Plisihd\",\n      \"prefix\": \"Dr\"\n    },\n    \"receivedOrganization\":{\n      \"ids\": [{\n        \"type\":\"2.16.840.1.113883.3.277.100.2\",\n        \"id\":\"cdxpostprod-otca\"\n      }],\n      \"name\": \"Organization Name\"\n    }\n  }],\n  \"participants\": [{\n  \t\"functionCode\":\"ORD\",\n    \"ids\": [{\n      \"type\":\"2.16.840.1.113883.3.277.1.61\",\n      \"id\":\"PLIF\"\n    }],\n    \"name\": {\n      \"use\": \"L\",\n      \"given\": [\"Noel\"],\n      \"family\": \"Plisihd\",\n      \"prefix\": \"Dr\"\n    }\n  }],\n  \"receivers\": [\"cdxpostprod-obctc\"],\n  \"nonXMLBody\": {\n    \"mediaType\": \"text/plain\",\n    \"content\": \"This patient was refered to you\"\n  }\n}"
 				},
 				"url": {
 					"raw": "http://192.168.100.101:8081/SubmitCDA",
@@ -138,7 +138,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"documentId\": \"2b0d8260-0c20-e911-a96a-0050568c55a6\"\n}"
+					"raw": "{\n\t\"documentId\": \"ad0007b5-c846-e911-a96a-0050568c55a6\"\n}"
 				},
 				"url": {
 					"raw": "http://192.168.100.101:8081/GetDocument",
@@ -176,7 +176,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"clinicId\": \"cdxpostprod-otca\",\n\t\"clinicName\": \"\",\n\t\"clinicAddress\": \"\"\n}"
+					"raw": "{\n\t\"clinicId\": \"\",\n\t\"clinicName\": \"Oscar\",\n\t\"clinicAddress\": \"\"\n}"
 				},
 				"url": {
 					"raw": "http://192.168.100.101:8081/ListClinics",
@@ -214,7 +214,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"clinicId\": \"\",\n\t\"providerId\": \"93188\",\n\t\"providerName\": \"\"\n}"
+					"raw": "{\n\t\"clinicId\": \"\",\n\t\"providerId\": \"\",\n\t\"providerName\": \"A\"\n}"
 				},
 				"url": {
 					"raw": "http://192.168.100.101:8081/ListProviders",

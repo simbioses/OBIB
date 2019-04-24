@@ -1,13 +1,18 @@
 package ca.uvic.leadlab.obibconnector.facades.send;
 
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
+import org.glassfish.jersey.internal.util.Base64;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.xml.bind.DatatypeConverter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 public class SubmitDocTest extends FacadesBaseTest {
@@ -90,5 +95,50 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .submit();
 
         Assert.assertNotNull(response);
+    }
+
+    //@Test(expected = OBIBException.class)
+    public void testSubmitDocWithBigAttachment() throws Exception {
+
+        ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
+
+        IDocument response = submitDoc.newDoc()
+                .patient()
+                .id("2222")
+                .name(NameType.LEGAL, "Joe", "Wine")
+                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                .phone(TelcoType.HOME, "250-111-1234")
+                .birthday("1980", "1", "1")
+                .gender(Gender.MALE)
+                .and().author()
+                .id("3333")
+                .time(new Date())
+                .name(NameType.LEGAL, "Joseph", "Cloud")
+                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                .phone(TelcoType.HOME, "250-111-1234")
+                .and().recipient()
+                .primary()
+                .id("4444")
+                .name(NameType.LEGAL, "Joseph", "Cloud")
+                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                .phone(TelcoType.HOME, "250-111-1234")
+                .and().participant()
+                .functionCode("PCP")
+                .id("555")
+                .name(NameType.LEGAL, "Joseph", "Cloud")
+                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                .phone(TelcoType.HOME, "250-111-1234")
+                .and()
+                .receiverId(clinicIdA)
+                .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
+                .submit();
+
+        Assert.assertNotNull(response);
+    }
+
+    private static byte[] loadFile(String filePath) throws Exception {
+        Path path = Paths.get(SubmitDocTest.class.getResource(filePath).toURI());
+        byte[] bytes = Files.readAllBytes(path);
+        return bytes;//return Base64.encode(bytes);
     }
 }

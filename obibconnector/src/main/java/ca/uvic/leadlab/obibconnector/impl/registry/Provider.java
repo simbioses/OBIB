@@ -39,9 +39,7 @@ public class Provider implements IProvider {
         ID = ImplHelper.getDefaultProviderId(provider.getIds());
 
         if (provider.getName() != null) {
-            for (String given : provider.getName().getGiven()) {
-                firstName = String.format("%s %s", firstName, given); // Concatenates the first name
-            }
+            firstName = ImplHelper.getFirstName(provider.getName().getGiven());
             lastName = provider.getName().getFamily();
             prefix = provider.getName().getPrefix();
         }

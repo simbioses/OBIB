@@ -38,7 +38,7 @@ public abstract class ImplHelper {
                 }
             }
         }
-        return ""; // TODO what if there is no default id type?
+        return ids != null && ids.size() > 0 ? ids.get(0).getCode() :  ""; // TODO Return the first ID if there is no default?
     }
 
     public static String getDefaultClinicId(List<Id> clinicIds) {
@@ -51,6 +51,14 @@ public abstract class ImplHelper {
 
     public static String getDefaultPatientId(List<Id> patientIds) {
         return getIdByType(patientIds, DEFAULT_PATIENT_ID_TYPE);
+    }
+
+    public static String getFirstName(List<String> given) {
+        String firstName = "";
+        for (String givenName : given) {
+            firstName = String.format("%s %s", firstName, givenName); // Concatenates the first name
+        }
+        return firstName.trim();
     }
 
     public static boolean checkAttachment(String content, String hash) {

@@ -24,7 +24,7 @@ public class DocumentMock2 implements IDocument {
 
     @Override
     public String getDocumentID() {
-        return "11f5f3e4-aeae-4507-8ceb-ede4afb21234";
+        return "11f5f3e4-aeae-4507-8ceb-ede4afb21235";
     }
 
     @Override
@@ -35,6 +35,11 @@ public class DocumentMock2 implements IDocument {
     @Override
     public String getSetId() {
         return "1";
+    }
+
+    @Override
+    public String getInFulFillmentOfId() {
+        return "11f5f3e4-aeae-4507-8ceb-ede4afb21234";
     }
 
     @Override

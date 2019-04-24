@@ -12,6 +12,7 @@ public interface IDocument {
     String getDocumentID();             // GUID of document
     int    getVersion();
     String getSetId();
+    String getInFulFillmentOfId();
     String getLoincCode();              // LOINC code of document type
     String getLoincCodeDisplayName();   // display name for LOINC code
     String getTitle();

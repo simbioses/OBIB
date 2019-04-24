@@ -38,6 +38,11 @@ public class DocumentMock1 implements IDocument {
     }
 
     @Override
+    public String getInFulFillmentOfId() {
+        return null;
+    }
+
+    @Override
     public String getLoincCode() {
         return "34117-2";
     }

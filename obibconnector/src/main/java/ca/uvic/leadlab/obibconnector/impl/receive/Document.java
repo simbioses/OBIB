@@ -131,6 +131,11 @@ public class Document implements IDocument {
     }
 
     @Override
+    public String getInFulFillmentOfId() {
+        return null; // todo implement me
+    }
+
+    @Override
     public String getLoincCode() {
         return loincCode;
     }

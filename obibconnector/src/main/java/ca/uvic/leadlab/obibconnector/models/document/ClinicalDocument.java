@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class  ClinicalDocument {
+public class ClinicalDocument {
 
     private String documentId;
     private Type type;
@@ -16,7 +16,7 @@ public class  ClinicalDocument {
     private Loinc loinc;
     private Date effectiveTime;
     private String title;
-    private Integer versionNumber;
+    private int versionNumber;
     private Id setId;
     private Patient patient;
     private List<Author> authors = new ArrayList<>();
@@ -79,11 +79,11 @@ public class  ClinicalDocument {
         this.title = title;
     }
 
-    public Integer getVersionNumber() {
+    public int getVersionNumber() {
         return versionNumber;
     }
 
-    public void setVersionNumber(Integer versionNumber) {
+    public void setVersionNumber(int versionNumber) {
         this.versionNumber = versionNumber;
     }
 

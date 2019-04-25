@@ -107,7 +107,7 @@ public class SubmitDoc implements ISubmitDoc {
             SubmitDocumentResponse response = services.submitCDA(document);
 
             if (!response.isOK()) {
-                throw new OBIBException(response.getMessage());
+                throw new OBIBRequestException(response.getMessage());
             }
 
             return new Document(response.getDocument());

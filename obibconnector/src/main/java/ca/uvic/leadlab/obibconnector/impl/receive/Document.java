@@ -14,9 +14,7 @@ import ca.uvic.leadlab.obibconnector.models.document.Participant;
 import ca.uvic.leadlab.obibconnector.models.document.Recipient;
 
 import javax.xml.bind.DatatypeConverter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Document implements IDocument {
 
@@ -29,6 +27,7 @@ public class Document implements IDocument {
     private String loincCodeDisplayName;
 
     private String setId;
+    private String inFulFillmentOfId;
 
     private IPatient patient;
 
@@ -62,6 +61,10 @@ public class Document implements IDocument {
         if (document.getSetId() != null) {
             setId = document.getSetId().getCode();
         }
+        if (document.getOrders() != null && !document.getOrders().isEmpty()) {
+            inFulFillmentOfId = document.getOrders().get(0).getId();
+        }
+
         patient = new Patient(document.getPatient());
         for (Author docAuthor : document.getAuthors()) {
             if (docAuthor.getSoftware() != null) {
@@ -132,7 +135,7 @@ public class Document implements IDocument {
 
     @Override
     public String getInFulFillmentOfId() {
-        return null; // todo implement me
+        return inFulFillmentOfId;
     }
 
     @Override

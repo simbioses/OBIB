@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.models.response;
 
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
+import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,9 @@ public class ListDocumentsResponse extends OBIBResponse {
         return ids;
     }
 
-    public ClinicalDocument getDocument() {
-        if (documents.size() != 1) {
-            // TODO throw exception?
+    public ClinicalDocument getDocument() throws OBIBRequestException {
+        if (documents.isEmpty()) {
+            throw new OBIBRequestException("No documents found.");
         }
         return documents.get(0);
     }

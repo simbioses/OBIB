@@ -8,7 +8,8 @@ import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
 import java.io.FileInputStream;
-import java.security.KeyStore;
+import java.io.IOException;
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,9 +55,14 @@ public abstract class WSClient {
             context.init(factory.getKeyManagers(), null, null);
 
             HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error initializing ssl context", e);
-            throw new ConnectorException("Error initializing ssl context", e);
+        } catch (IOException e) {
+            String errorMsg = "Error reading the certificate to initialize the SSL Context.";
+            LOGGER.log(Level.SEVERE, errorMsg, e);
+            throw new ConnectorException(errorMsg, e);
+        } catch (GeneralSecurityException e) {
+            String errorMsg = "Error initializing the SSL Context.";
+            LOGGER.log(Level.SEVERE, errorMsg, e);
+            throw new ConnectorException(errorMsg, e);
         }
     }
 

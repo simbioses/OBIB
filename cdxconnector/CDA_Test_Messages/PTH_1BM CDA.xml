@@ -1,0 +1,130 @@
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://microsoft.com/HealthCare/HL7/2X" xmlns:bccda="urn:bccda" xmlns:xalan="http://xml.apache.org/xslt" classCode="DOCCLIN" moodCode="EVN"><!--
+				********************************************************
+				CDA Header - IHA BBK/PTH Transform
+				********************************************************
+				--><realmCode code="CA-BC" /><typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040" assigningAuthorityName="HL7 CDA R2" /><templateId root="2.16.840.1.113883.3.51.60.2.2" assigningAuthorityName="Anatomic Pathology Report template" /><id root="2.16.840.1.113883.3.277.100.3" extension="2aa50693-8d29-4e3f-9e2f-f94c5b6fe4e5" assigningAuthorityName="CDX Clinical Document ID" /><code codeSystem="2.16.840.1.113883.6.1" code="11526-1" codeSystemName="LOINC Code" displayName="Anatomic Pathology Report" /><title>Anatomic Pathology Report - Bone Marrow</title><!--Message DateTime (MSH.7)--><effectiveTime value="201504020823-0700" /><confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="Confidentiality" /><languageCode code="en-CA" /><!-- ==== Patient Information ==== --><recordTarget typeCode="RCT" contextControlCode="OP"><patientRole classCode="PAT"><id root="2.16.840.1.113883.4.50" assigningAuthorityName="BC Patient Health Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.73" extension="A00030485" assigningAuthorityName="IHA Patient EMR Number" /><id root="2.16.840.1.113883.3.277.1.71" extension="VJ0070011/15" assigningAuthorityName="IHA Patient Unit Number" /><addr use="H">
+2501 40th Ave<delimiter /><city>LAKE COUNTRY</city><state>CA-BC</state><postalCode>V4V 2S7</postalCode></addr><telecom use="H" value="tel:250-558-1200" /><patient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>PTH</family><given>1BM</given></name><administrativeGenderCode code="F" /><birthTime value="19680101" /></patient></patientRole></recordTarget><!-- ==== Author: Person and/or software that created this document ==== --><author typeCode="AUT" contextControlCode="OP"><time value="201501081000-0800" /><assignedAuthor classCode="ASSIGNED"><id root="2.16.840.1.113883.3.277.1.81" extension="D50633" assigningAuthorityName="IHA Message Number" /><assignedAuthoringDevice classCode="DEV" determinerCode="INSTANCE"><softwareName code="PTH_IHVJH" codeSystem="2.16.840.1.113883.3.277.1.12" codeSystemName="IHA Software Code" /></assignedAuthoringDevice></assignedAuthor></author><!--  ==== Custodian: organization responsible for this document ==== --><custodian typeCode="CST"><assignedCustodian classCode="ASSIGNED"><representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE"><id root="2.16.840.1.113883.3.277.1.62" extension="IHVJH" assigningAuthorityName="IHA Meditech Location Identifier" /></representedCustodianOrganization></assignedCustodian></custodian><!-- ==== Information Recipients: Providers who have requested a copy of this document ==== --><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="MITD4" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Mitrovic</family><given>Danilo</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="PRCP"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="93190" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHAA" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihd</family><given>Aaron</given></name></informationRecipient></intendedRecipient></informationRecipient><!-- ==== Ordering Physician ==== --><participant typeCode="REF" contextControlCode="OP"><functionCode code="ORD" displayName="Ordering Provider" /><time value="201504020824-0700" /><associatedEntity classCode="PROV"><id root="2.16.840.1.113883.3.40.2.11" extension="93190" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHAA" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><associatedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihd</family><given>Aaron</given></name></associatedPerson></associatedEntity></participant><!-- ==== Order information ==== --><inFulfillmentOf typeCode="FLFS"><order classCode="ENC" moodCode="RQO"><id root="2.16.840.1.113883.3.277.1.22" extension="IHVJH-20150108-00000631" assigningAuthorityName="IHA Order Number (Requisition Number)" /><code code="RE:CM:N" codeSystemName="Order Status (Order Control[:Order Status][:Response Flag])" /></order></inFulfillmentOf><inFulfillmentOf typeCode="FLFS"><templateId root="2.16.840.1.113883.3.277.100.6" assigningAuthorityName="Order Component Template" /><order classCode="ENC" moodCode="RQO"><!-- ==== Unique Order Component Number (Requisition# + Specimen#) - Because there may be multiple documents that each represent the fulfillment of part of an order/requisition.
+						Any infulfillmentOf elements with this templateId mean that the identifier uniquely identifies the part, not the whole. Lab requisitions may contain tests for multiple specimens and each specimen will 
+						come across as a part of the whole Requisition. ====
+						--><id root="2.16.840.1.113883.3.277.1.22.1" extension="IHVJH-20150108-00000631__PT:BV15-1R" assigningAuthorityName="IHA Order Component Number" /></order></inFulfillmentOf><!-- ==== Parent Document: HL7 v2 message from Meditech ==== --><relatedDocument typeCode="XFRM"><parentDocument classCode="DOCCLIN" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.81" extension="D50633" assigningAuthorityName="IHA Message Number" /></parentDocument></relatedDocument><!-- ==== Encompassing Encounter: Patient Visit ==== --><componentOf typeCode="COMP"><!--Patient Account Number (PID_18)--><encompassingEncounter classCode="ENC" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.72" extension="VJ0070011/15" assigningAuthorityName="IHA Patient Account Number" /><!--Encounter has an admission date only--><effectiveTime value="201411191222-0800" /><encounterParticipant typeCode="ATND"><assignedEntity classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="MITD4" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Mitrovic</family><given>Danilo</given></name></assignedPerson></assignedEntity></encounterParticipant><location><healthCareFacility classCode="SDLOC"><id root="2.16.840.1.113883.3.277.1.62" extension="IHVJH" assigningAuthorityName="IHA Meditech Location Identifier" /><!--code represents the patient location, in the form "Pt.Type:Unit[:Room[:Bed]]"--><code code="REF:VERVJHLPTH" codeSystemName="Patient Type:Unit" /></healthCareFacility></location></encompassingEncounter></componentOf><!-- 
+				********************************************************
+				CDA Body: Level 1 - Basic Text Report  
+				********************************************************
+			--><component typeCode="COMP"><nonXMLBody classCode="DOCBODY" moodCode="EVN"><text mediaType="text/plain" representation="TXT">------------------------------------------------------------------------------------------
+PATIENT: Pthvjhrrf,Test kylatwo          ACCT: VJ0070011/15 LOC:  VERVJHLPTH   U:
+                                       AGE/SX: 46/F         ROOM:            REG: 19/11/14
+REG DR:  Danilo Mitrovic               DOB:    01/01/1968   BED:             DIS:
+                                       STATUS: REG REF      TLOC:
+------------------------------------------------------------------------------------------
+
+Specimen: PT:BV15-1R       SOUT     Received:  08/01/15-1148     Spec Type: Bone Mar
+
+Copies:
+   Danilo Mitrovic
+   1234 Test Ave
+   KELOWNA, BC V1V 3C3
+
+   Plisihd,Aaron
+   2734 Mourning Manor
+   464-913-5212
+
+   Clinical History
+
+History of lymphoma
+
+   Macroscopic
+
+fibrotic
+
+   Peripheral Bld Interp
+
+WBC             10.1    H       3.1-9.7 10^9/L
+              RBC             3.2    L        3.7-5.0 10^12/L
+              HGB             120             118-151 g/L
+              HCT             0.34            0.33-0.45 L/L
+              MCV             80.0   L        84.0-98.0 fL
+              MCH             32.0            28.3-33.5 pg
+              MCHC            330             329-352 g/L
+              RDW             16.0    H       12.0-15.0 %
+              PLT             300             147-375 10^9/L
+              Neuts           5.0             1.2-6.0 10^9/L
+              Lymphs          5.1     H       0.6-3.1 10^9/L
+              Monos           0.0    L        0.1-0.9 10^9/L
+              Eos             0.0             0.0-0.5 10^9/L
+              Basos           0.0             0.0-0.2 10^9/L
+
+   Bone Marrow Differential
+
+27/02/15 0200  Blast Cells     40.0           %
+
+
+
+
+
+
+
+
+
+
+
+                               ** CONTINUED ON NEXT PAGE **
+
+
+   Final Diagnosis
+
+suggest repeat to confirm lymphoma
+
+Signed ________________________________________ Andra J. Kyle 02/04/15 0823
+
+------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   ** END OF REPORT **
+</text></nonXMLBody></component></ClinicalDocument>

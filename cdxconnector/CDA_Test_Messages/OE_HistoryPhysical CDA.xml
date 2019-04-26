@@ -1,0 +1,179 @@
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://microsoft.com/HealthCare/HL7/2X" xmlns:bccda="urn:bccda" xmlns:xalan="http://xml.apache.org/xslt" classCode="DOCCLIN" moodCode="EVN"><!--
+				********************************************************
+				CDA Header
+				********************************************************
+				--><realmCode code="CA-BC" /><typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040" assigningAuthorityName="HL7 CDA R2" /><templateId root="2.16.840.1.113883.10.20.2" assigningAuthorityName="History &amp; Physical Note template" /><id root="2.16.840.1.113883.3.277.100.3" extension="03071fde-fae3-4b21-bc37-45a57774a5b6" assigningAuthorityName="CDX Clinical Document ID" /><code codeSystem="2.16.840.1.113883.6.1" code="34117-2" codeSystemName="LOINC Code" displayName="History &amp; Physical Note" /><title>History &amp; Physical Note</title><!--Message DateTime (MSH.7)--><effectiveTime value="201412081057-0800" /><confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="Confidentiality" /><languageCode code="en-CA" /><!-- ==== Patient Information ==== --><recordTarget typeCode="RCT" contextControlCode="OP"><patientRole classCode="PAT"><id root="2.16.840.1.113883.4.50" extension="9879596911" assigningAuthorityName="BC Patient Health Number" /><id root="2.16.840.1.113883.3.277.1.73" extension="A5-B20141114123151569" assigningAuthorityName="IHA Patient EMR Number" /><id root="2.16.840.1.113883.3.277.1.71" extension="SO00020005" assigningAuthorityName="IHA Patient Unit Number" /><addr use="H">
+1234 Some Street<delimiter /><city>Oliver</city><state>CA-BC</state><postalCode>V0H 1T0</postalCode></addr><telecom use="H" value="tel:250-555-6543" /><patient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>OE</family><given>History</given><given>Physical</given></name><administrativeGenderCode code="M" /><birthTime value="19500615" /></patient></patientRole></recordTarget><!-- ==== Author: Person and/or software that created this document ==== --><author typeCode="AUT" contextControlCode="OP"><time value="201412081052-0800" /><assignedAuthor classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="29427" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="ENTP2" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Entwistle</family><given>Peter</given><given>B</given></name></assignedPerson></assignedAuthor></author><author typeCode="AUT" contextControlCode="OP"><time value="201412081052-0800" /><assignedAuthor classCode="ASSIGNED"><id root="2.16.840.1.113883.3.277.1.81" extension="J11641" assigningAuthorityName="IHA Message Number" /><assignedAuthoringDevice classCode="DEV" determinerCode="INSTANCE"><softwareName code="OE_IHSOG" codeSystem="2.16.840.1.113883.3.277.1.12" codeSystemName="IHA Software Code" /></assignedAuthoringDevice></assignedAuthor></author><!--  ==== Custodian: organization responsible for this document ==== --><custodian typeCode="CST"><assignedCustodian classCode="ASSIGNED"><representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE"><id root="2.16.840.1.113883.3.277.1.62" extension="IHSOG" assigningAuthorityName="IHA Meditech Location Identifier" /></representedCustodianOrganization></assignedCustodian></custodian><!-- ==== Information Recipients: Providers who have requested a copy of this document ==== --><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="KINT5" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Kinnee</family><given>Todd</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="93197" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHNA" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihj</family><given>Naan</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="93194" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHNO" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihg</family><given>Noel</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="PRCP"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="29427" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="ENTP2" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Entwistle</family><given>Peter</given><given>B</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="27018" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="KANL2" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Kane</family><given>Lorraine</given><given>A</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="93193" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHMI" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihf</family><given>Mikel</given></name></informationRecipient></intendedRecipient></informationRecipient><!-- ==== Primary provider: Family provider ==== --><participant typeCode="IND" contextControlCode="OP"><functionCode code="PCP" displayName="Primary Care Physician" codeSystem="2.16.840.1.113883.2.20.3.87" codeSystemName="HL7ParticipationFunction" /><associatedEntity classCode="PROV"><id root="2.16.840.1.113883.3.40.2.11" extension="93194" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHNO" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><associatedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihg</family><given>Noel</given></name></associatedPerson></associatedEntity></participant><!-- ==== Ordering Physician ==== --><participant typeCode="REF" contextControlCode="OP"><functionCode code="ORD" displayName="Ordering Provider" /><associatedEntity classCode="PROV"><id root="2.16.840.1.113883.3.40.2.11" extension="29427" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="ENTP2" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><associatedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Entwistle</family><given>Peter</given><given>B</given></name></associatedPerson></associatedEntity></participant><!-- ==== Parent Document: HL7 v2 message from Meditech ==== --><relatedDocument typeCode="XFRM"><parentDocument classCode="DOCCLIN" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.81" extension="J11641" assigningAuthorityName="IHA Message Number" /></parentDocument></relatedDocument><!-- ==== Encompassing Encounter: Patient Visit ==== --><componentOf typeCode="COMP"><!--Patient Account Number (PID_18)--><encompassingEncounter classCode="ENC" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.72" extension="SO0070005/15" assigningAuthorityName="IHA Patient Account Number" /><!--Encounter has an admission date only--><effectiveTime value="201411171309-0800" /><encounterParticipant typeCode="ADM"><assignedEntity classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="93197" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="PLISIHNA" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Plisihj</family><given>Naan</given></name></assignedPerson></assignedEntity></encounterParticipant><encounterParticipant typeCode="ATND"><assignedEntity classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="KINT5" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Kinnee</family><given>Todd</given></name></assignedPerson></assignedEntity></encounterParticipant><location><healthCareFacility classCode="SDLOC"><id root="2.16.840.1.113883.3.277.1.62" extension="IHSOG" assigningAuthorityName="IHA Meditech Location Identifier" /><!--code represents the patient location, in the form "Pt.Type:Unit[:Room[:Bed]]"--><code code="IN:OLISOG1W:SOG203:01" codeSystemName="Patient Type:Unit:Room:Bed" /></healthCareFacility></location></encompassingEncounter></componentOf><!-- 
+				********************************************************
+				CDA Body: Level 1 - Basic Text Report  
+				********************************************************
+			--><component typeCode="COMP"><nonXMLBody classCode="DOCBODY" moodCode="EVN"><text mediaType="text/plain" representation="TXT"> Interior Health   South Okanagan General Hosp.   Oliver / Ph: 250-498-5000   
+
+Name: Pcmsogrrf,Optimization  
+MRP: Kinnee,Todd        Age: 64    Type: ADM ACIN     Acct: SO0070005/15     
+FamPhys: Plisihg,Noel        DOB: 15/06/1950    Loc: OLISOG1W     MedRec: SO00020005     
+        Sex: M    ADM: 17/11/14     HC#: 9879596911     
+        Ph: 250-555-6543    DIS:           
+
+
+
+ History and Physical Report  
+ Signed  
+ ___________________________________________________________________________________________________
+
+
+
+- Past Medical History  
+From Problem List:   
+Problems/History:  
+
+
+
+Problem Status Onset  
+
+Heart irregular Acute    
+
+
+
+- Allergies  
+
+
+
+
+Allergy/AdvReac Type Severity Reaction Status Date / Time  
+
+morphine Allergy Severe Personality Verified 17/11/14 13:26 PST  
+
+   changes    
+
+penicillin V Allergy Severe Generalized Verified 08/12/14 09:24 PST  
+
+   weakness    
+
+Warfarin Allergy Severe Wheezing Verified 08/12/14 09:46 PST  
+
+Gadolinium-Containing Allergy  Blood Verified 08/12/14 09:04 PST  
+
+Contrast Medi   Pressure    
+
+   Low    
+
+Peanuts # Allergy  Chest Verified 01/12/14 10:16 PST  
+
+   tightness    
+
+
+
+- Home Medications  
+
+
+
+
+ Medication  Instructions  Recorded  Confirmed  Type  
+
+Acetylsalicylic Acid EC TAB 80 mg PO DAILY 19/11/14 19/11/14 History  
+
+[Acetylsalicylic Acid;ASA;Aspirin]      
+
+Warfarin TAB [Coumadin] 2 mg PO 1700 19/11/14 19/11/14 History  
+
+Morphine Sulfate 15 amp IM/IV AMHS PRN 08/12/14 08/12/14 History  
+
+Penicillin V K LIQ [Penicillin V K 1 dose IM BID 08/12/14 08/12/14 History  
+
+LIQ]      
+
+
+
+
+
+- Last Documented Vital Signs  
+Last Vital Signs:  
+
+
+
+Temperature:  37 C   17/11/14 14:19 PST  
+
+Pulse Rate:  60   17/11/14 14:19 PST  
+
+Respiratory Rate:  16   17/11/14 14:19 PST  
+
+Blood Pressure:  120/80   17/11/14 14:19 PST  
+
+O2 Sat by Pulse Oximetry:  98   17/11/14 14:19 PST  
+
+
+
+- Orders Placed Since Admission  
+
+
+
+
+ Category Date Time Status  
+
+ INR [COAG] Routine Lab  05/12/14 Ordered  
+
+ PTT [COAG] Routine Lab  05/12/14 Ordered  
+
+ Rabies Immune Globulin [TS] Routine Lab  05/12/14 Received  
+
+ Acetylsalicylic Acid;ASA;Aspirin MED  17/11/14 08:30 Ordered  
+
+ 1 tab PO DAILY     
+
+ Acetylsalicylic Acid;ASA;Aspirin MED  19/11/14 14:15 Active  
+
+ 80 mg PO DAILY     
+
+ Advair 125-25 INH MED  24/11/14 20:30 Ordered  
+
+ 2 puff INH Q12HR     
+
+ Digoxin TAB MED  19/11/14 08:30 Ordered  
+
+ 0.125 mg PO DAILY     
+
+ Digoxin TAB MED  19/11/14 10:15 Ordered  
+
+ 0.125 mg PO DAILY     
+
+ Insulin Aspart INJ MED  20/11/14 08:30 Ordered  
+
+ 1 unit SUBCUT 0830     
+
+ Morphine IR TAB [Statex] MED  17/11/14 08:30 Active  
+
+ 10 mg PO DAILY PRN     
+
+ Sodium Chloride INJ 0.9% 100 ml MED  19/11/14 12:00 Active  
+
+ IV .As directed     
+
+ Triamcinolone OINT 0.1% **NF MED  01/12/14 21:00 Ordered  
+
+ See Dose Instructions  DENTAL HS     
+
+ Warfarin TAB MED  17/11/14 17:00 Ordered  
+
+ 1 mg PO 1700     
+
+ Warfarin TAB MED  19/11/14 17:00 Active  
+
+ 2 mg PO 1700     
+
+ buPROPion SR TAB MED  01/12/14 08:30 Active  
+
+ 100 mg PO DAILY     
+
+ Discharge Inpatient [NUR INT] AS ORDERED NUR INT  08/12/14 10:40 Active  
+
+ Code Status - Physician's Order Routine PHYS  04/12/14 15:22 Active  
+
+
+
+Created by: Peter B Entwistle  MD  
+
+Copies: Entwistle,Peter B; Kane,Lorraine A; Plisihg,Noel  
+Report: 0812-0003        
+
+</text></nonXMLBody></component></ClinicalDocument>

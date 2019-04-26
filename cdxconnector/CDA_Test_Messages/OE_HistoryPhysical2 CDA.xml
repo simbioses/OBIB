@@ -1,0 +1,86 @@
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://microsoft.com/HealthCare/HL7/2X" xmlns:bccda="urn:bccda" xmlns:xalan="http://xml.apache.org/xslt" classCode="DOCCLIN" moodCode="EVN"><!--
+				********************************************************
+				CDA Header
+				********************************************************
+				--><realmCode code="CA-BC" /><typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040" assigningAuthorityName="HL7 CDA R2" /><templateId root="2.16.840.1.113883.10.20.2" assigningAuthorityName="History &amp; Physical Note template" /><id root="2.16.840.1.113883.3.277.100.3" extension="bcdf9ee0-9532-48bb-ac40-26e27a5e686b" assigningAuthorityName="CDX Clinical Document ID" /><code codeSystem="2.16.840.1.113883.6.1" code="34117-2" codeSystemName="LOINC Code" displayName="History &amp; Physical Note" /><title>History &amp; Physical Note</title><!--Message DateTime (MSH.7)--><effectiveTime value="201412050800-0800" /><confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="Confidentiality" /><languageCode code="en-CA" /><!-- ==== Patient Information ==== --><recordTarget typeCode="RCT" contextControlCode="OP"><patientRole classCode="PAT"><id root="2.16.840.1.113883.4.50" extension="9879642535" assigningAuthorityName="BC Patient Health Number" /><id root="2.16.840.1.113883.3.277.1.73" extension="A5-B20141114095607349" assigningAuthorityName="IHA Patient EMR Number" /><id root="2.16.840.1.113883.3.277.1.71" extension="KG00020180" assigningAuthorityName="IHA Patient Unit Number" /><addr use="H">
+653 Toovey Rd<delimiter /><city>Kelowna</city><state>CA-BC</state><postalCode>V1P 1H7</postalCode></addr><telecom use="H" value="tel:250-763-9633" /><patient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>OE</family><given>History</given><given>Physical2</given></name><administrativeGenderCode code="M" /><birthTime value="19860905" /></patient></patientRole></recordTarget><!-- ==== Author: Person and/or software that created this document ==== --><author typeCode="AUT" contextControlCode="OP"><time value="201412050756-0800" /><assignedAuthor classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="03186" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="HOLC" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Holmes</family><given>Cheryl</given><given>L</given></name></assignedPerson></assignedAuthor></author><author typeCode="AUT" contextControlCode="OP"><time value="201412050756-0800" /><assignedAuthor classCode="ASSIGNED"><id root="2.16.840.1.113883.3.277.1.81" extension="J11507" assigningAuthorityName="IHA Message Number" /><assignedAuthoringDevice classCode="DEV" determinerCode="INSTANCE"><softwareName code="OE_IHKGH" codeSystem="2.16.840.1.113883.3.277.1.12" codeSystemName="IHA Software Code" /></assignedAuthoringDevice></assignedAuthor></author><!--  ==== Custodian: organization responsible for this document ==== --><custodian typeCode="CST"><assignedCustodian classCode="ASSIGNED"><representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE"><id root="2.16.840.1.113883.3.277.1.62" extension="IHKGH" assigningAuthorityName="IHA Meditech Location Identifier" /></representedCustodianOrganization></assignedCustodian></custodian><!-- ==== Information Recipients: Providers who have requested a copy of this document ==== --><informationRecipient typeCode="TRC"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="MITD4" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Mitrovic</family><given>Danilo</given></name></informationRecipient></intendedRecipient></informationRecipient><informationRecipient typeCode="PRCP"><intendedRecipient classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" extension="03186" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="HOLC" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><informationRecipient classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Holmes</family><given>Cheryl</given><given>L</given></name></informationRecipient></intendedRecipient></informationRecipient><!-- ==== Ordering Physician ==== --><participant typeCode="REF" contextControlCode="OP"><functionCode code="ORD" displayName="Ordering Provider" /><associatedEntity classCode="PROV"><id root="2.16.840.1.113883.3.40.2.11" extension="03186" assigningAuthorityName="BC MSP Provider License Number" /><id root="2.16.840.1.113883.3.277.1.61" extension="HOLC" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><associatedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><prefix>Dr</prefix><family>Holmes</family><given>Cheryl</given><given>L</given></name></associatedPerson></associatedEntity></participant><!-- ==== Parent Document: HL7 v2 message from Meditech ==== --><relatedDocument typeCode="XFRM"><parentDocument classCode="DOCCLIN" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.81" extension="J11507" assigningAuthorityName="IHA Message Number" /></parentDocument></relatedDocument><!-- ==== Encompassing Encounter: Patient Visit ==== --><componentOf typeCode="COMP"><!--Patient Account Number (PID_18)--><encompassingEncounter classCode="ENC" moodCode="EVN"><id root="2.16.840.1.113883.3.277.1.72" extension="KG0070067/15" assigningAuthorityName="IHA Patient Account Number" /><!--Encounter has an admission date only--><effectiveTime value="201411251112-0800" /><encounterParticipant typeCode="ADM"><assignedEntity classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="MITD4" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Mitrovic</family><given>Danilo</given></name></assignedPerson></assignedEntity></encounterParticipant><encounterParticipant typeCode="ATND"><assignedEntity classCode="ASSIGNED"><id root="2.16.840.1.113883.3.40.2.11" assigningAuthorityName="BC MSP Provider License Number" nullFlavor="UNK" /><id root="2.16.840.1.113883.3.277.1.61" extension="MITD4" assigningAuthorityName="IHA Provider Code: IHA-MT PVD-ID" /><assignedPerson classCode="PSN" determinerCode="INSTANCE"><name use="L"><family>Mitrovic</family><given>Danilo</given></name></assignedPerson></assignedEntity></encounterParticipant><location><healthCareFacility classCode="SDLOC"><id root="2.16.840.1.113883.3.277.1.62" extension="IHKGH" assigningAuthorityName="IHA Meditech Location Identifier" /><!--code represents the patient location, in the form "Pt.Type:Unit[:Room[:Bed]]"--><code code="IN:KELKGHC6W:KGHC0609:A" codeSystemName="Patient Type:Unit:Room:Bed" /></healthCareFacility></location></encompassingEncounter></componentOf><!-- 
+				********************************************************
+				CDA Body: Level 1 - Basic Text Report  
+				********************************************************
+			--><component typeCode="COMP"><nonXMLBody classCode="DOCBODY" moodCode="EVN"><text mediaType="text/plain" representation="TXT"> Interior Health   Kelowna General Hospital   Kamloops / Ph: 250-372-1145   
+
+Name: Regkghrrf,Daniel Martin  
+MRP: Danilo Mitrovic        Age: 28    Type: ADM ACIN     Acct: KG0070067/15     
+FamPhys:         DOB: 05/09/1986    Loc: KELKGHC6W     MedRec: KG00020180     
+        Sex: M    ADM: 25/11/14     HC#: 9879642535     
+        Ph: 250-763-9633    DIS:           
+
+
+
+ History and Physical Report  
+ Signed  
+ ___________________________________________________________________________________________________
+
+
+CHIEF COMPLAINT AND REASON FOR VISIT  
+Test for 6.14  
+
+HISTORY OF PRESENT ILLNESS  
+[]  
+
+HISTORY OF PAST ILLNESS  
+[]  
+
+MEDICATIONS  
+[]  
+
+ALLERGIES  
+Drug: []  
+Food: []  
+Other: []  
+
+REVIEW OF SYSTEMS  
+[]  
+
+SOCIAL HISTORY  
+[]  
+
+FAMILY HISTORY  
+[]  
+
+PHYSICAL EXAM  
+
+GENERAL STATUS  
+[]  
+
+VITAL SIGNS  
+[]  
+
+HEENT: []  
+Respiratory: []  
+Cardiovascular: []  
+Abdominal: []  
+Genitourinary: []  
+Extremities: []  
+Neurologic: []  
+Other: []  
+
+RESULTS  
+Lab: []  
+ECG: []  
+Radiology: []  
+Other: []  
+
+ASSESSMENT AND PLAN  
+[]  
+
+PROCEDURES   
+[]  
+
+
+Created by: Cheryl L Holmes    
+
+Copies: Holmes,Cheryl L  
+Report: 0512-0003        
+
+</text></nonXMLBody></component></ClinicalDocument>

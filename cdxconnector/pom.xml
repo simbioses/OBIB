@@ -7,9 +7,22 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Controls the import of the CDX certificates into a PFX keystore-->
+        <skip.generate.certificate>none</skip.generate.certificate>
+        <!-- skip.generate.certificate>generate-sources</skip.generate.certificate -->
+
+        <!-- Controls the download of the WSDL and XSD files -->
         <skip.wsdl.download>none</skip.wsdl.download>
-        <!-- skip.wsdl.download>generate-sources</skip.wsdl.download --> <!-- Used to download the WSDL and XSD -->
+        <!-- skip.wsdl.download>generate-sources</skip.wsdl.download -->
+        <certificate.path>/certs/LEADlab_IHA_cert.pfx</certificate.path>
+        <certificate.pass>LEADlab</certificate.pass>
+
+        <!-- Configure the default Web Services location in the Java classes -->
         <server.url>http://localhost</server.url>
+
+        <!-- Controls the tests execution -->
+        <skip.tests>true</skip.tests>
     </properties>
 
     <dependencies>
@@ -52,14 +65,24 @@
                     <version>3.1.1</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>keytool-maven-plugin</artifactId>
-                    <version>1.5</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>jaxws-maven-plugin</artifactId>
-                    <version>2.5</version>
+                    <artifactId>keytool-maven-plugin</artifactId>
+                    <version>1.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -89,7 +112,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Import Certificate Chain -->
+            <!-- Import the CDX certificates into a PFX keystore -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>keytool-maven-plugin</artifactId>
@@ -97,7 +120,7 @@
                     <!-- Root certificate -->
                     <execution>
                         <id>import-ROOT-certificate</id>
-                        <phase>generate-sources</phase>
+                        <phase>${skip.generate.certificate}</phase>
                         <goals>
                             <goal>importCertificate</goal>
                         </goals>
@@ -166,7 +189,7 @@
                             <properties>
                                 <property>
                                     <name>javax.net.ssl.keyStore</name>
-                                    <value>${basedir}/certs/LEADlab_IHA_cert.pfx</value>
+                                    <value>${basedir}${certificate.path}</value>
                                 </property>
                                 <property>
                                     <name>javax.net.ssl.keyStoreType</name>
@@ -174,7 +197,7 @@
                                 </property>
                                 <property>
                                     <name>javax.net.ssl.keyStorePassword</name>
-                                    <value>LEADlab</value>
+                                    <value>${certificate.pass}</value>
                                 </property>
                             </properties>
                         </configuration>
@@ -186,7 +209,6 @@
             <plugin>
                 <groupId>com.github.dkschlos</groupId>
                 <artifactId>wsdlget-maven-plugin</artifactId>
-                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <id>get-wsdl</id>
@@ -361,6 +383,67 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Skip tests by default -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skip.tests}</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- Copy necessary files to execute the tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>certs/</directory>
+                                </resource>
+                                <resource>
+                                    <directory>CDA_Test_Messages/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Build a test jar file with main class to submit documents -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>*.xml</exclude>
+                                <exclude>*.pfx</exclude>
+                                <exclude>*.txt</exclude>
+                            </excludes>
+                            <archive>
+                                <manifest>
+                                    <mainClass>ca.uvic.leadlab.cdxconnector.SubmitDocumentClient</mainClass>
+                                </manifest>
+                            </archive>
                         </configuration>
                     </execution>
                 </executions>

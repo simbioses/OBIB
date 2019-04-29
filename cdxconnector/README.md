@@ -2,7 +2,7 @@
 
 Library responsible for connects to the CDX Web Services.
 
-#### Maven execution details:
+### Maven execution details:
 
 * Importing the CDX certificates into a PFX keystore.
 
@@ -39,7 +39,34 @@ Library responsible for connects to the CDX Web Services.
 
   A jar-test is generate at the ```deploy``` phase. This jar contains a java client for submitting documents.
 
-#### Submit Document Java Client:
+### Submit Document Client:
+
+The Submit Document Client is a cdxconnector client that permit submit CDX documents directly from command line
+using CDA XML files.
+
+To execute the Submit Document Client the following files are necessary: 
+1. cdxconnector-\<version>.jar
+2. cdxconnector-\<version>-test.jar
+3. commons-codec-1.11.jar
+4. commons-lang3-3.8.1.jar
+5. submit_documents.sh \[optional]
+6. \<clinic-certificate>.pfx
+7. \<CDA.XML> or \<directory containing CDA xmls>
+
+#### Registering a clinic
+
+To register a clinic to submit documents using this client it is necessary configure the following data 
+in the **SubmitDocumentClient.properties** inside the *cdxconnector-\<version>-test.jar*:
+```
+obib.clinic.<location_id>.username = <cdx clinic username>
+obib.clinic.<location_id>.password = <cdx clinic password>
+obib.clinic.<location_id>.certificate = <relative path for the clinic PFX certificate file>
+obib.clinic.<location_id>.certpassword = <clinic certificate password>
+``` 
+
+where a clinic is identify by the portion of the keys: **<location_id>** 
+
+#### Executing the java client
 
 To execute the Submit Document Client call the **jar-test** file as following:
 
@@ -48,16 +75,24 @@ $ java -cp .:* -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar ca.uvic.leadlab.cdxcon
 ```
 
 where:
-- *location_id*: is the clinic 'location id' registered in the **SubmitDocumentClient.properties** file
-- *receivers_ids*: are the receiver clinics 'location id' separated by comma ','
-- *cda_file_path*: is the relative path for the cda file to be submitted
-- *attachment_files_paths*: (optional) are the document's attachment file separated by comma ','
+- *location_id*: is the clinic 'location id' registered in the **SubmitDocumentClient.properties** file;
+- *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
+- *cda_file_path*: is the relative path for the cda file to be submitted;
+- *attachment_files_paths*: (optional) are the document's attachment file separated by comma ','.
 
-To register a clinic to submit documents using this client it is necessary configure the following information 
-in the **SubmitDocumentClient.properties** file:
+#### Alternative: Executing via shell script
+
+To execute the Submit Document Client call the shell script **submit_documents.sh** as following:
+
 ```
-obib.clinic.location_id.username = <cdx clinic username>
-obib.clinic.location_id.password = <cdx clinic password>
-obib.clinic.location_id.certificate = <relative path for the clinic PFX certificate file>
-obib.clinic.location_id.certpassword = <clinic certificate password>
+$ ./submit_documents.sh location_id receivers_id cda_path
 ```
+
+where:
+- *location_id*: is the clinic 'location id' registered in the **SubmitDocumentClient.properties** file;
+- *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
+- *cda_path*: is the path of a CDA XML file or a directory that contains more than one CDA XML.
+In this case all files inside the directory will be submitted.
+
+*Notes:*
+1. If the CDA files are not located relative to the current directory, it is necessary adjust the classpath in the script.

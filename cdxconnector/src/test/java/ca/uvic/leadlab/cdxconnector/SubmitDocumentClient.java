@@ -3,6 +3,7 @@ package ca.uvic.leadlab.cdxconnector;
 import ca.uvic.leadlab.cdxconnector.messages.DocumentAttachment;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,7 +59,7 @@ public class SubmitDocumentClient {
             String[] receiversIds = args[1].split(",");
 
             // Load CDA from file
-            String cda = client.loadFile(args[2]);
+            String cda = client.loadCDAFile(args[2]);
 
             // Load attachments from files if there is any
             List<DocumentAttachment> attachments = null;
@@ -78,19 +79,34 @@ public class SubmitDocumentClient {
 
     private void configureClinic(final String clinicId) throws Exception {
         this.clinicId = clinicId;
+
+        // get the credentials from properties
         this.clinicUsername = properties.getProperty("obib.clinic." + clinicId + ".username");
         this.clinicPassword = properties.getProperty("obib.clinic." + clinicId + ".password");
-        this.clinicCertificate = getClass().getClassLoader()
-                .getResource(properties.getProperty("obib.clinic." + clinicId + ".certificate")).getFile();
+        this.clinicCertificate = properties.getProperty("obib.clinic." + clinicId + ".certificate");
         this.clinicCertpassword = properties.getProperty("obib.clinic." + clinicId + ".certpassword");
-
         if (clinicUsername == null || clinicPassword == null || clinicCertificate == null || clinicCertpassword == null) {
-            throw new Exception("Clinic '" + clinicId + "' credentials are not configured correctly.");
+            throw new Exception("Clinic '" + clinicId + "' credentials are not configured correctly. \n" +
+                    "clinicUsername: " + clinicUsername + "\n" +
+                    "clinicPassword: " + clinicPassword + "\n" +
+                    "clinicCertificate: " + clinicCertificate + "\n" +
+                    "clinicCertpassword: " + clinicCertpassword);
         }
+
+        // get the path of the certificate file
+        URL certURL = getClass().getClassLoader().getResource(clinicCertificate);
+        if (certURL == null) {
+            throw new IOException("Clinic '" + clinicId + "' certificate file '" + clinicCertificate +"' not found.");
+        }
+        this.clinicCertificate =  certURL.getFile();
     }
 
-    private String loadFile(final String filePath) throws URISyntaxException, IOException {
-        Path path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI());
+    private String loadCDAFile(final String filePath) throws URISyntaxException, IOException {
+        URL fileURL = getClass().getClassLoader().getResource(filePath);
+        if (fileURL == null) {
+            throw new IOException("CDA file '" + filePath + "' not found.");
+        }
+        Path path = Paths.get(fileURL.toURI());
         byte[] fileBytes = Files.readAllBytes(path);
         return new String(fileBytes);
     }

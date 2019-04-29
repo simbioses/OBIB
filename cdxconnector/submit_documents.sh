@@ -25,7 +25,11 @@ RECEIVERS_ID=$2
 CDA_PATH=$3
 
 # java program settings
-CLASS_PATH='cdxconnector-0.0.1-SNAPSHOT-tests.jar:.:*'
+# classpath to execute this script in the project folder
+CLASS_PATH='target/cdxconnector-0.0.1-SNAPSHOT-tests.jar:target/cdxconnector-0.0.1-SNAPSHOT.jar:target/dependencies/*:certs/:.'
+# classpath to execute this script in a folder containing all required files
+#CLASS_PATH='cdxconnector-0.0.1-SNAPSHOT-tests.jar:.:*'
+# remote debug configuration
 #DEBUG=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
 
 # Call the java client

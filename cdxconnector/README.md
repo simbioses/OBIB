@@ -96,3 +96,4 @@ In this case all files inside the directory will be submitted.
 
 *Notes:*
 1. If the CDA files are not located relative to the current directory, it is necessary adjust the classpath in the script.
+2. By default the classpath is configured to the current project structure.

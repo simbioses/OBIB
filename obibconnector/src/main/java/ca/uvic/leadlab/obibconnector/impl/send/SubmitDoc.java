@@ -7,6 +7,7 @@ import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.send.*;
 import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.impl.receive.Document;
+import ca.uvic.leadlab.obibconnector.models.common.Loinc;
 import ca.uvic.leadlab.obibconnector.models.document.*;
 import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
 import ca.uvic.leadlab.obibconnector.rest.IOscarInformation;
@@ -68,7 +69,7 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc documentType(DocumentType type) {
-        document.setType(new Type(type.code, type.label));
+        document.setLoinc(new Loinc(type.code, type.label));
         return null;
     }
 

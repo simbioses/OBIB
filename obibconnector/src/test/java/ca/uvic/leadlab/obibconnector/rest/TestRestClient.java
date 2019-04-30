@@ -39,8 +39,8 @@ public class TestRestClient {
     public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
-        ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config)
-                .newDoc()
+        ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config).newDoc()
+                .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")

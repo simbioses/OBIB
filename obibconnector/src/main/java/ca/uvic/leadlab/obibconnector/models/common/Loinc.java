@@ -5,6 +5,14 @@ public class Loinc {
     private String loincCode;
     private String displayName;
 
+    public Loinc() {
+    }
+
+    public Loinc(String loincCode, String displayName) {
+        this.loincCode = loincCode;
+        this.displayName = displayName;
+    }
+
     public String getLoincCode() {
         return loincCode;
     }

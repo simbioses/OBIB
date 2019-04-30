@@ -11,4 +11,13 @@ public enum AddressType {
     AddressType(String label) {
         this.label = label;
     }
+
+    public static AddressType fromLabel(String label) {
+        for (AddressType type : AddressType.values()) {
+            if (type.label.equals(label)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No AddressType enum with label = " + label);
+    }
 }

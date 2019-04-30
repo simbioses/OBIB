@@ -14,4 +14,13 @@ public enum RecipientType {
     public static boolean isPrimary(String label) {
         return PRIMARY.label.equalsIgnoreCase(label);
     }
+
+    public static RecipientType fromLabel(String label)  {
+        for (RecipientType type : RecipientType.values()) {
+            if (type.label.equals(label)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No RecipientType enum with label = " + label);
+    }
 }

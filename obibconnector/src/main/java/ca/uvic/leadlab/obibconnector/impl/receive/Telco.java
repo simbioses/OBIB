@@ -14,7 +14,7 @@ public class Telco implements ITelco {
 
     @Override
     public TelcoType getTelcoType() {
-        return TelcoType.valueOf(telecom.getUse());
+        return TelcoType.fromLabel(telecom.getUse());
     }
 
     @Override

@@ -12,4 +12,13 @@ public enum NameType {
     NameType(String label) {
         this.label = label;
     }
+
+    public static NameType fromLabel(String label) {
+        for (NameType type : NameType.values()) {
+            if (type.label.equals(label)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No NameType enum with label = " + label);
+    }
 }

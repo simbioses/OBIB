@@ -45,6 +45,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
         IDocument document = receiveDoc.retrieveDocument("ad0007b5-c846-e911-a96a-0050568c55a6");
 
+        System.out.println(mapper.writeValueAsString(document));
         Assert.assertNotNull(document);
         //Assert.assertEquals("2b0d8260-0c20-e911-a96a-0050568c55a6", document.getDocumentID());
     }

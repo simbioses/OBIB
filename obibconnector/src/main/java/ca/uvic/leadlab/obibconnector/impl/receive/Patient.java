@@ -84,7 +84,7 @@ public class Patient implements IPatient {
 
     @Override
     public Gender getGender() {
-        return Gender.valueOf(patient.getGenderCode());
+        return Gender.fromLabel(patient.getGenderCode());
     }
 
     @Override

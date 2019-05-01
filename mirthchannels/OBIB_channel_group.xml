@@ -484,9 +484,9 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -527,9 +527,9 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -573,9 +573,9 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -623,9 +623,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -658,9 +658,9 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -710,9 +710,9 @@ function buildDocumentStorageMessage(locationId, receiverId, documentId, message
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -739,21 +739,21 @@ function segmentExist(segment) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>CHANNEL_DEPLOY</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -783,9 +783,9 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -813,9 +813,9 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -850,9 +850,9 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -883,9 +883,9 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -926,9 +926,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -982,9 +982,9 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -1015,9 +1015,9 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -1048,9 +1048,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -1085,9 +1085,9 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -1128,9 +1128,9 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -1165,7 +1165,7 @@ function parseCDATelecom(cdaTelecom) {
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>2</revision>
+      <revision>16</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -1511,8 +1511,11 @@ try {
 	// (&apos;setId&apos; and &apos;versionNumber&apos; are not implemented)
 	
 	// ClinicalDocument/code CONF-BC0021, CONF-BC0022 (fixed in the message template, change it for different documents)
+	//tmp[&apos;code&apos;][&apos;@code&apos;] = msg[&apos;loinc&apos;][&apos;loincCode&apos;];
+	//tmp[&apos;code&apos;][&apos;@displayName&apos;] = msg[&apos;loinc&apos;][&apos;displayName&apos;];
 	
 	// ClinicalDocument/title CONF-BC0023, CONF-BC0024  (fixed in the message template, change it for different documents)
+	//tmp[&apos;title&apos;] = msg[&apos;loinc&apos;][&apos;displayName&apos;];
 	
 	// ClinicalDocument/effectiveTime CONF-BC0025, CONF-BC0026 
 	tmp[&apos;effectiveTime&apos;][&apos;@value&apos;] = formatCDAdataTime(new Date());
@@ -2093,7 +2096,7 @@ IgogICAgfQogIF0sCiAgIm9yZGVycyI6WwogICAgewogICAgICAiaWQiOiIiLAogICAgICAic3Rh
 dHVzQ29kZSI6IiIKICAgIH0KICBdLAogICJub25YTUxCb2R5Ijp7CiAgICAibWVkaWFUeXBlIjoi
 IiwKICAgICJjb250ZW50IjoiIgogIH0sCiAgImF0dGFjaG1lbnRzIjpbCiAgICB7CiAgICAgICJt
 ZWRpYVR5cGUiOiIiLAogICAgICAiY29udGVudCI6IiIsCiAgICAgICJoYXNoIjoiIiwKICAgICAg
-InJlZmVyZW5jZSI6IiIKICAgIH0KICBdLAogICJyZWNlaXZlcnMiOiBbIiJdCn0=</inboundTemplate>
+InJlZmVyZW5jZSI6IiIKICAgIH0KICBdLAogICJyZWNlaXZlcnMiOlsKICAgICIiCiAgXQp9</inboundTemplate>
             <outboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPENsaW5pY2FsRG9jdW1lbnQg
 eG1sbnM9InVybjpobDctb3JnOnYzIiB4bWxuczpiY2NkYT0idXJuOmJjY2RhIiB4bWxuczpuczA9
 Imh0dHA6Ly9taWNyb3NvZnQuY29tL0hlYWx0aENhcmUvSEw3LzJYIiB4bWxuczp4YWxhbj0iaHR0
@@ -2990,7 +2993,7 @@ importPackage(Packages.ca.uvic.leadlab.cdxconnector.messages);
 try {
 	var client = new WSClientDocument($(&apos;cdx.base.url&apos;), $(&apos;username&apos;), $(&apos;password&apos;), $(&apos;certPath&apos;), $(&apos;certPass&apos;));
 
-	var queryParameter = new DocumentQueryParameterBuilder().documentType(DocumentQueryParameterBuilder.DocumentType.CDA);
+	var queryParameter = new DocumentQueryParameterBuilder();//.documentType(DocumentQueryParameterBuilder.DocumentType.CDA);
 	if ($(&apos;effectiveTime_start&apos;) &amp;&amp; $(&apos;effectiveTime_end&apos;)) {
 		queryParameter.documentEffectiveTime(new Date($(&apos;effectiveTime_start&apos;)), true, new Date($(&apos;effectiveTime_end&apos;)), true);
 	}
@@ -3020,7 +3023,7 @@ try {
                 <enabled>true</enabled>
                 <variable>effectiveTime_start</variable>
                 <mapping>msg[&apos;effectiveTime&apos;][&apos;start&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3030,7 +3033,7 @@ try {
                 <enabled>true</enabled>
                 <variable>effectiveTime_end</variable>
                 <mapping>msg[&apos;effectiveTime&apos;][&apos;end&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3040,7 +3043,7 @@ try {
                 <enabled>true</enabled>
                 <variable>eventTime_start</variable>
                 <mapping>msg[&apos;eventTime&apos;][&apos;start&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3050,7 +3053,7 @@ try {
                 <enabled>true</enabled>
                 <variable>eventTime_end</variable>
                 <mapping>msg[&apos;eventTime&apos;][&apos;end&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3060,7 +3063,7 @@ try {
                 <enabled>true</enabled>
                 <variable>clinicId</variable>
                 <mapping>msg[&apos;clinicId&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3070,7 +3073,7 @@ try {
                 <enabled>true</enabled>
                 <variable>documentId</variable>
                 <mapping>msg[&apos;documentId&apos;]</mapping>
-                <defaultValue>&quot;&quot;</defaultValue>
+                <defaultValue>null</defaultValue>
                 <replacements/>
                 <scope>CHANNEL</scope>
               </com.mirth.connect.plugins.mapper.MapperStep>
@@ -3147,8 +3150,7 @@ try {
             <inboundTemplate encoding="base64"></inboundTemplate>
             <outboundTemplate encoding="base64">ewoJInN0YXR1cyI6ICIiLAoJIm1lc3NhZ2UiOiAiIiwKCSJhY2tEZXRhaWwiOiB7CgkJImFja0lk
 IjogIiIsCgkJImFja1RpbWUiOiAiIiwKCQkibWVzc2FnZUlkIjogIiIsCgkJInN0YXR1cyI6ICIi
-Cgl9LAoJImRvY3VtZW50cyI6IFt7CgkJImlkIjogIiIsCgkJInRlbXBsYXRlSWQiOiAiIiwKCQki
-ZWZmZWN0aXZlVGltZSI6ICIiCgl9XQp9</outboundTemplate>
+Cgl9LAoJImRvY3VtZW50cyI6IFtdCn0=</outboundTemplate>
             <inboundDataType>HL7V3</inboundDataType>
             <outboundDataType>JSON</outboundDataType>
             <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v3.HL7V3DataTypeProperties" version="3.7.1">
@@ -6168,7 +6170,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1556237095584</time>
+            <time>1556670138064</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -6204,9 +6206,9 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6247,9 +6249,9 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6293,9 +6295,9 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6343,9 +6345,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6378,9 +6380,9 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6430,9 +6432,9 @@ function buildDocumentStorageMessage(locationId, receiverId, documentId, message
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6459,21 +6461,21 @@ function segmentExist(segment) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>CHANNEL_DEPLOY</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -6503,9 +6505,9 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6533,9 +6535,9 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6570,9 +6572,9 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6603,9 +6605,9 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6646,9 +6648,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6702,9 +6704,9 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6735,9 +6737,9 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6768,9 +6770,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6805,9 +6807,9 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -6848,9 +6850,9 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7615,9 +7617,9 @@ return;</undeployScript>
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7658,9 +7660,9 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7704,9 +7706,9 @@ function buildCDAId(root, extension) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7754,9 +7756,9 @@ function buildCDAName(use, family, given, prefix, suffix) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7789,9 +7791,9 @@ function buildCDATelecom(use, type, value) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7841,9 +7843,9 @@ function buildDocumentStorageMessage(locationId, receiverId, documentId, message
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7870,21 +7872,21 @@ function segmentExist(segment) {
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-                    <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>CHANNEL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_PREPROCESSOR</contextType>
-                    <contextType>CHANNEL_UNDEPLOY</contextType>
-                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
-                    <contextType>GLOBAL_DEPLOY</contextType>
-                    <contextType>GLOBAL_UNDEPLOY</contextType>
-                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>CHANNEL_PREPROCESSOR</contextType>
+                    <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                    <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>CHANNEL_ATTACHMENT</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>CHANNEL_BATCH</contextType>
+                    <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_UNDEPLOY</contextType>
+                    <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>GLOBAL_PREPROCESSOR</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>CHANNEL_DEPLOY</contextType>
+                    <contextType>GLOBAL_DEPLOY</contextType>
+                    <contextType>CHANNEL_UNDEPLOY</contextType>
+                    <contextType>CHANNEL_BATCH</contextType>
                   </delegate>
                 </contextSet>
                 <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
@@ -7914,9 +7916,9 @@ function getDBConnection() {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7944,9 +7946,9 @@ function createErrorMessage(error) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -7981,9 +7983,9 @@ function createSegmentBefore(name, segment) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8014,9 +8016,9 @@ function formatCDAdataTime(dateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8057,9 +8059,9 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8113,9 +8115,9 @@ function parseCDAAddress(cdaAddress) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8146,9 +8148,9 @@ function parseCDADateTime(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8179,9 +8181,9 @@ function parseCDADateTimeToDB(cdaDateTime) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8216,9 +8218,9 @@ function parseCDAId(cdaID) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>
@@ -8259,9 +8261,9 @@ function parseCDAName(cdaName) {
                 <contextSet>
                   <delegate>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
                     <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-                    <contextType>SOURCE_RECEIVER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                   </delegate>
                 </contextSet>

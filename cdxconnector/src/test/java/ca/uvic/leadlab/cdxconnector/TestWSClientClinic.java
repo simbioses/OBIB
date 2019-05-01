@@ -1,16 +1,26 @@
 package ca.uvic.leadlab.cdxconnector;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestWSClientClinic extends TestWSClient {
 
+    static WSClientClinic wsClientClinicA;
+    static WSClientClinic wsClientClinicC;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        wsClientClinicA = new WSClientClinic(cdxServerUrl, ClinicA.username, ClinicA.password,
+                ClassLoader.getSystemClassLoader().getResource(ClinicA.certificate).getFile(), ClinicA.certPassword);
+
+        wsClientClinicC = new WSClientClinic(cdxServerUrl, ClinicC.username, ClinicC.password,
+                ClassLoader.getSystemClassLoader().getResource(ClinicC.certificate).getFile(), ClinicC.certPassword);
+    }
+
     @Test
     public void testListClinicsById() throws Exception {
-        WSClientClinic client = new WSClientClinic(cdxServerUrl, oscarClinic1Username, oscarClinic1Password,
-                getClass().getClassLoader().getResource(oscarClinic1Certificate).getFile(), oscarClinic1certPassword);
-
-        String response = client.listClinics("cdxpostprod-otca", "cdxpostprod-otca", "", "");
+        String response = wsClientClinicA.listClinics(ClinicA.id, ClinicA.id, "", "");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
@@ -18,10 +28,7 @@ public class TestWSClientClinic extends TestWSClient {
 
     @Test
     public void testListClinicsByName() throws Exception {
-        WSClientClinic client = new WSClientClinic(cdxServerUrl, oscarClinic1Username, oscarClinic1Password,
-                getClass().getClassLoader().getResource(oscarClinic1Certificate).getFile(), oscarClinic1certPassword);
-
-        String response = client.listClinics("cdxpostprod-otca", "", "Oscar", "");
+        String response = wsClientClinicA.listClinics(ClinicA.id, "", "Oscar", "");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
@@ -29,10 +36,7 @@ public class TestWSClientClinic extends TestWSClient {
 
     @Test
     public void testListClinicsByAddress() throws Exception {
-        WSClientClinic client = new WSClientClinic(cdxServerUrl, oscarClinic1Username, oscarClinic1Password,
-                getClass().getClassLoader().getResource(oscarClinic1Certificate).getFile(), oscarClinic1certPassword);
-
-        String response = client.listClinics("cdxpostprod-otca", "", "", "Test Ave");
+        String response = wsClientClinicA.listClinics(ClinicA.id, "", "", "Test Ave");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));

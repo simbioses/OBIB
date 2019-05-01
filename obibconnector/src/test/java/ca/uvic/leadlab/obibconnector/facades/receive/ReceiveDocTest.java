@@ -18,6 +18,11 @@ public class ReceiveDocTest extends FacadesBaseTest {
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
         Assert.assertNotNull(documentsIds);
+
+        System.out.println("Documents count: " + documentsIds.size());
+        for (String id : documentsIds) {
+            System.out.println(id);
+        }
     }
 
     //@Test(expected = OBIBException.class)
@@ -47,6 +52,8 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
         Assert.assertNotNull(document);
         //Assert.assertEquals("2b0d8260-0c20-e911-a96a-0050568c55a6", document.getDocumentID());
+
+        System.out.println(mapper.writeValueAsString(document));
     }
 
     //@Test(expected = OBIBException.class)

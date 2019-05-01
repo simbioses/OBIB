@@ -1,16 +1,26 @@
 package ca.uvic.leadlab.cdxconnector;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestWSClientProvider extends TestWSClient {
 
+    static WSClientProvider wsClientProviderA;
+    static WSClientProvider wsClientProviderC;
+
+    @BeforeClass
+    public static void setUp() throws Exception{
+        wsClientProviderA = new WSClientProvider(cdxServerUrl, ClinicA.username, ClinicA.password,
+                ClassLoader.getSystemClassLoader().getResource(ClinicA.certificate).getFile(), ClinicA.certPassword);
+
+        wsClientProviderC = new WSClientProvider(cdxServerUrl, ClinicC.username, ClinicC.password,
+                ClassLoader.getSystemClassLoader().getResource(ClinicC.certificate).getFile(), ClinicC.certPassword);
+    }
+
     @Test
     public void testListProvidersById() throws Exception {
-        WSClientProvider client = new WSClientProvider(cdxServerUrl, oscarClinic1Username, oscarClinic1Password,
-                getClass().getClassLoader().getResource(oscarClinic1Certificate).getFile(), oscarClinic1certPassword);
-
-        String response = client.listProviders("cdxpostprod-otca", "", "93188", "");
+        String response = wsClientProviderA.listProviders(ClinicA.id, "", "93188", "");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
@@ -18,10 +28,15 @@ public class TestWSClientProvider extends TestWSClient {
 
     @Test
     public void testListProvidersByName() throws Exception {
-        WSClientProvider client = new WSClientProvider(cdxServerUrl, oscarClinic1Username, oscarClinic1Password,
-                getClass().getClassLoader().getResource(oscarClinic1Certificate).getFile(), oscarClinic1certPassword);
+        String response = wsClientProviderA.listProviders(ClinicA.id, "", "", "Plisihb");
 
-        String response = client.listProviders("cdxpostprod-otca", "", "", "Plisihb");
+        Assert.assertNotNull(response);
+        System.out.println(TestUtils.prettyXML(response));
+    }
+
+    @Test
+    public void testListProvidersByClinicIdAndProviderName() throws Exception {
+        String response = wsClientProviderA.listProviders(ClinicA.id, ClinicA.id, "", "Pli");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));

@@ -24,6 +24,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
 
         IDocument response = submitDoc.newDoc()
+                        .documentType(DocumentType.REFERRAL_NOTE)
                         .patient()
                             .id("2222")
                             .name(NameType.LEGAL, "Joe", "Wine")
@@ -57,6 +58,8 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .submit();
 
         Assert.assertNotNull(response);
+
+        System.out.println("DOCUMENT ID: " + response.getDocumentID());
     }
 
     //@Test
@@ -64,6 +67,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
 
         IDocument response = submitDoc.newDoc()
+                .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
                     .id("2222")
                     .name(NameType.LEGAL, "Joe", "Wine")
@@ -95,6 +99,8 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .submit();
 
         Assert.assertNotNull(response);
+
+        System.out.println("DOCUMENT ID: " + response.getDocumentID());
     }
 
     //@Test(expected = OBIBException.class)
@@ -103,34 +109,35 @@ public class SubmitDocTest extends FacadesBaseTest {
         ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
 
         IDocument response = submitDoc.newDoc()
+                .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
-                .id("2222")
-                .name(NameType.LEGAL, "Joe", "Wine")
-                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                .phone(TelcoType.HOME, "250-111-1234")
-                .birthday("1980", "1", "1")
-                .gender(Gender.MALE)
+                    .id("2222")
+                    .name(NameType.LEGAL, "Joe", "Wine")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                    .birthday("1980", "1", "1")
+                    .gender(Gender.MALE)
                 .and().author()
-                .id("3333")
-                .time(new Date())
-                .name(NameType.LEGAL, "Joseph", "Cloud")
-                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                .phone(TelcoType.HOME, "250-111-1234")
+                    .id("3333")
+                    .time(new Date())
+                    .name(NameType.LEGAL, "Joseph", "Cloud")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
                 .and().recipient()
-                .primary()
-                .id("4444")
-                .name(NameType.LEGAL, "Joseph", "Cloud")
-                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                .phone(TelcoType.HOME, "250-111-1234")
+                    .primary()
+                    .id("4444")
+                    .name(NameType.LEGAL, "Joseph", "Cloud")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
                 .and().participant()
-                .functionCode("PCP")
-                .id("555")
-                .name(NameType.LEGAL, "Joseph", "Cloud")
-                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                .phone(TelcoType.HOME, "250-111-1234")
+                    .functionCode("PCP")
+                    .id("555")
+                    .name(NameType.LEGAL, "Joseph", "Cloud")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
                 .and()
-                .receiverId(clinicIdA)
-                .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
+                    .receiverId(clinicIdA)
+                    .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
                 .submit();
 
         Assert.assertNotNull(response);

@@ -1,6 +1,10 @@
 package ca.uvic.leadlab.obibconnector.facades;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class FacadesBaseTest {
+
+    protected ObjectMapper mapper = new ObjectMapper();
 
     protected String obibUrl = "http://192.168.100.101:8081";
     protected String clinicIdA = "cdxpostprod-otca";

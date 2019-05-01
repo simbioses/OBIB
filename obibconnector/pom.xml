@@ -67,7 +67,7 @@
 
     <groupId>ca.uvic.leadlab</groupId>
     <artifactId>obibconnector</artifactId>
-    <version>1.0-26</version>
+    <version>1.0-27</version>
 
     <dependencies>
         <dependency>

@@ -7,7 +7,6 @@ public class Support {
     public Support(Config conf) {
     }
 
-    public boolean notifyError(String context, String trace) {
-        return true;
+    public void notifyError(String context, String trace) {
     }
 }

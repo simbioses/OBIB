@@ -23,7 +23,9 @@ public class SearchDocTest extends FacadesBaseTest {
     public void testSearchDocumentById() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(configClinicA);
 
-        IDocument document = searchDoc.searchDocumentById("9965cc95-29df-4a4e-be26-93269d7a46c4");
+        IDocument document = searchDoc.searchDocumentById(configClinicA.getClinicId(),
+                //"ad0007b5-c846-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Not Found (?!)
+                "45a75b7e-5cb1-4d00-ab7f-b7872de47549"); // Using 'CDX Clinical Document ID' = Found
 
         Assert.assertNotNull(document);
         System.out.println(mapper.writeValueAsString(document));

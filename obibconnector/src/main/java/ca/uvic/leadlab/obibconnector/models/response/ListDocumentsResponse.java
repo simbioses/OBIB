@@ -18,6 +18,10 @@ public class ListDocumentsResponse extends OBIBResponse {
         return ids;
     }
 
+    public String getDocumentId() throws OBIBRequestException {
+        return getDocument().getDocumentId();
+    }
+
     public ClinicalDocument getDocument() throws OBIBRequestException {
         if (documents.isEmpty()) {
             throw new OBIBRequestException("No documents found.");

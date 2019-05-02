@@ -8,6 +8,6 @@ public interface ISearchDoc {
 
     List<IDocument> searchDocumentsByClinic(String clinicId) throws OBIBException;
 
-    IDocument searchDocumentById(String documentId) throws OBIBException;
+    IDocument searchDocumentById(String clinicId, String documentId) throws OBIBException;
 
 }

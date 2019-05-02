@@ -42,9 +42,10 @@ public class SearchDoc implements ISearchDoc {
     }
 
     @Override
-    public IDocument searchDocumentById(String documentId) throws OBIBException {
+    public IDocument searchDocumentById(String clinicId, String documentId) throws OBIBException {
         try {
-            ListDocumentsResponse response = services.searchDocument(SearchDocumentCriteria.byDocumentId(documentId));
+            ListDocumentsResponse response = services.searchDocument(
+                    SearchDocumentCriteria.byClinicIdAndDocumentId(clinicId, documentId));
 
             if (!response.isOK()) {
                 throw new OBIBRequestException(response.getMessage());

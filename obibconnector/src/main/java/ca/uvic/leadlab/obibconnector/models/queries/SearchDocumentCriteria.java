@@ -19,6 +19,13 @@ public class SearchDocumentCriteria {
         return criteria;
     }
 
+    public static SearchDocumentCriteria byClinicIdAndDocumentId(String clinicId, String documentId) {
+        SearchDocumentCriteria criteria = new SearchDocumentCriteria();
+        criteria.clinicId = clinicId;
+        criteria.documentId = documentId;
+        return criteria;
+    }
+
     public String getDocumentId() {
         return documentId;
     }

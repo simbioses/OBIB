@@ -54,18 +54,24 @@ public class Document implements IDocument {
             templateID = document.getTemplate().getTemplateId();
             templateName = document.getTemplate().getTemplateName();
         }
+
         if (document.getLoinc() != null) {
             loincCode = document.getLoinc().getLoincCode();
             loincCodeDisplayName = document.getLoinc().getDisplayName();
         }
+
         if (document.getSetId() != null) {
             setId = document.getSetId().getCode();
         }
+
         if (document.getOrders() != null && !document.getOrders().isEmpty()) {
             inFulFillmentOfId = document.getOrders().get(0).getId();
         }
 
-        patient = new Patient(document.getPatient());
+        if (document.getPatient() != null) {
+            patient = new Patient(document.getPatient());
+        }
+
         for (Author docAuthor : document.getAuthors()) {
             if (docAuthor.getSoftware() != null) {
                 authorDevice = docAuthor.getSoftware().getName();
@@ -75,9 +81,11 @@ public class Document implements IDocument {
                 authoringTime = DateFormatter.parseDateTime(docAuthor.getTime());
             }
         }
+
         if (document.getCustodian() != null) {
             custodianName = document.getCustodian().getName();
         }
+
         for (Recipient docRecipient : document.getRecipients()) {
             if (RecipientType.isPrimary(docRecipient.getTypeCode())) {
                 primaryRecipient = new Provider(docRecipient);

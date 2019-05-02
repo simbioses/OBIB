@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.uvic.leadlab.cdxconnector.messages.DocumentQueryParameterBuilder;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,19 +36,31 @@ public class TestWSClientDocument extends TestWSClient {
 
     @Test
     public void testGetDocument() throws Exception {
-        String response = wsClientDocumentA.getDocument(ClinicA.id, "8a96c1d7-2823-e911-a96a-0050568c55a6");
+        String response = wsClientDocumentA.getDocument(ClinicA.id,
+                "ad0007b5-c846-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Found
+                //"45a75b7e-5cb1-4d00-ab7f-b7872de47549"); // Using 'CDX Clinical Document ID' = Not found (?!)
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
     }
 
     @Test
-    public void testSearchDocuments() throws Exception {
-        String response = wsClientDocumentC.searchDocuments(ClinicA.id, new DocumentQueryParameterBuilder()
-                //.clinicId(ClinicA.id));
-        //.documentId("801068d3-0c67-45a4-ba99-2f767e559733"));
-        //.documentId("9965cc95-29df-4a4e-be26-93269d7a46c4"));
-        );
+    public void testSearchDocumentsByClinic() throws Exception {
+        String response = wsClientDocumentA
+                .searchDocuments(ClinicA.id, ClinicA.id, null, null, null);
+
+        Assert.assertNotNull(response);
+        System.out.println(TestUtils.prettyXML(response));
+    }
+
+    @Test
+    public void testSearchDocumentsByDocumentId() throws Exception {
+        String response = wsClientDocumentA
+                .searchDocuments(ClinicA.id, ClinicA.id,
+                        //"ad0007b5-c846-e911-a96a-0050568c55a6", // Using 'CDX Message ID' = Not Found (?!)
+                        "45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
+                        null, null);
+
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
     }

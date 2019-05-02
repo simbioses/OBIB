@@ -1,5 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages;
 
+import ca.uvic.leadlab.cdxconnector.DateRange;
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.*;
 
 import java.util.Date;
@@ -7,8 +9,8 @@ import java.util.Date;
 public class DocumentQueryParameterBuilder extends MessageBuilder {
 
     private DocumentType documentType;
-    private RCMRMT000003UV01ClinicalDocumentId clinicalDocumentId;
     private RCMRMT000003UV01RepresentedOrganizationId representedOrganizationId;
+    private RCMRMT000003UV01ClinicalDocumentId clinicalDocumentId;
     private RCMRMT000003UV01ClinicalDocumentEffectiveTime clinicalDocumentEffectiveTime;
     private RCMRMT000003UV01ServiceEventEffectiveTime serviceEventEffectiveTime;
 
@@ -22,14 +24,26 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
     }
 
     public DocumentQueryParameterBuilder clinicId(String clinicId) {
-        representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId(); // CONF-CDXMQ070
-        representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId)); // CONF-CDXMQ071
+        if (StringUtils.isNotBlank(clinicId)) {
+            representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId(); // CONF-CDXMQ070
+            representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId)); // CONF-CDXMQ071
+        }
         return this;
     }
 
     public DocumentQueryParameterBuilder documentId(String documentId) {
-        clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId(); // CONF-CDXMQ068
-        clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.3.4.1", documentId)); // CONF-CDXMQ069
+        if (StringUtils.isNotBlank(documentId)) {
+            clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId(); // CONF-CDXMQ068
+            clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.100.3", documentId)); // CONF-CDXMQ069
+        }
+        return this;
+    }
+
+    public DocumentQueryParameterBuilder documentEffectiveTime(DateRange effectiveTime) {
+        if (effectiveTime != null) {
+            documentEffectiveTime(effectiveTime.getLowDate(), effectiveTime.isLowDateInclusive(),
+                    effectiveTime.getHighDate(), effectiveTime.isHighDateInclusive());
+        }
         return this;
     }
 
@@ -39,6 +53,14 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         clinicalDocumentEffectiveTime.setValue(factory.createIVLTS(
                 factory.createIVXBTS(lowDateInclusive, lowDate), // CONF-CDXMQ066
                 factory.createIVXBTS(highDateInclusive, highDate))); // CONF-CDXMQ067
+        return this;
+    }
+
+    public DocumentQueryParameterBuilder eventEffectiveTime(DateRange eventTime) {
+        if (eventTime != null) {
+            eventEffectiveTime(eventTime.getLowDate(), eventTime.isLowDateInclusive(),
+                    eventTime.getHighDate(), eventTime.isHighDateInclusive());
+        }
         return this;
     }
 
@@ -65,14 +87,16 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         if (documentType != null) { // CONF-CDXMQ064
             parameter.getTemplateId().add(factory.createII("2.16.840.1.113883.3.277.100.20", documentType.name()));
         }
-        if (clinicalDocumentEffectiveTime != null) {
-            parameter.setClinicalDocumentEffectiveTime(clinicalDocumentEffectiveTime);
+        if (representedOrganizationId != null) { // clinicId
+            parameter.getRepresentedOrganizationId().add(representedOrganizationId);
         }
-        if (clinicalDocumentId != null) {
+        if (clinicalDocumentId != null) {   // documentId
             parameter.setClinicalDocumentId(clinicalDocumentId);
         }
-        parameter.getRepresentedOrganizationId().add(representedOrganizationId);
-        if (serviceEventEffectiveTime != null) {
+        if (clinicalDocumentEffectiveTime != null) { // documentEffectiveTime
+            parameter.setClinicalDocumentEffectiveTime(clinicalDocumentEffectiveTime);
+        }
+        if (serviceEventEffectiveTime != null) { // eventEffectiveTime
             parameter.getServiceEventEffectiveTime().add(serviceEventEffectiveTime);
         }
         return parameter;

@@ -31,7 +31,7 @@ public class WSClientProvider extends WSClient {
                     builder.queryByProviderName(providerName); // CONF-CDXPR011
                 }
                 if (StringUtils.isNotBlank(clinicId)) {
-                    builder.queryBysdlcId("2.16.840.1.113883.3.277.100.2", clinicId); // CONF-CDXPR013
+                    builder.queryBySdlcId("2.16.840.1.113883.3.277.100.2", clinicId); // CONF-CDXPR013
                 }
             }
 

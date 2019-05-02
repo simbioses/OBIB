@@ -80,13 +80,17 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    public String searchDocuments(String locationId,
-                                  DocumentQueryParameterBuilder queryParameterBuilder) throws ConnectorException {
+    public String searchDocuments(String locationId, String clinicId, String documentId,
+                                  DateRange effectiveTime, DateRange eventTime) throws ConnectorException {
         try {
             RCMRIN000029UV01 request = new SearchDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
                     .sender(locationId) // ID Of requestor
-                    .documentQuery(queryParameterBuilder) // query parameters
+                    .documentQuery(new DocumentQueryParameterBuilder()
+                            .clinicId(clinicId)
+                            .documentId(documentId)
+                            .documentEffectiveTime(effectiveTime)
+                            .eventEffectiveTime(eventTime)) // query parameters
                     .build();
 
             WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);

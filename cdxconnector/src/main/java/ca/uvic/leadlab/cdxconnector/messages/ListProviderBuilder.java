@@ -36,7 +36,7 @@ public class ListProviderBuilder extends MessageBuilder {
         return this;
     }
 
-    public ListProviderBuilder queryBysdlcId(String root, String extension) {
+    public ListProviderBuilder queryBySdlcId(String root, String extension) {
         PRPMMT306010UVQueryByParameterPayload query = createParameterPayload();
         // CONF- CDXPR010, CONF- CDXPR013
         query.getSdlcId().add(factory.createPRPMMT306010UVSdlcId(root, extension));

@@ -70,7 +70,7 @@ public class SubmitDoc implements ISubmitDoc {
     @Override
     public ISubmitDoc documentType(DocumentType type) {
         document.setLoinc(new Loinc(type.code, type.label));
-        return null;
+        return this;
     }
 
     @Override

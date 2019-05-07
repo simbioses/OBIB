@@ -9,7 +9,7 @@ DB_USERNAME='mirth'
 DB_PASSWORD='Mirth!123'
 
 ## Config and Mirth Connect root paths
-CONF_ROOT='/home/vagrant/configs'
+CONF_ROOT='/vagrant/configs'
 MIRTH_ROOT='/opt/MirthConnect'
 
 ## Set the correct timezone
@@ -39,8 +39,10 @@ mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL ON OBIB_DB.* to '$DB_US
 ## Enable mariadb remote access
 sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
-## Execute database insertion script as 'user'
-mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert.sql
+## Execute database insertion scripts as 'user'
+mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql
+mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql
+mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_clinic_credential.sql
 
 ## Download Mirth Connect
 wget -q http://downloads.mirthcorp.com/connect/3.7.1.b243/mirthconnect-3.7.1.b243-unix.tar.gz

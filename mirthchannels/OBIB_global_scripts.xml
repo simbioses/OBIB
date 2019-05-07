@@ -46,22 +46,46 @@ fileProp.close();
 logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &quot;&apos; CDA properties.&quot;);
 
 
-/*********** Load CDX Ids from database ***********/
+/*********** Load CDX IDs from database ***********/
 try {
 	dbConn = getDBConnection();
 
 	var count = 0;
 	var result = dbConn.executeCachedQuery(&apos;SELECT * FROM cdx_id;&apos;);
 	while (result &amp;&amp; result.next()) {
-		globalMap.put(result.getString(&apos;extension&apos;), result.getString(&apos;name&apos;));
+		globalMap.put(result.getString(&apos;code&apos;), result.getString(&apos;name&apos;));
 		count++;
 	}
 	result.close();
-	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX ids.&quot;);
+	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX Ids.&quot;);
 	
 	dbConn.close();
 } catch(err) {
-	logger.error(&apos;Global Scripts: Erro connecting to database. &apos; + err);
+	logger.error(&apos;Global Scripts: Erro loading CDX Ids from database. &apos; + err);
+}
+
+/*********** Load CDX LOINC codes from database ***********/
+try {
+	dbConn = getDBConnection();
+
+	var count = 0;
+	var result = dbConn.executeCachedQuery(&apos;SELECT * FROM cdx_loinc_code;&apos;);
+	while (result &amp;&amp; result.next()) {
+		var loinc_code = {
+			&apos;loinc_code&apos;: result.getString(&apos;loinc_code&apos;),
+			&apos;loinc_name&apos;: result.getString(&apos;loinc_name&apos;),
+			&apos;template_id&apos;: result.getString(&apos;template_id&apos;),
+			&apos;template_name&apos;: result.getString(&apos;template_name&apos;),
+		}
+		globalMap.put(result.getString(&apos;loinc_code&apos;), loinc_code);
+		count++;
+	}
+	result.close();
+	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX LOINC Codes.&quot;);
+	
+	dbConn.close();
+} catch(err) {
+	logger.error(&apos;Global Scripts: Erro loading CDX LOINC Codes from database. &apos; + err);
 }
 
 return;</string>

@@ -62,15 +62,23 @@ Vagrant.configure("2") do |config|
   #
   # View the documentation for the provider you are using for more
   # information on available options.
+  
+  # https://github.com/dotless-de/vagrant-vbguest/issues/333  
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   
   # Copy the configuration files
-  config.vm.provision "file", source: "./configs", destination: "$HOME/configs"
+  #config.vm.provision "setup", type: "file", source: "./configs", destination: "$HOME/configs"
   
   # Run the configuration script
-  config.vm.provision "shell", path: "mirth_connect.sh"
+  config.vm.provision "install", type: "shell", path: "mirth_connect.sh"
+  
+  # Copy the configuration files
+  config.vm.provision "updates", type: "shell", path: "updates.sh", run: "never"
   
 end

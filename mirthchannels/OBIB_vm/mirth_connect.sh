@@ -51,13 +51,14 @@ wget -q http://downloads.mirthcorp.com/connect/3.7.1.b243/mirthconnect-3.7.1.b24
 sudo tar -xzf mirthconnect-3.7.1.b243-unix.tar.gz
 sudo mv 'Mirth Connect' $MIRTH_ROOT
 
-## Copy and setup the Mirth Connect configuration files
+## Copy the Mirth Connect configuration files
 sudo cp -R $CONF_ROOT/appdata/ $MIRTH_ROOT/
 sudo cp -R $CONF_ROOT/certs/ $MIRTH_ROOT/
 sudo cp $CONF_ROOT/conf/mirth.properties $MIRTH_ROOT/conf/mirth.properties
 sudo cp -R $CONF_ROOT/custom-lib/ $MIRTH_ROOT/
 sudo cp $CONF_ROOT/mirth.service /etc/systemd/system/mirth.service
 
+## Setup the configurations files
 sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/appdata/configuration.properties
 sudo sed -e 's,${SERVER_IP},'"$SERVER_IP"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -i $MIRTH_ROOT/conf/mirth.properties
 sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -i $MIRTH_ROOT/custom-lib/CDA.properties

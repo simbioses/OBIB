@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
   # Run the configuration script
   config.vm.provision "install", type: "shell", path: "mirth_connect.sh"
   
-  # Copy the configuration files
+  # Copy the configuration files - execute manually: $ vagrant provision --provision-with updates
   config.vm.provision "updates", type: "shell", path: "updates.sh", run: "never"
   
 end

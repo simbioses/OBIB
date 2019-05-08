@@ -10,20 +10,20 @@ public class MessageObjectFactory extends ObjectFactory {
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
     public II createII(NullFlavor nullFlavor) {
-        II id = createII();
+        II id = new II();
         id.setNullFlavor(nullFlavor);
         return id;
     }
 
     public II createII(String root, String extension) {
-        II id = createII();
+        II id = new II();
         id.setRoot(root);
         id.setExtension(extension);
         return id;
     }
 
     public II createII(String root, String assigningAuthorityName, String extension) {
-        II id = createII();
+        II id = new II();
         id.setRoot(root);
         id.setAssigningAuthorityName(assigningAuthorityName);
         id.setExtension(extension);
@@ -31,32 +31,32 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public TS createTS(String value) {
-        TS ts = createTS();
+        TS ts = new TS();
         ts.setValue(value);
         return ts;
     }
 
     public TS createTS(Date value) {
-        TS ts = createTS();
+        TS ts = new TS();
         ts.setValue(DATE_TIME_FORMAT.format(value));
         return ts;
     }
 
     public CS createCS(String code) {
-        CS cs = createCS();
+        CS cs = new CS();
         cs.setCode(code);
         return cs;
     }
 
     public CD createCD(String code, String codeSystem) {
-        CD cd = createCD();
+        CD cd = new CD();
         cd.setCode(code);
         cd.setCodeSystem(codeSystem);
         return cd;
     }
 
     public MCCIMT000100UV01Receiver createMCCIMT000100UV01Receiver(MCCIMT000100UV01Device device) {
-        MCCIMT000100UV01Receiver receiver = createMCCIMT000100UV01Receiver();
+        MCCIMT000100UV01Receiver receiver = new MCCIMT000100UV01Receiver();
         receiver.setDevice(device);
         return receiver;
     }
@@ -68,7 +68,7 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public MCCIMT000100UV01Sender createMCCIMT000100UV01Sender(MCCIMT000100UV01Device device) {
-        MCCIMT000100UV01Sender sender = createMCCIMT000100UV01Sender();
+        MCCIMT000100UV01Sender sender = new MCCIMT000100UV01Sender();
         sender.setDevice(device);
         return sender;
     }
@@ -80,20 +80,20 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public PRPMMT406010UV01OrganizationID createPRPMMT406010UV01OrganizationID(String root, String extension) {
-        PRPMMT406010UV01OrganizationID id = createPRPMMT406010UV01OrganizationID();
+        PRPMMT406010UV01OrganizationID id = new PRPMMT406010UV01OrganizationID();
         id.setValue(createII(root, extension));
         return id;
     }
 
     public PRPMMT406010UV01OrganizationName createPRPMMT406010UV01OrganizationName(String value) {
         PRPMMT406010UV01OrganizationName name = new PRPMMT406010UV01OrganizationName();
-        name.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
+        name.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
         return name;
     }
 
     public PRPMMT406010UV01OrganizationAddress createPRPMMT406010UV01OrganizationAddress(String value) {
-        PRPMMT406010UV01OrganizationAddress address = createPRPMMT406010UV01OrganizationAddress();
-        address.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
+        PRPMMT406010UV01OrganizationAddress address = new PRPMMT406010UV01OrganizationAddress();
+        address.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
         return address;
     }
 
@@ -105,7 +105,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
         PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
-        providerName.setValue(createST(value)); // Changed in the XSD to use ST as specified in the documentation
+        providerName.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
         return providerName;
     }
 
@@ -116,31 +116,31 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public ST createST(String content) {
-        ST st = createST();
+        ST st = new ST();
         st.getContent().add(content);
         return st;
     }
 
     public EN createEN(String content) {
-        EN en = createEN();
+        EN en = new EN();
         en.getDelimiterOrFamilyOrGiven().add(createENXP(content));
         return en;
     }
 
     public ENXP createENXP(String content) {
-        ENXP enxp = createEnFamily();
+        ENXP enxp = new EnFamily();
         enxp.getContent().add(content);
         return enxp;
     }
 
     public AD createAD(String content) {
-        AD ad = createAD();
+        AD ad = new AD();
         ad.getAdditionalLocatorOrBuildingNumberSuffixOrCareOf().add(createADXP(content));
         return ad;
     }
 
     public ADXP createADXP(String content) {
-        ADXP adxp = createAdxpStreetAddressLine();
+        ADXP adxp = new AdxpStreetAddressLine();
         adxp.getContent().add(content);
         return adxp;
     }
@@ -153,7 +153,7 @@ public class MessageObjectFactory extends ObjectFactory {
     }
 
     public IVXBTS createIVXBTS(boolean inclusive, Date value) {
-        IVXBTS ivxbts = createIVXBTS();
+        IVXBTS ivxbts = new IVXBTS();
         ivxbts.setInclusive(inclusive);
         ivxbts.setValue(DATE_TIME_FORMAT.format(value));
         return ivxbts;

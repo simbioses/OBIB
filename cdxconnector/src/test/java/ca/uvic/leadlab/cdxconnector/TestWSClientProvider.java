@@ -28,7 +28,7 @@ public class TestWSClientProvider extends TestWSClient {
 
     @Test
     public void testListProvidersByName() throws Exception {
-        String response = wsClientProviderA.listProviders(ClinicA.id, "", "", "Plisihb");
+        String response = wsClientProviderA.listProviders(ClinicA.id, "", "", "Plis");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));

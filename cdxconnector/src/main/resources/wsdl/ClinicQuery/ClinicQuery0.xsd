@@ -2368,7 +2368,7 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="realmCode" type="tns:CS"/>
             <xs:element maxOccurs="1" minOccurs="0" name="typeId" type="tns:II"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="templateId" type="tns:II"/>
-            <xs:element maxOccurs="1" minOccurs="0" name="value" type="tns:ST"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="value" type="tns:ST"/> <!-- NOTE: Changed to use ST as specified in the documentation -->
             <xs:element maxOccurs="1" minOccurs="0" name="semanticsText" type="tns:ST"/>
         </xs:sequence>
         <xs:attribute name="nullFlavor" type="tns:NullFlavor"/>
@@ -2388,7 +2388,7 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="realmCode" type="tns:CS"/>
             <xs:element maxOccurs="1" minOccurs="0" name="typeId" type="tns:II"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="templateId" type="tns:II"/>
-            <xs:element maxOccurs="1" minOccurs="0" name="value" type="tns:ST"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="value" type="tns:ST"/> <!-- NOTE: Changed to use ST as specified in the documentation -->
             <xs:element maxOccurs="1" minOccurs="0" name="semanticsText" type="tns:ST"/>
         </xs:sequence>
         <xs:attribute name="nullFlavor" type="tns:NullFlavor"/>
@@ -2890,7 +2890,7 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="templateId" type="tns:II"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="id" type="tns:II"/>
             <xs:element maxOccurs="1" minOccurs="0" name="code" type="tns:CE"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="name" type="tns:EN"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="name" type="tns:ST"/> <!-- NOTE: Changed to use ST as specified in the documentation -->
             <xs:element maxOccurs="unbounded" minOccurs="0" name="addr" type="tns:AD"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="telecom" type="tns:TEL"/>
             <xs:element maxOccurs="1" minOccurs="0" name="statusCode" type="tns:CS"/>

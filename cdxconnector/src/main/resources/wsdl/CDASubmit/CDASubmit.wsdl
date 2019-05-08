@@ -24,7 +24,7 @@
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit3.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit4.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit5.xsd"/>
-            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit6.xsd"/-->
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit6.xsd"/--> <!-- NOTE: Commented to generate the Java classes correctly -->
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit7.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit8.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit9.xsd"/>

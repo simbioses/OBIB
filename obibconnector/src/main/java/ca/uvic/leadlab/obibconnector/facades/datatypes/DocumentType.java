@@ -12,13 +12,20 @@ public enum DocumentType {
     NOTE("34109-9", "Note"),
     NOTIFICATION("X10915","General-Purpose Notification");
 
-
-
     public final String label;
     public final String code;
 
     DocumentType(String code, String label) {
         this.label = label;
         this.code = code;
+    }
+
+    public static DocumentType fromCode(String code) {
+        for (DocumentType value : DocumentType.values()) {
+            if (value.code.equalsIgnoreCase(code)) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("No DocumentType enum with code = " + code);
     }
 }

@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.RecipientType;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
@@ -57,7 +58,12 @@ public class Document implements IDocument {
 
         if (document.getLoinc() != null) {
             loincCode = document.getLoinc().getLoincCode();
-            loincCodeDisplayName = document.getLoinc().getDisplayName();
+            try { // try to get the display name from the DocumentType enum.
+                DocumentType documentType = DocumentType.fromCode(loincCode);
+                loincCodeDisplayName = documentType.label;
+            } catch (Exception ignored) { // otherwise, return the value from obib
+                loincCodeDisplayName = document.getLoinc().getDisplayName();
+            }
         }
 
         if (document.getSetId() != null) {

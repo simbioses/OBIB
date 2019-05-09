@@ -69,8 +69,7 @@ sudo chmod +x /etc/systemd/system/mirth.service
 sudo systemctl enable mirth
 
 ## Clean temporary files
-sudo rm mirthconnect-3.7.1.b243-unix.tar.gz
-sudo rm -rf $CONF_ROOT
+#sudo rm mirthconnect-3.7.1.b243-unix.tar.gz
 
 ## End
 echo -e "\e[1;92mSetup completed, please restart the VM - e.g.: vagrant reload\e[0m"

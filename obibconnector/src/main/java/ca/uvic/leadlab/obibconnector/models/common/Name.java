@@ -14,10 +14,10 @@ public class Name {
     public Name() {
     }
 
-    public Name(String use, String family, String given, String prefix, String suffix) {
+    public Name(String use, String given, String family, String prefix, String suffix) {
         this.use = use;
-        this.family = family;
         this.addGiven(given);
+        this.family = family;
         this.prefix = prefix;
         this.suffix = suffix;
     }

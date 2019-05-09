@@ -2,6 +2,7 @@ package ca.uvic.leadlab.obibconnector.facades.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.impl.receive.ReceiveDoc;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class ReceiveDocTest extends FacadesBaseTest {
 
-    //@Test
+    @Test
     public void testPollNewDocIDs() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
@@ -24,7 +25,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
         }
     }
 
-    //@Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class)
     public void testPollNewDocIDsError() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(new Config() {
             @Override
@@ -43,7 +44,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
         //Assert.assertNull(documentsIds);
     }
 
-    //@Test
+    @Test
     public void testRetrieveDocument() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
@@ -57,7 +58,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
         System.out.println(mapper.writeValueAsString(document));
     }
 
-    //@Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 

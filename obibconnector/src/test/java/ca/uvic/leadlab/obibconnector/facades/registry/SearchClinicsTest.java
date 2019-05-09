@@ -10,16 +10,18 @@ import java.util.List;
 
 public class SearchClinicsTest extends FacadesBaseTest {
 
-    //@Test
+    @Test
     public void testFindById() throws Exception {
         ISearchClinic searchClinic = new SearchClinic(configClinicC);
 
         List<IClinic> clinics = searchClinic.findByID(clinicIdA);
 
         Assert.assertNotNull(clinics);
+
+        System.out.println(mapper.writeValueAsString(clinics));
     }
 
-    //@Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class)
     public void testFindByIdError() throws Exception {
         ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
@@ -28,21 +30,25 @@ public class SearchClinicsTest extends FacadesBaseTest {
         //Assert.assertNull(clinics);
     }
 
-    //@Test
+    @Test
     public void testFindByName() throws Exception {
         ISearchClinic searchClinic = new SearchClinic(configClinicC);
 
         List<IClinic> clinics = searchClinic.findByName("oscar");
 
         Assert.assertNotNull(clinics);
+
+        System.out.println(mapper.writeValueAsString(clinics));
     }
 
-    //@Test
+    @Test
     public void testFindByAddress() throws Exception {
         ISearchClinic searchClinic = new SearchClinic(configClinicC);
 
         List<IClinic> clinics = searchClinic.findByAddress("Kelowna");
 
         Assert.assertNotNull(clinics);
+
+        System.out.println(mapper.writeValueAsString(clinics));
     }
 }

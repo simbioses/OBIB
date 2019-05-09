@@ -35,7 +35,7 @@ public class TestRestClient {
         }
     };
 
-    //@Test
+    @Test
     public void testSubmitDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
@@ -84,7 +84,7 @@ public class TestRestClient {
         Assert.assertNotNull(response);
     }
 
-    //@Test
+    @Test
     public void testListDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
@@ -94,7 +94,7 @@ public class TestRestClient {
         Assert.assertNotNull(response);
     }
 
-    //@Test
+    @Test
     public void testSearchDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
@@ -105,7 +105,7 @@ public class TestRestClient {
         Assert.assertNotNull(response);
     }
 
-    //@Test
+    @Test
     public void testGetDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
@@ -116,7 +116,7 @@ public class TestRestClient {
         Assert.assertNotNull(response);
     }
 
-    //@Test
+    @Test
     public void testListClinics() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
@@ -126,7 +126,7 @@ public class TestRestClient {
         Assert.assertNotNull(response);
     }
 
-    //@Test
+    @Test
     public void testListProviders() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 

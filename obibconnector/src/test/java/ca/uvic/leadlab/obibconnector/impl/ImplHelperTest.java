@@ -7,6 +7,6 @@ public class ImplHelperTest {
 
     //@Test
     public void testCheckAttachment() throws Exception {
-        //Assert.assertTrue(ImplHelper.checkAttachment("", ""));
+        Assert.assertTrue(ImplHelper.checkAttachment("", ""));
     }
 }

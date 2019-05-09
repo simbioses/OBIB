@@ -9,17 +9,19 @@ import java.util.List;
 
 public class SearchDocTest extends FacadesBaseTest {
 
-    //@Test
+    @Test
     public void testSearchDocumentsByClinic() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(configClinicA);
 
         List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinicA.getClinicId());
 
         Assert.assertNotNull(documents);
+
+        System.out.println("Documents count: " + documents.size());
         System.out.println(mapper.writeValueAsString(documents));
     }
 
-    //@Test
+    @Test
     public void testSearchDocumentById() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(configClinicA);
 

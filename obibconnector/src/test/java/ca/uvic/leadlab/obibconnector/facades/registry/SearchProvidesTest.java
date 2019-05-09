@@ -10,16 +10,18 @@ import java.util.List;
 
 public class SearchProvidesTest extends FacadesBaseTest {
 
-    //@Test
+    @Test
     public void testFindByProviderId() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
         List<IProvider> providers = searchProviders.findByProviderID("93188");
 
         Assert.assertNotNull(providers);
+
+        System.out.println(mapper.writeValueAsString(providers));
     }
 
-    //@Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class)
     public void testFindByProviderIdError() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
@@ -28,22 +30,24 @@ public class SearchProvidesTest extends FacadesBaseTest {
         //Assert.assertNull(providers);
     }
 
-    //@Test
+    @Test
     public void testFindByName() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
-        List<IProvider> providers = searchProviders.findByName("a");
+        List<IProvider> providers = searchProviders.findByName("Plis");
 
         Assert.assertNotNull(providers);
+
+        System.out.println(mapper.writeValueAsString(providers));
     }
 
-    //@Test(expected = OBIBException.class) /* CDX return: "Provider clinic ID cannot be the only parameter. Please use Clinic Search instead." */
+    @Test(expected = OBIBException.class) /* CDX return: "Provider clinic ID cannot be the only parameter. Please use Clinic Search instead." */
     public void testFindByClinicID() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
         List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
 
-        Assert.assertNotNull(providers);
+        //Assert.assertNotNull(providers);
     }
 
 }

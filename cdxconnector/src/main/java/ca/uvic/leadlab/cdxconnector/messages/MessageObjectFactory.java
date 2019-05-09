@@ -87,13 +87,13 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT406010UV01OrganizationName createPRPMMT406010UV01OrganizationName(String value) {
         PRPMMT406010UV01OrganizationName name = new PRPMMT406010UV01OrganizationName();
-        name.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
+        name.setValue(createEN(value));
         return name;
     }
 
     public PRPMMT406010UV01OrganizationAddress createPRPMMT406010UV01OrganizationAddress(String value) {
         PRPMMT406010UV01OrganizationAddress address = new PRPMMT406010UV01OrganizationAddress();
-        address.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
+        address.setValue(createAD(value));
         return address;
     }
 
@@ -105,7 +105,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
         PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
-        providerName.setValue(createST(value)); // NOTE: Changed in the XSD to use ST as specified in the documentation
+        providerName.setValue(createEN(value));
         return providerName;
     }
 
@@ -123,7 +123,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public EN createEN(String content) {
         EN en = new EN();
-        en.getDelimiterOrFamilyOrGiven().add(createENXP(content));
+        en.getContent().add(content);
         return en;
     }
 
@@ -135,7 +135,7 @@ public class MessageObjectFactory extends ObjectFactory {
 
     public AD createAD(String content) {
         AD ad = new AD();
-        ad.getAdditionalLocatorOrBuildingNumberSuffixOrCareOf().add(createADXP(content));
+        ad.getContent().add(content);
         return ad;
     }
 

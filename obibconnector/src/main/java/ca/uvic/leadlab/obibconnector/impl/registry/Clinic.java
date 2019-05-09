@@ -9,7 +9,7 @@ public class Clinic implements IClinic {
     private final ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic;
 
     private String ID;
-
+    private String name;
     private String streetAddress;
     private String city;
     private String postalCode;
@@ -17,11 +17,11 @@ public class Clinic implements IClinic {
 
     private IProvider provider;
 
-    Clinic(ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic) {
+    public Clinic(ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic) {
         this.clinic = clinic;
 
         ID = ImplHelper.getDefaultClinicId(clinic.getIds());
-
+        name = clinic.getName();
         if (clinic.getAddress() != null) {
             streetAddress = clinic.getAddress().getStreetAddress();
             city = clinic.getAddress().getCity();
@@ -41,7 +41,7 @@ public class Clinic implements IClinic {
 
     @Override
     public String getName() {
-        return clinic.getName();
+        return name;
     }
 
     @Override

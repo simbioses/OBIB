@@ -2,7 +2,6 @@ package ca.uvic.leadlab.obibconnector.models.document;
 
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.registry.Provider;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class DataEnterer extends Provider {
 
@@ -17,7 +16,6 @@ public class DataEnterer extends Provider {
         this.id = id;
     }
 
-    @JsonIgnore
     @Override
     public void setId(String id) {
         this.id = new Id(id, null);

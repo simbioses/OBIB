@@ -2,7 +2,6 @@ package ca.uvic.leadlab.obibconnector.models.registry;
 
 import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.models.common.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ public class Provider extends Person {
     private List<Telecom> telecoms = new ArrayList<>();
     private List<Clinic> clinics = new ArrayList<>();
 
-    @JsonIgnore
     public String getStatus() {
         return status;
     }
@@ -33,7 +31,6 @@ public class Provider extends Person {
         this.ids = ids;
     }
 
-    @JsonIgnore
     @Override
     public void setId(String id) {
         if (this.ids == null) {
@@ -59,7 +56,6 @@ public class Provider extends Person {
         this.addresses = addresses;
     }
 
-    @JsonIgnore
     @Override
     public void setAddress(Address address) {
         if (this.addresses == null) {
@@ -76,7 +72,6 @@ public class Provider extends Person {
         this.telecoms = telecoms;
     }
 
-    @JsonIgnore
     @Override
     public void setTelecom(Telecom telecom) {
         if (this.telecoms == null) {
@@ -85,7 +80,6 @@ public class Provider extends Person {
         this.telecoms.add(telecom);
     }
 
-    @JsonIgnore
     public List<Clinic> getClinics() {
         return clinics;
     }

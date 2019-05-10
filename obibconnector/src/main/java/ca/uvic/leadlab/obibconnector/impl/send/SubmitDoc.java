@@ -88,7 +88,6 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
-        document.setNonXMLBody(new NonXMLBody(reference, type.mediaType)); // TODO multiple attachments?
         document.addAttachment(new Attachment(ImplHelper.calculateHash(data),
                 type.mediaType,
                 DatatypeConverter.printBase64Binary(data),

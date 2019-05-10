@@ -3,7 +3,10 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 public enum AttachmentType {
 
     PDF(MediaType.PDF.mediaType),
-    RTF(MediaType.RTF.mediaType);
+    RTF(MediaType.RTF.mediaType),
+    JPEG(MediaType.JPEG.mediaType),
+    PNG(MediaType.PNG.mediaType),
+    TIFF(MediaType.TIFF.mediaType);
 
     public final String mediaType;
 

@@ -95,7 +95,9 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .phone(TelcoType.HOME, "250-111-1234")
                 .and()
                     .receiverId(clinicIdA)
+                    .content("New referral with multiple attachments...")
                     .attach(AttachmentType.PDF, "logo.pdf", DatatypeConverter.parseBase64Binary(base64Pdf))
+                    .attach(AttachmentType.PDF, "logo2.pdf", DatatypeConverter.parseBase64Binary(base64Pdf))
                 .submit();
 
         Assert.assertNotNull(response);

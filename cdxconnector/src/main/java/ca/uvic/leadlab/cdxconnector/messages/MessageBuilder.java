@@ -31,7 +31,7 @@ public abstract class MessageBuilder {
         return device;
     }
 
-    MCCIMT100100UV01Device createDeviceForDocRetr(String agentOrganizationIdExtension) {
+    MCCIMT100100UV01Device createDeviceForDocRetr(String agentOrganizationIdExtension, boolean sender) {
         MCCIMT100100UV01Device device = new MCCIMT100100UV01Device();
         device.setClassCode(EntityClassDevice.DEV);
         device.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
@@ -44,10 +44,10 @@ public abstract class MessageBuilder {
         representedOrganization.setClassCode(EntityClassOrganization.ORG);
         representedOrganization.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
 
-        // TODO verify CONF-CDXSPR0034 id.assigningAuthorityName=”CDX Clinic ID”
-        // TODO verify CONF-CDXSPR0049 id.assigningAuthorityName=”ClinicID”
+        // Receiver = CONF-CDXSPR0034 id.assigningAuthorityName=”CDX Clinic ID”
+        // Sender = CONF-CDXSPR0049 id.assigningAuthorityName=”ClinicID”
         representedOrganization.getId().add(factory.createII("2.16.840.1.113883.3.277.100.2",
-                "CDX Clinic ID",
+                sender ? "ClinicID": "CDX Clinic ID",
                 agentOrganizationIdExtension));
 
         agent.setRepresentedOrganization(representedOrganization);

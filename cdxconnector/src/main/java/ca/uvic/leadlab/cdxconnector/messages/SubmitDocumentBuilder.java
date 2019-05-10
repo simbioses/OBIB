@@ -89,8 +89,8 @@ public class SubmitDocumentBuilder extends MessageBuilder {
     private ED createAttachmentText(MediaType mediaType, String content, byte[] hash) {
         ED ed = new ED();
         // TODO ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
-        //ed.setIntegrityCheck(hash); // CONF-CDXOD066
-        //ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
+        ed.setIntegrityCheck(hash); // CONF-CDXOD066
+        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
         ed.setMediaType(mediaType.value()); // CONF-CDXOD068
         ed.getContent().add(content); // CONF-CDXOD069
         return ed;

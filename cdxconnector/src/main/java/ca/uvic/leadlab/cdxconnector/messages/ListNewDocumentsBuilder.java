@@ -20,12 +20,12 @@ public class ListNewDocumentsBuilder extends MessageBuilder {
         if (receivers == null) {
             receivers = new ArrayList<>();
         }
-        receivers.add(factory.createMCCIMT100100UV01Receiver(createDeviceForDocRetr(receiverAgentOrganizationIdExtension))); // CONF-CDXSPR0021
+        receivers.add(factory.createMCCIMT100100UV01Receiver(createDeviceForDocRetr(receiverAgentOrganizationIdExtension, false))); // CONF-CDXSPR0021
         return this;
     }
 
     public ListNewDocumentsBuilder sender(String senderAgentOrganizationIdExtension) {
-        sender = factory.createMCCIMT100100UV01Sender(createDeviceForDocRetr(senderAgentOrganizationIdExtension)); // CONF-CDXSPR0036
+        sender = factory.createMCCIMT100100UV01Sender(createDeviceForDocRetr(senderAgentOrganizationIdExtension, true)); // CONF-CDXSPR0036
         return this;
     }
 

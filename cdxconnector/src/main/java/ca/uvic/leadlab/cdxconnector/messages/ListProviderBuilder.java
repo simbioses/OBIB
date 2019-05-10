@@ -45,7 +45,6 @@ public class ListProviderBuilder extends MessageBuilder {
     }
 
     public PRPMIN306010UV build() {
-        // TODO validate CONF- CDXPR099
         PRPMIN306010UV request = new PRPMIN306010UV(); // CONF-CDXPR001
         request.setITSVersion("XML_1.0");
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId));

@@ -45,7 +45,6 @@ public class ListClinicBuilder extends MessageBuilder {
     }
 
     public PRPMIN406010UV01 build() {
-        // TODO validate CONF- CDXPR62a
         PRPMIN406010UV01 request = new PRPMIN406010UV01(); // CONF-CDXPR050
         request.setITSVersion("XML_1.0");
         request.setId(factory.createII("2.16.840.1.113883.3.277.100.1", messageId));

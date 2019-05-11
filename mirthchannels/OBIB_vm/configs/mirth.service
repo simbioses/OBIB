@@ -16,6 +16,6 @@ ExecStop=${MIRTH_ROOT}/mcservice stop
 ExecRestart=${MIRTH_ROOT}/mcservice restart
 
 # Give a reasonable amount of time for the server to start up/shut down
-TimeoutSec=60
-
+TimeoutStartSec=60
+TimeoutStopSec=20
 

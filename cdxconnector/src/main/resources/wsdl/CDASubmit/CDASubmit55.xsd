@@ -2352,8 +2352,8 @@
     </xs:simpleType>
     <xs:simpleType name="IntegrityCheckAlgorithm">
         <xs:restriction base="q302:cs" xmlns:q302="urn:hl7-org:v3">
-            <xs:enumeration value="SHA-1"/>
-            <xs:enumeration value="SHA-256"/>
+            <xs:enumeration value="SHA1"/> <!-- NOTE: Changed to send the value specified in the documentation -->
+            <xs:enumeration value="SHA256"/> <!-- NOTE: Changed to send the value specified in the documentation -->
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ManagedParticipationStatus">

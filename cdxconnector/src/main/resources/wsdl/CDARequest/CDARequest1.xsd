@@ -715,8 +715,8 @@
     </xs:simpleType>
     <xs:simpleType name="IntegrityCheckAlgorithm">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="SHA-1"/>
-            <xs:enumeration value="SHA-256"/>
+            <xs:enumeration value="SHA1"/> <!-- NOTE: Changed to send the value specified in the documentation -->
+            <xs:enumeration value="SHA256"/> <!-- NOTE: Changed to send the value specified in the documentation -->
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="ENXP">

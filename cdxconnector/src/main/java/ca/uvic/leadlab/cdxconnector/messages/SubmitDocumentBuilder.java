@@ -38,8 +38,7 @@ public class SubmitDocumentBuilder extends MessageBuilder {
         if (attachments == null) {
             attachments = new ArrayList<>();
         }
-        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(),
-                DatatypeConverter.parseBase64Binary(attachment.getHash())));
+        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(), attachment.getHash().getBytes()));
         return this;
     }
 

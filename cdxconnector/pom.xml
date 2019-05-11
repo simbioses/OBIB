@@ -288,6 +288,7 @@
                                         <extraarg>-impl</extraarg>
                                     </extraargs>
                                     <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/CDARequest_jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
                                     </bindingFiles>
@@ -334,6 +335,7 @@
                                         <extraarg>-verbose</extraarg>
                                     </extraargs>
                                     <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/ProviderQuery_jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
                                     </bindingFiles>
@@ -357,6 +359,7 @@
                                         <extraarg>-verbose</extraarg>
                                     </extraargs>
                                     <bindingFiles>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/ClinicQuery_jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
                                     </bindingFiles>

@@ -52,7 +52,7 @@ public class SearchProviders implements ISearchProviders {
         ListProvidersResponse response = services.listProviders(searchProviderCriteria);
 
         if (!response.isOK()) {
-            throw new OBIBRequestException(response.getMessage());
+            throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
         }
 
         List<IProvider> providers = new ArrayList<>();

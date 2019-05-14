@@ -26,7 +26,7 @@ public class ReceiveDoc implements IReceiveDoc {
             ListDocumentsResponse response = services.listDocument();
 
             if (!response.isOK()) {
-                throw new OBIBRequestException(response.getMessage());
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
             return response.getDocumentIds();
@@ -41,7 +41,7 @@ public class ReceiveDoc implements IReceiveDoc {
             ListDocumentsResponse response = services.getDocument(SearchDocumentCriteria.byDocumentId(id));
 
             if (!response.isOK()) {
-                throw new OBIBRequestException(response.getMessage());
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
             return new Document(response.getDocument());

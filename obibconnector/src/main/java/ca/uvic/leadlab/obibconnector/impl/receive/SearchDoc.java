@@ -28,7 +28,7 @@ public class SearchDoc implements ISearchDoc {
             ListDocumentsResponse response = services.searchDocument(SearchDocumentCriteria.byClinicId(clinicId));
 
             if (!response.isOK()) {
-                throw new OBIBRequestException(response.getMessage());
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
             List<IDocument> documents = new ArrayList<>();
@@ -48,7 +48,7 @@ public class SearchDoc implements ISearchDoc {
                     SearchDocumentCriteria.byClinicIdAndDocumentId(clinicId, documentId));
 
             if (!response.isOK()) {
-                throw new OBIBRequestException(response.getMessage());
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
             return new Document(response.getDocument());

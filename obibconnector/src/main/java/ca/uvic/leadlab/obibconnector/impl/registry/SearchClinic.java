@@ -52,7 +52,7 @@ public class SearchClinic implements ISearchClinic {
         ListClinicsResponse response = services.listClinics(searchClinicCriteria);
 
         if (!response.isOK()) {
-            throw new OBIBRequestException(response.getMessage());
+            throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
         }
 
         List<IClinic> clinics = new ArrayList<>();

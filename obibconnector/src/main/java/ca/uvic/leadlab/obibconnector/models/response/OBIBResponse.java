@@ -1,11 +1,14 @@
 
 package ca.uvic.leadlab.obibconnector.models.response;
 
+import java.util.Map;
+
 public abstract class OBIBResponse {
 
     private String status;
     private String message;
     private AckDetail ackDetail;
+    private Map<String, String> obibErrors;
 
     public boolean isOK() {
         return "SUCCESS".equalsIgnoreCase(status);
@@ -25,6 +28,14 @@ public abstract class OBIBResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Map<String, String> getObibErrors() {
+        return obibErrors;
+    }
+
+    public void setObibErrors(Map<String, String> obibErrors) {
+        this.obibErrors = obibErrors;
     }
 
     public AckDetail getAckDetail() {

@@ -22,6 +22,10 @@ public class Document implements IDocument {
     private String templateID;
     private String templateName;
 
+    private String documentID;
+    private int version;
+    private Date effectiveTime;
+
     private String loincCode;
     private String loincCodeDisplayName;
 
@@ -53,6 +57,10 @@ public class Document implements IDocument {
             templateID = document.getTemplate().getTemplateId();
             templateName = document.getTemplate().getTemplateName();
         }
+
+        documentID = document.getDocumentId();
+        version = document.getVersionNumber();
+        effectiveTime = DateFormatter.parseDateTime(document.getEffectiveTime());
 
         if (document.getLoinc() != null) {
             loincCode = document.getLoinc().getLoincCode();
@@ -132,12 +140,12 @@ public class Document implements IDocument {
 
     @Override
     public String getDocumentID() {
-        return document.getDocumentId();
+        return documentID;
     }
 
     @Override
     public int getVersion() {
-        return document.getVersionNumber();
+        return version;
     }
 
     @Override
@@ -192,7 +200,7 @@ public class Document implements IDocument {
 
     @Override
     public Date getEffectiveTime() {
-        return document.getEffectiveTime();
+        return effectiveTime;
     }
 
     @Override

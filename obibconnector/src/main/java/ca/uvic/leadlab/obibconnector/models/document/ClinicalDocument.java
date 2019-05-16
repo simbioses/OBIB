@@ -1,8 +1,10 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.common.Loinc;
 import ca.uvic.leadlab.obibconnector.models.common.Template;
+import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +16,7 @@ public class ClinicalDocument {
     private Type type;
     private Template template;
     private Loinc loinc;
-    private Date effectiveTime;
+    private String effectiveTime;
     private String title;
     private int versionNumber;
     private Id setId;
@@ -63,11 +65,11 @@ public class ClinicalDocument {
         this.loinc = loinc;
     }
 
-    public Date getEffectiveTime() {
+    public String getEffectiveTime() {
         return effectiveTime;
     }
 
-    public void setEffectiveTime(Date effectiveTime) {
+    public void setEffectiveTime(String effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
 

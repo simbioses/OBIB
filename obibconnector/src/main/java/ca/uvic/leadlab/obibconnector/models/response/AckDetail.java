@@ -5,7 +5,7 @@ import java.util.Date;
 public class AckDetail {
 
     private String ackId;
-    private Date ackTime;
+    private String ackTime;
     private String messageId;
     private String status;
 
@@ -17,11 +17,11 @@ public class AckDetail {
         this.ackId = ackId;
     }
 
-    public Date getAckTime() {
+    public String getAckTime() {
         return ackTime;
     }
 
-    public void setAckTime(Date ackTime) {
+    public void setAckTime(String ackTime) {
         this.ackTime = ackTime;
     }
 

@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
-import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
+import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import ca.uvic.leadlab.obibconnector.models.common.*;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class Patient extends Person {
         if (this.ids == null) {
             this.ids = new ArrayList<>();
         }
-        this.ids.add(new Id(id, ImplHelper.DEFAULT_PATIENT_ID_TYPE));
+        this.ids.add(new Id(id, OBIBConnectorHelper.DEFAULT_PATIENT_ID_TYPE));
     }
 
     public List<Name> getNames() {

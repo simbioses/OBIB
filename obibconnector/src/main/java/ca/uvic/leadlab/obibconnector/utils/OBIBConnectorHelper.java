@@ -1,20 +1,13 @@
-package ca.uvic.leadlab.obibconnector.impl;
+package ca.uvic.leadlab.obibconnector.utils;
 
-import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public abstract class ImplHelper {
+public abstract class OBIBConnectorHelper {
 
-    private static final Properties properties = setupProperties();
-
-    private static final String HASH_ALGORITHM = properties.getProperty("obib.attachment.hash.algorithm");
+    public static final Properties properties = setupProperties();
 
     public static final String DEFAULT_CLINIC_ID_TYPE = properties.getProperty("obib.default.clinic.id.type");
     public static final String DEFAULT_PROVIDER_ID_TYPE = properties.getProperty("obib.default.provider.id.type");
@@ -23,11 +16,15 @@ public abstract class ImplHelper {
     private static Properties setupProperties() {
         Properties properties = new Properties();
         try {
-            properties.load(ImplHelper.class.getResourceAsStream("/obib_impl.properties"));
+            properties.load(OBIBConnectorHelper.class.getResourceAsStream("/obibconnector.properties"));
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this exception
         }
         return properties;
+    }
+
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
     }
 
     private static String getIdByType(List<Id> ids, String type) {
@@ -61,26 +58,4 @@ public abstract class ImplHelper {
         return firstName.trim();
     }
 
-    public static boolean checkAttachment(String content, String hash) {
-        try {
-            MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
-
-            byte[] contentHash = md.digest(DatatypeConverter.parseBase64Binary(content));
-
-            return Arrays.equals(contentHash, DatatypeConverter.parseBase64Binary(hash));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace(); // TODO log this exception
-            return true; // does not fails the process on error
-        }
-    }
-
-    public static String calculateHash(byte[] content) throws OBIBException {
-        try {
-            MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
-
-            return DatatypeConverter.printBase64Binary(md.digest(content));
-        } catch (NoSuchAlgorithmException e) {
-            throw new OBIBException("Error calculating attachment hash.", e);
-        }
-    }
 }

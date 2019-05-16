@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.send;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
+import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.send.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.send.ISubmitDoc;
@@ -22,7 +22,7 @@ public class PatientBuilder<P extends Patient> extends PersonBuilder<P, IPatient
 
     @Override
     public IPatient birthday(Date date) {
-        person.setBirthday(DateFormatter.DATE_FORMATTER.format(date));
+        person.setBirthday(DateFormatter.formatDate(date));
         return this;
     }
 

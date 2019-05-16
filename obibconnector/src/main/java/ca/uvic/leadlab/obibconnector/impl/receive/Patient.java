@@ -1,10 +1,11 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.Gender;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
-import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
+import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Name;
 import ca.uvic.leadlab.obibconnector.models.common.Telecom;
@@ -23,6 +24,9 @@ public class Patient implements IPatient {
     private String lastName;
     private String prefix;
 
+    private Date birthdate;
+    private Gender gender;
+
     private String streetAddress;
     private String city;
     private String province;
@@ -32,10 +36,10 @@ public class Patient implements IPatient {
     private List<ITelco> phones = new ArrayList<>();
     private List<ITelco> emails = new ArrayList<>();
 
-    Patient(ca.uvic.leadlab.obibconnector.models.document.Patient patient) {
+    Patient(ca.uvic.leadlab.obibconnector.models.document.Patient patient) throws OBIBException {
         this.patient = patient;
 
-        ID = ImplHelper.getDefaultPatientId(patient.getIds());
+        ID = OBIBConnectorHelper.getDefaultPatientId(patient.getIds());
 
         if (!patient.getNames().isEmpty()) {
             Name name = patient.getNames().get(0);
@@ -43,6 +47,9 @@ public class Patient implements IPatient {
             lastName = name.getFamily();
             prefix = name.getPrefix();
         }
+
+        birthdate = DateFormatter.parseDate(patient.getBirthday());
+        gender = Gender.fromLabel(patient.getGenderCode());
 
         if (!patient.getAddresses().isEmpty()) {
             Address address = patient.getAddresses().get(0);
@@ -84,12 +91,12 @@ public class Patient implements IPatient {
 
     @Override
     public Gender getGender() {
-        return Gender.fromLabel(patient.getGenderCode());
+        return gender;
     }
 
     @Override
     public Date getBirthdate() {
-        return DateFormatter.parseDate(patient.getBirthday());
+        return birthdate;
     }
 
     @Override

@@ -1,18 +1,16 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.DateFormatter;
+import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
+import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentType;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.RecipientType;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
-import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
 import ca.uvic.leadlab.obibconnector.impl.registry.Provider;
-import ca.uvic.leadlab.obibconnector.models.document.Author;
-import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
-import ca.uvic.leadlab.obibconnector.models.document.Participant;
-import ca.uvic.leadlab.obibconnector.models.document.Recipient;
+import ca.uvic.leadlab.obibconnector.models.document.*;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.*;
@@ -48,7 +46,7 @@ public class Document implements IDocument {
 
     private String contents;
 
-    public Document(ClinicalDocument document) {
+    public Document(ClinicalDocument document) throws OBIBException {
         this.document = document;
 
         if (document.getTemplate() != null) {
@@ -111,7 +109,7 @@ public class Document implements IDocument {
 
         if (document.getAttachments() != null) { // attachments
             for (ca.uvic.leadlab.obibconnector.models.document.Attachment attachment : document.getAttachments()) {
-                if (!ImplHelper.checkAttachment(attachment.getContent(), attachment.getHash())) {
+                if (!AttachmentUtils.checkAttachment(attachment.getContent(), attachment.getHash())) {
                     // TODO log check error
                 }
                 attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),

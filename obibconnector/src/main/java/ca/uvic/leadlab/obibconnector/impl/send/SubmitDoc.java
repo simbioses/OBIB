@@ -5,7 +5,7 @@ import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.send.*;
-import ca.uvic.leadlab.obibconnector.impl.ImplHelper;
+import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
 import ca.uvic.leadlab.obibconnector.impl.receive.Document;
 import ca.uvic.leadlab.obibconnector.models.common.Loinc;
 import ca.uvic.leadlab.obibconnector.models.document.*;
@@ -88,7 +88,7 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
-        document.addAttachment(new Attachment(ImplHelper.calculateHash(data),
+        document.addAttachment(new Attachment(AttachmentUtils.calculateHash(data),
                 type.mediaType,
                 DatatypeConverter.printBase64Binary(data),
                 reference));

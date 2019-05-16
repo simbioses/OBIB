@@ -5,26 +5,24 @@ import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchProviderCriteria;
 import ca.uvic.leadlab.obibconnector.models.response.*;
+import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Properties;
 
 public class RestClient implements IOscarInformation {
 
-    private static final Properties properties = setupProperties();
-
-    private static final String SUBMIT_CDA_PATH = properties.getProperty("obib.submitcda.path");
-    private static final String LIST_DOCUMENTS_PATH = properties.getProperty("obib.listdocuments.path");
-    private static final String SEARCH_DOCUMENT_PATH = properties.getProperty("obib.searchdocument.path");
-    private static final String GET_DOCUMENT_PATH = properties.getProperty("obib.getdocument.path");
-    private static final String LIST_CLINICS_PATH = properties.getProperty("obib.listclinics.path");
-    private static final String LIST_PROVIDERS_PATH = properties.getProperty("obib.listproviders.path");
-    private static final String CONNECT_TIMEOUT = properties.getProperty("obib.connect.timeout");
-    private static final String READ_TIMEOUT = properties.getProperty("obib.read.timeout");
+    private static final String SUBMIT_CDA_PATH = OBIBConnectorHelper.getProperty("obib.submitcda.path");
+    private static final String LIST_DOCUMENTS_PATH = OBIBConnectorHelper.getProperty("obib.listdocuments.path");
+    private static final String SEARCH_DOCUMENT_PATH = OBIBConnectorHelper.getProperty("obib.searchdocument.path");
+    private static final String GET_DOCUMENT_PATH = OBIBConnectorHelper.getProperty("obib.getdocument.path");
+    private static final String LIST_CLINICS_PATH = OBIBConnectorHelper.getProperty("obib.listclinics.path");
+    private static final String LIST_PROVIDERS_PATH = OBIBConnectorHelper.getProperty("obib.listproviders.path");
+    private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
+    private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
 
     private static final Client client = setupRestClient();
 
@@ -34,16 +32,6 @@ public class RestClient implements IOscarInformation {
     public RestClient(String obibURL, String locationId) {
         this.obibURL = obibURL;
         this.locationId = locationId;
-    }
-
-    private static Properties setupProperties() {
-        Properties properties = new Properties();
-        try {
-            properties.load(RestClient.class.getResourceAsStream("/obibconnector.properties"));
-        } catch (Exception e) {
-            e.printStackTrace(); // TODO log this exception
-        }
-        return properties;
     }
 
     private static Client setupRestClient() {

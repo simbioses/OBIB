@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
+import ca.uvic.leadlab.obibconnector.models.support.ErrorMessage;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
@@ -21,6 +22,7 @@ public class RestClient implements IOscarInformation {
     private static final String GET_DOCUMENT_PATH = OBIBConnectorHelper.getProperty("obib.getdocument.path");
     private static final String LIST_CLINICS_PATH = OBIBConnectorHelper.getProperty("obib.listclinics.path");
     private static final String LIST_PROVIDERS_PATH = OBIBConnectorHelper.getProperty("obib.listproviders.path");
+    private static final String NOTIFY_ERROR_PATH = OBIBConnectorHelper.getProperty("obib.notifyerror.path");
     private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
     private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
 
@@ -102,5 +104,10 @@ public class RestClient implements IOscarInformation {
     @Override
     public ListClinicsResponse listClinics(SearchClinicCriteria searchCriteria) throws OBIBRequestException {
         return doRequest(LIST_CLINICS_PATH, searchCriteria, ListClinicsResponse.class);
+    }
+
+    @Override
+    public OBIBResponse notifyError(ErrorMessage error) throws OBIBRequestException {
+        return doRequest(NOTIFY_ERROR_PATH, error, OBIBResponse.class);
     }
 }

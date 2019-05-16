@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
+import ca.uvic.leadlab.obibconnector.models.support.ErrorMessage;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
@@ -29,5 +30,7 @@ public interface IOscarInformation {
 
     //list Clinics
     ListClinicsResponse listClinics(SearchClinicCriteria searchCriteria) throws OBIBRequestException;
+
+    OBIBResponse notifyError(ErrorMessage error) throws OBIBRequestException;
 
 }

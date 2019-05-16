@@ -13,7 +13,7 @@ CONF_ROOT='/vagrant/configs'
 MIRTH_ROOT='/opt/MirthConnect'
 
 ## Set the correct timezone
-sudo cp /usr/share/zoneinfo/Canada/Pacific /etc/localtime
+sudo timedatectl set-timezone Canada/Pacific
 
 ## Update the OS
 sudo apt-get update

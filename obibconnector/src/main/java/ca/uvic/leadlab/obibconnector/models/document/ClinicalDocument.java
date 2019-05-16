@@ -28,6 +28,7 @@ public class ClinicalDocument {
     private List<Authenticator> authenticators = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
+    private List<ServiceEvent> serviceEvents = new ArrayList<>();
     private NonXMLBody nonXMLBody;
     private List<Attachment> attachments = new ArrayList<>();
     private List<String> receivers = new ArrayList<>();
@@ -187,6 +188,37 @@ public class ClinicalDocument {
             this.orders = new ArrayList<>();
         }
         this.orders.add(order);
+    }
+
+    public List<ServiceEvent> getServiceEvents() {
+        return serviceEvents;
+    }
+
+    public void setServiceEvents(List<ServiceEvent> serviceEvents) {
+        this.serviceEvents = serviceEvents;
+    }
+
+    public void addServiceEvent(ServiceEvent serviceEvent) {
+        if (this.serviceEvents == null) {
+            this.serviceEvents = new ArrayList<>();
+        }
+        this.serviceEvents.add(serviceEvent);
+    }
+
+    public ServiceEvent getLastServiceEvent() throws OBIBException {
+        ServiceEvent last = null;
+        for (ServiceEvent serviceEvent : serviceEvents) {
+            if (last == null) {
+                last = serviceEvent;
+            } else {
+                Date lastTime = DateFormatter.parseDateTime(last.getEffectiveTime());
+                Date eventTime = DateFormatter.parseDateTime(serviceEvent.getEffectiveTime());
+                if (eventTime.after(lastTime)) {
+                    last = serviceEvent; // Get the last "Real ServiceEvent"
+                }
+            }
+        }
+        return last;
     }
 
     public NonXMLBody getNonXMLBody() {

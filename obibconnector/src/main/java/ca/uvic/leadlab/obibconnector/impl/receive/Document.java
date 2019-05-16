@@ -32,6 +32,8 @@ public class Document implements IDocument {
     private String setId;
     private String inFulFillmentOfId;
 
+    private String statusCode;
+
     private IPatient patient;
 
     private IProvider author;
@@ -77,7 +79,14 @@ public class Document implements IDocument {
         }
 
         if (document.getOrders() != null && !document.getOrders().isEmpty()) {
-            inFulFillmentOfId = document.getOrders().get(0).getId();
+            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getCode();
+        }
+
+        if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {
+            ServiceEvent event = document.getLastServiceEvent();
+            if (event != null) {
+                statusCode = event.getStatusCode();
+            }
         }
 
         if (document.getPatient() != null) {
@@ -235,7 +244,7 @@ public class Document implements IDocument {
 
     @Override
     public String getStatusCode() {
-        return null;
+        return statusCode;
     }
 
     @Override

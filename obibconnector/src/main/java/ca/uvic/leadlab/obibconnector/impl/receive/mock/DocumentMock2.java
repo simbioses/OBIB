@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
+import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
@@ -119,8 +120,8 @@ public class DocumentMock2 implements IDocument {
     }
 
     @Override
-    public String getStatusCode() {
-        return "signed";
+    public DocumentStatus getStatusCode() {
+        return DocumentStatus.COMPLETED;
     }
 
     @Override

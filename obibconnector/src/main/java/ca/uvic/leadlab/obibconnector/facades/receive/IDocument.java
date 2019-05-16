@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
+import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 
 import java.util.Date;
@@ -34,7 +35,7 @@ public interface IDocument {
     IProvider getFamilyProvider();
 
     String  getOrderID();               // the order ID for consultation notes is identical to their respective consultation requests
-    String  getStatusCode();
+    DocumentStatus getStatusCode();
     Date  getObservationDate();
 
     String  getProcedureName();

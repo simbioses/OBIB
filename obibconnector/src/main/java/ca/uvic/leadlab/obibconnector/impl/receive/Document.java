@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
-import ca.uvic.leadlab.obibconnector.facades.datatypes.EventStatus;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
@@ -33,7 +33,7 @@ public class Document implements IDocument {
     private String setId;
     private String inFulFillmentOfId;
 
-    private String statusCode;
+    private DocumentStatus statusCode;
 
     private IPatient patient;
 
@@ -86,11 +86,11 @@ public class Document implements IDocument {
         if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {
             ServiceEvent event = document.getLastServiceEvent();
             if (event != null) {
-                statusCode = event.getStatusCode();
+                statusCode = DocumentStatus.fromCode(event.getStatusCode());
             }
         }
-        if (statusCode == null || statusCode.isEmpty()) {
-            statusCode = EventStatus.COMPLETED.name();
+        if (statusCode == null) {
+            statusCode = DocumentStatus.COMPLETED;
         }
 
         if (document.getPatient() != null) {
@@ -247,7 +247,7 @@ public class Document implements IDocument {
     }
 
     @Override
-    public String getStatusCode() {
+    public DocumentStatus getStatusCode() {
         return statusCode;
     }
 

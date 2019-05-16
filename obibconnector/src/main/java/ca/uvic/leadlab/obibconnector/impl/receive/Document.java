@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
+import ca.uvic.leadlab.obibconnector.facades.datatypes.EventStatus;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
@@ -87,6 +88,9 @@ public class Document implements IDocument {
             if (event != null) {
                 statusCode = event.getStatusCode();
             }
+        }
+        if (statusCode == null || statusCode.isEmpty()) {
+            statusCode = EventStatus.COMPLETED.name();
         }
 
         if (document.getPatient() != null) {

@@ -45,7 +45,6 @@ public class SubmitDocTest extends FacadesBaseTest {
                         .id("93193")
                         .name("Mikel", "Plisihf", "Dr.", "")
                     .and().inFulfillmentOf()
-                        .id("TEST_ID")
                         .id("2")
                         .statusCode(OrderStatus.COMPLETED)
                     .and().documentationOf()
@@ -59,6 +58,47 @@ public class SubmitDocTest extends FacadesBaseTest {
             Assert.assertNotNull(response);
 
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
+    }
+
+    @Test(expected = OBIBException.class)
+    public void testSubmitDocWithErrors() throws Exception {
+        ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
+
+        IDocument response = submitDoc.newDoc()
+//                .documentType(DocumentType.REFERRAL_NOTE) // LOINC is required
+                .patient()
+//                    .id("2222") // Patient shall contain at least one id
+//                    .name("Joe", "Wine") // Patient shall contain at least one name
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                    .birthday("1980", "01", "01")
+                    .gender(Gender.MALE)
+                .and().author()
+//                    .id("93188") // Author shall contain at least one id
+//                    .time(new Date()) // Author shall contain one time
+//                    .name("Lucius", "Plisihb", "Dr.", "") // Author shall contain one name
+                .and().recipient()
+                    .primary()
+//                    .id("93190") Recipient should contain one or two id
+//                    .name("Aaron", "Plisihd", "Dr.", "") // Recipient shall contain one name
+                    .recipientOrganization("123", "Organization Name")
+                .and().dataEnterer()
+//                    .time(new Date()) // Data Enterer shall contain one time
+                    .name("Lucile", "Plis")
+                .and().participant()
+                    .functionCode("PCP")
+//                    .id("93193") // Participant should contain one or two id
+//                    .name("Mikel", "Plisihf", "Dr.", "") // Participant shall contain one name
+                .and().inFulfillmentOf()
+//                    .id("2") // InFulfillmentOf shall contain at least one id
+                    .statusCode(OrderStatus.COMPLETED)
+                .and().documentationOf()
+                    .statusCode(DocumentStatus.COMPLETED)
+//                    .effectiveTime(new Date()) // ServiceEvent shall contain one effectiveTime
+                .and()
+//                    .receiverId(clinicIdA) // At least one receiver is required to submit document
+//                    .content("Referral test 1") // NO BODY?
+                .submit();
     }
 
     @Test
@@ -134,8 +174,6 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .receiverId(clinicIdA)
                     .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
                 .submit();
-
-        Assert.assertNotNull(response);
     }
 
     private static byte[] loadFile(String filePath) throws Exception {

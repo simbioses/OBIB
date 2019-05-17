@@ -48,12 +48,9 @@ public class ReceiveDocTest extends FacadesBaseTest {
     public void testRetrieveDocument() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
-        IDocument document = receiveDoc.retrieveDocument(
-                "ad0007b5-c846-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Found
-                //"45a75b7e-5cb1-4d00-ab7f-b7872de47549"); // Using 'CDX Clinical Document ID' = Not Found (?!)
+        IDocument document = receiveDoc.retrieveDocument("2b0d8260-0c20-e911-a96a-0050568c55a6");
 
         Assert.assertNotNull(document);
-        //Assert.assertEquals("2b0d8260-0c20-e911-a96a-0050568c55a6", document.getDocumentID());
 
         System.out.println(mapper.writeValueAsString(document));
     }

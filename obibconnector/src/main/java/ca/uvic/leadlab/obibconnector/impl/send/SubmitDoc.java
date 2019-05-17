@@ -81,6 +81,13 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
+    public IServiceEvent documentationOf() {
+        ServiceEvent serviceEvent = new ServiceEvent();
+        document.addServiceEvent(serviceEvent);
+        return new ServiceEventBuilder(this, serviceEvent);
+    }
+
+    @Override
     public ISubmitDoc content(String text) {
         document.setNonXMLBody(new NonXMLBody(text, MediaType.TEXT.mediaType));
         return this;

@@ -25,6 +25,8 @@ public interface ISubmitDoc extends ISubmit {
 
     IOrder inFulfillmentOf();
 
+    IServiceEvent documentationOf();
+
     ISubmitDoc content(String text);
 
     ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException;

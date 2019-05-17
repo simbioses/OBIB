@@ -1439,7 +1439,7 @@ function storeOBIBError(errorCode, errorMessage) {
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>183</revision>
+      <revision>189</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -2212,7 +2212,7 @@ if (!receivers || receivers.length == 0) {
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>Order</name>
+                <name>Order (InFulfillmentOf)</name>
                 <sequenceNumber>9</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try { 
@@ -2231,9 +2231,13 @@ if (!receivers || receivers.length == 0) {
 		inFulfillmentOf[&apos;order&apos;] = new XML(&apos;&lt;order classCode=&quot;ENC&quot; moodCode=&quot;RQO&quot;/&gt;&apos;); 
 		
 		// CONF-BC0124: inFulfillmentOf/order SHALL contain at least one [1..*] id
-		if (getArrayOrXmlLength(msgOrder[&apos;id&apos;]) == 0) {
+		if (getArrayOrXmlLength(msgOrder[&apos;ids&apos;]) == 0) {
 			storeOBIBError(&apos;obib.infulfillmentof.id.error&apos;, &apos;InFulfillmentOf shall contain at least one id&apos;);
 		}
+		for (var j = 0; j &lt; getArrayOrXmlLength(msgOrder[&apos;ids&apos;]); j++) {
+			inFulfillmentOf[&apos;order&apos;][&apos;id&apos;][j] = buildCDAId(msgOrder[&apos;ids&apos;][j][&apos;type&apos;], 
+										  		  msgOrder[&apos;ids&apos;][j][&apos;code&apos;]);
+	  	}
 		inFulfillmentOf[&apos;order&apos;][&apos;id&apos;] = buildCDAId(null, msgOrder[&apos;id&apos;]);
 		
 		// CONF-BC0526 TODO ? xpath is quite different from xml
@@ -2243,14 +2247,22 @@ if (!receivers || receivers.length == 0) {
 		//}
 	}
 } catch (e) {
-    	var error = &apos;Error on &quot;Order&quot;: &apos; + e;
+    	var error = &apos;Error on &quot;Order (InFulfillmentOf)&quot;: &apos; + e;
     	logger.error(error); // log the error
     	storeOBIBError(&apos;obib.cda.build.error&apos;, error);
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>Document Body</name>
+                <name>ServiceEvent (documentationOf)</name>
                 <sequenceNumber>10</sequenceNumber>
+                <enabled>true</enabled>
+                <script>// 4.3.1. Service Event - Optional - 0..* (zero or more)
+
+// TODO CONF-BC0520, CONF-BC0103, ...</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Document Body</name>
+                <sequenceNumber>11</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try { 
 	// 2.3. CDA LEVEL 1 NARRATIVE TEXT AND ATTACHMENTS
@@ -2275,7 +2287,7 @@ if (!receivers || receivers.length == 0) {
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Attachments</name>
-                <sequenceNumber>11</sequenceNumber>
+                <sequenceNumber>12</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	var attachments = [];
@@ -2295,7 +2307,7 @@ if (!receivers || receivers.length == 0) {
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
                 <name>Document Validation</name>
-                <sequenceNumber>12</sequenceNumber>
+                <sequenceNumber>13</sequenceNumber>
                 <enabled>true</enabled>
                 <script>logger.debug(&quot;Document Validation&quot;);
 
@@ -5810,7 +5822,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1557969274748</time>
+            <time>1558052490188</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

@@ -18,6 +18,13 @@ public class ReceivedOrganization {
         this.ids = ids;
     }
 
+    public void setId(String id) {
+        if (this.ids == null) {
+            this.ids = new ArrayList<>();
+        }
+        this.ids.add(new Id(id, null));
+    }
+
     public String getName() {
         return name;
     }

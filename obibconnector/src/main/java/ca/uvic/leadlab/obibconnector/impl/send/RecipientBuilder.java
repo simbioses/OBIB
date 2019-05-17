@@ -22,7 +22,7 @@ public class RecipientBuilder<P extends Recipient> extends PersonBuilder<P, IRec
     @Override
     public IRecipient recipientOrganization(String id, String name) {
         ReceivedOrganization organization = new ReceivedOrganization();
-        //TODO organization.setId(id);
+        organization.setId(id);
         organization.setName(name);
         person.setReceivedOrganization(organization);
         return this;

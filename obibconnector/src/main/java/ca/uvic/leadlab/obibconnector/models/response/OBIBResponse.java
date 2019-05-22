@@ -3,7 +3,7 @@ package ca.uvic.leadlab.obibconnector.models.response;
 
 import java.util.Map;
 
-public abstract class OBIBResponse {
+public class OBIBResponse {
 
     private String status;
     private String message;

@@ -29,6 +29,7 @@ public class ClinicalDocument {
     private List<Participant> participants = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     private List<ServiceEvent> serviceEvents = new ArrayList<>();
+    private List<ParentDocument> parentDocuments = new ArrayList<>();
     private NonXMLBody nonXMLBody;
     private List<Attachment> attachments = new ArrayList<>();
     private List<String> receivers = new ArrayList<>();
@@ -219,6 +220,21 @@ public class ClinicalDocument {
             }
         }
         return last;
+    }
+
+    public List<ParentDocument> getParentDocuments() {
+        return parentDocuments;
+    }
+
+    public void setParentDocuments(List<ParentDocument> parentDocuments) {
+        this.parentDocuments = parentDocuments;
+    }
+
+    public void addParentDocument(ParentDocument parentDocument) {
+        if (this.parentDocuments == null) {
+            this.parentDocuments = new ArrayList<>();
+        }
+        this.parentDocuments.add(parentDocument);
     }
 
     public NonXMLBody getNonXMLBody() {

@@ -33,6 +33,8 @@ public class Document implements IDocument {
     private String setId;
     private String inFulFillmentOfId;
 
+    private String parentDocumentId;
+
     private DocumentStatus statusCode;
 
     private IPatient patient;
@@ -80,7 +82,11 @@ public class Document implements IDocument {
         }
 
         if (document.getOrders() != null && !document.getOrders().isEmpty()) {
-            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getCode();
+            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getCode(); // TODO improve this
+        }
+
+        if (document.getParentDocuments() != null && !document.getParentDocuments().isEmpty()) {
+            parentDocumentId = document.getParentDocuments().get(0).getId().getCode(); // TODO improve this
         }
 
         if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {
@@ -270,7 +276,7 @@ public class Document implements IDocument {
 
     @Override
     public String getParentDocumentID() {
-        return null;
+        return parentDocumentId;
     }
 
     @Override

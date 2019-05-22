@@ -6839,7 +6839,7 @@ function storeOBIBError(errorCode, errorMessage) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>30</revision>
+      <revision>31</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -7279,7 +7279,7 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;relatedDocument&apos;]); i++) {
 		var parentDocument = {};
 
-		parentDocument[&apos;type&apos;] = msg[&apos;relatedDocument&apos;][i][&apos;@typeCode&apos;].toString();
+		parentDocument[&apos;typeCode&apos;] = msg[&apos;relatedDocument&apos;][i][&apos;@typeCode&apos;].toString();
 		
 		var relatedParendDocument = msg[&apos;relatedDocument&apos;][i][&apos;parentDocument&apos;];
 
@@ -7790,7 +7790,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1558490520153</time>
+            <time>1558491676119</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

@@ -4,18 +4,18 @@ import ca.uvic.leadlab.obibconnector.models.common.Id;
 
 public class ParentDocument {
 
-    private String type;
+    private String typeCode;
     private Id id;
     private Id setId;
     private int versionNumber;
     private String mediaType;
 
-    public String getType() {
-        return type;
+    public String getTypeCode() {
+        return typeCode;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
     }
 
     public Id getId() {

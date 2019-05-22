@@ -6839,7 +6839,7 @@ function storeOBIBError(errorCode, errorMessage) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>22</revision>
+      <revision>30</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -7246,7 +7246,7 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
                 <sequenceNumber>9</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
-	// Orders
+	// ServiceEvents
 	tmp[&apos;serviceEvents&apos;] = [];
 	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;documentationOf&apos;]); i++) {
 		var serviceEvent = {};
@@ -7260,6 +7260,8 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 		if (getArrayOrXmlLength(documentationOfServiceEvent[&apos;effectiveTime&apos;]) &gt; 0) {
 			serviceEvent[&apos;effectiveTime&apos;] = parseCDADateTime(documentationOfServiceEvent[&apos;effectiveTime&apos;][&apos;@value&apos;].toString());
 		}
+
+		// TODO performers
 		
 		tmp[&apos;serviceEvents&apos;][i] = serviceEvent;
 	}
@@ -7268,8 +7270,42 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 }</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
               <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
-                <name>Parse Text</name>
+                <name>Parse ParentDocuments (relatedDocument)</name>
                 <sequenceNumber>10</sequenceNumber>
+                <enabled>true</enabled>
+                <script>try {
+	// ParentDocument
+	tmp[&apos;parentDocuments&apos;] = [];
+	for (var i = 0; i &lt; getArrayOrXmlLength(msg[&apos;relatedDocument&apos;]); i++) {
+		var parentDocument = {};
+
+		parentDocument[&apos;type&apos;] = msg[&apos;relatedDocument&apos;][i][&apos;@typeCode&apos;].toString();
+		
+		var relatedParendDocument = msg[&apos;relatedDocument&apos;][i][&apos;parentDocument&apos;];
+
+		parentDocument[&apos;id&apos;] = parseCDAId(relatedParendDocument[&apos;id&apos;]);
+
+		if (getArrayOrXmlLength(relatedParendDocument[&apos;setId&apos;]) &gt; 0) {
+			parentDocument[&apos;setId&apos;] = parseCDAId(relatedParendDocument[&apos;setId&apos;]);
+		}
+
+		if (getArrayOrXmlLength(relatedParendDocument[&apos;versionNumber&apos;]) &gt; 0) {
+			parentDocument[&apos;versionNumber&apos;] = relatedParendDocument[&apos;versionNumber&apos;].toString();
+		}
+
+		if (getArrayOrXmlLength(relatedParendDocument[&apos;text&apos;]) &gt; 0) {
+			parentDocument[&apos;mediaType&apos;] = relatedParendDocument[&apos;text&apos;][&apos;@mediaType&apos;].toString();
+		}
+				
+		tmp[&apos;parentDocuments&apos;][i] = parentDocument;
+	}
+} catch(e) {
+	logger.error(&quot;Error on &apos;Parse ParentDocuments&apos;: &quot; + e);
+}</script>
+              </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+              <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.7.1">
+                <name>Parse Text</name>
+                <sequenceNumber>11</sequenceNumber>
                 <enabled>true</enabled>
                 <script>try {
 	// Text
@@ -7754,7 +7790,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1558484870520</time>
+            <time>1558490520153</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

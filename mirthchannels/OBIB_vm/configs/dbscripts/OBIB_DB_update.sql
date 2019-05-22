@@ -1,26 +1,14 @@
 use OBIB_DB;
 
-drop table if exists cdx_id;
-
-create table if not exists cdx_id
+/* error_message - table */
+drop table if exists error_message;
+create table if not exists error_message
 (
-    id        int auto_increment
-        primary key,
-    code      varchar(36) not null,
-    name      varchar(50) null,
-    category  varchar(36) null,
-    type      varchar(36) null
+	id int auto_increment
+		primary key,
+	date datetime null,
+	clinic_id varchar(36) null,
+	message_id varchar(36) null,
+	context varchar(255) null,
+	trace mediumtext null
 );
-
-drop table if exists cdx_loinc_code;
-
-create table if not exists cdx_loinc_code
-(
-    id            int auto_increment
-        primary key,
-    loinc_code    varchar(10) not null,
-    loinc_name    varchar(36) null,
-    template_id   varchar(36) not null,
-    template_name varchar(50) null
-);
-

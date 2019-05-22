@@ -8,6 +8,6 @@ DB_PASSWORD='Mirth!123'
 CONF_ROOT='/vagrant/configs'
 MIRTH_ROOT='/opt/MirthConnect'
 
-## Update May 9, 2019: cdxconnector jar 
-sudo cp -R $CONF_ROOT/custom-lib/cdxconnector/cdxconnector-0.0.1-SNAPSHOT.jar $MIRTH_ROOT/custom-lib/cdxconnector/
+## Update May 17, 2019: update db
+mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/OBIB_DB_update.sql
 

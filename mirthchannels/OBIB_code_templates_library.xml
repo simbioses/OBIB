@@ -1,41 +1,42 @@
-<codeTemplateLibrary version="3.7.1">
-  <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
-  <name>OBIB</name>
-  <revision>5</revision>
-  <lastModified>
-    <time>1557967210347</time>
-    <timezone>Canada/Pacific</timezone>
-  </lastModified>
-  <description></description>
-  <includeNewChannels>true</includeNewChannels>
-  <enabledChannelIds>
-    <string>e995ffe5-fe5f-4260-a385-98f81c8418fe</string>
-    <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
-    <string>f3a65b72-9187-42ef-88cd-1d7626887e2e</string>
-    <string>2375f320-7fd5-48cd-b3bb-53c22dab182b</string>
-  </enabledChannelIds>
-  <disabledChannelIds/>
-  <codeTemplates>
-    <codeTemplate version="3.7.1">
-      <id>9914a610-67bc-42b7-aa87-6a693ed1800c</id>
-      <name>Build CDA Address</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108498</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+<list>
+  <codeTemplateLibrary version="3.7.1">
+    <id>a689ef28-f6b5-43bf-95c0-3a7f0cfadaff</id>
+    <name>CDA</name>
+    <revision>3</revision>
+    <lastModified>
+      <time>1558481008156</time>
+      <timezone>Canada/Pacific</timezone>
+    </lastModified>
+    <description>Functions to build/format/parse CDA message fragments</description>
+    <includeNewChannels>true</includeNewChannels>
+    <enabledChannelIds>
+      <string>e995ffe5-fe5f-4260-a385-98f81c8418fe</string>
+      <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
+      <string>f3a65b72-9187-42ef-88cd-1d7626887e2e</string>
+      <string>2375f320-7fd5-48cd-b3bb-53c22dab182b</string>
+    </enabledChannelIds>
+    <disabledChannelIds/>
+    <codeTemplates>
+      <codeTemplate version="3.7.1">
+        <id>9914a610-67bc-42b7-aa87-6a693ed1800c</id>
+        <name>Build CDA Address</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439745</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a XML address tag based on &apos;4.2.1.2. Addresses&apos;
 
 	@param {String} use - 
@@ -57,28 +58,28 @@ function buildCDAAddress(use, streetAddress, city, state, postalCode, country) {
   	}
   	return addr;
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>d56207a8-0d51-40fb-9437-73815405b6a2</id>
-      <name>Build CDA ID</name>
-      <revision>2</revision>
-      <lastModified>
-        <time>1558128182956</time>
-        <timezone>Canada/Pacific</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>d56207a8-0d51-40fb-9437-73815405b6a2</id>
+        <name>Build CDA ID</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439988</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a XML id tag
 
 	@param {String} root - 
@@ -103,28 +104,28 @@ function buildCDAId(root, extension) {
 }
 
 </code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
-      <name>Build CDA Name</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108885</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>aaee9682-0184-43e5-a80b-32615c89dae0</id>
+        <name>Build CDA Name</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439951</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a XML name tag based on &apos;4.2.1.1. Person Names&apos;
 
 	@param {String} use -
@@ -153,28 +154,28 @@ function buildCDAName(use, family, given, prefix, suffix) {
   	}
   	return name;
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
-      <name>Build CDA Telecom</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108562</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>39f73e3c-ac8d-46ee-904c-32d6a73d93c0</id>
+        <name>Build CDA Telecom</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439760</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a XML telecom tag
 
 	@param {String} use - &apos;H&apos; = home, &apos;W&apos; = work, &apos;M&apos; = mobile
@@ -188,28 +189,28 @@ function buildCDATelecom(use, type, value) {
   	telecom[&apos;@value&apos;] = type + &quot;:&quot; + value;
   	return telecom;
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>978d7943-1810-4652-a684-8f7b6bc3bc11</id>
-      <name>Build CDA TemplateId</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108192</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>978d7943-1810-4652-a684-8f7b6bc3bc11</id>
+        <name>Build CDA TemplateId</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439660</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a XML templateId tag
 
 	@param {String} code - 
@@ -226,30 +227,345 @@ function buildCDATemplateId(code) {
 		  	
   	return templateId;&#xd;
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>0d5c946b-11fe-4dde-8c69-7d9296ea32a0</id>
-      <name>Build Document Storage Message</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108673</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>importPackage(Packages.ca.uvic.leadlab.cdxconnector.messages);
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>0b2ecd99-756c-4a93-9bba-230bf83b0c62</id>
+        <name>Format CDA Date</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439911</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Format the date for the CDA format &apos;yyyyMMdd&apos;
 
-/**
+	@param {Date/String} date -
+	@return {String} return the formated date
+*/
+function formatCDADate(date) {
+	return DateUtil.convertDate(&quot;yyyy-MM-dd&quot;, &quot;yyyyMMdd&quot;, date);
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>07a8a226-a4d4-4248-b816-00011d888d0f</id>
+        <name>Format CDA Date/Time</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439701</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Format the date/time for the CDA format &apos;yyyyMMddHHmmZZZ&apos;
+
+	@param {Date/String} dateTime - 
+	@return {String} return the formated dateTime
+*/
+function formatCDADateTime(dateTime) {
+	return DateUtil.formatDate(&apos;yyyyMMddHHmmZZZ&apos;, new Date(dateTime));
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
+        <name>Parse CDA Address</name>
+        <revision>2</revision>
+        <lastModified>
+          <time>1558485022981</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Address to JSON Object
+
+	@param {String} cdaAddress - 
+	@return {String} return the parsed Address object
+*/
+function parseCDAAddress(cdaAddress) {
+	var addr = {};
+	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
+	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
+	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
+	if (strtAddr) {
+		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
+	}
+	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
+	if (getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]) &gt; 0) {
+		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
+			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
+		}
+		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
+	}
+	if (getArrayOrXmlLength(cdaAddress[&apos;city&apos;]) &gt; 0) {
+		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
+	}
+	if (getArrayOrXmlLength(cdaAddress[&apos;province&apos;]) &gt; 0) {
+		addr[&apos;province&apos;] = cdaAddress[&apos;state&apos;].toString();
+	}
+	if (getArrayOrXmlLength(cdaAddress[&apos;postalCode&apos;]) &gt; 0) {
+		addr[&apos;postalCode&apos;] = cdaAddress[&apos;postalCode&apos;].toString();
+	}
+	if (getArrayOrXmlLength(cdaAddress[&apos;country&apos;]) &gt; 0) {
+		addr[&apos;country&apos;] = cdaAddress[&apos;country&apos;].toString();
+	}
+	return addr;
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
+        <name>Parse CDA Date/Time</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439891</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Date/Time to Date object
+
+	@param {String} cdaDateTime - 
+	@return {String} return the Date object
+*/
+function parseCDADateTime(cdaDateTime) {
+	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
+	}
+	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
+        <name>Parse CDA Date/TIme to DB format</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439972</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Date/Time to Date in DB format
+
+	@param {String} cdaDateTime - 
+	@return {String} return the Date in DB format
+*/
+function parseCDADateTimeToDB(cdaDateTime) {
+	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
+	}
+	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
+        <name>Parse CDA ID</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439596</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Id to JSON object
+
+	@param {String} cdaID - 
+	@return {String} return the parsed ID object
+*/
+function parseCDAId(cdaID) {
+	var id = {};
+	if (cdaID[&apos;@extension&apos;]) {
+		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
+	}
+	if (cdaID[&apos;@root&apos;]) {
+		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
+	}
+	return id;
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
+        <name>Parse CDA Name</name>
+        <revision>2</revision>
+        <lastModified>
+          <time>1558485070479</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Name to JSON object
+
+	@param {String} cdaName - 
+	@return {String} return the parsed Name object
+*/
+function parseCDAName(cdaName) {
+	var name = {};
+	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
+	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
+	name[&apos;given&apos;] = [];
+	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
+		name[&apos;given&apos;][i] = cdaName[&apos;given&apos;][i].toString();
+	}
+	if (getArrayOrXmlLength(cdaName[&apos;prefix&apos;]) &gt; 0) {
+		name[&apos;prefix&apos;] = cdaName[&apos;prefix&apos;].toString();
+	}
+	if (getArrayOrXmlLength(cdaName[&apos;suffix&apos;]) &gt; 0) {
+		name[&apos;suffix&apos;] = cdaName[&apos;suffix&apos;].toString();
+	}
+	return name;
+}</code>
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
+        <name>Parse CDA Telecom</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462440017</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
+	Parse the CDA Telecom to JSON object
+
+	@param {String} telecom - 
+	@return {String} return the parsed Telecom object
+*/
+function parseCDATelecom(cdaTelecom) {
+	var telecom = {};
+	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
+	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
+	telecom[&apos;type&apos;] = telParts[0];	
+	telecom[&apos;value&apos;] = telParts[1];
+	return telecom;
+}</code>
+        </properties>
+      </codeTemplate>
+    </codeTemplates>
+  </codeTemplateLibrary>
+  <codeTemplateLibrary version="3.7.1">
+    <id>5d2a129c-da07-49cc-950c-d941a93cd271</id>
+    <name>OBIB</name>
+    <revision>3</revision>
+    <lastModified>
+      <time>1558485022961</time>
+      <timezone>Canada/Pacific</timezone>
+    </lastModified>
+    <description></description>
+    <includeNewChannels>true</includeNewChannels>
+    <enabledChannelIds>
+      <string>e995ffe5-fe5f-4260-a385-98f81c8418fe</string>
+      <string>b2f0c503-a881-4126-995e-844c3e7692fd</string>
+      <string>f3a65b72-9187-42ef-88cd-1d7626887e2e</string>
+      <string>2375f320-7fd5-48cd-b3bb-53c22dab182b</string>
+    </enabledChannelIds>
+    <disabledChannelIds/>
+    <codeTemplates>
+      <codeTemplate version="3.7.1">
+        <id>0d5c946b-11fe-4dde-8c69-7d9296ea32a0</id>
+        <name>Build Document Storage Message</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439830</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Build a Document Storage Message.
 
 	@param {String} locationId - 
@@ -269,58 +585,28 @@ function buildDocumentStorageMessage(locationId, receiverId, documentId, message
 	return storageMsg;
 }
 </code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>d55c3c9d-e151-4034-9d14-35f86a4a58f1</id>
-      <name>Check Segment</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108774</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Verify that the segment exists.
-
-	@param {Object} segment - 
-	@return {boolean} return true if the segment exists
-*/
-function segmentExist(segment) {
-	return getArrayOrXmlLength(segment) &gt; 0;
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>738d81a1-d04c-482e-a011-30c61a09b3d3</id>
-      <name>Create Array of DocumentAttachment</name>
-      <revision>4</revision>
-      <lastModified>
-        <time>1557514941299</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>738d81a1-d04c-482e-a011-30c61a09b3d3</id>
+        <name>Create Array of DocumentAttachment</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439680</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Create an Array of DocumentAttachment objects from a JSON object
 
 	@param {Object[]} jsonAttachments - 
@@ -340,38 +626,38 @@ function createDocumentAttachmentArray(jsonAttachments) {
 	}
 	return attachments;
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>bcd2a30d-111f-4fd3-9724-0e9a2e7dfe50</id>
-      <name>Create DatabaseConnection</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108932</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>CHANNEL_UNDEPLOY</contextType>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>CHANNEL_POSTPROCESSOR</contextType>
-          <contextType>CHANNEL_PREPROCESSOR</contextType>
-          <contextType>CHANNEL_ATTACHMENT</contextType>
-          <contextType>GLOBAL_POSTPROCESSOR</contextType>
-          <contextType>GLOBAL_UNDEPLOY</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>GLOBAL_DEPLOY</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>GLOBAL_PREPROCESSOR</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>CHANNEL_DEPLOY</contextType>
-          <contextType>CHANNEL_BATCH</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>bcd2a30d-111f-4fd3-9724-0e9a2e7dfe50</id>
+        <name>Create DatabaseConnection</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439931</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>CHANNEL_BATCH</contextType>
+            <contextType>CHANNEL_POSTPROCESSOR</contextType>
+            <contextType>CHANNEL_PREPROCESSOR</contextType>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>GLOBAL_PREPROCESSOR</contextType>
+            <contextType>CHANNEL_UNDEPLOY</contextType>
+            <contextType>GLOBAL_UNDEPLOY</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>CHANNEL_DEPLOY</contextType>
+            <contextType>GLOBAL_POSTPROCESSOR</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>CHANNEL_ATTACHMENT</contextType>
+            <contextType>GLOBAL_DEPLOY</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Get the DatabaseConnection object
 
 	@return {DatabaseConnection} return the DatabaseConnection object
@@ -383,28 +669,28 @@ function getDBConnection() {
 			globalMap.get(&apos;obib.db.username&apos;) , 
 			globalMap.get(&apos;obib.db.password&apos;));
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>60bfd3ac-552a-4d59-ac1d-48fbe4f430b2</id>
-      <name>Create Error Message</name>
-      <revision>12</revision>
-      <lastModified>
-        <time>1557795952834</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>60bfd3ac-552a-4d59-ac1d-48fbe4f430b2</id>
+        <name>Create Error Message</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439851</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Create JSON error message
 
 	@param {String} error - Error message
@@ -414,28 +700,28 @@ function getDBConnection() {
 function createErrorMessage(error, obibErrors) {
 	return JSON.stringify({&apos;status&apos;: &apos;ERROR&apos;, &apos;message&apos;: error, &apos;obibErrors&apos;: obibErrors})
 }</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>f1de696c-f547-49ae-8225-f7e40ed2c87c</id>
-      <name>Create Segment Before</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108424</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>f1de696c-f547-49ae-8225-f7e40ed2c87c</id>
+        <name>Create Segment Before</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439720</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Create a new segment and insert it before the target segment.
 	
 	@param {String} name - The name of the segment to create.
@@ -451,88 +737,28 @@ function createSegmentBefore(name, segment) {
    	return msgObj.child(segment[0].childIndex() - 1);
 }
 </code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>0b2ecd99-756c-4a93-9bba-230bf83b0c62</id>
-      <name>Format CDA Date</name>
-      <revision>8</revision>
-      <lastModified>
-        <time>1557969826591</time>
-        <timezone>Canada/Pacific</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Format the date for the CDA format &apos;yyyyMMdd&apos;
-
-	@param {Date/String} date -
-	@return {String} return the formated date
-*/
-function formatCDADate(date) {
-	return DateUtil.convertDate(&quot;yyyy-MM-dd&quot;, &quot;yyyyMMdd&quot;, date);
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>07a8a226-a4d4-4248-b816-00011d888d0f</id>
-      <name>Format CDA Date/Time</name>
-      <revision>7</revision>
-      <lastModified>
-        <time>1557969321208</time>
-        <timezone>Canada/Pacific</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Format the date/time for the CDA format &apos;yyyyMMddHHmmZZZ&apos;
-
-	@param {Date/String} dateTime - 
-	@return {String} return the formated dateTime
-*/
-function formatCDADateTime(dateTime) {
-	return DateUtil.formatDate(&apos;yyyyMMddHHmmZZZ&apos;, new Date(dateTime));
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
-      <name>Handle Return Message</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108623</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>e83b8bbf-433a-4c3d-88a2-16f4132b38af</id>
+        <name>Handle Return Message</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439790</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Handle the return message creation.
 
 	@param {Object} responseStatus - 
@@ -554,265 +780,28 @@ function handleResponseMessage(responseStatus, responseStatusMessage, responseMe
 	}
 }
 </code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>f4743440-d5d2-44f2-acd9-35746c48d9b3</id>
-      <name>Parse CDA Address</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108023</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Address to JSON Object
-
-	@param {String} cdaAddress - 
-	@return {String} return the parsed Address object
-*/
-function parseCDAAddress(cdaAddress) {
-	var addr = {};
-	addr[&apos;use&apos;] = cdaAddress[&apos;@use&apos;].toString();
-	// Try to get the street address from the body of the tag &lt;addr&gt; (Document format)
-	var strtAddr = cdaAddress.toString().match(/&lt;addr.*&gt;(.+?)(?=&lt;delimiter\/&gt;)/); // return array of matchs
-	if (strtAddr) {
-		addr[&apos;streetAddress&apos;] = strtAddr[1]; //.replace(/(&lt;\/?[^&gt;]+&gt;)/gi, &apos;&apos;); // strip xml tags?
-	}
-	// Try to append the list of &apos;delimiters&apos; (List clinics/providers format)
-	if (segmentExist(cdaAddress[&apos;delimiter&apos;])) {
-		for (var i = 0; i &lt; getArrayOrXmlLength(cdaAddress[&apos;delimiter&apos;]); i++) {
-			addr[&apos;streetAddress&apos;] = (addr[&apos;streetAddress&apos;] ? addr[&apos;streetAddress&apos;] + &apos; &apos; : &apos;&apos;) + cdaAddress[&apos;delimiter&apos;][i].toString();
-		}
-		addr[&apos;streetAddress&apos;] = addr[&apos;streetAddress&apos;].trim(); // trim any whitespace from both side of the address
-	}
-	if (segmentExist(cdaAddress[&apos;city&apos;])) {
-		addr[&apos;city&apos;] = cdaAddress[&apos;city&apos;].toString();
-	}
-	if (segmentExist(cdaAddress[&apos;province&apos;])) {
-		addr[&apos;province&apos;] = cdaAddress[&apos;state&apos;].toString();
-	}
-	if (segmentExist(cdaAddress[&apos;postalCode&apos;])) {
-		addr[&apos;postalCode&apos;] = cdaAddress[&apos;postalCode&apos;].toString();
-	}
-	if (segmentExist(cdaAddress[&apos;country&apos;])) {
-		addr[&apos;country&apos;] = cdaAddress[&apos;country&apos;].toString();
-	}
-	return addr;
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
-      <name>Parse CDA Date/Time</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108842</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Date/Time to Date object
-
-	@param {String} cdaDateTime - 
-	@return {String} return the Date object
-*/
-function parseCDADateTime(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
-		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
-	}
-	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
-      <name>Parse CDA Date/TIme to DB format</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108977</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Date/Time to Date in DB format
-
-	@param {String} cdaDateTime - 
-	@return {String} return the Date in DB format
-*/
-function parseCDADateTimeToDB(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
-		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
-	}
-	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>a2f73260-eb70-4dcc-8b8a-9350c3bec9fd</id>
-      <name>Parse CDA ID</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439107886</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Id to JSON object
-
-	@param {String} cdaID - 
-	@return {String} return the parsed ID object
-*/
-function parseCDAId(cdaID) {
-	var id = {};
-	if (cdaID[&apos;@extension&apos;]) {
-		id[&apos;code&apos;] = cdaID[&apos;@extension&apos;].toString();
-	}
-	if (cdaID[&apos;@root&apos;]) {
-		id[&apos;type&apos;] = cdaID[&apos;@root&apos;].toString();
-	}
-	return id;
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>a0354d90-ffa8-47c5-9776-e41927d2f0d0</id>
-      <name>Parse CDA Name</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439108115</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Name to JSON object
-
-	@param {String} cdaName - 
-	@return {String} return the parsed Name object
-*/
-function parseCDAName(cdaName) {
-	var name = {};
-	name[&apos;use&apos;] = cdaName[&apos;@use&apos;].toString();
-	name[&apos;family&apos;] = cdaName[&apos;family&apos;].toString();
-	name[&apos;given&apos;] = [];
-	for (var i = 0; i &lt; getArrayOrXmlLength(cdaName[&apos;given&apos;]); i++) {
-		name[&apos;given&apos;][i] = cdaName[&apos;given&apos;][i].toString();
-	}
-	if (segmentExist(cdaName[&apos;prefix&apos;])) {
-		name[&apos;prefix&apos;] = cdaName[&apos;prefix&apos;].toString();
-	}
-	if (segmentExist(cdaName[&apos;suffix&apos;])) {
-		name[&apos;suffix&apos;] = cdaName[&apos;suffix&apos;].toString();
-	}
-	return name;
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>407e6d63-57cf-42f8-b555-5d6c575f4f55</id>
-      <name>Parse CDA Telecom</name>
-      <revision>1</revision>
-      <lastModified>
-        <time>1557439109060</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
-	Parse the CDA Telecom to JSON object
-
-	@param {String} telecom - 
-	@return {String} return the parsed Telecom object
-*/
-function parseCDATelecom(cdaTelecom) {
-	var telecom = {};
-	telecom[&apos;use&apos;] = cdaTelecom[&apos;@use&apos;].toString();
-	var telParts = cdaTelecom[&apos;@value&apos;].split(&apos;:&apos;);
-	telecom[&apos;type&apos;] = telParts[0];	
-	telecom[&apos;value&apos;] = telParts[1];
-	return telecom;
-}</code>
-      </properties>
-    </codeTemplate>
-    <codeTemplate version="3.7.1">
-      <id>dfd86988-26e1-4d97-b81d-fee49e303272</id>
-      <name>Store OBIB Error</name>
-      <revision>14</revision>
-      <lastModified>
-        <time>1557795722702</time>
-        <timezone>Etc/UTC</timezone>
-      </lastModified>
-      <contextSet>
-        <delegate>
-          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
-          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
-          <contextType>DESTINATION_DISPATCHER</contextType>
-          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
-          <contextType>SOURCE_RECEIVER</contextType>
-        </delegate>
-      </contextSet>
-      <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
-        <type>FUNCTION</type>
-        <code>/**
+        </properties>
+      </codeTemplate>
+      <codeTemplate version="3.7.1">
+        <id>dfd86988-26e1-4d97-b81d-fee49e303272</id>
+        <name>Store OBIB Error</name>
+        <revision>1</revision>
+        <lastModified>
+          <time>1558462439811</time>
+          <timezone>Canada/Pacific</timezone>
+        </lastModified>
+        <contextSet>
+          <delegate>
+            <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+            <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            <contextType>DESTINATION_DISPATCHER</contextType>
+            <contextType>SOURCE_RECEIVER</contextType>
+            <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          </delegate>
+        </contextSet>
+        <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+          <type>FUNCTION</type>
+          <code>/**
 	Store the error as an &apos;associative array&apos; in the channel map.
 	To retrieve the array of errors use &apos;channelMap.get(&apos;obibErrors&apos;)&apos;
 
@@ -827,7 +816,8 @@ function storeOBIBError(errorCode, errorMessage) {
 	obibErrors[errorCode] = errorMessage;
 	channelMap.put(&apos;obibErrors&apos;, obibErrors);
 }</code>
-      </properties>
-    </codeTemplate>
-  </codeTemplates>
-</codeTemplateLibrary>
+        </properties>
+      </codeTemplate>
+    </codeTemplates>
+  </codeTemplateLibrary>
+</list>

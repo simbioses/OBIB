@@ -6839,7 +6839,7 @@ function storeOBIBError(errorCode, errorMessage) {
       <nextMetaDataId>2</nextMetaDataId>
       <name>CDA Document Parser</name>
       <description></description>
-      <revision>31</revision>
+      <revision>43</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -7261,7 +7261,42 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 			serviceEvent[&apos;effectiveTime&apos;] = parseCDADateTime(documentationOfServiceEvent[&apos;effectiveTime&apos;][&apos;@value&apos;].toString());
 		}
 
-		// TODO performers
+		// Performers
+		serviceEvent[&apos;performers&apos;] = [];
+		for (var j = 0; j &lt; getArrayOrXmlLength(documentationOfServiceEvent[&apos;performer&apos;]); j++) {
+			var performer = {};
+
+			performer[&apos;typeCode&apos;] = documentationOfServiceEvent[&apos;performer&apos;][j][&apos;@typeCode&apos;].toString()
+
+			var assignedEntity = documentationOfServiceEvent[&apos;performer&apos;][j][&apos;assignedEntity&apos;];
+
+			performer[&apos;code&apos;] = assignedEntity[&apos;code&apos;].toString();
+
+			performer[&apos;ids&apos;] = [];
+			for (var k = 0; k &lt; getArrayOrXmlLength(assignedEntity[&apos;id&apos;]); k++) {
+				performer[&apos;ids&apos;][k] = parseCDAId(assignedEntity[&apos;id&apos;][k]);
+			}
+
+			if (getArrayOrXmlLength(assignedEntity[&apos;assignedPerson&apos;]) &gt; 0) {
+				performer[&apos;name&apos;] = parseCDAName(assignedEntity[&apos;assignedPerson&apos;][&apos;name&apos;]);
+			}
+
+			if (getArrayOrXmlLength(assignedEntity[&apos;addr&apos;]) &gt; 0) {
+				performer[&apos;addresses&apos;] = [];
+				for (var k = 0; k &lt; getArrayOrXmlLength(assignedEntity[&apos;addr&apos;]); k++) {
+					performer[&apos;addresses&apos;][k] = parseCDAAddress(assignedEntity[&apos;addr&apos;][k]);
+				}
+			}
+			
+			if (getArrayOrXmlLength(assignedEntity[&apos;telecom&apos;]) &gt; 0) {
+				performer[&apos;telecoms&apos;] = [];
+				for (var k = 0; k &lt; getArrayOrXmlLength(assignedEntity[&apos;telecom&apos;]); k++) {
+					performer[&apos;telecoms&apos;][k] = parseCDATelecom(assignedEntity[&apos;telecom&apos;][k]);
+				}
+			}
+			
+			serviceEvent[&apos;performers&apos;][j] = performer;
+		}
 		
 		tmp[&apos;serviceEvents&apos;][i] = serviceEvent;
 	}
@@ -7790,7 +7825,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1558491676119</time>
+            <time>1558492615145</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

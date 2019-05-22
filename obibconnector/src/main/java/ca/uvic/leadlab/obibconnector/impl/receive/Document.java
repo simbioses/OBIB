@@ -30,6 +30,8 @@ public class Document implements IDocument {
     private String loincCode;
     private String loincCodeDisplayName;
 
+    private String title;
+
     private String setId;
     private String inFulFillmentOfId;
 
@@ -76,6 +78,8 @@ public class Document implements IDocument {
                 loincCodeDisplayName = document.getLoinc().getDisplayName();
             }
         }
+
+        title = document.getTitle();
 
         if (document.getSetId() != null) {
             setId = document.getSetId().getCode();
@@ -191,7 +195,7 @@ public class Document implements IDocument {
 
     @Override
     public String getTitle() {
-        return document.getTitle();
+        return title;
     }
 
     @Override
@@ -241,7 +245,7 @@ public class Document implements IDocument {
 
     @Override
     public IProvider getOrderingProvider() {
-        return null;
+        return null; // TODO type of participant?
     }
 
     @Override
@@ -251,7 +255,7 @@ public class Document implements IDocument {
 
     @Override
     public String getOrderID() {
-        return null;
+        return null; // TODO same of getInFulFillmentOfId?
     }
 
     @Override

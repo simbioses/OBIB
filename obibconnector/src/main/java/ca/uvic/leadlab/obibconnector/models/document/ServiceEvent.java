@@ -1,9 +1,13 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServiceEvent {
 
     private String effectiveTime;
     private String statusCode;
+    private List<Performer> performers = new ArrayList<>();
 
     public ServiceEvent() {
     }
@@ -29,4 +33,11 @@ public class ServiceEvent {
         this.statusCode = statusCode;
     }
 
+    public List<Performer> getPerformers() {
+        return performers;
+    }
+
+    public void setPerformers(List<Performer> performers) {
+        this.performers = performers;
+    }
 }

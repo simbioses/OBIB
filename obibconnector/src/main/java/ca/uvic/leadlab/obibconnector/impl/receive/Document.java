@@ -245,7 +245,7 @@ public class Document implements IDocument {
 
     @Override
     public IProvider getOrderingProvider() {
-        return null; // TODO type of participant?
+        return null;
     }
 
     @Override
@@ -255,7 +255,7 @@ public class Document implements IDocument {
 
     @Override
     public String getOrderID() {
-        return null; // TODO same of getInFulFillmentOfId?
+        return null;
     }
 
     @Override

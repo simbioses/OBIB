@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.impl.receive;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
+import ca.uvic.leadlab.obibconnector.facades.datatypes.ParticipantFunctionCode;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
@@ -52,6 +53,9 @@ public class Document implements IDocument {
     private List<IProvider> secondaryRecipients = new ArrayList<>();
 
     private List<IProvider> participatingProviders = new ArrayList<>();
+
+    private IProvider orderingProvider;
+    private IProvider familyProvider;
 
     private List<IAttachment> attachments = new ArrayList<>();
 
@@ -133,7 +137,15 @@ public class Document implements IDocument {
 
         for (Participant participant : document.getParticipants()) {
             participatingProviders.add(new Provider(participant));
+
+            if (ParticipantFunctionCode.ORD.name().equalsIgnoreCase(participant.getFunctionCode())) {
+                orderingProvider = new Provider(participant);
+            }
+            if (ParticipantFunctionCode.PCP.name().equalsIgnoreCase(participant.getFunctionCode())) {
+                familyProvider = new Provider(participant);
+            }
         }
+
 
         // TODO return document body
         // if (document.getNonXMLBody() != null && MediaType.isPlainText(document.getNonXMLBody().getMediaType())) {
@@ -245,12 +257,12 @@ public class Document implements IDocument {
 
     @Override
     public IProvider getOrderingProvider() {
-        return null;
+        return orderingProvider;
     }
 
     @Override
     public IProvider getFamilyProvider() {
-        return null;
+        return familyProvider;
     }
 
     @Override

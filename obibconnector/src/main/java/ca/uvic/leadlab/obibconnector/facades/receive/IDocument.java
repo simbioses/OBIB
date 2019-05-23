@@ -31,8 +31,8 @@ public interface IDocument {
     IProvider getPrimaryRecipient();
     List<IProvider> getSecondaryRecipients(); // if present
 
-    IProvider getOrderingProvider();    // TODO implement. Is it a specific type of participant?
-    IProvider getFamilyProvider();      // TODO implement. Is it a specific type of participant?
+    IProvider getOrderingProvider();
+    IProvider getFamilyProvider();
 
     String  getOrderID();               // TODO implement. the order ID for consultation notes is identical to their respective consultation requests
     DocumentStatus getStatusCode();

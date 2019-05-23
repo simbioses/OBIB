@@ -34,21 +34,21 @@ public interface IDocument {
     IProvider getOrderingProvider();
     IProvider getFamilyProvider();
 
-    String  getOrderID();               // the order ID for consultation notes is identical to their respective consultation requests
+    String  getOrderID();               // TODO implement. the order ID for consultation notes is identical to their respective consultation requests
     DocumentStatus getStatusCode();
-    Date  getObservationDate();
+    Date  getObservationDate();         // TODO implement.
 
-    String  getProcedureName();
-    IProvider getProcedurePerformer();
+    String  getProcedureName();         // TODO implement.
+    IProvider getProcedurePerformer();  // TODO implement.
 
     String getParentDocumentID();
 
-    String getPatientEncounterID();
+    String getPatientEncounterID();     // TODO implement.
 
-    Date getAdmissionDate();
-    Date getDischargeDate();
+    Date getAdmissionDate();            // TODO implement.
+    Date getDischargeDate();            // TODO implement.
 
-    String getDischargeDisposition();
+    String getDischargeDisposition();   // TODO implement.
 
     List<IProvider> getParticipatingProviders();
 

@@ -41,6 +41,14 @@ public class DocumentQueryParameterBuilder {
         return this;
     }
 
+    public DocumentQueryParameterBuilder messageId(String messageId) {
+        if (StringUtils.isNotBlank(messageId)) {
+            clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId(); // CONF-CDXMQ068
+            clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.100.1", messageId)); // CONF-CDXMQ069
+        }
+        return this;
+    }
+
     public DocumentQueryParameterBuilder documentEffectiveTime(DateRange effectiveTime) {
         if (effectiveTime != null) {
             documentEffectiveTime(effectiveTime.getLowDate(), effectiveTime.isLowDateInclusive(),

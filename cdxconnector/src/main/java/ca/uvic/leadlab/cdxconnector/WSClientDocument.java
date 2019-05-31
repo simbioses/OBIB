@@ -114,14 +114,14 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    public String getDocument(String locationId, String documentId) throws ConnectorException {
+    public String getDocument(String locationId, String messageId) throws ConnectorException {
         try {
             RCMRIN000031UV01 request = new GetDocumentBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
                     .receiver("CDX") // ID Of receiver
                     .sender(locationId) // ID Of requestor
                     .documentQuery(new DocumentQueryParameterBuilder()
                             .clinicId(locationId)
-                            .documentId(documentId)) // query parameters
+                            .messageId(messageId)) // query parameters
                     .build();
 
             WSUtil.logObject(LOGGER, "\nGet Document Request:\n", request);

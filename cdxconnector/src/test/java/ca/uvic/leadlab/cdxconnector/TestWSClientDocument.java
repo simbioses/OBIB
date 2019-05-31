@@ -36,10 +36,7 @@ public class TestWSClientDocument extends TestWSClient {
 
     @Test
     public void testGetDocument() throws Exception {
-        String response = wsClientDocumentA.getDocument(ClinicA.id,
-                //"a163901e-6173-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Found
-                "16449a1b-b544-47d6-8f43-7f9a1d3b4a46");
-                //"45a75b7e-5cb1-4d00-ab7f-b7872de47549"); // Using 'CDX Clinical Document ID' = Not found (?!)
+        String response = wsClientDocumentA.getDocument(ClinicA.id,"db0e5fb8-c946-e911-a96a-0050568c55a6");
 
         // "a163901e-6173-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
         // "f01a004a-5673-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
@@ -61,7 +58,6 @@ public class TestWSClientDocument extends TestWSClient {
     public void testSearchDocumentsByDocumentId() throws Exception {
         String response = wsClientDocumentA
                 .searchDocuments(ClinicA.id, ClinicA.id,
-                        //"45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
                         "61a1a387-408b-4e5c-be24-1976ace1c280",
                         null, null);
 
@@ -73,8 +69,7 @@ public class TestWSClientDocument extends TestWSClient {
     public void testGetDistributionStatusByDocumentId() throws Exception {
         String response = wsClientDocumentA
                 .getDistributionStatus(ClinicA.id, ClinicA.id,
-                        //"45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
-                        "61a1a387-408b-4e5c-be24-1976ace1c280",
+                        "61a1a387-408b-4e5c-be24-1976ace1c280", // Does not work without the DocumentId
                         null, null);
 
         Assert.assertNotNull(response);

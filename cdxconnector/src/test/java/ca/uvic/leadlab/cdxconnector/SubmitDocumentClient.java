@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.uvic.leadlab.cdxconnector.messages.DocumentAttachment;
+import ca.uvic.leadlab.cdxconnector.messages.submit.DocumentAttachment;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;

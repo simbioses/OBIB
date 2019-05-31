@@ -1,41 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-               version="2.1" >
+               version="2.0" >
 
-    <!--jaxb:bindings schemaLocation="CDASubmit/CDASubmit0.xsd">
+    <!--jaxb:bindings schemaLocation="CDASubmit/CDASubmit57.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit1.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit2.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit2.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit1.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit3.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit0.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit4.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit58.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit5.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit59.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit6.xsd">
+
+    <jaxb:bindings schemaLocation="CDASubmit/CDASubmit60.xsd" node="/xsd:schema">
         <jaxb:schemaBindings>
-            <jaxb:package name="ca.excluded" />
+            <jaxb:nameXmlTransform>
+                <jaxb:anonymousTypeName suffix="AnonymousType"/>
+                <jaxb:elementName suffix="Element"/>
+                <jaxb:modelGroupName suffix="ModelGroup"/>
+                <jaxb:typeName suffix="Type"/>
+            </jaxb:nameXmlTransform>
         </jaxb:schemaBindings>
     </jaxb:bindings-->
 

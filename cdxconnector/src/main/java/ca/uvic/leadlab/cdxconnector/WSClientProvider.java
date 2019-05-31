@@ -1,10 +1,10 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.uvic.leadlab.cdxconnector.messages.ListProviderBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.registry.ListProviderBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.hl7.v3.PRPMIN306010UV;
-import org.hl7.v3.PRPMIN306011UV;
-import org.hl7.v3.ProviderQuery;
+import registrysearch.PRPMIN306010UV;
+import registrysearch.PRPMIN306011UV;
+import registrysearch.ProviderQuery;
 
 import java.net.MalformedURLException;
 import java.net.URL;

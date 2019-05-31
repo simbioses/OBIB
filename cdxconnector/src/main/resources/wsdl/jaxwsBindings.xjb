@@ -1,3 +1,6 @@
-<jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxws:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
     <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
 </jaxws:bindings>

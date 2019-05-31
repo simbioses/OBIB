@@ -1,8 +1,15 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.interiorhealth.BizTalkServiceInstance;
-import ca.uvic.leadlab.cdxconnector.messages.*;
-import org.hl7.v3.*;
+import ca.uvic.leadlab.cdxconnector.messages.distribution.DistributionStatusBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.distribution.DistributionStatusQueryParameterBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
+import ca.uvic.leadlab.cdxconnector.messages.request.DocumentQueryParameterBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.request.GetDocumentBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.request.ListNewDocumentsBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.request.SearchDocumentBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.submit.DocumentAttachment;
+import ca.uvic.leadlab.cdxconnector.messages.submit.SubmitDocumentBuilder;
+import cdasubmitrequest.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -133,7 +140,46 @@ public class WSClientDocument extends WSClient {
 
     private RCMRAR000003UV01_Service createCDARequestService() throws ConnectorException {
         try {
-            RCMRAR000003UV01_Service requestService = new RCMRAR000003UV01_Service(new URL(baseUrl + "/CDArequestService/CDARequest.svc?WSDL"));
+            RCMRAR000003UV01_Service requestService = new RCMRAR000003UV01_Service(new URL(baseUrl
+                    + "/CDArequestService/CDARequest.svc?WSDL"));
+            requestService.setHandlerResolver(handlerResolver(requestService.getServiceName()));
+            return requestService;
+        } catch (MalformedURLException e) {
+            throw new ConnectorException("Error creating CDARequestService", e);
+        }
+    }
+
+    public String getDistributionStatus(String locationId, String clinicId, String documentId,
+                                        DateRange effectiveTime, DateRange eventTime) throws ConnectorException {
+        try {
+            distributionstatus.RCMRIN000029UV01 request = new DistributionStatusBuilder(UUID.randomUUID().toString())// Unique Message ID (GUID)
+                    .receiver("CDX") // ID Of receiver
+                    .sender(locationId) // ID Of requestor
+                    .documentQuery(new DistributionStatusQueryParameterBuilder()
+                            .clinicId(clinicId)
+                            .documentId(documentId)
+                            .documentEffectiveTime(effectiveTime)
+                            .eventEffectiveTime(eventTime)) // query parameters
+                    .build();
+
+            WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
+
+            distributionstatus.RCMRAR000003UV01_Service documentService = createDistributionStatusService();
+            distributionstatus.RCMRIN000030UV01 response = documentService.getDistributionStatusEndpoint().getStatus(request);
+
+            WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
+
+            return WSUtil.parseObject(response, false);
+        } catch (MessageBuilderException e) {
+            LOGGER.log(Level.SEVERE, "Error searching documents", e);
+            throw new ConnectorException("Error searching documents", e);
+        }
+    }
+
+    private distributionstatus.RCMRAR000003UV01_Service createDistributionStatusService() throws ConnectorException {
+        try {
+            distributionstatus.RCMRAR000003UV01_Service requestService = new distributionstatus
+                    .RCMRAR000003UV01_Service(new URL(baseUrl + "/DistributionStatusService/DistributionStatus.svc?WSDL"));
             requestService.setHandlerResolver(handlerResolver(requestService.getServiceName()));
             return requestService;
         } catch (MalformedURLException e) {

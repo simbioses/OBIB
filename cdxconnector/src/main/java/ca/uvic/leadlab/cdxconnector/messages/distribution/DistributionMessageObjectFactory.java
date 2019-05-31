@@ -1,11 +1,11 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.distribution;
 
-import org.hl7.v3.*;
+import distributionstatus.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MessageObjectFactory extends ObjectFactory {
+public class DistributionMessageObjectFactory extends ObjectFactory {
 
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
@@ -61,58 +61,10 @@ public class MessageObjectFactory extends ObjectFactory {
         return receiver;
     }
 
-    public MCCIMT100100UV01Receiver createMCCIMT100100UV01Receiver(MCCIMT100100UV01Device device) {
-        MCCIMT100100UV01Receiver receiver = new MCCIMT100100UV01Receiver();
-        receiver.setDevice(device);
-        return receiver;
-    }
-
     public MCCIMT000100UV01Sender createMCCIMT000100UV01Sender(MCCIMT000100UV01Device device) {
         MCCIMT000100UV01Sender sender = new MCCIMT000100UV01Sender();
         sender.setDevice(device);
         return sender;
-    }
-
-    public MCCIMT100100UV01Sender createMCCIMT100100UV01Sender(MCCIMT100100UV01Device device) {
-        MCCIMT100100UV01Sender sender = new MCCIMT100100UV01Sender();
-        sender.setDevice(device);
-        return sender;
-    }
-
-    public PRPMMT406010UV01OrganizationID createPRPMMT406010UV01OrganizationID(String root, String extension) {
-        PRPMMT406010UV01OrganizationID id = new PRPMMT406010UV01OrganizationID();
-        id.setValue(createII(root, extension));
-        return id;
-    }
-
-    public PRPMMT406010UV01OrganizationName createPRPMMT406010UV01OrganizationName(String value) {
-        PRPMMT406010UV01OrganizationName name = new PRPMMT406010UV01OrganizationName();
-        name.setValue(createEN(value));
-        return name;
-    }
-
-    public PRPMMT406010UV01OrganizationAddress createPRPMMT406010UV01OrganizationAddress(String value) {
-        PRPMMT406010UV01OrganizationAddress address = new PRPMMT406010UV01OrganizationAddress();
-        address.setValue(createAD(value));
-        return address;
-    }
-
-    public PRPMMT306010UVProviderID createPRPMMT306010UVProviderID(String root, String extension) {
-        PRPMMT306010UVProviderID providerID = new PRPMMT306010UVProviderID();
-        providerID.setValue(createII(root, extension));
-        return providerID;
-    }
-
-    public PRPMMT306010UVProviderName createPRPMMT306010UVProviderName(String value) {
-        PRPMMT306010UVProviderName providerName = new PRPMMT306010UVProviderName();
-        providerName.setValue(createEN(value));
-        return providerName;
-    }
-
-    public PRPMMT306010UVSdlcId createPRPMMT306010UVSdlcId(String root, String extension) {
-        PRPMMT306010UVSdlcId sdlcId = new PRPMMT306010UVSdlcId();
-        sdlcId.setValue(createII(root, extension));
-        return sdlcId;
     }
 
     public ST createST(String content) {
@@ -121,22 +73,10 @@ public class MessageObjectFactory extends ObjectFactory {
         return st;
     }
 
-    public EN createEN(String content) {
-        EN en = new EN();
-        en.getContent().add(content);
-        return en;
-    }
-
     public ENXP createENXP(String content) {
         ENXP enxp = new EnFamily();
         enxp.getContent().add(content);
         return enxp;
-    }
-
-    public AD createAD(String content) {
-        AD ad = new AD();
-        ad.getContent().add(content);
-        return ad;
     }
 
     public ADXP createADXP(String content) {

@@ -1,10 +1,10 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.uvic.leadlab.cdxconnector.messages.ListClinicBuilder;
+import ca.uvic.leadlab.cdxconnector.messages.registry.ListClinicBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.hl7.v3.ClinicQuery;
-import org.hl7.v3.PRPMIN406010UV01;
-import org.hl7.v3.PRPMIN406110UV01;
+import registrysearch.ClinicQuery;
+import registrysearch.PRPMIN406010UV01;
+import registrysearch.PRPMIN406110UV01;
 
 import java.net.MalformedURLException;
 import java.net.URL;

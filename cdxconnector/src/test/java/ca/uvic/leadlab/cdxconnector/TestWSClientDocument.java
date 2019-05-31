@@ -37,8 +37,12 @@ public class TestWSClientDocument extends TestWSClient {
     @Test
     public void testGetDocument() throws Exception {
         String response = wsClientDocumentA.getDocument(ClinicA.id,
-                "ad0007b5-c846-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Found
+                //"a163901e-6173-e911-a96a-0050568c55a6"); // Using 'CDX Message ID' = Found
+                "16449a1b-b544-47d6-8f43-7f9a1d3b4a46");
                 //"45a75b7e-5cb1-4d00-ab7f-b7872de47549"); // Using 'CDX Clinical Document ID' = Not found (?!)
+
+        // "a163901e-6173-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
+        // "f01a004a-5673-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
@@ -57,8 +61,20 @@ public class TestWSClientDocument extends TestWSClient {
     public void testSearchDocumentsByDocumentId() throws Exception {
         String response = wsClientDocumentA
                 .searchDocuments(ClinicA.id, ClinicA.id,
-                        //"ad0007b5-c846-e911-a96a-0050568c55a6", // Using 'CDX Message ID' = Not Found (?!)
-                        "45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
+                        //"45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
+                        "61a1a387-408b-4e5c-be24-1976ace1c280",
+                        null, null);
+
+        Assert.assertNotNull(response);
+        System.out.println(TestUtils.prettyXML(response));
+    }
+
+    @Test
+    public void testGetDistributionStatusByDocumentId() throws Exception {
+        String response = wsClientDocumentA
+                .getDistributionStatus(ClinicA.id, ClinicA.id,
+                        //"45a75b7e-5cb1-4d00-ab7f-b7872de47549", // Using 'CDX Clinical Document ID' = Found
+                        "61a1a387-408b-4e5c-be24-1976ace1c280",
                         null, null);
 
         Assert.assertNotNull(response);

@@ -1,6 +1,6 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.submit;
 
-import org.hl7.v3.MediaType;
+import cdasubmitrequest.*;
 
 public class DocumentAttachment {
 

@@ -1,12 +1,14 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.distribution;
 
 import ca.uvic.leadlab.cdxconnector.DateRange;
+import distributionstatus.*;
 import org.apache.commons.lang3.StringUtils;
-import org.hl7.v3.*;
 
 import java.util.Date;
 
-public class DocumentQueryParameterBuilder extends MessageBuilder {
+public class DistributionStatusQueryParameterBuilder {
+
+    private DistributionMessageObjectFactory factory = new DistributionMessageObjectFactory();
 
     private DocumentType documentType;
     private RCMRMT000003UV01RepresentedOrganizationId representedOrganizationId;
@@ -18,12 +20,12 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         CDA, HL7v2
     }
 
-    public DocumentQueryParameterBuilder documentType(DocumentType documentType) {
+    public DistributionStatusQueryParameterBuilder documentType(DocumentType documentType) {
         this.documentType = documentType;
         return this;
     }
 
-    public DocumentQueryParameterBuilder clinicId(String clinicId) {
+    public DistributionStatusQueryParameterBuilder clinicId(String clinicId) {
         if (StringUtils.isNotBlank(clinicId)) {
             representedOrganizationId = new RCMRMT000003UV01RepresentedOrganizationId(); // CONF-CDXMQ070
             representedOrganizationId.setValue(factory.createII("2.16.840.1.113883.3.277.100.2", clinicId)); // CONF-CDXMQ071
@@ -31,7 +33,7 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder documentId(String documentId) {
+    public DistributionStatusQueryParameterBuilder documentId(String documentId) {
         if (StringUtils.isNotBlank(documentId)) {
             clinicalDocumentId = new RCMRMT000003UV01ClinicalDocumentId(); // CONF-CDXMQ068
             clinicalDocumentId.setValue(factory.createII("2.16.840.1.113883.3.277.100.3", documentId)); // CONF-CDXMQ069
@@ -39,7 +41,7 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder documentEffectiveTime(DateRange effectiveTime) {
+    public DistributionStatusQueryParameterBuilder documentEffectiveTime(DateRange effectiveTime) {
         if (effectiveTime != null) {
             documentEffectiveTime(effectiveTime.getLowDate(), effectiveTime.isLowDateInclusive(),
                     effectiveTime.getHighDate(), effectiveTime.isHighDateInclusive());
@@ -47,8 +49,8 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder documentEffectiveTime(Date lowDate, boolean lowDateInclusive,
-                                                               Date highDate, boolean highDateInclusive) {
+    public DistributionStatusQueryParameterBuilder documentEffectiveTime(Date lowDate, boolean lowDateInclusive,
+                                                                         Date highDate, boolean highDateInclusive) {
         clinicalDocumentEffectiveTime = new RCMRMT000003UV01ClinicalDocumentEffectiveTime(); // CONF-CDXMQ065
         clinicalDocumentEffectiveTime.setValue(factory.createIVLTS(
                 factory.createIVXBTS(lowDateInclusive, lowDate), // CONF-CDXMQ066
@@ -56,7 +58,7 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder eventEffectiveTime(DateRange eventTime) {
+    public DistributionStatusQueryParameterBuilder eventEffectiveTime(DateRange eventTime) {
         if (eventTime != null) {
             eventEffectiveTime(eventTime.getLowDate(), eventTime.isLowDateInclusive(),
                     eventTime.getHighDate(), eventTime.isHighDateInclusive());
@@ -64,8 +66,8 @@ public class DocumentQueryParameterBuilder extends MessageBuilder {
         return this;
     }
 
-    public DocumentQueryParameterBuilder eventEffectiveTime(Date lowDate, boolean lowDateInclusive,
-                                                            Date highDate, boolean highDateInclusive) {
+    public DistributionStatusQueryParameterBuilder eventEffectiveTime(Date lowDate, boolean lowDateInclusive,
+                                                                      Date highDate, boolean highDateInclusive) {
         serviceEventEffectiveTime = new RCMRMT000003UV01ServiceEventEffectiveTime(); // CONF-CDXMQ072
         serviceEventEffectiveTime.setValue(factory.createIVLTS(
                 factory.createIVXBTS(lowDateInclusive, lowDate), // CONF-CDXMQ073

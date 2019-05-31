@@ -129,7 +129,7 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType mixed="true" name="AD">
-        <xs:complexContent mixed="true"> <!-- NOTE: Changed to allow plain text in tag body -->
+        <xs:complexContent mixed="true"> <!-- HACK: Changed to allow plain text in tag body -->
             <xs:extension base="tns:ANY">
                 <xs:sequence>
                     <xs:choice maxOccurs="unbounded" minOccurs="0">
@@ -712,8 +712,8 @@
     </xs:simpleType>
     <xs:simpleType name="IntegrityCheckAlgorithm">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="SHA1"/> <!-- NOTE: Changed to send the value specified in the documentation -->
-            <xs:enumeration value="SHA256"/> <!-- NOTE: Changed to send the value specified in the documentation -->
+            <xs:enumeration value="SHA-1"/>
+            <xs:enumeration value="SHA-256"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="ENXP">
@@ -966,7 +966,7 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType mixed="true" name="EN">
-        <xs:complexContent mixed="true"> <!-- NOTE: Changed to allow plain text in tag body -->
+        <xs:complexContent mixed="true"> <!-- HACK: Changed to allow plain text in tag body -->
             <xs:extension base="tns:ANY">
                 <xs:sequence>
                     <xs:choice maxOccurs="unbounded" minOccurs="0">

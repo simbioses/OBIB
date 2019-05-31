@@ -1,14 +1,16 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.submit;
 
-import org.hl7.v3.*;
+import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
+import cdasubmitrequest.*;
 
-import javax.xml.bind.DatatypeConverter;
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SubmitDocumentBuilder extends MessageBuilder {
+public class SubmitDocumentBuilder {
+
+    private SubmitMessageObjectFactory factory = new SubmitMessageObjectFactory();
 
     private String messageId;
     private List<MCCIMT000100UV01Receiver> receivers;
@@ -18,6 +20,27 @@ public class SubmitDocumentBuilder extends MessageBuilder {
 
     public SubmitDocumentBuilder(String messageId) {
         this.messageId = messageId;
+    }
+
+    private MCCIMT000100UV01Device createDevice(String agentOrganizationIdExtension) {
+        MCCIMT000100UV01Device device = factory.createMCCIMT000100UV01Device();
+        device.setClassCode(EntityClassDevice.DEV);
+        device.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        device.getId().add(factory.createII(NullFlavor.NA));
+
+        MCCIMT000100UV01Agent agent = factory.createMCCIMT000100UV01Agent();
+        agent.setClassCode(RoleClassAgent.AGNT);
+
+        MCCIMT000100UV01Organization representedOrganization = factory.createMCCIMT000100UV01Organization();
+        representedOrganization.setClassCode(EntityClassOrganization.ORG);
+        representedOrganization.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        representedOrganization.getId().add(factory.createII("2.16.840.1.113883.3.277.100.2",
+                "CDX Clinic ID",
+                agentOrganizationIdExtension));
+
+        agent.setRepresentedOrganization(representedOrganization);
+        device.setAsAgent(agent);
+        return device;
     }
 
     public SubmitDocumentBuilder receiver(String receiverAgentOrganizationIdExtension) {
@@ -80,14 +103,14 @@ public class SubmitDocumentBuilder extends MessageBuilder {
     private ED createText(Serializable content) {
         ED ed = new ED();
         ed.setMediaType(MediaType.TEXT_XML.value()); // CONF-CDXOD063
-        // TODO ed.setRepresentation(BinaryDataEncoding.TXT); // CONF-CDXOD064
+        //ed.setRepresentation(BinaryDataEncoding.TXT);
         ed.getContent().add("<![CDATA[ " + content + " ]]>"); // CONF-CDXOD065
         return ed;
     }
 
     private ED createAttachmentText(MediaType mediaType, String content, byte[] hash) {
         ED ed = new ED();
-        // TODO ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
+        //ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
         ed.setIntegrityCheck(hash); // CONF-CDXOD066
         ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
         ed.setMediaType(mediaType.value()); // CONF-CDXOD068

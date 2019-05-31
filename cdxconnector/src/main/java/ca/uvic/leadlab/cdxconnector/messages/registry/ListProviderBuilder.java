@@ -1,10 +1,12 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.registry;
 
-import org.hl7.v3.*;
+import registrysearch.*;
 
 import java.util.Date;
 
-public class ListProviderBuilder extends MessageBuilder {
+public class ListProviderBuilder {
+
+    private RegistryMessageObjectFactory factory = new RegistryMessageObjectFactory();
 
     private String messageId;
     private MCCIMT000100UV01Sender sender;
@@ -13,6 +15,27 @@ public class ListProviderBuilder extends MessageBuilder {
     public ListProviderBuilder(String messageId) {
         this.messageId = messageId;
         this.controlActProcess = createControlActProcess();
+    }
+
+    private MCCIMT000100UV01Device createDevice(String agentOrganizationIdExtension) {
+        MCCIMT000100UV01Device device = factory.createMCCIMT000100UV01Device();
+        device.setClassCode(EntityClassDevice.DEV);
+        device.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        device.getId().add(factory.createII(NullFlavor.NA));
+
+        MCCIMT000100UV01Agent agent = factory.createMCCIMT000100UV01Agent();
+        agent.setClassCode(RoleClassAgent.AGNT);
+
+        MCCIMT000100UV01Organization representedOrganization = factory.createMCCIMT000100UV01Organization();
+        representedOrganization.setClassCode(EntityClassOrganization.ORG);
+        representedOrganization.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        representedOrganization.getId().add(factory.createII("2.16.840.1.113883.3.277.100.2",
+                "CDX Clinic ID",
+                agentOrganizationIdExtension));
+
+        agent.setRepresentedOrganization(representedOrganization);
+        device.setAsAgent(agent);
+        return device;
     }
 
     public ListProviderBuilder sender(String senderAgentOrganizationIdExtension) {
@@ -52,9 +75,9 @@ public class ListProviderBuilder extends MessageBuilder {
         request.setVersionCode(factory.createCS("2010Normative")); // CONF- CDXPR002
         // CONF- CDXPR003
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "PRPM_IN306010UV"));
-        request.setProcessingCode(factory.createCS(ProcessingID.P.value()));
-        request.setProcessingModeCode(factory.createCS(ProcessingMode.T.value()));
-        request.setAcceptAckCode(factory.createCS(AcknowledgementCondition.AL.value()));
+        request.setProcessingCode(factory.createCS("P"));
+        request.setProcessingModeCode(factory.createCS("T"));
+        request.setAcceptAckCode(factory.createCS("AL"));
         // CONF- CDXPR004
         request.getReceiver().add(factory.createMCCIMT000100UV01Receiver(createDevice("CDX")));
         request.setSender(sender);
@@ -74,7 +97,7 @@ public class ListProviderBuilder extends MessageBuilder {
         if (parameterPayload == null) {
             parameterPayload = new PRPMMT306010UVQueryByParameterPayload();
         }
-        parameterPayload.setStatusCode(factory.createCS(QueryStatusCode.NEW.value())); // CONF- CDXPR008, CONF- CDXPR009
+        parameterPayload.setStatusCode(factory.createCS("new")); // CONF- CDXPR008, CONF- CDXPR009
         return parameterPayload;
     }
 }

@@ -945,15 +945,15 @@ function parseCDAAddress(cdaAddress) {
               <codeTemplate version="3.7.1">
                 <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
                 <name>Parse CDA Date/Time</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439891</time>
+                  <time>1559605931391</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -968,7 +968,10 @@ function parseCDAAddress(cdaAddress) {
 	@return {String} return the Date object
 */
 function parseCDADateTime(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
@@ -978,15 +981,15 @@ function parseCDADateTime(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
                 <name>Parse CDA Date/TIme to DB format</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439972</time>
+                  <time>1559605899144</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -1001,7 +1004,10 @@ function parseCDADateTime(cdaDateTime) {
 	@return {String} return the Date in DB format
 */
 function parseCDADateTimeToDB(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);
@@ -1428,7 +1434,7 @@ function storeOBIBError(errorCode, errorMessage) {
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>440</revision>
+      <revision>444</revision>
       <sourceConnector version="3.7.1">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -6411,7 +6417,7 @@ try {
 				var distributionStatus = {};
 				distributionStatus[&apos;statusCode&apos;] = intendedRecipient[&apos;receivedOrganization&apos;].*::[&apos;distributionStatus&apos;].*::[&apos;statusCode&apos;][&apos;@code&apos;].toString();
 				distributionStatus[&apos;statusName&apos;] = intendedRecipient[&apos;receivedOrganization&apos;].*::[&apos;distributionStatus&apos;].*::[&apos;statusCode&apos;][&apos;@displayName&apos;].toString();
-				distributionStatus[&apos;statusTime&apos;] = intendedRecipient[&apos;receivedOrganization&apos;].*::[&apos;distributionStatus&apos;].*::[&apos;statusTime&apos;][&apos;@value&apos;].toString();
+				distributionStatus[&apos;statusTime&apos;] = parseCDADateTime(intendedRecipient[&apos;receivedOrganization&apos;].*::[&apos;distributionStatus&apos;].*::[&apos;statusTime&apos;][&apos;@value&apos;].toString());
 								
 				// Primary Recipient
 				distributionStatus[&apos;recipient&apos;] = {};
@@ -7226,7 +7232,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1559603530971</time>
+            <time>1559605812682</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>
@@ -7583,15 +7589,15 @@ function parseCDAAddress(cdaAddress) {
               <codeTemplate version="3.7.1">
                 <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
                 <name>Parse CDA Date/Time</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439891</time>
+                  <time>1559605931391</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -7606,7 +7612,10 @@ function parseCDAAddress(cdaAddress) {
 	@return {String} return the Date object
 */
 function parseCDADateTime(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
@@ -7616,15 +7625,15 @@ function parseCDADateTime(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
                 <name>Parse CDA Date/TIme to DB format</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439972</time>
+                  <time>1559605899144</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -7639,7 +7648,10 @@ function parseCDADateTime(cdaDateTime) {
 	@return {String} return the Date in DB format
 */
 function parseCDADateTimeToDB(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);
@@ -9406,15 +9418,15 @@ function parseCDAAddress(cdaAddress) {
               <codeTemplate version="3.7.1">
                 <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
                 <name>Parse CDA Date/Time</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439891</time>
+                  <time>1559605931391</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -9429,7 +9441,10 @@ function parseCDAAddress(cdaAddress) {
 	@return {String} return the Date object
 */
 function parseCDADateTime(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
@@ -9439,15 +9454,15 @@ function parseCDADateTime(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
                 <name>Parse CDA Date/TIme to DB format</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439972</time>
+                  <time>1559605899144</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -9462,7 +9477,10 @@ function parseCDADateTime(cdaDateTime) {
 	@return {String} return the Date in DB format
 */
 function parseCDADateTimeToDB(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);
@@ -10466,15 +10484,15 @@ function parseCDAAddress(cdaAddress) {
               <codeTemplate version="3.7.1">
                 <id>41f1daa2-e22b-439a-b0b5-16bc108c007e</id>
                 <name>Parse CDA Date/Time</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439891</time>
+                  <time>1559605931391</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -10489,7 +10507,10 @@ function parseCDAAddress(cdaAddress) {
 	@return {String} return the Date object
 */
 function parseCDADateTime(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd\&apos;T\&apos;HH:mm:ssZ&quot;, cdaDateTime);
@@ -10499,15 +10520,15 @@ function parseCDADateTime(cdaDateTime) {
               <codeTemplate version="3.7.1">
                 <id>1dc8b8fe-b046-4292-a7c2-218c37bd0d2d</id>
                 <name>Parse CDA Date/TIme to DB format</name>
-                <revision>1</revision>
+                <revision>2</revision>
                 <lastModified>
-                  <time>1558462439972</time>
+                  <time>1559605899144</time>
                   <timezone>Canada/Pacific</timezone>
                 </lastModified>
                 <contextSet>
                   <delegate>
-                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_DISPATCHER</contextType>
+                    <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
                     <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
                     <contextType>SOURCE_RECEIVER</contextType>
@@ -10522,7 +10543,10 @@ function parseCDADateTime(cdaDateTime) {
 	@return {String} return the Date in DB format
 */
 function parseCDADateTimeToDB(cdaDateTime) {
-	if (cdaDateTime &amp;&amp; cdaDateTime.length &lt;= 8) {
+	if (!cdaDateTime || cdaDateTime.length == 0) {
+		return null;
+	}
+	if (cdaDateTime.length &lt;= 8) {
 		return DateUtil.convertDate(&quot;yyyyMMdd&quot;, &quot;yyyy-MM-dd&quot;, cdaDateTime);
 	}
 	return DateUtil.convertDate(&quot;yyyyMMddHHmmZZZ&quot;, &quot;yyyy-MM-dd hh:mm:ss&quot;, cdaDateTime);

@@ -12,23 +12,18 @@ Interface declaration
  */
 public interface IOscarInformation {
 
-    //ClinicalDocument OscarInfo();
-    //This is for Submit CDA
     SubmitDocumentResponse submitCDA(ClinicalDocument clinicalDocument) throws OBIBRequestException;
 
-    //for List Document
+    ListDocumentsResponse distributionStatus(SearchDocumentCriteria searchCriteria) throws OBIBRequestException;
+
     ListDocumentsResponse listDocument() throws OBIBRequestException;
 
-    //for search Document
     ListDocumentsResponse searchDocument(SearchDocumentCriteria searchCriteria) throws OBIBRequestException;
 
-    //for get document
     ListDocumentsResponse getDocument(SearchDocumentCriteria searchCriteria) throws OBIBRequestException;
 
-    //list Provider
     ListProvidersResponse listProviders(SearchProviderCriteria searchCriteria) throws OBIBRequestException;
 
-    //list Clinics
     ListClinicsResponse listClinics(SearchClinicCriteria searchCriteria) throws OBIBRequestException;
 
     OBIBResponse notifyError(ErrorMessage error) throws OBIBRequestException;

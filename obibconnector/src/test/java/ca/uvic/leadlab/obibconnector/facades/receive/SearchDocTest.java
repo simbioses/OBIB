@@ -31,4 +31,14 @@ public class SearchDocTest extends FacadesBaseTest {
         Assert.assertNotNull(document);
         System.out.println(mapper.writeValueAsString(document));
     }
+
+    @Test
+    public void testDistributionStatus() throws Exception {
+        ISearchDoc searchDoc = new SearchDoc(configClinicA);
+
+        IDocument document = searchDoc.distributionStatus("006b83bc-be96-46bb-beb1-472dcb12c56a");
+
+        Assert.assertNotNull(document);
+        System.out.println(mapper.writeValueAsString(document));
+    }
 }

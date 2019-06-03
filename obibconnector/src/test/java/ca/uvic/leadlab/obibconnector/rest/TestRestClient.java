@@ -85,6 +85,17 @@ public class TestRestClient {
     }
 
     @Test
+    public void testDistributionStatus() throws Exception {
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
+
+        ListDocumentsResponse response = restClient.distributionStatus(SearchDocumentCriteria
+                .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
+        System.out.println(mapper.writeValueAsString(response));
+
+        Assert.assertNotNull(response);
+    }
+
+    @Test
     public void testListDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 

@@ -57,4 +57,20 @@ public class SearchDoc implements ISearchDoc {
         }
     }
 
+    @Override
+    public IDocument distributionStatus(String documentId) throws OBIBException {
+        try {
+            ListDocumentsResponse response = services.distributionStatus(
+                    SearchDocumentCriteria.byDocumentId(documentId));
+
+            if (!response.isOK()) {
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
+            }
+
+            return new Document(response.getDocument());
+        } catch (OBIBRequestException e) {
+            throw new OBIBException("Error retrieving document distribution status.", e);
+        }
+    }
+
 }

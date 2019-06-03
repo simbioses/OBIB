@@ -10,4 +10,6 @@ public interface ISearchDoc {
 
     IDocument searchDocumentById(String clinicId, String documentId) throws OBIBException;
 
+    IDocument distributionStatus(String documentId) throws OBIBException;
+
 }

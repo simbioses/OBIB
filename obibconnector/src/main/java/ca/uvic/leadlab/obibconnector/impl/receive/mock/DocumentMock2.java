@@ -2,6 +2,7 @@ package ca.uvic.leadlab.obibconnector.impl.receive.mock;
 
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
 import ca.uvic.leadlab.obibconnector.facades.receive.IAttachment;
+import ca.uvic.leadlab.obibconnector.facades.receive.IDistributionStatus;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.facades.receive.IPatient;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
@@ -535,5 +536,8 @@ public class DocumentMock2 implements IDocument {
         return ats;
     }
 
-
+    @Override
+    public List<IDistributionStatus> getDistributionStatus() {
+        return null;
+    }
 }

@@ -2,11 +2,10 @@ package ca.uvic.leadlab.obibconnector.impl.registry;
 
 import ca.uvic.leadlab.obibconnector.facades.registry.IClinic;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
+import ca.uvic.leadlab.obibconnector.models.document.ReceivedOrganization;
 import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 
 public class Clinic implements IClinic {
-
-    private final ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic;
 
     private String ID;
     private String name;
@@ -18,8 +17,6 @@ public class Clinic implements IClinic {
     private IProvider provider;
 
     public Clinic(ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic) {
-        this.clinic = clinic;
-
         ID = OBIBConnectorHelper.getDefaultClinicId(clinic.getIds());
         name = clinic.getName();
         if (clinic.getAddress() != null) {
@@ -32,6 +29,11 @@ public class Clinic implements IClinic {
         if (!clinic.getProviders().isEmpty()) {
             provider = new Provider(clinic.getProviders().get(0));
         }
+    }
+
+    public Clinic(ReceivedOrganization receivedOrganization) {
+        ID = OBIBConnectorHelper.getDefaultClinicId(receivedOrganization.getIds());
+        name = receivedOrganization.getName();
     }
 
     @Override

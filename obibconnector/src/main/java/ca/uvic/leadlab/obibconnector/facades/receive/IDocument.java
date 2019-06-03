@@ -56,4 +56,6 @@ public interface IDocument {
 
     List<IAttachment> getAttachments();
 
+    List<IDistributionStatus> getDistributionStatus();
+
 }

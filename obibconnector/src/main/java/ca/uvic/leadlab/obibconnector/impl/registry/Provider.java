@@ -13,8 +13,6 @@ import java.util.List;
 
 public class Provider implements IProvider {
 
-    private final ca.uvic.leadlab.obibconnector.models.registry.Provider provider;
-
     private String ID;
 
     private String firstName;
@@ -34,8 +32,6 @@ public class Provider implements IProvider {
     private String clinicName;
 
     public Provider(ca.uvic.leadlab.obibconnector.models.registry.Provider provider) {
-        this.provider = provider;
-
         ID = OBIBConnectorHelper.getDefaultProviderId(provider.getIds());
 
         if (provider.getName() != null) {

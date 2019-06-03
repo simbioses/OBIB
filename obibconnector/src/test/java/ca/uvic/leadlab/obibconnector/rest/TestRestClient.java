@@ -4,6 +4,7 @@ import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.models.document.ClinicalDocument;
+import ca.uvic.leadlab.obibconnector.models.queries.DateRange;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchDocumentCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchProviderCriteria;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class TestRestClient {
@@ -117,11 +119,40 @@ public class TestRestClient {
     }
 
     @Test
+    public void testSearchDocumentWithDate() throws Exception {
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
+
+        SearchDocumentCriteria criteria = SearchDocumentCriteria.byClinicId("cdxpostprod-otca");
+        Calendar cal = Calendar.getInstance();
+        cal.set(2019, Calendar.MARCH, 1);
+        Date start = cal.getTime();
+        cal.set(2019, Calendar.APRIL, 1);
+        Date end = cal.getTime();
+        criteria.setEffectiveTime(new DateRange(start, end));
+
+        ListDocumentsResponse response = restClient.searchDocument(criteria);
+        System.out.println(mapper.writeValueAsString(response));
+
+        Assert.assertNotNull(response);
+    }
+
+    @Test
+    public void testSearchDocumentById() throws Exception {
+        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
+
+        ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
+                .byDocumentId("61a1a387-408b-4e5c-be24-1976ace1c280"));
+        System.out.println(mapper.writeValueAsString(response));
+
+        Assert.assertNotNull(response);
+    }
+
+    @Test
     public void testGetDocument() throws Exception {
         IOscarInformation restClient = new RestClient(obibUrl, clinicId);
 
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
-                .byDocumentId("ad0007b5-c846-e911-a96a-0050568c55a6"));
+                .byDocumentId("db0e5fb8-c946-e911-a96a-0050568c55a6"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);

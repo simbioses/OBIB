@@ -1,10 +1,10 @@
 #!/bin/sh
 
-## Configurable variables
+## Server Settings
 SERVER_IP='192.168.100.101'
 
+## Database credentials
 DB_ROOT_PASS='_DBrP445!'
-
 DB_USERNAME='mirth'
 DB_PASSWORD='Mirth!123'
 
@@ -19,13 +19,17 @@ sudo timedatectl set-timezone Canada/Pacific
 sudo apt-get update
 #sudo apt-get upgrade
 
-## Install Java 8 and MariaDB
+## Install Java 8
 sudo apt-get -y install openjdk-8-jdk
 
+## Install MariaDB
 echo 'mysql-server mysql-server/root_password password' $DB_ROOT_PASS | sudo debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password' $DB_ROOT_PASS | sudo debconf-set-selections
 sudo apt-get -y install mariadb-server
 mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+
+## Install xmllint (used by the update.sh script)
+#sudo apt-get -y install libxml2-utils
 
 ## Execute database creation script as 'root'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/mirth_create.sql

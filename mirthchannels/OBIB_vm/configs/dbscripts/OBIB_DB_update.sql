@@ -1,7 +1,6 @@
 use OBIB_DB;
 
 /* error_message - table */
-drop table if exists error_message;
 create table if not exists error_message
 (
 	id int auto_increment

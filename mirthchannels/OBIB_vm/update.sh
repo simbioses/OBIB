@@ -1,20 +1,10 @@
 #!/bin/sh
 
-## Administrator credentials
-ADMIN_USERNAME='admin'
-ADMIN_PASSWORD='admin'
+## Load the settings
+. /vagrant/./mirth_connect.sh
 
-## Database credentials
-DB_ROOT_PASS='_DBrP445!'
-DB_USERNAME='mirth'
-DB_PASSWORD='Mirth!123'
-
-## Application Paths
-CONF_ROOT='/vagrant/configs'
-MIRTH_ROOT='/opt/MirthConnect'
-
-## Client API settings
-API_URL="https://192.168.100.101:8443/api"
+# Client API settings
+API_URL="https://$SERVER_IP:8443/api"
 ARGS="--header Content-Type:application/xml --header Accept:application/xml"
 OUT_ARGS="--silent --location --write-out %{http_code}"
 AUTH="--insecure --user $ADMIN_USERNAME:$ADMIN_PASSWORD"
@@ -48,8 +38,7 @@ mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/OBIB_DB_update
 printf '\nUpdating MirthConnect Resources...\n'
 
 sudo cp -R $CONF_ROOT/custom-lib/ $MIRTH_ROOT/
-sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' \
-    -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -i $MIRTH_ROOT/custom-lib/CDA.properties
+sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -i $MIRTH_ROOT/custom-lib/CDA.properties
 
 ## Reload Resources
 printf '\nReloading MirthConnect Resources...\n'
@@ -61,14 +50,19 @@ printf '\nUpdating Global Scripts...\n'
 
 execUpdate "/server/globalScripts" "$CONF_ROOT/obib/OBIB_global_scripts.xml" "scripts_update.out"
 
-## Update Channel Group
-printf '\nUpdating Update Channel Group...\n'
+## Update Code Templates
+printf '\nUpdating Code Templates...\n'
 
-#GROUP_FILE="$CONF_ROOT/obib/OBIB_channel_group.xml"
-#GROUP_OUTPUT='template_update.out'
-#GROUP_RESP=$(curl -X POST $ARGS $AUTH --data @$GROUP_FILE "$API_URL/channelgroups/_bulkUpdate?override=true" --output $GROUP_OUTPUT $OUT_ARGS)
+execUpdate "/codeTemplateLibraries?override=true" "$CONF_ROOT/obib/OBIB_code_templates_library.xml" "templates_update.out"
 
-#checkResponse $GROUP_RESP $GROUP_OUTPUT
+## Update Channels
+for file in $CONF_ROOT/obib/channels/*.xml; do
+    printf "\nUpdating Channel: $(basename "$file" .xml)...\n"
+    
+    channel_id=$(xmllint --xpath "//channel/id/text()" "$file")
+    execUpdate "/channels/$channel_id?override=true" "$file" "$(basename "$file" .xml)_update.out"
+    execAction "/channels/$channel_id/enabled/true" "$(basename "$file" .xml)_enabled.out"
+done
 
 ## Redeploy All Channels
 printf '\nRedeploying All Channels...\n'

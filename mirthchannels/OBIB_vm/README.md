@@ -61,7 +61,7 @@ $ ifconfig
 Execute the **updates** provision from host machine:
 
 ```bash
-$ vagrant provision --provision-with updates
+$ vagrant provision --provision-with update
 ```
 
 ## *Step 7: (Manual option) Install OBIB Global Scripts*

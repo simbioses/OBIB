@@ -8,7 +8,7 @@ DB_ROOT_PASS='_DBrP445!'
 DB_USERNAME='mirth'
 DB_PASSWORD='Mirth!123'
 
-## Mirth Connect root path
+## Mirth Connect and configs root paths
 MIRTH_ROOT='/opt/MirthConnect'
 CONF_ROOT='/vagrant/configs'
 

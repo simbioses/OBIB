@@ -50,11 +50,6 @@ printf '\nUpdating Global Scripts...\n'
 
 execUpdate "/server/globalScripts" "$CONF_ROOT/obib/OBIB_global_scripts.xml" "scripts_update.out"
 
-## Update Code Templates
-printf '\nUpdating Code Templates...\n'
-
-execUpdate "/codeTemplateLibraries?override=true" "$CONF_ROOT/obib/OBIB_code_templates_library.xml" "templates_update.out"
-
 ## Update Channels
 for file in $CONF_ROOT/obib/channels/*.xml; do
     printf "\nUpdating Channel: $(basename "$file" .xml)...\n"
@@ -63,6 +58,11 @@ for file in $CONF_ROOT/obib/channels/*.xml; do
     execUpdate "/channels/$channel_id?override=true" "$file" "$(basename "$file" .xml)_update.out"
     execAction "/channels/$channel_id/enabled/true" "$(basename "$file" .xml)_enabled.out"
 done
+
+## Update Code Templates
+printf '\nUpdating Code Templates...\n'
+
+execUpdate "/codeTemplateLibraries?override=true" "$CONF_ROOT/obib/OBIB_code_templates_library.xml" "templates_update.out"
 
 ## Redeploy All Channels
 printf '\nRedeploying All Channels...\n'

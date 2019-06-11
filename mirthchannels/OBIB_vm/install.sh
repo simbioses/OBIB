@@ -20,7 +20,7 @@ sudo apt-get -y install mariadb-server
 mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
 ## Install xmllint (used by the update.sh script)
-#sudo apt-get -y install libxml2-utils
+sudo apt-get -y install libxml2-utils
 
 ## Execute database creation script as 'root'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/mirth_create.sql

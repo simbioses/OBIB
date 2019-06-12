@@ -13,7 +13,7 @@ config.vm.network "private_network", ip: "192.168.56.105"
 
 ## Step 4: Adjust the mirth_connect.sh script (optional)
 
-If IP address was ajusted in Vagrantfile, adjust here as well:
+If the VM IP address was ajusted in the Vagrantfile on Step 3, it is necessary to adjust it here as well:
 
 ```bash
 ## Server Settings

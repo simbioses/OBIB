@@ -14,6 +14,7 @@ import ca.uvic.leadlab.obibconnector.models.response.ListProvidersResponse;
 import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -21,11 +22,13 @@ import java.util.Date;
 
 public class TestRestClient {
 
-    private ObjectMapper mapper = new ObjectMapper();
     private String obibUrl = "http://192.168.100.101:8081";
     private String clinicId = "cdxpostprod-otca";
 
-    private Config config = new Config() {
+    private IOscarInformation restClient;
+
+    private ObjectMapper mapper = new ObjectMapper(); // to visualize the objects
+    private Config config = new Config() { // to create a document on submit tests
         @Override
         public String getUrl() {
             return obibUrl;
@@ -37,10 +40,13 @@ public class TestRestClient {
         }
     };
 
+    @Before
+    public void setup() {
+        restClient = new RestClient(obibUrl, clinicId);
+    }
+
     @Test
     public void testSubmitDocument() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config).newDoc()
                 .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
@@ -88,8 +94,6 @@ public class TestRestClient {
 
     @Test
     public void testDistributionStatus() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListDocumentsResponse response = restClient.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));
@@ -99,8 +103,6 @@ public class TestRestClient {
 
     @Test
     public void testListDocument() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListDocumentsResponse response = restClient.listDocument();
         System.out.println(mapper.writeValueAsString(response));
 
@@ -109,8 +111,6 @@ public class TestRestClient {
 
     @Test
     public void testSearchDocument() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
                 .byClinicId("cdxpostprod-otca"));
         System.out.println(mapper.writeValueAsString(response));
@@ -120,8 +120,6 @@ public class TestRestClient {
 
     @Test
     public void testSearchDocumentWithDate() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         SearchDocumentCriteria criteria = SearchDocumentCriteria.byClinicId("cdxpostprod-otca");
         Calendar cal = Calendar.getInstance();
         cal.set(2019, Calendar.MARCH, 1);
@@ -138,8 +136,6 @@ public class TestRestClient {
 
     @Test
     public void testSearchDocumentById() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
                 .byDocumentId("61a1a387-408b-4e5c-be24-1976ace1c280"));
         System.out.println(mapper.writeValueAsString(response));
@@ -149,8 +145,6 @@ public class TestRestClient {
 
     @Test
     public void testGetDocument() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
                 .byDocumentId("db0e5fb8-c946-e911-a96a-0050568c55a6"));
         System.out.println(mapper.writeValueAsString(response));
@@ -160,8 +154,6 @@ public class TestRestClient {
 
     @Test
     public void testListClinics() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListClinicsResponse response = restClient.listClinics(SearchClinicCriteria.byClinicId("cdxpostprod-otca"));
         System.out.println(mapper.writeValueAsString(response));
 
@@ -170,11 +162,19 @@ public class TestRestClient {
 
     @Test
     public void testListProviders() throws Exception {
-        IOscarInformation restClient = new RestClient(obibUrl, clinicId);
-
         ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderId("93188"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
+    }
+
+    @Test(expected = OBIBRequestException.class)
+    public void testConnectionError() throws Exception {
+        RestClient restClientError = new RestClient("http://192.168.0.0:80", "");
+        ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
+                .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
+        System.out.println(mapper.writeValueAsString(response));
+
+        Assert.assertNull(response);
     }
 }

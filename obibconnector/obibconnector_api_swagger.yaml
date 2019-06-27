@@ -1,0 +1,799 @@
+swagger: '2.0'
+
+info:
+  description: This Describe the API interface for OSCAR EMR Interoprability
+  version: 1.0.0
+  title: OBIB API
+  # put the contact info for your development or API team
+  contact: 
+    email: aalani@uvic.ca
+  license:
+    name: Lead-Lab
+    url: https://lead-lab.atlassian.net/wiki/spaces/HBX/pages/220790787/CDX+test+environment
+
+# Added by API Auto Mocking Plugin
+#host: virtserver.swaggerhub.com
+#basePath: /Lead-Lab/get-cda-header/1.0.0
+# Added by API Auto Mocking Plugin
+#basePath: /jenshweber/OBIB/1.0
+
+schemes:
+ - http
+consumes:
+  - application/json
+produces:
+  - application/json
+  
+# tags are used for organizing operations
+tags:
+- name: SubmitCDA
+  description: Securely submit a CDA document to CDX
+- name: DistributionStatus
+  description: Retrieving the distribution status of a document from CDX.
+- name: ListDocuments
+  description: List the new documents avaialble for the clinic. This must be followed by GetDocument Process
+- name: SearchDocument
+  description: Search for existing documents that match specific criteria from CDX. This must be followed by GetDocument Process
+- name: GetDocument
+  description: Retrieving relevant documents from CDX.
+- name: ListProviders
+  description: Search & display the list of providers within CDX infrastructure
+- name: ListClinics
+  description: Search & display the list of clinics within CDX infrastructure
+
+
+paths:
+
+  /SubmitCDA:
+    post:
+      tags:
+      - SubmitCDA
+      summary: post service for submiting  a CDA Level 1 document
+      operationId: post_submitcda
+      description: Adds a new CDA Level 1 document to CDX
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: clinicalDocument
+        description: list of objects used to generate the CDA Level 1 Document
+        required: true
+        schema:
+          $ref: '#/definitions/ClinicalDocument'
+      responses:
+        201:
+          description: Document Submitted
+          schema:
+            $ref: '#/definitions/SubmitDocumentResponse'
+        400:
+          description: invalid input, object invalid, document not submitted
+        409:
+          description: an existing document already exists
+
+  /DistributionStatus:
+    post:
+      tags:
+      - DistributionStatus
+      summary: It retuns the distribution status for a document
+      operationId: get_distributionStatus
+      description: This will Get the distribution status for a document on CDX Infrastructure
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: searchDocumentCriteria
+        description: This is parameters needed for the request
+        required: true
+        schema:
+          $ref: '#/definitions/SearchDocumentCriteria'
+      responses:
+        201:
+          description: Document Search Success
+          schema:
+            $ref: '#/definitions/ListDocumentsResponse'
+        400:
+          description: No Document found", or " Invalid Clinic ID
+          
+  /ListDocuments:
+    post:
+      tags:
+      - ListDocuments
+      summary: It helps to list new document available on CDX
+      operationId: get_listNewDocument
+      description: This will List the new documents on CDX Infrastructure
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      responses:
+        201:
+          description: Document Search Success
+          schema:
+            $ref: '#/definitions/ListDocumentsResponse'
+        400:
+          description: No Document found", or " Invalid Clinic ID
+
+  /SearchDocument:
+    post:
+      tags:
+      - SearchDocument
+      summary: Request existing documents that match specific criteria from CDX. This must be followed by GetDocument Process
+      operationId: get_searchDocument
+      description: This will search for existing document on CDX Infrastructure
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: searchDocumentCriteria
+        description: This is parameters needed for the request
+        required: true
+        schema:
+          $ref: '#/definitions/SearchDocumentCriteria'
+      responses:
+        201:
+          description: Document Search Success
+          schema:
+            $ref: '#/definitions/ListDocumentsResponse'
+        400:
+          description: No Document found", or " Invalid Clinic ID or time
+
+  /GetDocument:
+    post:
+      tags:
+      - GetDocument
+      summary: Retrieving relevant documents from CDX based on specified document id.
+      operationId: get_getdocument
+      description: By passing in the appropriate options, you can GET the relevant document from CDX
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: searchDocumentCriteria
+        description: This is parameters needed for the request
+        required: true
+        schema:
+          $ref: '#/definitions/SearchDocumentCriteria'
+      responses:
+        200:
+          description: Request was successfully processed
+          schema:
+            $ref: '#/definitions/ListDocumentsResponse'
+        400:
+          description: bad input parameter
+          
+  /ListProviders:
+    post:
+      tags:
+      - ListProviders
+      summary: get the list of providers from CDX
+      operationId: listProviders
+      description: THis provides the list of clinics on the CDX Infrastructure
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: searchProviderCriteria
+        description: This is parameters needed for the request
+        required: true
+        schema:
+          $ref: '#/definitions/SearchProviderCriteria'
+      responses:
+        200:
+          description: Successful Operation
+          schema:
+            $ref: '#/definitions/ListProvidersResponse'
+        400:
+          description: No Provider found", or "Valid name not provided for query
+  
+  /ListClinics:
+    post:
+      tags:
+      - ListClinics
+      summary: get the list of clinic from CDX
+      operationId: listClinic
+      description: THis provides the list of clinics on the CDX Infrastructure
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: location_id
+        type: string
+        description: This is the clinic ID
+        required: true
+      - in: header
+        name: content_type
+        type: string
+        description: application/json
+        required: true
+      - in: body
+        name: searchClinicCriteria
+        description: This is parameters needed for the request
+        required: true
+        schema:
+          $ref: '#/definitions/SearchClinicCriteria'
+      responses:
+        200:
+          description: Successful Operation
+          schema:
+            $ref: '#/definitions/ListClinicsResponse'
+        400:
+          description: No Clinic found", or "Valid name not provided for query
+
+
+definitions:
+
+  # OBIB ClinicalDocument definitions
+  ClinicalDocument:
+    properties:
+      documentId: 
+        type: string
+        example: ""
+      template:
+        $ref: '#/definitions/Template'
+      loinc:
+        $ref: '#/definitions/Loinc'
+      effectiveTime: # document creation time
+        type: string
+        example: "2019-02-08T19:00:31:00+00:00"
+      title: # document creation time
+        type: string
+        example: ""
+      patient:
+        $ref: '#/definitions/PatientDetail'
+      authors:
+        type: "array"
+        items:
+          $ref: '#/definitions/AuthorDetail'
+      receipients:
+        type: "array"
+        items:
+          $ref: '#/definitions/ReceipentDetail'
+      custodian:
+        $ref: '#/definitions/CustodianDetail'
+      dataEnterer:
+        $ref: '#/definitions/DataEnterer'
+      authenticators:
+        type: "array"
+        items:
+          $ref: '#/definitions/AuthenticatorDetail'
+      participants:
+        type: "array"
+        items:
+          $ref: '#/definitions/Participant'
+      orders:
+        type: "array"
+        items:
+          $ref: '#/definitions/Order'
+      nonXMLBody:
+        $ref: '#/definitions/NonXMLBody'
+      attachment:
+        type: "array"
+        items:
+          $ref: '#/definitions/Attachment'
+
+  Template:
+    type: object
+    properties:
+      templateId:
+        type: string
+        example: ""
+      templateName:
+        type: string
+        example: ""  
+
+  Loinc:
+    type: object
+    properties:
+      loincCode:
+        type: string
+        example: ""
+      displayName:
+        type: string
+        example: ""  
+
+  Order:
+    type: object
+    properties:
+      id:
+        type: string
+        example: ""
+      statusCode:
+        type: string
+        example: ""
+
+  NonXMLBody:
+    type: object
+    properties:
+      mediaType:
+        type: string
+        example: ""
+      content:
+        type: string
+        example: ""
+
+  Attachment:
+    type: object
+    properties:
+      mediaType:
+        type: string
+        example: ""
+      content:
+        type: string
+        example: ""
+      hash:
+        type: string
+        example: ""
+      reference:
+        type: string
+        example: ""
+
+  DataEnterer:
+    type: object
+    properties:
+      time:
+        type: string
+      id:
+        $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+          $ref: "#/definitions/Name"
+  
+  ReceiveOrganization:
+    type: object
+    properties:
+      ids:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      name:
+        type: string
+
+  Id:
+    type: object
+    properties:
+      code:
+        type: string
+      type:
+        type: string
+
+  Address:
+    type: object
+    properties:
+      streetaddress:
+        type: string
+        example: "1775 Fort Street"
+      city:
+        type: string
+        example: "Victoria"
+      province:
+        type: string
+        example: "BC"
+      postalcode:
+        type: string
+        example: "V89017"
+      country:
+        type: string
+        example: "CA"
+      use:
+        type: string
+        example: "H"
+    xml:
+      name: Address
+  
+  Name:
+    type: object
+    properties:
+      firstname:
+        type: string
+        example: "Jens"
+      middlename:
+        type: string
+        example: "D."
+      familyname:
+        type: string
+        example: "Weber"
+      given:
+        type: "array"
+        items:
+          $ref: "#/definitions/Givenname"
+      prefix:
+        type: string
+        example: "Dr."
+      surfix:
+        type: string
+        example: ""
+    xml:
+      name: PatientName
+
+  Givenname:
+    type: object
+    properties:
+      given:
+        type: string
+        example: "Aron"
+
+  Telecom:
+    type: object
+    properties:
+      tell:
+        type: string
+        example: "tel"
+      use:
+        type: string
+        example: "H"
+      value:
+        type: string
+        example: "250-508-93331"
+    xml:
+      name: PatientName
+  
+  PatientDetail:
+    type: object
+    properties:
+      id:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+        type: "array"
+        items:
+          $ref: '#/definitions/Name'
+      genderCode:
+        type: string
+      birthday:
+        type: string
+
+  AuthenticatorDetail:
+    type: object
+    properties:
+      id:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+          $ref: "#/definitions/Name"
+  
+  ReceipentDetail:
+     type: object
+     properties:
+      id:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+          $ref: "#/definitions/Name"
+      typeCoce:
+        type: string
+        example: ""
+      receiveOrganization:
+        $ref: '#/definitions/ReceiveOrganization'
+
+  AuthorDetail:
+    type: object
+    properties:
+      id:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+          $ref: "#/definitions/Name"
+      software:
+          $ref: '#/definitions/Software'
+      time: # time the document was authored
+        type: string
+        example: "2019-02-08T19:00:31:00+00:00"
+  
+  Software:
+    type: object
+    properties:
+      name:
+        type: string
+        example: ""
+      code:
+        type: string
+        example: ""
+
+  # Who generate the document, usually its is ClinicID
+  CustodianDetail:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Id'
+      name:
+        type: string
+        example: "OMR medical Clinic"
+
+  Participant:
+    type: object
+    properties:
+      id:
+        type: "array"
+        items:
+          $ref: '#/definitions/Id'
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: "array"
+        items:
+          $ref: '#/definitions/Telecom'
+      name:
+          $ref: "#/definitions/Name"
+      typeCode:
+        type: string
+        example: ""
+      functionCode:
+        type: string
+        example: ""
+        
+  SubmitDocumentResponse:
+    allOf:
+      - $ref: '#/definitions/OBIBResponse'
+      - type: object
+    properties:
+      documentId:
+        type: string
+      document:
+        $ref: '#/definitions/ClinicalDocument'
+
+  # Definitions related to Document related methods, i.e. DistributionStatus,
+  # ListDocuments, SearchDocument, GetDocument
+  SearchDocumentCriteria:
+    type: object
+    properties:
+      documentId:
+        type: string
+        example: ""
+      clinicId:
+        type: string
+        example: "cdxpostprod-otca"
+      effectiveTime:
+        $ref: '#/definitions/DateRange'
+      eventTime:
+        $ref: '#/definitions/DateRange'
+  
+  DateRange:
+    type: object
+    properties:
+      start:
+        type: string
+        example: "2019-01-01T00:00-0700"
+      end:
+        type: string
+        example: "2019-02-01T00:00-0700"
+
+  ListDocumentsResponse:
+    allOf:
+      - $ref: '#/definitions/OBIBResponse'
+      - type: object
+        properties:
+          documents:
+            type: array
+            items: 
+              $ref: '#/definitions/ClinicalDocument'
+
+  # ListProviders definitions
+  SearchProviderCriteria:
+    type: object
+    properties:
+      clinicId:
+        type: string
+      providerId:
+        type: string
+      providerName:
+        type: string
+  
+  ListProvidersResponse:
+    allOf:
+      - $ref: '#/definitions/OBIBResponse'
+      - type: object
+        properties:
+          providers:
+            type: "array"
+            items:
+              $ref: "#/definitions/Provider"
+
+  Provider:
+    type: "object"
+    properties:
+      status:
+        type: string 
+        example: "active" 
+      ids:
+        type: array
+        items:
+          $ref: "#/definitions/Id"
+      name:
+         $ref: "#/definitions/Name"   
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      telecoms:
+        type: array
+        items:
+          $ref: '#/definitions/Telecom'
+      clinics:
+        type: array
+        items:
+          $ref: "#/definitions/Clinic"   
+
+  # ListClinics definitions
+  SearchClinicCriteria:
+    type: object
+    properties:
+      clinicId:
+        type: string
+      clinicName:
+        type: string
+      clinicAddress:
+        type: string
+  
+  ListClinicsResponse:
+    allOf:
+      - $ref: '#/definitions/OBIBResponse'
+      - type: object
+        properties:
+          clinics:
+            type: "array"
+            items:
+              $ref: "#/definitions/Clinic"
+
+  Clinic:
+    type: "object"
+    properties:
+      status:
+        type: string 
+      ids:
+        type: array
+        items:
+          $ref: "#/definitions/Id"
+      name:
+        type: string 
+        example: "" 
+      address: 
+        $ref: "#/definitions/Address" 
+      providers:
+        type: "array"
+        items:
+          $ref: "#/definitions/Provider"
+      templates:
+        type: array
+        items:
+          $ref: '#/definitions/Template'
+
+  # Generic response definitions
+  OBIBResponse:
+    type: object
+    properties:
+      status:
+        type: string
+      message:
+        type: string
+      ackDetail:
+        $ref: "#/definitions/AckDetail"
+      obibErrors:
+        type: array
+        items: {}
+
+  AckDetail:
+    type: object
+    properties:
+      ackId:
+        type: string
+      ackTime:
+        type: string
+      messageId:
+        type: string
+      status:
+        type: string
+

@@ -8,7 +8,7 @@ public abstract class TestWSClient {
         String id = "cdxpostprod-otca";
         String username = "cdxpostprod-otca";
         String password = "VMK31";
-        String certificate = "LEADlab_IHA_cert.pfx";
+        String certificate = "certs/LEADlab_IHA_cert.pfx";
         String certPassword = "LEADlab";
     }
 
@@ -16,7 +16,7 @@ public abstract class TestWSClient {
         String id = "cdxpostprod-obctc";
         String username = "cdxpostprod-obctc";
         String password = "2LsTebRe";
-        String certificate = "OscarTestClinic.pfx";
+        String certificate = "certs/OscarTestClinic.pfx";
         String certPassword = "LEADlab";
     }
 }

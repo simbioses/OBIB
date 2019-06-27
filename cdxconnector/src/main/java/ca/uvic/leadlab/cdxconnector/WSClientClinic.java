@@ -47,7 +47,7 @@ public class WSClientClinic extends WSClient {
             WSUtil.logObject(LOGGER, "\nList Clinics Response:\n", response);
 
             return WSUtil.parseObject(response, false);
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing clinics", e);
             throw new ConnectorException("Error listing clinics", e);
         }

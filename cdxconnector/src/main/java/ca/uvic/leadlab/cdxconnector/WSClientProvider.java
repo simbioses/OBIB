@@ -46,7 +46,7 @@ public class WSClientProvider extends WSClient {
             WSUtil.logObject(LOGGER, "\nList Provider Response:\n", response);
 
             return WSUtil.parseObject(response, false);
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing providers", e);
             throw new ConnectorException("Error listing providers", e);
         }

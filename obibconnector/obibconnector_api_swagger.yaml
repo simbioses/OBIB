@@ -5,7 +5,7 @@ info:
   version: 1.0.0
   title: OBIB API
   # put the contact info for your development or API team
-  contact: 
+  contact:
     email: aalani@uvic.ca
   license:
     name: Lead-Lab
@@ -18,28 +18,28 @@ info:
 #basePath: /jenshweber/OBIB/1.0
 
 schemes:
- - http
+  - http
 consumes:
   - application/json
 produces:
   - application/json
-  
+
 # tags are used for organizing operations
 tags:
-- name: SubmitCDA
-  description: Securely submit a CDA document to CDX
-- name: DistributionStatus
-  description: Retrieving the distribution status of a document from CDX.
-- name: ListDocuments
-  description: List the new documents avaialble for the clinic. This must be followed by GetDocument Process
-- name: SearchDocument
-  description: Search for existing documents that match specific criteria from CDX. This must be followed by GetDocument Process
-- name: GetDocument
-  description: Retrieving relevant documents from CDX.
-- name: ListProviders
-  description: Search & display the list of providers within CDX infrastructure
-- name: ListClinics
-  description: Search & display the list of clinics within CDX infrastructure
+  - name: SubmitCDA
+    description: Securely submit a CDA document to CDX
+  - name: DistributionStatus
+    description: Retrieving the distribution status of a document from CDX.
+  - name: ListDocuments
+    description: List the new documents avaialble for the clinic. This must be followed by GetDocument Process
+  - name: SearchDocument
+    description: Search for existing documents that match specific criteria from CDX. This must be followed by GetDocument Process
+  - name: GetDocument
+    description: Retrieving relevant documents from CDX.
+  - name: ListProviders
+    description: Search & display the list of providers within CDX infrastructure
+  - name: ListClinics
+    description: Search & display the list of clinics within CDX infrastructure
 
 
 paths:
@@ -47,31 +47,31 @@ paths:
   /SubmitCDA:
     post:
       tags:
-      - SubmitCDA
+        - SubmitCDA
       summary: post service for submiting  a CDA Level 1 document
       operationId: post_submitcda
       description: Adds a new CDA Level 1 document to CDX
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: clinicalDocument
-        description: list of objects used to generate the CDA Level 1 Document
-        required: true
-        schema:
-          $ref: '#/definitions/ClinicalDocument'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: clinicalDocument
+          description: list of objects used to generate the CDA Level 1 Document
+          required: true
+          schema:
+            $ref: '#/definitions/ClinicalDocument'
       responses:
         201:
           description: Document Submitted
@@ -85,31 +85,31 @@ paths:
   /DistributionStatus:
     post:
       tags:
-      - DistributionStatus
+        - DistributionStatus
       summary: It retuns the distribution status for a document
       operationId: get_distributionStatus
       description: This will Get the distribution status for a document on CDX Infrastructure
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: searchDocumentCriteria
-        description: This is parameters needed for the request
-        required: true
-        schema:
-          $ref: '#/definitions/SearchDocumentCriteria'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: searchDocumentCriteria
+          description: This is parameters needed for the request
+          required: true
+          schema:
+            $ref: '#/definitions/SearchDocumentCriteria'
       responses:
         201:
           description: Document Search Success
@@ -117,29 +117,29 @@ paths:
             $ref: '#/definitions/ListDocumentsResponse'
         400:
           description: No Document found", or " Invalid Clinic ID
-          
+
   /ListDocuments:
     post:
       tags:
-      - ListDocuments
+        - ListDocuments
       summary: It helps to list new document available on CDX
       operationId: get_listNewDocument
       description: This will List the new documents on CDX Infrastructure
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
       responses:
         201:
           description: Document Search Success
@@ -151,31 +151,31 @@ paths:
   /SearchDocument:
     post:
       tags:
-      - SearchDocument
+        - SearchDocument
       summary: Request existing documents that match specific criteria from CDX. This must be followed by GetDocument Process
       operationId: get_searchDocument
       description: This will search for existing document on CDX Infrastructure
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: searchDocumentCriteria
-        description: This is parameters needed for the request
-        required: true
-        schema:
-          $ref: '#/definitions/SearchDocumentCriteria'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: searchDocumentCriteria
+          description: This is parameters needed for the request
+          required: true
+          schema:
+            $ref: '#/definitions/SearchDocumentCriteria'
       responses:
         201:
           description: Document Search Success
@@ -187,29 +187,29 @@ paths:
   /GetDocument:
     post:
       tags:
-      - GetDocument
+        - GetDocument
       summary: Retrieving relevant documents from CDX based on specified document id.
       operationId: get_getdocument
       description: By passing in the appropriate options, you can GET the relevant document from CDX
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: searchDocumentCriteria
-        description: This is parameters needed for the request
-        required: true
-        schema:
-          $ref: '#/definitions/SearchDocumentCriteria'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: searchDocumentCriteria
+          description: This is parameters needed for the request
+          required: true
+          schema:
+            $ref: '#/definitions/GetDocumentCriteria'
       responses:
         200:
           description: Request was successfully processed
@@ -217,35 +217,35 @@ paths:
             $ref: '#/definitions/ListDocumentsResponse'
         400:
           description: bad input parameter
-          
+
   /ListProviders:
     post:
       tags:
-      - ListProviders
+        - ListProviders
       summary: get the list of providers from CDX
       operationId: listProviders
       description: THis provides the list of clinics on the CDX Infrastructure
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: searchProviderCriteria
-        description: This is parameters needed for the request
-        required: true
-        schema:
-          $ref: '#/definitions/SearchProviderCriteria'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: searchProviderCriteria
+          description: This is parameters needed for the request
+          required: true
+          schema:
+            $ref: '#/definitions/SearchProviderCriteria'
       responses:
         200:
           description: Successful Operation
@@ -253,33 +253,33 @@ paths:
             $ref: '#/definitions/ListProvidersResponse'
         400:
           description: No Provider found", or "Valid name not provided for query
-  
+
   /ListClinics:
     post:
       tags:
-      - ListClinics
+        - ListClinics
       summary: get the list of clinic from CDX
       operationId: listClinic
       description: THis provides the list of clinics on the CDX Infrastructure
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: header
-        name: location_id
-        type: string
-        description: This is the clinic ID
-        required: true
-      - in: header
-        name: content_type
-        type: string
-        description: application/json
-        required: true
-      - in: body
-        name: searchClinicCriteria
-        description: This is parameters needed for the request
-        required: true
-        schema:
-          $ref: '#/definitions/SearchClinicCriteria'
+        - in: header
+          name: location_id
+          type: string
+          description: This is the clinic ID
+          required: true
+        - in: header
+          name: content_type
+          type: string
+          description: application/json
+          required: true
+        - in: body
+          name: searchClinicCriteria
+          description: This is parameters needed for the request
+          required: true
+          schema:
+            $ref: '#/definitions/SearchClinicCriteria'
       responses:
         200:
           description: Successful Operation
@@ -294,7 +294,7 @@ definitions:
   # OBIB ClinicalDocument definitions
   ClinicalDocument:
     properties:
-      documentId: 
+      documentId:
         type: string
         example: ""
       template:
@@ -348,7 +348,7 @@ definitions:
         example: ""
       templateName:
         type: string
-        example: ""  
+        example: ""
 
   Loinc:
     type: object
@@ -358,7 +358,7 @@ definitions:
         example: ""
       displayName:
         type: string
-        example: ""  
+        example: ""
 
   Order:
     type: object
@@ -412,8 +412,8 @@ definitions:
         items:
           $ref: '#/definitions/Telecom'
       name:
-          $ref: "#/definitions/Name"
-  
+        $ref: "#/definitions/Name"
+
   ReceiveOrganization:
     type: object
     properties:
@@ -455,7 +455,7 @@ definitions:
         example: "H"
     xml:
       name: Address
-  
+
   Name:
     type: object
     properties:
@@ -502,7 +502,7 @@ definitions:
         example: "250-508-93331"
     xml:
       name: PatientName
-  
+
   PatientDetail:
     type: object
     properties:
@@ -543,11 +543,11 @@ definitions:
         items:
           $ref: '#/definitions/Telecom'
       name:
-          $ref: "#/definitions/Name"
-  
+        $ref: "#/definitions/Name"
+
   ReceipentDetail:
-     type: object
-     properties:
+    type: object
+    properties:
       id:
         type: "array"
         items:
@@ -561,7 +561,7 @@ definitions:
         items:
           $ref: '#/definitions/Telecom'
       name:
-          $ref: "#/definitions/Name"
+        $ref: "#/definitions/Name"
       typeCoce:
         type: string
         example: ""
@@ -584,13 +584,13 @@ definitions:
         items:
           $ref: '#/definitions/Telecom'
       name:
-          $ref: "#/definitions/Name"
+        $ref: "#/definitions/Name"
       software:
-          $ref: '#/definitions/Software'
+        $ref: '#/definitions/Software'
       time: # time the document was authored
         type: string
         example: "2019-02-08T19:00:31:00+00:00"
-  
+
   Software:
     type: object
     properties:
@@ -627,14 +627,14 @@ definitions:
         items:
           $ref: '#/definitions/Telecom'
       name:
-          $ref: "#/definitions/Name"
+        $ref: "#/definitions/Name"
       typeCode:
         type: string
         example: ""
       functionCode:
         type: string
         example: ""
-        
+
   SubmitDocumentResponse:
     allOf:
       - $ref: '#/definitions/OBIBResponse'
@@ -660,7 +660,14 @@ definitions:
         $ref: '#/definitions/DateRange'
       eventTime:
         $ref: '#/definitions/DateRange'
-  
+
+  # simplification of 'SearchDocumentCriteria' to GetDocument method
+  GetDocumentCriteria:
+    type: object
+    properties:
+      documentId:
+        type: string
+
   DateRange:
     type: object
     properties:
@@ -678,7 +685,7 @@ definitions:
         properties:
           documents:
             type: array
-            items: 
+            items:
               $ref: '#/definitions/ClinicalDocument'
 
   # ListProviders definitions
@@ -691,7 +698,7 @@ definitions:
         type: string
       providerName:
         type: string
-  
+
   ListProvidersResponse:
     allOf:
       - $ref: '#/definitions/OBIBResponse'
@@ -706,14 +713,14 @@ definitions:
     type: "object"
     properties:
       status:
-        type: string 
-        example: "active" 
+        type: string
+        example: "active"
       ids:
         type: array
         items:
           $ref: "#/definitions/Id"
       name:
-         $ref: "#/definitions/Name"   
+        $ref: "#/definitions/Name"
       addresses:
         type: array
         items:
@@ -725,7 +732,7 @@ definitions:
       clinics:
         type: array
         items:
-          $ref: "#/definitions/Clinic"   
+          $ref: "#/definitions/Clinic"
 
   # ListClinics definitions
   SearchClinicCriteria:
@@ -737,7 +744,7 @@ definitions:
         type: string
       clinicAddress:
         type: string
-  
+
   ListClinicsResponse:
     allOf:
       - $ref: '#/definitions/OBIBResponse'
@@ -752,16 +759,16 @@ definitions:
     type: "object"
     properties:
       status:
-        type: string 
+        type: string
       ids:
         type: array
         items:
           $ref: "#/definitions/Id"
       name:
-        type: string 
-        example: "" 
-      address: 
-        $ref: "#/definitions/Address" 
+        type: string
+        example: ""
+      address:
+        $ref: "#/definitions/Address"
       providers:
         type: "array"
         items:
@@ -796,4 +803,3 @@ definitions:
         type: string
       status:
         type: string
-

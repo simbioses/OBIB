@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Load the settings
 . /vagrant/./mirth_connect.sh

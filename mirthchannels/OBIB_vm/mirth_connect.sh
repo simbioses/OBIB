@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Server Settings
 SERVER_IP='192.168.100.101'

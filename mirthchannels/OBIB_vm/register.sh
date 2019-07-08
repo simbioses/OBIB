@@ -14,9 +14,9 @@ checkClinic() {
     clinic=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT clinic_name \
         FROM clinic_credential WHERE clinic_id = $1;")
     if [[ -z $clinic ]]; then
-        echo "Clinic '$clinic' found in database!"
+        echo "Clinic '$clinic' found!"
     else
-        echo "Clinic not found in database!"
+        echo "Clinic not found!"
     fi
 
     # check if certificate exists
@@ -29,8 +29,17 @@ checkClinic() {
 
 # save a clinic - params <id> <name> <username> <password> <cert_path> <cert_pass>
 saveClinic() {
+    # check if clinic already exist
+    clinic=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT clinic_name \
+        FROM clinic_credential WHERE clinic_id = $1;")
+
+    if [[ ! -z $clinic ]]; then
+        echo "Clinic already exists!"
+        exit 1
+    fi
+
     # copy the clinic certificate
-    sudo cp -R $5 $CERTS_PATH/
+    sudo cp $5 $CERTS_PATH/
 
     # get only the certificate file name
     cert=$(basename -- "$5")
@@ -108,7 +117,6 @@ unregisterClinic() {
 }
 
 # main
-
 usage() {
     echo "Usage: ./register.sh OPTION"
     echo "Options:"

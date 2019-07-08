@@ -7,8 +7,9 @@
 ## Step 3: Adjust the Vagrantfile (optional)
 
 Change the configurations as needed, e.g. VM IP address:
+
 ```bash
-config.vm.network "private_network", ip: "192.168.56.105"
+config.vm.network "private_network", ip: "192.168.100.101"
 ```
 
 ## Step 4: Adjust the mirth_connect.sh script (optional)
@@ -17,7 +18,7 @@ If the VM IP address was ajusted in the Vagrantfile on Step 3, it is necessary t
 
 ```bash
 ## Server Settings
-SERVER_IP='192.168.56.105'
+SERVER_IP='192.168.100.101'
 ```
 
 Change other settings as needed. Such as database credentials, MirthConnect root path, timezone, and so on.
@@ -35,7 +36,7 @@ Then, restart the VM to ensure that all services are stating on boot time.
 $ vagrant reload
 ```
 
-## Step 6: Verify the Instalation
+## Step 6: Verify the Instalation (optional)
 
 From the host machine, login into the VM 
 

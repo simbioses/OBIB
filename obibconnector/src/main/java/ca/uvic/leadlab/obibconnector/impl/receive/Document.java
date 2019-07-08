@@ -3,6 +3,7 @@ package ca.uvic.leadlab.obibconnector.impl.receive;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentStatus;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.ParticipantFunctionCode;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
+import ca.uvic.leadlab.obibconnector.facades.receive.IDistributionStatus;
 import ca.uvic.leadlab.obibconnector.utils.AttachmentUtils;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.DocumentType;
@@ -58,6 +59,8 @@ public class Document implements IDocument {
     private IProvider familyProvider;
 
     private List<IAttachment> attachments = new ArrayList<>();
+
+    private List<IDistributionStatus> distributionStatus = new ArrayList<>();
 
     private String contents;
 
@@ -159,6 +162,12 @@ public class Document implements IDocument {
                 }
                 attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),
                         DatatypeConverter.parseBase64Binary(attachment.getContent())));
+            }
+        }
+
+        if (document.getDistributionStatuses() != null) {
+            for (ca.uvic.leadlab.obibconnector.models.document.DistributionStatus status : document.getDistributionStatuses()) {
+                distributionStatus.add(new DistributionStatus(status));
             }
         }
 
@@ -328,5 +337,10 @@ public class Document implements IDocument {
     @Override
     public List<IAttachment> getAttachments() {
         return attachments;
+    }
+
+    @Override
+    public List<IDistributionStatus> getDistributionStatus() {
+        return distributionStatus;
     }
 }

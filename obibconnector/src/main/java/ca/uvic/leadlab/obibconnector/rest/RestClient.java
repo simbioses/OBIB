@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 public class RestClient implements IOscarInformation {
 
     private static final String SUBMIT_CDA_PATH = OBIBConnectorHelper.getProperty("obib.submitcda.path");
+    private static final String DISTRIBUTION_STATUS_PATH = OBIBConnectorHelper.getProperty("obib.distributionstatus.path");
     private static final String LIST_DOCUMENTS_PATH = OBIBConnectorHelper.getProperty("obib.listdocuments.path");
     private static final String SEARCH_DOCUMENT_PATH = OBIBConnectorHelper.getProperty("obib.searchdocument.path");
     private static final String GET_DOCUMENT_PATH = OBIBConnectorHelper.getProperty("obib.getdocument.path");
@@ -58,7 +59,8 @@ public class RestClient implements IOscarInformation {
      * @param <R>
      * @return
      */
-    private <T, R extends OBIBResponse> R doRequest(String path, T requestEntity, Class<R> responseEntity) throws OBIBRequestException {
+    private <T, R extends OBIBResponse> R doRequest(String path, T requestEntity,
+                                                    Class<R> responseEntity) throws OBIBRequestException {
         try {
             Response response = client.target(getServicesURL())
                     .path(path)
@@ -66,19 +68,30 @@ public class RestClient implements IOscarInformation {
                     .header("locationId", locationId)
                     .post(Entity.json(requestEntity), Response.class);
 
-            if (response.getStatus() != 200) {
-                // TODO throw exception?
+            if (!Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+                throw new OBIBRequestException(String.format("Response Error: %d - %s",
+                        response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase()));
             }
 
             return response.readEntity(responseEntity);
         } catch (Exception e) {
-            throw new OBIBRequestException("Error submitting request to OBIB Server.", e);
+            if (e instanceof OBIBRequestException) {
+                throw e;
+            }
+            String[] msgArray = e.getMessage().split(":");
+            throw new OBIBRequestException(String.format("Connection error: %s",
+                    msgArray.length > 0 ? msgArray[msgArray.length - 1] : "Unknown"), e);
         }
     }
 
     @Override
     public SubmitDocumentResponse submitCDA(ClinicalDocument clinicalDocument) throws OBIBRequestException {
         return doRequest(SUBMIT_CDA_PATH, clinicalDocument, SubmitDocumentResponse.class);
+    }
+
+    @Override
+    public ListDocumentsResponse distributionStatus(SearchDocumentCriteria searchCriteria) throws OBIBRequestException {
+        return doRequest(DISTRIBUTION_STATUS_PATH, searchCriteria, ListDocumentsResponse.class);
     }
 
     @Override

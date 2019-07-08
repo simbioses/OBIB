@@ -1,4 +1,4 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.exception;
 
 public class MessageBuilderException extends Exception {
 

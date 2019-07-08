@@ -19,14 +19,12 @@ public class ListDocumentsResponse extends OBIBResponse {
     }
 
     public String getDocumentId() throws OBIBRequestException {
-        return getDocument().getDocumentId();
+        ClinicalDocument document = getDocument();
+        return document != null ? document.getDocumentId() : "";
     }
 
     public ClinicalDocument getDocument() throws OBIBRequestException {
-        if (documents.isEmpty()) {
-            throw new OBIBRequestException("No documents found.");
-        }
-        return documents.get(0);
+        return !documents.isEmpty() ? documents.get(0) : null;
     }
 
     public List<ClinicalDocument> getDocuments() {

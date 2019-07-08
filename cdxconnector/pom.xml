@@ -97,7 +97,7 @@
                 <plugin>
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-codegen-plugin</artifactId>
-                    <version>3.2.7</version>
+                    <version>3.3.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -263,11 +263,15 @@
                                     <wsdlLocation>${server.url}/CDASubmitService/CDASubmit.svc?WSDL</wsdlLocation>
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <!--extraarg>cdasubmit</extraarg-->
+                                        <extraarg>cdasubmitrequest</extraarg> <!-- HACK: Joined submit and request classes to be able to set content in ED -->
                                     </extraargs>
                                     <bindingFiles>
-                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/CDASubmit_jaxbBindings.xjb</bindingFile>
-                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/wsdl/CDASubmit_jaxbBindings.xjb</bindingFile>
                                     </bindingFiles>
                                 </wsdlOption>
                             </wsdlOptions>
@@ -286,6 +290,10 @@
                                     <wsdlLocation>${server.url}/CDArequestService/CDARequest.svc?WSDL</wsdlLocation>
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <!--extraarg>cdarequest</extraarg-->
+                                        <extraarg>cdasubmitrequest</extraarg> <!-- HACK: Joined submit and request classes to be able to set content in ED -->
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/CDARequest_jaxbBindings.xjb</bindingFile>
@@ -296,7 +304,7 @@
                             </wsdlOptions>
                         </configuration>
                     </execution>
-                    <!--execution>
+                    <execution>
                         <id>generate-DistributionStatus-classes</id>
                         <phase>generate-sources</phase>
                         <goals>
@@ -310,6 +318,8 @@
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
                                         <extraarg>-verbose</extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>distributionstatus</extraarg>
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxbBindings.xjb</bindingFile>
@@ -318,7 +328,7 @@
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
-                    </execution-->
+                    </execution>
                     <execution>
                         <id>generate-providerQuery-classes</id>
                         <phase>generate-sources</phase>
@@ -333,6 +343,8 @@
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
                                         <extraarg>-verbose</extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>registrysearch</extraarg>
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/ProviderQuery_jaxbBindings.xjb</bindingFile>
@@ -357,6 +369,8 @@
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
                                         <extraarg>-verbose</extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>registrysearch</extraarg>
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/ClinicQuery_jaxbBindings.xjb</bindingFile>

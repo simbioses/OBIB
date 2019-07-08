@@ -34,6 +34,7 @@ public class ClinicalDocument {
     private List<Attachment> attachments = new ArrayList<>();
     private List<String> receivers = new ArrayList<>();
     private String cdaXML;
+    private List<DistributionStatus> distributionStatuses = new ArrayList<>();
 
     public String getDocumentId() {
         return documentId;
@@ -281,5 +282,13 @@ public class ClinicalDocument {
 
     public void setCdaXML(String cdaXML) {
         this.cdaXML = cdaXML;
+    }
+
+    public List<DistributionStatus> getDistributionStatuses() {
+        return distributionStatuses;
+    }
+
+    public void setDistributionStatuses(List<DistributionStatus> distributionStatuses) {
+        this.distributionStatuses = distributionStatuses;
     }
 }

@@ -1,12 +1,15 @@
-package ca.uvic.leadlab.cdxconnector.messages;
+package ca.uvic.leadlab.cdxconnector.messages.request;
 
-import org.hl7.v3.*;
+import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
+import cdasubmitrequest.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GetDocumentBuilder extends MessageBuilder {
+public class GetDocumentBuilder {
+
+    private RequestMessageObjectFactory factory = new RequestMessageObjectFactory();
 
     private final String messageId;
     private List<MCCIMT000100UV01Receiver> receivers;
@@ -15,6 +18,27 @@ public class GetDocumentBuilder extends MessageBuilder {
 
     public GetDocumentBuilder(String messageId) {
         this.messageId = messageId;
+    }
+
+    private MCCIMT000100UV01Device createDevice(String agentOrganizationIdExtension) {
+        MCCIMT000100UV01Device device = factory.createMCCIMT000100UV01Device();
+        device.setClassCode(EntityClassDevice.DEV);
+        device.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        device.getId().add(factory.createII(NullFlavor.NA));
+
+        MCCIMT000100UV01Agent agent = factory.createMCCIMT000100UV01Agent();
+        agent.setClassCode(RoleClassAgent.AGNT);
+
+        MCCIMT000100UV01Organization representedOrganization = factory.createMCCIMT000100UV01Organization();
+        representedOrganization.setClassCode(EntityClassOrganization.ORG);
+        representedOrganization.setDeterminerCode(EntityDeterminerSpecific.INSTANCE);
+        representedOrganization.getId().add(factory.createII("2.16.840.1.113883.3.277.100.2",
+                "CDX Clinic ID",
+                agentOrganizationIdExtension));
+
+        agent.setRepresentedOrganization(representedOrganization);
+        device.setAsAgent(agent);
+        return device;
     }
 
     public GetDocumentBuilder receiver(String receiverAgentOrganizationIdExtension) {
@@ -43,9 +67,9 @@ public class GetDocumentBuilder extends MessageBuilder {
         request.setCreationTime(factory.createTS(new Date())); // CONF-CDXMCQ018, CONF-CDXMCQ019
         request.setVersionCode(factory.createCS("Ballot2009May")); // CONF-CDXMCQ020, CONF-CDXMCQ021
         request.setInteractionId(factory.createII("2.16.840.1.113883.1.6", "RCMR_IN000031UV01")); // CONF-CDXMCQ022, CONF-CDXMCQ023, CONF-CDXMCQ024
-        request.setProcessingCode(factory.createCS(ProcessingID.P.value())); // CONF-CDXMCQ025, CONF-CDXMCQ026
-        request.setProcessingModeCode(factory.createCS(ProcessingMode.T.value())); // CONF-CDXMCQ027, CONF-CDXMCQ028
-        request.setAcceptAckCode(factory.createCS(AcknowledgementCondition.NE.value())); // CONF-CDXMCQ029, CONF-CDXMCQ030
+        request.setProcessingCode(factory.createCS("P")); // CONF-CDXMCQ025, CONF-CDXMCQ026
+        request.setProcessingModeCode(factory.createCS("T")); // CONF-CDXMCQ027, CONF-CDXMCQ028
+        request.setAcceptAckCode(factory.createCS("NE")); // CONF-CDXMCQ029, CONF-CDXMCQ030
         request.getReceiver().addAll(receivers); // CONF-CDXMCQ031
         request.setSender(sender); // CONF-CDXMCQ046
 

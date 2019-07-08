@@ -1,12 +1,10 @@
 /* OBIB_DB - database/schema */
--- drop schema if exists OBIB_DB;
 create schema OBIB_DB collate utf8_general_ci;
 
 use OBIB_DB;
 
 /* cdx_id - table */ 
-drop table if exists cdx_id;
-create table if not exists cdx_id
+create table cdx_id
 (
     id        int auto_increment
         primary key,
@@ -17,8 +15,7 @@ create table if not exists cdx_id
 );
 
 /* cdx_loinc_code - table */ 
-drop table if exists cdx_loinc_code;
-create table if not exists cdx_loinc_code
+create table cdx_loinc_code
 (
     id            int auto_increment
         primary key,
@@ -29,8 +26,7 @@ create table if not exists cdx_loinc_code
 );
 
 /* clinic_credential - table */ 
-drop table if exists clinic_credential;
-create table if not exists clinic_credential
+create table clinic_credential
 (
     clinic_id            varchar(36)  not null
         primary key,
@@ -42,8 +38,7 @@ create table if not exists clinic_credential
 );
 
 /* document - table */ 
-drop table if exists document;
-create table if not exists document
+create table document
 (
     document_id      varchar(36) not null,
     document_date    datetime    not null,
@@ -56,8 +51,7 @@ create table if not exists document
 );
 
 /* document_attachment - table */ 
-drop table if exists document_attachment;
-create table if not exists document_attachment
+create table document_attachment
 (
     document_id    varchar(36) not null,
     media_type     varchar(50) not null,
@@ -69,12 +63,11 @@ create table if not exists document_attachment
         foreign key (document_id) references document (document_id)
 );
 
-create index if not exists document_attachment_document_id_media_type_reference_name_index
+create index document_attachment_document_id_media_type_reference_name_index
     on document_attachment (document_id, media_type, reference_name);
 
 /* document_response - table */ 
-drop table if exists document_response;
-create table if not exists document_response
+create table document_response
 (
     response_id      varchar(36) not null,
     response_date    datetime    not null,
@@ -89,8 +82,7 @@ create table if not exists document_response
 );
 
 /* error_message - table */
-drop table if exists error_message;
-create table if not exists error_message
+create table error_message
 (
 	id int auto_increment
 		primary key,

@@ -1,6 +1,6 @@
-# CDXConnector Java App
+# CDX Connector (Java Lib)
 
-Library responsible for connects to the CDX Web Services.
+Library responsible for connecting to CDX Web Services.
 
 ### Maven execution details:
 

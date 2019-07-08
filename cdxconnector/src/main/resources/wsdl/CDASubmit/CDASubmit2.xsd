@@ -1,6 +1,6 @@
 <xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
            xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--xs:include schemaLocation="CDASubmit5.xsd"/--> <!-- NOTE: Commented to generate the Java classes correctly -->
+    <xs:include schemaLocation="CDASubmit5.xsd"/>
     <xs:complexType name="PIVL_TS">
         <xs:annotation>
             <xs:documentation>

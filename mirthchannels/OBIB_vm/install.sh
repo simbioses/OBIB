@@ -7,20 +7,23 @@
 sudo timedatectl set-timezone $TIMEZONE
 
 ## Update the OS
-sudo apt-get update
-#sudo apt-get upgrade
+sudo apt update
+#sudo apt -y upgrade
 
 ## Install Java 8
-sudo apt-get -y install openjdk-8-jdk
+sudo apt -y install openjdk-8-jdk
 
 ## Install MariaDB
 echo 'mysql-server mysql-server/root_password password' $DB_ROOT_PASS | sudo debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password' $DB_ROOT_PASS | sudo debconf-set-selections
-sudo apt-get -y install mariadb-server
+sudo apt -y install mariadb-server
 mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
+## Install nginx
+sudo apt -y install nginx
+
 ## Install xmllint (used by the update.sh script)
-sudo apt-get -y install libxml2-utils
+sudo apt -y install libxml2-utils
 
 ## Execute database creation script as 'root'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/mirth_create.sql
@@ -62,6 +65,9 @@ sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i /etc/systemd/system/mirth.ser
 ## Configure Mirth Connect to start on boot
 sudo chmod +x /etc/systemd/system/mirth.service
 sudo systemctl enable mirth
+
+## Secure certs folder
+sudo chmod 700 /opt/MirthConnect/certs/
 
 ## Clean temporary files
 #sudo rm mirthconnect-3.7.1.b243-unix.tar.gz

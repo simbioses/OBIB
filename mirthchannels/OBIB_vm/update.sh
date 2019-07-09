@@ -88,7 +88,7 @@ echo "<set>$channel_group</set>" > "OBIB_channel_group_set.xml"
 execBulkUpdate "/channelgroups/_bulkUpdate?override=true" "channelGroups" "OBIB_channel_group_set.xml" "group_update.out"
 # 3 - extract <channel/> from <channelGroup/>
 extractChannels "OBIB_channel_group_set.xml"
-# 4 - update all channels
+# 4 - update and enable all channels
 for file in channels/*.xml; do
     printf "\nUpdating Channel: $(basename "$file" .xml)\n"
     channel_id=$(xmllint --xpath "//channel/id/text()" "$file")
@@ -102,7 +102,7 @@ printf '\nUpdating Code Templates Libraries\n'
 execUpdate "/codeTemplateLibraries?override=true" "$CONF_ROOT/obib/OBIB_code_templates_library.xml" "templates_update.out"
 # 2 - extract all <codeTemplate/> from <codeTemplateLibrary/>
 extractTemplates "$CONF_ROOT/obib/OBIB_code_templates_library.xml"
-# 3 - uldate all codeTemplates
+# 3 - update all codeTemplates
 for file in templates/*.xml; do
     printf "\nUpdating Template: $(basename "$file" .xml)\n"
     template_id=$(xmllint --xpath "//codeTemplate/id/text()" "$file")

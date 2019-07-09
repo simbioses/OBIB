@@ -6,24 +6,22 @@
 DATABASE='OBIB_DB'
 CERTS_PATH=$MIRTH_ROOT'/certs'
 
-# check if clinic is registered - params <id> <cert_path>
+# check if clinic is registered - params <id>
 checkClinic() {
     echo "Verifying clinic registration..."
     
     # check if clinic is into database
-    clinic=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT clinic_name \
-        FROM clinic_credential WHERE clinic_id = $1;")
-    if [[ -z $clinic ]]; then
-        echo "Clinic '$clinic' found!"
+    cert=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT certificate_file \
+        FROM clinic_credential WHERE clinic_id = '$1';")
+    
+    if [[ -z $cert ]]; then
+        echo "Clinic not registered."
     else
-        echo "Clinic not found!"
-    fi
-
-    # check if certificate exists
-    if [[ -f $2 ]]; then
-        echo "Certificate file not found!"
-    else
-        echo "Certificate file found!"
+        echo "Clinic registered."
+        
+        # check if certificate exists
+        cert_path=$CERTS_PATH/$cert
+        sudo [ -f $cert_path ] &&  echo "Certificate file found." || echo "Certificate file not found."
     fi
 }
 
@@ -31,10 +29,10 @@ checkClinic() {
 saveClinic() {
     # check if clinic already exist
     clinic=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT clinic_name \
-        FROM clinic_credential WHERE clinic_id = $1;")
+        FROM clinic_credential WHERE clinic_id = '$1';")
 
     if [[ ! -z $clinic ]]; then
-        echo "Clinic already exists!"
+        echo "Error: Clinic already exists!"
         exit 1
     fi
 
@@ -45,11 +43,12 @@ saveClinic() {
     cert=$(basename -- "$5")
     
     # insert the clinic info into database
-    mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "INSERT INTO \
-        clinic_credential (clinic_id, clinic_name, clinic_username, clinic_password, certificate_file, certificate_password) \
-        VALUES ($1, $2, $3, $4, $cert, $6);"
+    mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "INSERT INTO clinic_credential \
+        (clinic_id, clinic_name, clinic_username, clinic_password, certificate_file, certificate_password) \
+        VALUES ('$1', '$2', '$3', '$4', '$cert', '$6');"
 
     # validate
+    echo ""
     checkClinic $1 "$CERTS_PATH/$cert"
 }
 
@@ -57,10 +56,10 @@ saveClinic() {
 removeClinic() {
     # get clinic certificate
     cert=$(mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "SELECT certificate_file \
-        FROM clinic_credential WHERE clinic_id = $1 AND clinic_password = $2;")
+        FROM clinic_credential WHERE clinic_id = '$1' AND clinic_password = '$2';")
     
     if [[ -z $cert ]]; then
-        echo "Clinic not found!"
+        echo "Error: Clinic not found!"
         exit 1
     fi
     
@@ -68,10 +67,11 @@ removeClinic() {
     sudo rm "$CERTS_PATH/$cert" 2> /dev/null
     
     # delete clinic register in DB
-    mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "DELETE FROM certificate_file \
-        WHERE clinic_id = $1 AND clinic_password = $2;"
+    mysql --user=$DB_USERNAME --password=$DB_PASSWORD --database=$DATABASE -se "DELETE FROM clinic_credential \
+        WHERE clinic_id = '$1' AND clinic_password = '$2';"
 
     # validate
+    echo ""
     checkClinic $1 "$CERTS_PATH/$cert"
 }
 
@@ -90,7 +90,7 @@ registerClinic() {
         while true; do
             read -p 'Please, confirm the clinic information. "c" = confirm, "r" = redo, "q" = quit: ' opts
             case $opts in
-                [Cc]* ) saveClinic $id $name $username $password $cert_path $cert_pass; break 2;;
+                [Cc]* ) saveClinic "$id" "$name" "$username" "$password" "$cert_path" "$cert_pass"; break 2;;
                 [Rr]* ) break;;
                 [Qq]* ) echo "bye."; exit;;
                 * )     echo 'Please answer "c", "r" or "q": ';;
@@ -109,7 +109,7 @@ unregisterClinic() {
     while true; do
         read -p 'Are you sure you want to unregister this clinic? "y" or "n": ' yn
         case $yn in
-            [Yy]* ) removeClinic $id $pass; break;;
+            [Yy]* ) removeClinic "$id" "$pass"; break;;
             [Nn]* ) echo "bye."; exit;;
             * ) echo 'Please answer "y" or "n": ';;
         esac
@@ -122,6 +122,7 @@ usage() {
     echo "Options:"
     echo " -r | --register   : register a new clinic"
     echo " -u | --unregister : unregister an existent clinic"
+    echo " -c | --check      : check if a clinic is registered"
     echo " -h | --help       : this help information"
 }
 
@@ -133,6 +134,7 @@ fi
 case $1 in
     -r | --register )   registerClinic;;
     -u | --unregister ) unregisterClinic;;
+    -c | --ceck )       checkClinic "$2";;
     -h | --help )       usage;;
     * )                 usage;;
 esac

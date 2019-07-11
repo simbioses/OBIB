@@ -48,28 +48,24 @@ logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &qu
 
 /*********** Load CDX IDs from database ***********/
 try {
-	dbConn = getDBConnection();
-
 	var count = 0;
-	var result = dbConn.executeCachedQuery(&apos;SELECT * FROM cdx_id;&apos;);
+	var result = executeCachedQuery(&apos;SELECT * FROM cdx_id;&apos;);
 	while (result &amp;&amp; result.next()) {
 		globalMap.put(result.getString(&apos;code&apos;), result.getString(&apos;name&apos;));
 		count++;
 	}
-	result.close();
+	if (result != null) {
+		Packages.org.apache.commons.dbutils.DbUtils.closeQuietly(result);
+	}
 	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX Ids.&quot;);
-	
-	dbConn.close();
 } catch(err) {
 	logger.error(&apos;Global Scripts: Erro loading CDX Ids from database. &apos; + err);
 }
 
 /*********** Load CDX LOINC codes from database ***********/
 try {
-	dbConn = getDBConnection();
-
 	var count = 0;
-	var result = dbConn.executeCachedQuery(&apos;SELECT * FROM cdx_loinc_code;&apos;);
+	var result = executeCachedQuery(&apos;SELECT * FROM cdx_loinc_code;&apos;);
 	while (result &amp;&amp; result.next()) {
 		var loinc_code = {
 			&apos;loinc_code&apos;: result.getString(&apos;loinc_code&apos;),
@@ -80,10 +76,10 @@ try {
 		globalMap.put(result.getString(&apos;loinc_code&apos;), loinc_code);
 		count++;
 	}
-	result.close();
+	if (result != null) {
+		Packages.org.apache.commons.dbutils.DbUtils.closeQuietly(result);
+	}
 	logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + count + &quot;&apos; CDX LOINC Codes.&quot;);
-	
-	dbConn.close();
 } catch(err) {
 	logger.error(&apos;Global Scripts: Erro loading CDX LOINC Codes from database. &apos; + err);
 }

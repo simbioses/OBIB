@@ -10,7 +10,10 @@ ARGS2="--header Accept:application/xml"
 OUT_ARGS="--silent --location --write-out %{http_code}"
 AUTH="--insecure --user $ADMIN_USERNAME:$ADMIN_PASSWORD"
 
-# Create temporary dirs
+# (Re)Create temporary dirs
+rm -rf output
+rm -rf channels
+rm -rf templates
 mkdir -p output
 mkdir -p channels
 mkdir -p templates

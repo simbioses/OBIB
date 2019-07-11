@@ -15,6 +15,6 @@ CONF_ROOT='/vagrant/configs'
 ## Config timezone
 TIMEZONE='Canada/Pacific'
 
-## Administrator credentials (used by update.sh)
+## Mirth Connect Administrator credentials
 ADMIN_USERNAME='admin'
 ADMIN_PASSWORD='admin'

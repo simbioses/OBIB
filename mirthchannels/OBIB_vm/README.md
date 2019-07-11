@@ -59,15 +59,18 @@ $ ifconfig
 
 ## Step 7: Install OBIB on MirthConnect
 
-Execute the **updates** provision from host machine:
+Execute the **update** provision from host machine:
 
 ```bash
 $ vagrant provision --provision-with update
 ```
 
+*All operations should display **Response code: 2XX** in the console*. However if something goes wrong, 
+the operations returns are stored in the folder /home/vagrant/output of the vm.
+
 ## *Step 7: (Manual option) Install OBIB Global Scripts*
 
-Open browser on Mirthconnect admin web site: **http://192.168.56.105:8080** and Launch or Download the MirthConnect Administrator.
+Open browser on Mirthconnect admin web site: **http://192.168.100.101:8080** and Launch or Download the MirthConnect Administrator.
 
 *Link to download other Administrator Launcher options: https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads*
 
@@ -92,6 +95,10 @@ In MirthConnect Administrator:
 
 Execute the **update** provision from host machine:
 
-```
+```bash
 $ vagrant provision --provision-with update
 ```
+
+*All operations should display **Response code: 2XX** in the console*. However if something goes wrong, 
+the operations returns are stored in the folder /home/vagrant/output of the vm.
+ 

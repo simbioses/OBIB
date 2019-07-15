@@ -9,6 +9,7 @@ public class FacadesBaseTest {
     protected String obibUrl = "http://192.168.100.101:8081";
     protected String clinicIdA = "cdxpostprod-otca";
     protected String clinicIdC = "cdxpostprod-obctc";
+    protected String clinicIdT = "cdxpostprod-ctc";
 
     protected Config configClinicA = new Config() {
         @Override
@@ -31,6 +32,18 @@ public class FacadesBaseTest {
         @Override
         public String getClinicId() {
             return clinicIdC;
+        }
+    };
+
+    protected Config configClinicT = new Config() {
+        @Override
+        public String getUrl() {
+            return obibUrl;
+        }
+
+        @Override
+        public String getClinicId() {
+            return clinicIdT;
         }
     };
 

@@ -54,7 +54,8 @@ sudo mv 'Mirth Connect' $MIRTH_ROOT
 sudo cp -R $CONF_ROOT/appdata/ $MIRTH_ROOT/
 sudo cp -R $CONF_ROOT/certs/ $MIRTH_ROOT/
 sudo cp $CONF_ROOT/conf/* $MIRTH_ROOT/conf/
-sudo cp $CONF_ROOT/mirth.service /etc/systemd/system/mirth.service
+sudo cp $CONF_ROOT/mirth.service /etc/systemd/system/
+sudo cp $CONF_ROOT/mariadb-java-client-2.4.2.jar $MIRTH_ROOT/server-lib/database/
 
 ## Setup the configurations files
 sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/appdata/configuration.properties

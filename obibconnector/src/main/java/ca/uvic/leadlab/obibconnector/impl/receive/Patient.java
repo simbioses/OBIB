@@ -48,7 +48,7 @@ public class Patient implements IPatient {
             prefix = name.getPrefix();
         }
 
-        birthdate = DateFormatter.parseDate(patient.getBirthday());
+        birthdate = DateFormatter.parseDateTime(patient.getBirthday());
         gender = Gender.fromLabel(patient.getGenderCode());
 
         if (!patient.getAddresses().isEmpty()) {

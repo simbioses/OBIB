@@ -12,16 +12,11 @@ public abstract class DateFormatter {
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
     private static final DateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
 
-    public static Date parseDate(String strDate) throws OBIBException {
-        try {
-            return DATE_FORMATTER.parse(strDate);
-        } catch (ParseException e) {
-            throw new OBIBException("Error parsing date.", e);
-        }
-    }
-
     public static Date parseDateTime(String strDateTime) throws OBIBException {
         try {
+            if (strDateTime.length() == 10) {
+                return DATE_FORMATTER.parse(strDateTime);
+            }
             return DATE_TIME_FORMATTER.parse(strDateTime);
         } catch (ParseException e) {
             throw new OBIBException("Error parsing date/time.", e);

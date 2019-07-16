@@ -2,6 +2,7 @@ package ca.uvic.leadlab.cdxconnector;
 
 import ca.uvic.leadlab.cdxconnector.messages.registry.ListProviderBuilder;
 import org.apache.commons.lang3.StringUtils;
+import registrysearch.PRPMAR300013UV;
 import registrysearch.PRPMIN306010UV;
 import registrysearch.PRPMIN306011UV;
 import registrysearch.ProviderQuery;
@@ -39,9 +40,8 @@ public class WSClientProvider extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nList Provider Request:\n", request);
 
-            ProviderQuery providerQuery = new ProviderQuery(new URL(baseUrl + "/RegistrySearch/ProviderQuery.svc?WSDL"));
-            providerQuery.setHandlerResolver(handlerResolver(providerQuery.getServiceName()));
-            PRPMIN306011UV response = providerQuery.getCustomBindingPRPMAR300013UV().prpmIN306010UV(request);
+            PRPMAR300013UV service = createProviderService();
+            PRPMIN306011UV response = service.prpmIN306010UV(request);
 
             WSUtil.logObject(LOGGER, "\nList Provider Response:\n", response);
 
@@ -49,6 +49,20 @@ public class WSClientProvider extends WSClient {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing providers", e);
             throw new ConnectorException("Error listing providers", e);
+        }
+    }
+
+    private PRPMAR300013UV createProviderService() throws ConnectorException {
+        try {
+            ProviderQuery providerQuery = new ProviderQuery(new URL(baseUrl + "/RegistrySearch/ProviderQuery.svc?WSDL"));
+            providerQuery.setHandlerResolver(handlerResolver(providerQuery.getServiceName()));
+
+            PRPMAR300013UV service = providerQuery.getCustomBindingPRPMAR300013UV();
+            setupTimeout(service);
+
+            return service;
+        } catch (MalformedURLException e) {
+            throw new ConnectorException("Error creating ProviderService", e);
         }
     }
 }

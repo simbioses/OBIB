@@ -3,6 +3,7 @@ package ca.uvic.leadlab.cdxconnector;
 import ca.uvic.leadlab.cdxconnector.messages.registry.ListClinicBuilder;
 import org.apache.commons.lang3.StringUtils;
 import registrysearch.ClinicQuery;
+import registrysearch.PRPMAR400013UV;
 import registrysearch.PRPMIN406010UV01;
 import registrysearch.PRPMIN406110UV01;
 
@@ -42,7 +43,9 @@ public class WSClientClinic extends WSClient {
 
             ClinicQuery clinicQuery = new ClinicQuery(new URL(baseUrl + "/RegistrySearch/ClinicQuery.svc?WSDL"));
             clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
-            PRPMIN406110UV01 response = clinicQuery.getCustomBindingPRPMAR400013UV().prpmIN406010UV01(request);
+
+            PRPMAR400013UV port = createClinicService();
+            PRPMIN406110UV01 response = port.prpmIN406010UV01(request);
 
             WSUtil.logObject(LOGGER, "\nList Clinics Response:\n", response);
 
@@ -50,6 +53,20 @@ public class WSClientClinic extends WSClient {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing clinics", e);
             throw new ConnectorException("Error listing clinics", e);
+        }
+    }
+
+    private PRPMAR400013UV createClinicService() throws ConnectorException {
+        try {
+            ClinicQuery clinicQuery = new ClinicQuery(new URL(baseUrl + "/RegistrySearch/ClinicQuery.svc?WSDL"));
+            clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
+
+            PRPMAR400013UV service = clinicQuery.getCustomBindingPRPMAR400013UV();
+            setupTimeout(service);
+
+            return service;
+        } catch (MalformedURLException e) {
+            throw new ConnectorException("Error creating ClinicService", e);
         }
     }
 }

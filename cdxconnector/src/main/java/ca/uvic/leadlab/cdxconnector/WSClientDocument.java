@@ -2,7 +2,6 @@ package ca.uvic.leadlab.cdxconnector;
 
 import ca.uvic.leadlab.cdxconnector.messages.distribution.DistributionStatusBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.distribution.DistributionStatusQueryParameterBuilder;
-import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
 import ca.uvic.leadlab.cdxconnector.messages.request.DocumentQueryParameterBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.request.GetDocumentBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.request.ListNewDocumentsBuilder;
@@ -44,8 +43,8 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nSubmit Document Request:\n", request);
 
-            BizTalkServiceInstance documentService = createCDASubmitService();
-            MCCIIN000002UV01 response = documentService.getCustomBindingITwoWayAsync().submitCDA(request);
+            CDASubmit documentService = createCDASubmitService();
+            MCCIIN000002UV01 response = documentService.submitCDA(request);
 
             WSUtil.logObject(LOGGER, "\nSubmit Document Response:\n", response);
 
@@ -56,11 +55,15 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    private BizTalkServiceInstance createCDASubmitService() throws ConnectorException {
+    private CDASubmit createCDASubmitService() throws ConnectorException {
         try {
             BizTalkServiceInstance submitService = new BizTalkServiceInstance(new URL(baseUrl + "/CDASubmitService/CDASubmit.svc?WSDL"));
             submitService.setHandlerResolver(handlerResolver(submitService.getServiceName()));
-            return submitService;
+
+            CDASubmit service = submitService.getCustomBindingITwoWayAsync();
+            setupTimeout(service);
+
+            return service;
         } catch (MalformedURLException e) {
             throw new ConnectorException("Error creating CDASubmitService", e);
         }
@@ -75,8 +78,8 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nList New Documents Request:\n", request);
 
-            RCMRAR000003UV01_Service documentService = createCDARequestService();
-            RCMRIN000030UV01 response = documentService.getCDARequestEndpoint().mcciIN100001UV01(request);
+            RCMRAR000003UV01 documentService = createCDARequestService();
+            RCMRIN000030UV01 response = documentService.mcciIN100001UV01(request);
 
             WSUtil.logObject(LOGGER, "\nList New Documents Response:\n", response);
 
@@ -102,8 +105,8 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
 
-            RCMRAR000003UV01_Service documentService = createCDARequestService();
-            RCMRIN000030UV01 response = documentService.getCDARequestEndpoint().rcmrIN000029UV01(request);
+            RCMRAR000003UV01 documentService = createCDARequestService();
+            RCMRIN000030UV01 response = documentService.rcmrIN000029UV01(request);
 
             WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
 
@@ -126,8 +129,8 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nGet Document Request:\n", request);
 
-            RCMRAR000003UV01_Service documentService = createCDARequestService();
-            RCMRIN000032UV01 response = documentService.getCDARequestEndpoint().rcmrIN000031UV01(request);
+            RCMRAR000003UV01 documentService = createCDARequestService();
+            RCMRIN000032UV01 response = documentService.rcmrIN000031UV01(request);
 
             WSUtil.logObject(LOGGER, "\nGet Document Response:\n", response);
 
@@ -138,12 +141,16 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    private RCMRAR000003UV01_Service createCDARequestService() throws ConnectorException {
+    private RCMRAR000003UV01 createCDARequestService() throws ConnectorException {
         try {
             RCMRAR000003UV01_Service requestService = new RCMRAR000003UV01_Service(new URL(baseUrl
                     + "/CDArequestService/CDARequest.svc?WSDL"));
             requestService.setHandlerResolver(handlerResolver(requestService.getServiceName()));
-            return requestService;
+
+            RCMRAR000003UV01 service = requestService.getCDARequestEndpoint();
+            setupTimeout(service);
+
+            return service;
         } catch (MalformedURLException e) {
             throw new ConnectorException("Error creating CDARequestService", e);
         }
@@ -164,8 +171,8 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
 
-            distributionstatus.RCMRAR000003UV01_Service documentService = createDistributionStatusService();
-            distributionstatus.RCMRIN000030UV01 response = documentService.getDistributionStatusEndpoint().getStatus(request);
+            distributionstatus.RCMRAR000003UV01 documentService = createDistributionStatusService();
+            distributionstatus.RCMRIN000030UV01 response = documentService.getStatus(request);
 
             WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
 
@@ -176,12 +183,16 @@ public class WSClientDocument extends WSClient {
         }
     }
 
-    private distributionstatus.RCMRAR000003UV01_Service createDistributionStatusService() throws ConnectorException {
+    private distributionstatus.RCMRAR000003UV01 createDistributionStatusService() throws ConnectorException {
         try {
             distributionstatus.RCMRAR000003UV01_Service requestService = new distributionstatus
                     .RCMRAR000003UV01_Service(new URL(baseUrl + "/DistributionStatusService/DistributionStatus.svc?WSDL"));
             requestService.setHandlerResolver(handlerResolver(requestService.getServiceName()));
-            return requestService;
+
+            distributionstatus.RCMRAR000003UV01 service = requestService.getDistributionStatusEndpoint();
+            setupTimeout(service);
+
+            return service;
         } catch (MalformedURLException e) {
             throw new ConnectorException("Error creating CDARequestService", e);
         }

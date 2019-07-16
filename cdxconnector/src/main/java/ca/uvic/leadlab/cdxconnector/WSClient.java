@@ -1,9 +1,12 @@
 package ca.uvic.leadlab.cdxconnector;
 
+import com.sun.xml.internal.ws.client.BindingProviderProperties;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
@@ -13,6 +16,7 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,5 +82,14 @@ public abstract class WSClient {
                 return handlerChain;
             }
         };
+    }
+
+    void setupTimeout(Object service) {
+        Map<String, Object> requestCtx = ((BindingProvider) service).getRequestContext();
+
+        requestCtx.put(BindingProviderProperties.CONNECT_TIMEOUT,
+                Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout")));
+        requestCtx.put(BindingProviderProperties.REQUEST_TIMEOUT,
+                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout")));
     }
 }

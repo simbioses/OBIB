@@ -1,7 +1,5 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import com.sun.xml.internal.ws.client.BindingProviderProperties;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -87,9 +85,9 @@ public abstract class WSClient {
     void setupTimeout(Object service) {
         Map<String, Object> requestCtx = ((BindingProvider) service).getRequestContext();
 
-        requestCtx.put(BindingProviderProperties.CONNECT_TIMEOUT,
+        requestCtx.put("com.sun.xml.internal.ws.connect.timeout",
                 Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout")));
-        requestCtx.put(BindingProviderProperties.REQUEST_TIMEOUT,
+        requestCtx.put("com.sun.xml.internal.ws.request.timeout",
                 Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout")));
     }
 }

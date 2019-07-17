@@ -69,11 +69,12 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveAllDocuments() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicA);
-        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
-        ISupport support = new Support(configClinicA);
+        Config configClinic = configClinicT;
+        ISearchDoc searchDoc = new SearchDoc(configClinic);
+        IReceiveDoc receiveDoc = new ReceiveDoc(configClinic);
+        ISupport support = new Support(configClinic);
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinicA.getClinicId());
+        List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinic.getClinicId());
 
         Assert.assertNotNull(documents);
         System.out.println("Total documents: " + documents.size());
@@ -82,10 +83,11 @@ public class ReceiveDocTest extends FacadesBaseTest {
                 IDocument document = receiveDoc.retrieveDocument(doc.getDocumentID());
 
                 Assert.assertNotNull(document);
-                System.out.println("Retrieved Document Id: " + document.getDocumentID());
+                System.out.println("Retrieved Document: " + doc.getDocumentID());
+                System.out.println(mapper.writeValueAsString(document));
             } catch (Exception e) {
-                System.out.println("Error retrieving Document Id: " + doc.getDocumentID());
-                support.notifyError("Error retrieving Document Id: " + doc.getDocumentID(), e.getMessage());
+                System.out.println("Error retrieving Document: " + doc.getDocumentID());
+                support.notifyError("Error retrieving Document: " + doc.getDocumentID(), e.getMessage());
             }
         }
     }

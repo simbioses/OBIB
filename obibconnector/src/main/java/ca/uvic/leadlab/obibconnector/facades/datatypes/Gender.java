@@ -2,7 +2,8 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum Gender {
     MALE("M"),
-    FEMALE("F");
+    FEMALE("F"),
+    UNDIFFERENTIATED("U");
 
     public final String label;
 
@@ -16,6 +17,6 @@ public enum Gender {
                 return type;
             }
         }
-        throw new IllegalArgumentException("No Gender enum with label = " + label);
+        return UNDIFFERENTIATED;
     }
 }

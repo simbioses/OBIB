@@ -29,9 +29,13 @@ public abstract class OBIBConnectorHelper {
 
     private static String getIdByType(List<Id> ids, String type) {
         if (ids != null && type != null) {
-            for (Id id : ids) {
-                if (type.equalsIgnoreCase(id.getType())) {
-                    return id.getCode();
+            String[] types = type.split(";");
+            for (String tp : types) {
+                for (Id id : ids) {
+                    if (tp.equalsIgnoreCase(id.getType())
+                            && id.getCode() != null && !id.getCode().isEmpty()) {
+                        return id.getCode();
+                    }
                 }
             }
         }
@@ -43,7 +47,11 @@ public abstract class OBIBConnectorHelper {
     }
 
     public static String getDefaultProviderId(List<Id> providerIds) {
-        return getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPE);
+        String id = getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPE);
+        if (id == null || id.isEmpty()) {
+
+        }
+        return id;
     }
 
     public static String getDefaultPatientId(List<Id> patientIds) {

@@ -1,9 +1,15 @@
 package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum TelcoType {
+    DIRECT("DIR"),
+    EMERGENCY("EC"),
     HOME("H"),
-    WORK("W"),
-    MOBILE("M");
+    VACATION("HV"),
+    MOBILE("MC"),
+    PAGER("PG"),
+    TEMPORARY("TMP"),
+    WORK("WP"),
+    CONFIDENTIAL("CONF");
 
     public final String label;
 

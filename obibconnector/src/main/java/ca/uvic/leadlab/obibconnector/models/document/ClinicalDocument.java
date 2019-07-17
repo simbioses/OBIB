@@ -215,6 +215,9 @@ public class ClinicalDocument {
             } else {
                 Date lastTime = DateFormatter.parseDateTime(last.getEffectiveTime());
                 Date eventTime = DateFormatter.parseDateTime(serviceEvent.getEffectiveTime());
+                if (eventTime.equals(lastTime) && serviceEvent.haveStatus()) {
+                    last = serviceEvent;
+                }
                 if (eventTime.after(lastTime)) {
                     last = serviceEvent; // Get the last "Real ServiceEvent"
                 }

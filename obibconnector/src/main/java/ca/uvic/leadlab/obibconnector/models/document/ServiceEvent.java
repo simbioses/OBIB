@@ -25,6 +25,10 @@ public class ServiceEvent {
         this.effectiveTime = effectiveTime;
     }
 
+    public boolean haveStatus() {
+        return statusCode != null && !statusCode.isEmpty();
+    }
+
     public String getStatusCode() {
         return statusCode;
     }

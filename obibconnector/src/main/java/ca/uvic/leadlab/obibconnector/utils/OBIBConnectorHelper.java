@@ -39,7 +39,7 @@ public abstract class OBIBConnectorHelper {
                 }
             }
         }
-        return ids != null && ids.size() > 0 ? ids.get(0).getCode() :  ""; // TODO Return the first ID if there is no default?
+        return ""; // If not found, return empty string
     }
 
     public static String getDefaultClinicId(List<Id> clinicIds) {
@@ -47,11 +47,7 @@ public abstract class OBIBConnectorHelper {
     }
 
     public static String getDefaultProviderId(List<Id> providerIds) {
-        String id = getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPE);
-        if (id == null || id.isEmpty()) {
-
-        }
-        return id;
+        return getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPE);
     }
 
     public static String getDefaultPatientId(List<Id> patientIds) {

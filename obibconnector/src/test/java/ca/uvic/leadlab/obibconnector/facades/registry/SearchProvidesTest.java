@@ -41,13 +41,13 @@ public class SearchProvidesTest extends FacadesBaseTest {
         System.out.println(mapper.writeValueAsString(providers));
     }
 
-    @Test(expected = OBIBException.class) /* CDX return: "Provider clinic ID cannot be the only parameter. Please use Clinic Search instead." */
+    @Test
     public void testFindByClinicID() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
         List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
 
-        //Assert.assertNotNull(providers);
+        Assert.assertNotNull(providers);
     }
 
 }

@@ -4,7 +4,9 @@ import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.facades.registry.ISearchProviders;
+import ca.uvic.leadlab.obibconnector.models.queries.SearchClinicCriteria;
 import ca.uvic.leadlab.obibconnector.models.queries.SearchProviderCriteria;
+import ca.uvic.leadlab.obibconnector.models.response.ListClinicsResponse;
 import ca.uvic.leadlab.obibconnector.models.response.ListProvidersResponse;
 import ca.uvic.leadlab.obibconnector.rest.IOscarInformation;
 import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
@@ -33,7 +35,24 @@ public class SearchProviders implements ISearchProviders {
     @Override
     public List<IProvider> findByClinicID(String id) throws OBIBException {
         try {
+            /*
+            CDX return: "Provider clinic ID cannot be the only parameter. Please use Clinic Search instead."
             return listProviders(SearchProviderCriteria.byClinicId(id));
+            */
+
+            ListClinicsResponse response = services.listClinics(SearchClinicCriteria.byClinicId(id)); // Using clinic search
+
+            if (!response.isOK()) {
+                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
+            }
+
+            List<IProvider> providers = new ArrayList<>();
+            if (response.getClinics() != null && !response.getClinics().isEmpty()) {
+                for (ca.uvic.leadlab.obibconnector.models.registry.Provider provider : response.getClinics().get(0).getProviders()){
+                    providers.add(new Provider(provider));
+                }
+            }
+            return providers;
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error finding providers by clinic id.", e);
         }

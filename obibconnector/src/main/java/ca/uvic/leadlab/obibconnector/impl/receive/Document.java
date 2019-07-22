@@ -50,7 +50,7 @@ public class Document implements IDocument {
 
     private String custodianName;
 
-    private IProvider primaryRecipient;
+    private List<IProvider> primaryRecipients = new ArrayList<>();
     private List<IProvider> secondaryRecipients = new ArrayList<>();
 
     private List<IProvider> participatingProviders = new ArrayList<>();
@@ -131,10 +131,13 @@ public class Document implements IDocument {
         }
 
         for (Recipient docRecipient : document.getRecipients()) {
-            if (RecipientType.isPrimary(docRecipient.getTypeCode())) {
-                primaryRecipient = new Provider(docRecipient);
-            } else {
-                secondaryRecipients.add(new Provider(docRecipient));
+            IProvider provider = new Provider(docRecipient);
+            if (!docRecipient.isOrganizationOnly()) { // Do not generate recipient for "organization only recipient"
+                if (RecipientType.isPrimary(docRecipient.getTypeCode())) {
+                    primaryRecipients.add(provider);
+                } else {
+                    secondaryRecipients.add(provider);
+                }
             }
         }
 
@@ -255,8 +258,8 @@ public class Document implements IDocument {
     }
 
     @Override
-    public IProvider getPrimaryRecipient() {
-        return primaryRecipient;
+    public List<IProvider> getPrimaryRecipients() {
+        return primaryRecipients;
     }
 
     @Override

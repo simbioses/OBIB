@@ -22,4 +22,8 @@ public class Recipient extends Provider {
     public void setReceivedOrganization(ReceivedOrganization receivedOrganization) {
         this.receivedOrganization = receivedOrganization;
     }
+
+    public boolean isOrganizationOnly() {
+        return getReceivedOrganization() != null && (getName() == null || getName().isEmpty());
+    }
 }

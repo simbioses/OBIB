@@ -68,4 +68,8 @@ public class Name {
     public void setSuffix(String suffix) {
         this.suffix = suffix;
     }
+
+    public boolean isEmpty() {
+        return (family == null || family.isEmpty()) && (given == null || given.isEmpty());
+    }
 }

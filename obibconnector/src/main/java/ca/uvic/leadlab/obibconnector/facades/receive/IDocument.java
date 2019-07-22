@@ -28,7 +28,7 @@ public interface IDocument {
 
     String getCustodianName();              // return name of custodian (that generated document)
 
-    IProvider getPrimaryRecipient();
+    List<IProvider> getPrimaryRecipients();
     List<IProvider> getSecondaryRecipients(); // if present
 
     IProvider getOrderingProvider();

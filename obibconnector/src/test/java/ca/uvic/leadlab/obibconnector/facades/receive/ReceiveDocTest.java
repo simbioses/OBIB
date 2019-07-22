@@ -51,7 +51,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
     public void testRetrieveDocument() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicT);
 
-        IDocument document = receiveDoc.retrieveDocument("e1e7ada8-41a7-e911-a96d-0050568c55a6");
+        IDocument document = receiveDoc.retrieveDocument("ce97ad52-13a8-e911-a96d-0050568c55a6");
 
         Assert.assertNotNull(document);
 

@@ -36,7 +36,7 @@ public class Provider extends Person {
         if (this.ids == null) {
             this.ids = new ArrayList<>();
         }
-        this.ids.add(new Id(id, OBIBConnectorHelper.DEFAULT_PROVIDER_ID_TYPE));
+        this.ids.add(new Id(id, OBIBConnectorHelper.getDefaultProviderIdType()));
     }
 
     public Name getName() {

@@ -7,11 +7,11 @@ import java.util.Properties;
 
 public abstract class OBIBConnectorHelper {
 
-    public static final Properties properties = setupProperties();
+    private static final Properties properties = setupProperties();
 
-    public static final String DEFAULT_CLINIC_ID_TYPE = properties.getProperty("obib.default.clinic.id.type");
-    public static final String DEFAULT_PROVIDER_ID_TYPE = properties.getProperty("obib.default.provider.id.type");
-    public static final String DEFAULT_PATIENT_ID_TYPE = properties.getProperty("obib.default.patient.id.type");
+    private static final String DEFAULT_CLINIC_ID_TYPES = properties.getProperty("obib.default.clinic.id.type");
+    private static final String DEFAULT_PROVIDER_ID_TYPES = properties.getProperty("obib.default.provider.id.type");
+    private static final String DEFAULT_PATIENT_ID_TYPES = properties.getProperty("obib.default.patient.id.type");
 
     private static Properties setupProperties() {
         Properties properties = new Properties();
@@ -32,8 +32,7 @@ public abstract class OBIBConnectorHelper {
             String[] types = type.split(";");
             for (String tp : types) {
                 for (Id id : ids) {
-                    if (tp.equalsIgnoreCase(id.getType())
-                            && id.getCode() != null && !id.getCode().isEmpty()) {
+                    if (tp.equalsIgnoreCase(id.getType()) && id.getCode() != null && !id.getCode().isEmpty()) {
                         return id.getCode();
                     }
                 }
@@ -43,15 +42,15 @@ public abstract class OBIBConnectorHelper {
     }
 
     public static String getDefaultClinicId(List<Id> clinicIds) {
-        return getIdByType(clinicIds, DEFAULT_CLINIC_ID_TYPE);
+        return getIdByType(clinicIds, DEFAULT_CLINIC_ID_TYPES);
     }
 
     public static String getDefaultProviderId(List<Id> providerIds) {
-        return getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPE);
+        return getIdByType(providerIds, DEFAULT_PROVIDER_ID_TYPES);
     }
 
     public static String getDefaultPatientId(List<Id> patientIds) {
-        return getIdByType(patientIds, DEFAULT_PATIENT_ID_TYPE);
+        return getIdByType(patientIds, DEFAULT_PATIENT_ID_TYPES);
     }
 
     public static String getFirstName(List<String> given) {
@@ -62,4 +61,27 @@ public abstract class OBIBConnectorHelper {
         return firstName.trim();
     }
 
+    public static String getDefaultClinicIdTypes() {
+        String[] types = DEFAULT_CLINIC_ID_TYPES.split(";");
+        if (types.length == 0) {
+            throw new IllegalArgumentException("No 'Clinic ID Type' found in obib.properties.");
+        }
+        return types[0];
+    }
+
+    public static String getDefaultProviderIdType() {
+        String[] types = DEFAULT_PROVIDER_ID_TYPES.split(";");
+        if (types.length == 0) {
+            throw new IllegalArgumentException("No 'Provider ID Type' found in obib.properties.");
+        }
+        return types[0];
+    }
+
+    public static String getDefaultPatientIdType() {
+        String[] types = DEFAULT_PATIENT_ID_TYPES.split(";");
+        if (types.length == 0) {
+            throw new IllegalArgumentException("No 'Patient ID Type' found in obib.properties.");
+        }
+        return types[0];
+    }
 }

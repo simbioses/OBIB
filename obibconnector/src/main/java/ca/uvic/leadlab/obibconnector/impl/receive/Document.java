@@ -258,6 +258,11 @@ public class Document implements IDocument {
     }
 
     @Override
+    public IProvider getPrimaryRecipient() {
+        return !primaryRecipients.isEmpty() ? primaryRecipients.get(0) : null;
+    }
+
+    @Override
     public List<IProvider> getPrimaryRecipients() {
         return primaryRecipients;
     }

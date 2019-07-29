@@ -33,6 +33,14 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
+    public ISubmitDoc updateDoc(String documentId, int versionNumber) {
+        this.document = new ClinicalDocument();
+        document.setDocumentId(documentId);
+        document.setVersionNumber(versionNumber);
+        return this;
+    }
+
+    @Override
     public IPatient patient() {
         Patient patient = new Patient();
         document.setPatient(patient);

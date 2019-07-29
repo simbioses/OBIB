@@ -7,6 +7,8 @@ public interface ISubmitDoc extends ISubmit {
 
     ISubmitDoc newDoc();
 
+    ISubmitDoc updateDoc(String documentId, int versionNumber);
+
     IPatient patient();
 
     IAuthor author();

@@ -9,13 +9,26 @@
 
     <includeBaseDirectory>false</includeBaseDirectory>
 
+    <!-- set ${project.version} into obib.properties -->
+    <files>
+        <file>
+            <source>mirthchannels/OBIB_vm/configs/custom-lib/obib.properties</source>
+            <outputDirectory>configs/custom-lib/</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+    </files>
+
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/mirthchannels/OBIB_vm</directory>
+            <directory>mirthchannels/OBIB_vm</directory>
             <includes>
                 <include>*</include>
                 <include>configs/**</include>
             </includes>
+            <excludes>
+                <exclude>.*</exclude>
+                <exclude>configs/custom-lib/obib.properties</exclude>
+            </excludes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>

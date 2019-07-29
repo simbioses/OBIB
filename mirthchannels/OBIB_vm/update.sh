@@ -69,11 +69,12 @@ extractTemplates() {
 printf '\nUpdating OBIB Database\n'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/OBIB_DB_update.sql
 
-## Update Resources
+  ## Update Resources
 printf '\nUpdating MirthConnect Resources\n'
+sudo rm -rf $MIRTH_ROOT/custom-lib/*
 sudo cp -R $CONF_ROOT/custom-lib/ $MIRTH_ROOT/
 sudo sed -e 's,${TIMEZONE},'"$TIMEZONE"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' \
- -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/custom-lib/CDA.properties
+ -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/custom-lib/obib.properties
 
 ## Reload Resources
 printf '\nReloading MirthConnect Resources\n'

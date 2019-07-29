@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class OBIBResponse {
 
+    private String obibVersion;
     private String status;
     private String message;
     private AckDetail ackDetail;
@@ -12,6 +13,14 @@ public class OBIBResponse {
 
     public boolean isOK() {
         return "SUCCESS".equalsIgnoreCase(status);
+    }
+
+    public String getObibVersion() {
+        return obibVersion;
+    }
+
+    public void setObibVersion(String obibVersion) {
+        this.obibVersion = obibVersion;
     }
 
     public String getStatus() {

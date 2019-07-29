@@ -47,11 +47,11 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.basedir}/mirthchannels/OBIB_vm/configs/custom-lib/cdxconnector/</outputDirectory>
+                            <outputDirectory>mirthchannels/OBIB_vm/configs/custom-lib/cdxconnector/</outputDirectory>
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/cdxconnector/target/</directory>
+                                    <directory>cdxconnector/target/</directory>
                                     <includes>
                                         <include>cdxconnector-*.jar</include>
                                     </includes>
@@ -84,7 +84,7 @@
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
-                                <descriptor>${project.basedir}/assembly_obibvm.xml</descriptor>
+                                <descriptor>assembly_obibvm.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>

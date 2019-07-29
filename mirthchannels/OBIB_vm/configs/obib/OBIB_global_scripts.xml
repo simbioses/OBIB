@@ -30,20 +30,20 @@ if (!new Packages.java.io.File($(&apos;custom-lib&apos;) + &apos;CDA_with_BcCdaE
 	logger.error(&apos;Global Scripts: &quot;CDA.xsd&quot; schema cannot be found, channels will not work correctly.&apos;);
 }
 
-globalMap.put(&apos;CDAProperties&apos;, &apos;CDA.properties&apos;);
-if (!new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)).exists()) {
-	logger.error(&apos;Global Scripts: &quot;CDA.properties&quot; cannot be found, channels will not work correctly.&apos;);
+globalMap.put(&apos;OBIBProperties&apos;, &apos;obib.properties&apos;);
+if (!new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;OBIBProperties&apos;)).exists()) {
+	logger.error(&apos;Global Scripts: &quot;obib.properties&quot; cannot be found, channels will not work correctly.&apos;);
 }
 
 
-/*********** Load CDA properties ***********/
+/*********** Load OBIB properties ***********/
 var properties = new Packages.java.util.Properties();
-var fileProp = new Packages.java.io.FileInputStream(new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;CDAProperties&apos;)));
+var fileProp = new Packages.java.io.FileInputStream(new Packages.java.io.File($(&apos;custom-lib&apos;) + globalMap.get(&apos;OBIBProperties&apos;)));
 
 properties.load(fileProp);
 globalMap.putAll(properties);
 fileProp.close();
-logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &quot;&apos; CDA properties.&quot;);
+logger.debug(&quot;Global Scripts: Loaded &apos;&quot; + properties.size() + &quot;&apos; OBIB properties.&quot;);
 
 
 /*********** Load CDX IDs from database ***********/

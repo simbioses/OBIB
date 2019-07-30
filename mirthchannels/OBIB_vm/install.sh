@@ -16,9 +16,24 @@ sudo apt -y install openjdk-8-jdk
 ## Install nginx
 sudo apt -y install nginx
 
-# TODO copy nginx configuration files
+## Generate certificates and private keys for nginx
+sudo openssl req -x509 -sha256 -newkey rsa:4096 -days 1825 -subj "/O=OSP/CN=OBIB" \
+ -keyout $KEYS_PATH/obib_ca.key -out $CERTS_PATH/obib_ca.crt -passout pass:$OBIB_KEY_PASS
+sudo chmod 400 $KEYS_PATH/obib_ca.key
+sudo chmod 444 $CERTS_PATH/obib_ca.crt
+sudo openssl req -x509 -sha256 -newkey rsa:4096 -days 1825 -nodes -subj "/O=OSP/CN=OBIB" \
+ -keyout $KEYS_PATH/obib.key -out $CERTS_PATH/obib.crt
+sudo chmod 400 $KEYS_PATH/obib.key
+sudo chmod 444 $CERTS_PATH/obib.crt
+#sudo openssl dhparam -out $NGINX_PATH/dhparam.pem 4096
 
-# TODO copy obib server certificates
+## Copy files and configure nginx
+sudo cp /vagrant/configs/nginx/obib.conf $NGINX_PATH/snippets/
+sudo cp /vagrant/configs/nginx/obib $NGINX_PATH/sites-available/
+sudo rm $NGINX_PATH/sites-enabled/*
+sudo ln -s $NGINX_PATH/sites-available/obib $NGINX_PATH/sites-enabled/
+sudo nginx -t
+#sudo systemctl restart nginx
 
 ## Install xmllint (used by the deploy.sh script)
 sudo apt -y install libxml2-utils
@@ -27,8 +42,8 @@ sudo apt -y install libxml2-utils
 echo 'mysql-server mysql-server/root_password password' $DB_ROOT_PASS | sudo debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password' $DB_ROOT_PASS | sudo debconf-set-selections
 sudo apt -y install mariadb-server
-mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' \
- IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+mysql --user=root --password=$DB_ROOT_PASS -e \
+ "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
 ## Execute database creation script as 'root'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/mirth_create.sql
@@ -75,7 +90,7 @@ sudo chmod +x /etc/systemd/system/mirth.service
 sudo systemctl enable mirth
 
 ## Secure certs folder
-sudo chmod 700 /opt/MirthConnect/certs/
+sudo chmod 700 $MIRTH_ROOT/certs/
 
 ## Clean temporary files
 #sudo rm mirthconnect-3.7.1.b243-unix.tar.gz

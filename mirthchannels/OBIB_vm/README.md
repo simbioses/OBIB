@@ -101,6 +101,6 @@ Execute the **deploy** provision from host machine:
 $ vagrant provision --provision-with deploy
 ```
 
-*All operations should display **Response code: 2XX** in the console*. However if something goes wrong, 
-the operations returns are stored in the folder /home/vagrant/output of the vm.
+*All operations should display **Response code: 2XX** in the console*. If something goes wrong, 
+the operations responses are stored in the folder /home/vagrant/output of the vm.
  

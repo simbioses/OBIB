@@ -18,3 +18,11 @@ TIMEZONE='Canada/Pacific'
 ## Mirth Connect Administrator credentials
 ADMIN_USERNAME='admin'
 ADMIN_PASSWORD='admin'
+
+## OBIB CA Private Key Password
+OBIB_KEY_PASS='OBIB!123'
+
+## SSL and NGINX paths
+CERTS_PATH=/etc/ssl/certs
+KEYS_PATH=/etc/ssl/private
+NGINX_PATH=/etc/nginx

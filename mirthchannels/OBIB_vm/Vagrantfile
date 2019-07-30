@@ -81,7 +81,10 @@ Vagrant.configure("2") do |config|
   # Run the configuration script
   config.vm.provision "install", type: "shell", path: "install.sh"
   
-  # Copy the configuration files - execute manually: $ vagrant provision --provision-with update
-  config.vm.provision "update", type: "shell", path: "update.sh", run: "never"
+  # Copy the configuration files - execute manually: $ vagrant provision --provision-with deploy
+  config.vm.provision "deploy", type: "shell", path: "deploy.sh", run: "never"
+
+  # Register a clinic within obib - execute manually: $ vagrant provision --provision-with register
+  config.vm.provision "register", type: "shell", path: "register.sh", run: "never"
   
 end

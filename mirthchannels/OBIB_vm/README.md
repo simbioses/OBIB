@@ -1,10 +1,12 @@
-# Installing the OBIB VM
+# OBIB Vagrant Virtual Machine 
 
-## Step 1: Check out the OBIB from git
+## Installing the OBIB VM
 
-## Step 2: Enter the /OBIB/mirthchannels/OBIB_vm folder
+### Step 1: Check out the OBIB from git
 
-## Step 3: Adjust the Vagrantfile (optional)
+### Step 2: Enter the /OBIB/mirthchannels/OBIB_vm folder
+
+### Step 3: Adjust the Vagrantfile (optional)
 
 Change the configurations as needed, e.g. VM IP address:
 
@@ -12,7 +14,7 @@ Change the configurations as needed, e.g. VM IP address:
 config.vm.network "private_network", ip: "192.168.100.101"
 ```
 
-## Step 4: Adjust the mirth_connect.sh script (optional)
+### Step 4: Adjust the mirth_connect.sh script (optional)
 
 If the VM IP address was ajusted in the Vagrantfile on Step 3, it is necessary to adjust it here as well:
 
@@ -23,7 +25,7 @@ SERVER_IP='192.168.100.101'
 
 Change other settings as needed. Such as database credentials, MirthConnect root path, timezone, and so on.
 
-## Step 5: Run vagrant up from host machine
+### Step 5: Run vagrant up from host machine
 
 ```bash
 $ vagrant up
@@ -36,7 +38,7 @@ Then, restart the VM to ensure that all services are stating on boot time.
 $ vagrant reload
 ```
 
-## Step 6: Verify the Instalation (optional)
+### Step 6: Verify the Instalation (optional)
 
 From the host machine, login into the VM 
 
@@ -57,18 +59,18 @@ Check if the IP address is correctly assigned
 $ ifconfig
 ```
 
-## Step 7: Install OBIB on MirthConnect
+### Step 7: Install OBIB on MirthConnect
 
-Execute the **update** provision from host machine:
+Execute the **deploy** provision from host machine:
 
 ```bash
-$ vagrant provision --provision-with update
+$ vagrant provision --provision-with deploy
 ```
 
 *All operations should display **Response code: 2XX** in the console*. However if something goes wrong, 
 the operations returns are stored in the folder /home/vagrant/output of the vm.
 
-## *Step 7: (Manual option) Install OBIB Global Scripts*
+### *Step 7 (Manual Option): Install OBIB Global Scripts*
 
 Open browser on Mirthconnect admin web site: **http://192.168.100.101:8080** and Launch or Download the MirthConnect Administrator.
 
@@ -81,7 +83,7 @@ Open browser on Mirthconnect admin web site: **http://192.168.100.101:8080** and
 5. Select the **OBIB_global_scripts.xml** file from */mirthchannels/OBIB_vm/configs/obib/* folder.
 6. Click on **Save Scripts** in Script Tasks menus.
 
-## *Step 8: (Manual option) Install OBIB Channel Group*
+### *Step 8 (Manual Option): Install OBIB Channel Group*
 
 In MirthConnect Administrator:
 
@@ -91,12 +93,12 @@ In MirthConnect Administrator:
 4. Answer **Yes** to import the Code Template Libraries as well.
 5. Select the **OBIB** group on main screen and clic on **Redeploy all** in the Channel Tasks menus.
 
-# Updating the OBIB VM
+## Updating the OBIB VM
 
-Execute the **update** provision from host machine:
+Execute the **deploy** provision from host machine:
 
 ```bash
-$ vagrant provision --provision-with update
+$ vagrant provision --provision-with deploy
 ```
 
 *All operations should display **Response code: 2XX** in the console*. However if something goes wrong, 

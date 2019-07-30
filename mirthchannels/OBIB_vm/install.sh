@@ -13,18 +13,22 @@ sudo apt update
 ## Install Java 8
 sudo apt -y install openjdk-8-jdk
 
+## Install nginx
+sudo apt -y install nginx
+
+# TODO copy nginx configuration files
+
+# TODO copy obib server certificates
+
+## Install xmllint (used by the deploy.sh script)
+sudo apt -y install libxml2-utils
+
 ## Install MariaDB
 echo 'mysql-server mysql-server/root_password password' $DB_ROOT_PASS | sudo debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password' $DB_ROOT_PASS | sudo debconf-set-selections
 sudo apt -y install mariadb-server
 mysql --user=root --password=$DB_ROOT_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' \
  IDENTIFIED BY '$DB_ROOT_PASS' WITH GRANT OPTION; FLUSH PRIVILEGES;"
-
-## Install nginx
-sudo apt -y install nginx
-
-## Install xmllint (used by the update.sh script)
-sudo apt -y install libxml2-utils
 
 ## Execute database creation script as 'root'
 mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/mirth_create.sql
@@ -41,6 +45,7 @@ sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-serve
 ## Execute database insertion scripts as 'user'
 mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql
 mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql
+# TODO move this to register
 mysql --user=$DB_USERNAME --password=$DB_PASSWORD < $CONF_ROOT/dbscripts/OBIB_DB_insert_clinic_credential.sql
 
 ## Download Mirth Connect

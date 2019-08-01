@@ -1593,7 +1593,7 @@ function storeOBIBError(errorCode, errorMessage) {
 - Route the messages to the appropriate destination connector according to the REST path [&quot;Destination Set Filter&quot; source transformer]
 - Transform the JSON messages to BCCDA documents [&quot;Javascript&quot; destination transformers]
 - Send the HL7 messages to CDX WebServices using the CDXConnector Java Library [&quot;Javascript Writer&quot; destination connector]</description>
-      <revision>1</revision>
+      <revision>13</revision>
       <sourceConnector version="3.8.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -1954,23 +1954,25 @@ if (!receivers || receivers.length == 0) {
 
 	// ClinicalDocument/templateId
 	tmp[&apos;templateId&apos;] = buildCDATemplateId(msgLoinc[&apos;loincCode&apos;]);
+
+	var isNew = false; // verify if the document is new
 	
 	// CONF-BC0014, CONF-BC0015
 	var documentId = msg[&apos;documentId&apos;]; // updating document
 	if (!documentId) {
 		documentId = UUIDGenerator.getUUID(); // new document
+		isNew = true;
 	}
 	tmp[&apos;id&apos;] = buildCDAId(&quot;2.16.840.1.113883.3.277.100.3&quot;, documentId);
 	channelMap.put(&apos;documentId&apos;, documentId); // store the documentId, necessary in the response
 	
 	// CONF-BC0016, CONF-BC0552, CONF-BC0553, CONF-BC0017, CONF-BC0018, CONF-BC0019, CONF-BC0020, CONF-BC0554, CONF-BC0555
 	// TODO &apos;setId&apos; and &apos;versionNumber&apos; are not implemented
-	if (msg[&apos;versionNumber&apos;]) {
-		var version = msg[&apos;versionNumber&apos;];
-		version += 1;
+	//if (typeof msg[&apos;versionNumber&apos;]) {
+	if (!isNew) { // not new? send the versionNumber
 		var versionNumber = createSegmentAfter(&apos;versionNumber&apos;, tmp[&apos;languageCode&apos;]);
-		versionNumber[&apos;@value&apos;] = version;
-		channelMap.put(&apos;versionNumber&apos;, version); // store the versionNumber
+		versionNumber[&apos;@value&apos;] = msg[&apos;versionNumber&apos;] + 1;
+		channelMap.put(&apos;versionNumber&apos;, versionNumber[&apos;@value&apos;]); // store the versionNumber
 	}
 	
 	// ClinicalDocument/code CONF-BC0021, CONF-BC0022
@@ -7414,7 +7416,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1564440603308</time>
+            <time>1564697859225</time>
             <timezone>America/Vancouver</timezone>
           </lastModified>
           <pruningSettings>

@@ -13,8 +13,10 @@ import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
 import ca.uvic.leadlab.obibconnector.rest.IOscarInformation;
 import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 import ca.uvic.leadlab.obibconnector.rest.RestClient;
+import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 
 import javax.xml.bind.DatatypeConverter;
+import java.util.Date;
 
 public class SubmitDoc implements ISubmitDoc {
 
@@ -37,6 +39,8 @@ public class SubmitDoc implements ISubmitDoc {
         this.document = new ClinicalDocument();
         document.setDocumentId(documentId);
         document.setVersionNumber(versionNumber);
+        // send a new serviceEvent when updating a document
+        document.addServiceEvent(new ServiceEvent(DateFormatter.formatDateTime(new Date()), DocumentStatus.UPDATED.code));
         return this;
     }
 

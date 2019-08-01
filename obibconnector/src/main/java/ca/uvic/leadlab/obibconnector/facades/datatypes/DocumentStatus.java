@@ -4,7 +4,8 @@ public enum DocumentStatus {
     COMPLETED("completed"),
     ACTIVE("active"),
     ABORTED("aborted"),
-    CORRECTED("corrected");
+    CORRECTED("corrected"),
+    UPDATED("updated");
 
     public final String code;
 

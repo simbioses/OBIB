@@ -3,6 +3,11 @@
 ## Load the settings
 . /vagrant/./mirth_connect.sh
 
+CA_KEY_PATH=$KEYS_PATH/$OBIB_CA_KEY
+CA_CERT_PATH=$CERTS_PATH/$OBIB_CA_CERT
+OBIB_KEY_PATH=$KEYS_PATH/obib.key
+OBIB_CERT_PATH=$CERTS_PATH/obib.crt
+
 ## Set the correct timezone
 sudo timedatectl set-timezone $TIMEZONE
 
@@ -16,22 +21,28 @@ sudo apt -y install openjdk-8-jdk
 ## Install nginx
 sudo apt -y install nginx
 
-## Generate certificates and private keys for nginx
-sudo openssl req -x509 -sha256 -newkey rsa:4096 -days 1825 -subj "/O=OSP/CN=OBIB" \
- -keyout $KEYS_PATH/obib_ca.key -out $CERTS_PATH/obib_ca.crt -passout pass:$OBIB_KEY_PASS
-sudo chmod 400 $KEYS_PATH/obib_ca.key
-sudo chmod 444 $CERTS_PATH/obib_ca.crt
-sudo openssl req -x509 -sha256 -newkey rsa:4096 -days 1825 -nodes -subj "/O=OSP/CN=OBIB" \
- -keyout $KEYS_PATH/obib.key -out $CERTS_PATH/obib.crt
-sudo chmod 400 $KEYS_PATH/obib.key
-sudo chmod 444 $CERTS_PATH/obib.crt
-#sudo openssl dhparam -out $NGINX_PATH/dhparam.pem 4096
+## Copy CA certificate and key
+sudo cp $CONF_ROOT/ssl/$OBIB_CA_KEY $CA_KEY_PATH
+sudo cp $CONF_ROOT/ssl/$OBIB_CA_CERT $CA_CERT_PATH
 
-## Copy files and configure nginx
-sudo cp /vagrant/configs/nginx/obib.conf $NGINX_PATH/snippets/
-sudo cp /vagrant/configs/nginx/obib $NGINX_PATH/sites-available/
-sudo rm $NGINX_PATH/sites-enabled/*
-sudo ln -s $NGINX_PATH/sites-available/obib $NGINX_PATH/sites-enabled/
+## Generate nginx certificate and key
+sudo openssl genrsa -out $OBIB_KEY_PATH 2048
+sudo chmod 400 $OBIB_KEY_PATH
+sudo openssl req -new -key $OBIB_KEY_PATH -sha256 -subj "/C=CA/O=OSP/CN=OBIB" -out obib.csr -extensions v3_req \
+  -config $CONF_ROOT/nginx/openssl.cnf
+sudo openssl x509 -req -sha256 -days 730 -in obib.csr -CA $CA_CERT_PATH -CAkey $CA_KEY_PATH -passin pass:$OBIB_CA_PASS \
+  -set_serial 1 -out $OBIB_CERT_PATH -extensions v3_req -extfile $CONF_ROOT/nginx/openssl.cnf
+sudo chmod 444 $OBIB_CERT_PATH
+
+sudo openssl verify -CAfile $CA_CERT_PATH $OBIB_CERT_PATH
+
+#sudo openssl dhparam -out $NGINX_ROOT/dhparam.pem 4096
+
+## Copy nginx configuration files
+sudo cp $CONF_ROOT/nginx/obib.conf $NGINX_ROOT/snippets/
+sudo cp $CONF_ROOT/nginx/obib $NGINX_ROOT/sites-available/
+sudo rm $NGINX_ROOT/sites-enabled/*
+sudo ln -s $NGINX_ROOT/sites-available/obib $NGINX_ROOT/sites-enabled/
 sudo nginx -t
 #sudo systemctl restart nginx
 
@@ -70,14 +81,16 @@ wget -q http://downloads.mirthcorp.com/connect/3.8.0.b2464/mirthconnect-3.8.0.b2
 sudo tar -xzf mirthconnect-3.8.0.b2464-unix.tar.gz
 sudo mv 'Mirth Connect' $MIRTH_ROOT
 
-## Copy the Mirth Connect configuration files
+## Copy Mirth Connect's configuration files
 sudo cp -R $CONF_ROOT/appdata/ $MIRTH_ROOT/
+# TODO move this to register
 sudo cp -R $CONF_ROOT/certs/ $MIRTH_ROOT/
+sudo chmod 700 $MIRTH_ROOT/certs/
 sudo cp $CONF_ROOT/conf/* $MIRTH_ROOT/conf/
 sudo cp $CONF_ROOT/mirth.service /etc/systemd/system/
 sudo cp $CONF_ROOT/mariadb-java-client-2.4.2.jar $MIRTH_ROOT/server-lib/database/
 
-## Setup the configurations files
+## Setup Mirth Connect's configuration files
 sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/appdata/configuration.properties
 sudo sed -e 's,${SERVER_IP},'"$SERVER_IP"',g' -e 's,${TIMEZONE},'"$TIMEZONE"',g' \
  -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -i $MIRTH_ROOT/conf/mirth.properties
@@ -89,11 +102,9 @@ sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i /etc/systemd/system/mirth.ser
 sudo chmod +x /etc/systemd/system/mirth.service
 sudo systemctl enable mirth
 
-## Secure certs folder
-sudo chmod 700 $MIRTH_ROOT/certs/
-
 ## Clean temporary files
-#sudo rm mirthconnect-3.7.1.b243-unix.tar.gz
+#sudo rm obib.csr
+#sudo rm mirthconnect-3.8.0.b2464-unix.tar.gz
 
 ## End
 echo -e "\e[1;92mSetup completed, please restart the VM - e.g.: vagrant reload\e[0m"

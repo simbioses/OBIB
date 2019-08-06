@@ -25,13 +25,13 @@ sudo apt -y install nginx
 sudo cp $CONF_ROOT/ssl/$OBIB_CA_KEY $CA_KEY_PATH
 sudo cp $CONF_ROOT/ssl/$OBIB_CA_CERT $CA_CERT_PATH
 
-## Generate nginx certificate and key
-sudo openssl genrsa -out $OBIB_KEY_PATH 2048
+## Generate nginx certificate and key from the CA certificate
+sudo openssl req -new -newkey rsa:2048 -keyout $OBIB_KEY_PATH -out obib.csr -nodes \
+  -subj "/C=CA/O=OSP/OU=OBIB/CN=OBIB Server" -extensions v3_req -config $CONF_ROOT/nginx/openssl.cnf
 sudo chmod 400 $OBIB_KEY_PATH
-sudo openssl req -new -key $OBIB_KEY_PATH -sha256 -subj "/C=CA/O=OSP/CN=OBIB" -out obib.csr -extensions v3_req \
-  -config $CONF_ROOT/nginx/openssl.cnf
 sudo openssl x509 -req -sha256 -days 730 -in obib.csr -CA $CA_CERT_PATH -CAkey $CA_KEY_PATH -passin pass:$OBIB_CA_PASS \
   -set_serial 1 -out $OBIB_CERT_PATH -extensions v3_req -extfile $CONF_ROOT/nginx/openssl.cnf
+sudo cat $OBIB_CERT_PATH $CA_CERT_PATH > $OBIB_CERT_PATH
 sudo chmod 444 $OBIB_CERT_PATH
 
 sudo openssl verify -CAfile $CA_CERT_PATH $OBIB_CERT_PATH

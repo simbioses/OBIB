@@ -41,9 +41,6 @@ public class WSClientClinic extends WSClient {
 
             WSUtil.logObject(LOGGER, "\nList Clinics Request:\n", request);
 
-            ClinicQuery clinicQuery = new ClinicQuery(new URL(baseUrl + "/RegistrySearch/ClinicQuery.svc?WSDL"));
-            clinicQuery.setHandlerResolver(handlerResolver(clinicQuery.getServiceName()));
-
             PRPMAR400013UV port = createClinicService();
             PRPMIN406110UV01 response = port.prpmIN406010UV01(request);
 

@@ -21,7 +21,8 @@ public class SearchDoc implements ISearchDoc {
     private final IOscarInformation services;
 
     public SearchDoc(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId(),
+                conf.getClinicPassword(), conf.getKeystorePassword());
     }
 
     @Override

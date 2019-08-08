@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.rest;
 
 import javax.net.ssl.*;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -26,9 +27,9 @@ class KeyStoreManager implements X509KeyManager, X509TrustManager {
     private KeyStore loadKeystore(String keyStoreFile, char[] password) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            InputStream in = KeyStoreManager.class.getResourceAsStream("/" + keyStoreFile);
+            InputStream in = KeyStoreManager.class.getResourceAsStream(keyStoreFile);
             if (in == null) {
-                throw new IOException("KeyStore " + keyStoreFile + " not found.");
+                in = new FileInputStream(keyStoreFile);
             }
             try {
                 keyStore.load(in, password);

@@ -40,6 +40,16 @@ public class ReceiveDocTest extends FacadesBaseTest {
             public String getClinicId() {
                 return "__Wrong_ID";
             }
+
+            @Override
+            public String getClinicPassword() {
+                return "Invalid_Password    ";
+            }
+
+            @Override
+            public String getKeystorePassword() {
+                return certPass;
+            }
         });
 
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
@@ -51,7 +61,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
     public void testRetrieveDocument() throws Exception {
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
-        IDocument document = receiveDoc.retrieveDocument("807e1637-28b2-e911-a96d-0050568c55a6");
+        IDocument document = receiveDoc.retrieveDocument("7744d591-b0b4-e911-a96d-0050568c55a6");
 
         Assert.assertNotNull(document);
 
@@ -69,7 +79,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveAllDocuments() throws Exception {
-        Config configClinic = configClinicT;
+        Config configClinic = configClinicA;
         ISearchDoc searchDoc = new SearchDoc(configClinic);
         IReceiveDoc receiveDoc = new ReceiveDoc(configClinic);
         ISupport support = new Support(configClinic);

@@ -24,10 +24,9 @@ public class TestRestClient {
 
     private String obibUrl = "https://192.168.100.101";
 
-    private String clinicUsername = "cdxpostprod-otca";
+    private String clinicId = "cdxpostprod-otca";
     private String clinicPassword = "VMK31";
 
-    private String certFile = "clinic.pfx";
     private String certPass = "password";
 
     private IOscarInformation restClient;
@@ -40,17 +39,12 @@ public class TestRestClient {
         }
 
         @Override
-        public String getClinicUsername() {
-            return clinicUsername;
+        public String getClinicId() {
+            return clinicId;
         }
 
         @Override
         public String getClinicPassword() {
-            return null;
-        }
-
-        @Override
-        public String getKeystore() {
             return null;
         }
 
@@ -62,7 +56,7 @@ public class TestRestClient {
 
     @Before
     public void setup() throws Exception {
-        restClient = new RestClient(obibUrl, clinicUsername, clinicPassword, certFile, certPass);
+        restClient = new RestClient(obibUrl, clinicId, clinicPassword, certPass);
     }
 
     @Test
@@ -190,7 +184,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testConnectionError() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl + ":81", "", "", certFile, certPass);
+        RestClient restClientError = new RestClient(obibUrl + ":81", "", "", certPass);
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));
@@ -200,7 +194,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testInvalidCredentials() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl, clinicUsername, "WRONG_PASS", certFile, certPass);
+        RestClient restClientError = new RestClient(obibUrl, clinicId, "WRONG_PASS", certPass);
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));

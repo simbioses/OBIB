@@ -57,9 +57,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -100,9 +100,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -141,9 +141,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -176,9 +176,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -215,9 +215,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -256,9 +256,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password
@@ -295,9 +295,9 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: username
+          name: clinicId
           type: string
-          description: Clinic Username
+          description: Clinic Identification
           required: true
         - in: header
           name: password

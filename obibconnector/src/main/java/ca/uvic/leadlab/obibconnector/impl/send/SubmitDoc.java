@@ -25,7 +25,8 @@ public class SubmitDoc implements ISubmitDoc {
     private ClinicalDocument document;
 
     public SubmitDoc(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId(),
+                conf.getClinicPassword(), conf.getKeystorePassword());
     }
 
     @Override

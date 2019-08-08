@@ -26,46 +26,45 @@ public class RestClient implements IOscarInformation {
     private static final String LIST_CLINICS_PATH = OBIBConnectorHelper.getProperty("obib.listclinics.path");
     private static final String LIST_PROVIDERS_PATH = OBIBConnectorHelper.getProperty("obib.listproviders.path");
     private static final String NOTIFY_ERROR_PATH = OBIBConnectorHelper.getProperty("obib.notifyerror.path");
+
     private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
     private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
+
+    private static final String OBIB_KEYSTORE = OBIBConnectorHelper.getProperty("obib.keystore.path");
 
     private final Client client;
 
     private final String obibURL;
 
-    private final String username;
-    private final String password;
-
-    public RestClient(String obibURL, String locationId) {
-        this(obibURL, locationId, null, null, null);
-    }
+    private final String clinicId;
+    private final String clinicPassword;
 
     /**
      * Construct a RestClient with a ssl context for authentication
      */
-    public RestClient(String obibURL, String username, String password, String keystorePath, String keystorePass) {
+    public RestClient(String obibURL, String clinicId, String clinicPassword, String keystorePass) {
         this.obibURL = obibURL;
-        this.username = username;
-        this.password = password;
+        this.clinicId = clinicId;
+        this.clinicPassword = clinicPassword;
         // build rest client
-        this.client =  setupRestClient(keystorePath, keystorePass);
+        this.client =  setupRestClient(keystorePass);
     }
 
-    private Client setupRestClient(String keyStoreFile, String keyStorePass) {
+    private Client setupRestClient(String keyStorePass) {
         ClientConfig config = new ClientConfig()
                 //.register(new JacksonJsonProvider())
                 .property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
                 .property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
         ClientBuilder builder = ClientBuilder.newBuilder().withConfig(config);
-        if (keyStoreFile != null && keyStorePass != null) {
-            builder.sslContext(setupSSLContext(keyStoreFile, keyStorePass));
+        if (keyStorePass != null) {
+            builder.sslContext(setupSSLContext(keyStorePass));
         }
         return builder.build();
     }
 
-    private SSLContext setupSSLContext(String keyStoreFile, String keyStorePass) {
+    private SSLContext setupSSLContext(String keyStorePass) {
         try {
-            KeyStoreManager keyStoreManager = new KeyStoreManager(keyStoreFile, keyStorePass);
+            KeyStoreManager keyStoreManager = new KeyStoreManager(OBIB_KEYSTORE, keyStorePass);
 
             SSLContext context = SSLContext.getInstance("TLSv1.2");
             context.init(new KeyManager[]{keyStoreManager}, new TrustManager[]{keyStoreManager}, null);
@@ -96,8 +95,8 @@ public class RestClient implements IOscarInformation {
             Response response = client.target(getServicesURL())
                     .path(path)
                     .request(MediaType.APPLICATION_JSON)
-                    .header("username", username)
-                    .header("password", password)
+                    .header("clinicId", clinicId)
+                    .header("password", clinicPassword)
                     .post(Entity.json(requestEntity), Response.class);
 
             if (!Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {

@@ -5,7 +5,6 @@ import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.receive.IDocument;
 import ca.uvic.leadlab.obibconnector.impl.send.SubmitDoc;
 import ca.uvic.leadlab.obibconnector.facades.datatypes.*;
-import org.glassfish.jersey.internal.util.Base64;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -48,9 +47,9 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .and().inFulfillmentOf()
                         .id("2")
                         .statusCode(OrderStatus.ACTIVE)
-                    .and().documentationOf()
-                        .statusCode(DocumentStatus.COMPLETED)
-                        .effectiveTime(new Date())
+                    //.and().documentationOf()
+                    //    .statusCode(DocumentStatus.COMPLETED)
+                    //   .effectiveTime(new Date())
                     .and()
                         .receiverId(clinicIdA)
                         .content("Referral test 1")
@@ -67,37 +66,33 @@ public class SubmitDocTest extends FacadesBaseTest {
 
         // TODO get document and update it
 
-        IDocument response = submitDoc.updateDoc("2ffcaae0-45f8-467c-95c9-0fc91ca816dd", 1)
+        IDocument response = submitDoc.updateDoc("2ffcaae0-45f8-467c-95c9-0fc91ca816dd", 0)
                 .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
-                .id("2222")
-                .name("Joe", "Wine")
-                .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                .phone(TelcoType.HOME, "250-111-1234")
-                .birthday("1980", "01", "01")
-                .birthday("1980",   "01", "01")
-                .gender(Gender.MALE)
+                    .id("2222")
+                    .name("Joe", "Wine")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                    .birthday("1980", "01", "01")
+                    .gender(Gender.MALE)
                 .and().author()
-                .id("93188")
-                .time(new Date())
-                .name("Lucius", "Plisihb", "Dr.", "")
+                    .id("93188")
+                    .time(new Date())
+                    .name("Lucius", "Plisihb", "Dr.", "")
                 .and().recipient()
-                .primary()
-                .id("93190")
-                .name("Aaron", "Plisihd", "Dr.", "")
+                    .primary()
+                    .id("93190")
+                    .name("Aaron", "Plisihd", "Dr.", "")
                 .and().participant()
-                .functionCode("PCP")
-                .id("93193")
-                .name("Mikel", "Plisihf", "Dr.", "")
+                    .functionCode("PCP")
+                    .id("93193")
+                    .name("Mikel", "Plisihf", "Dr.", "")
                 .and().inFulfillmentOf()
-                .id("2")
-                .statusCode(OrderStatus.ACTIVE)
-                .and().documentationOf()
-                .statusCode(DocumentStatus.COMPLETED)
-                .effectiveTime(new Date())
+                    .id("2")
+                    .statusCode(OrderStatus.ACTIVE)
                 .and()
-                .receiverId(clinicIdA)
-                .content("Referral test 1 - text updated ")
+                    .receiverId(clinicIdA)
+                    .content("Referral test 1 - text updated ")
                 .submit();
 
         Assert.assertNotNull(response);

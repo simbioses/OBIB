@@ -14,7 +14,8 @@ public class Support implements ISupport {
     private final IOscarInformation services;
 
     public Support(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId());
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId(),
+                conf.getClinicPassword(), conf.getKeystorePassword());
     }
 
     @Override

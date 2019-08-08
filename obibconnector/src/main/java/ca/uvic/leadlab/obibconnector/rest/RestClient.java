@@ -10,9 +10,11 @@ import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
+import javax.net.ssl.*;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.GeneralSecurityException;
 
 public class RestClient implements IOscarInformation {
 
@@ -27,22 +29,48 @@ public class RestClient implements IOscarInformation {
     private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
     private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
 
-    private static final Client client = setupRestClient();
+    private final Client client;
 
     private final String obibURL;
     private final String locationId;
 
     public RestClient(String obibURL, String locationId) {
-        this.obibURL = obibURL;
-        this.locationId = locationId;
+        this(obibURL, locationId, null, null);
     }
 
-    private static Client setupRestClient() {
+    /**
+     * Construct a RestClient with a ssl context for authentication
+     */
+    public RestClient(String obibURL, String locationId, String keystorePath, String keystorePass) {
+        this.obibURL = obibURL;
+        this.locationId = locationId;
+        // build rest client
+        this.client =  setupRestClient(keystorePath, keystorePass);
+    }
+
+    private Client setupRestClient(String keyStoreFile, String keyStorePass) {
         ClientConfig config = new ClientConfig()
                 //.register(new JacksonJsonProvider())
                 .property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
                 .property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
-        return ClientBuilder.newClient(config);
+        ClientBuilder builder = ClientBuilder.newBuilder().withConfig(config);
+        if (keyStoreFile != null && keyStorePass != null) {
+            builder.sslContext(setupSSLContext(keyStoreFile, keyStorePass));
+        }
+        return builder.build();
+    }
+
+    private SSLContext setupSSLContext(String keyStoreFile, String keyStorePass) {
+        try {
+            KeyStoreManager keyStoreManager = new KeyStoreManager(keyStoreFile, keyStorePass);
+
+            SSLContext context = SSLContext.getInstance("TLSv1.2");
+            context.init(new KeyManager[]{keyStoreManager}, new TrustManager[]{keyStoreManager}, null);
+
+            return context;
+        } catch (GeneralSecurityException e) {
+            throw new IllegalArgumentException("Error initializing the SSL Context.", e);
+        }
     }
 
     private String getServicesURL() {

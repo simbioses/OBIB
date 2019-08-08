@@ -22,8 +22,12 @@ import java.util.Date;
 
 public class TestRestClient {
 
-    private String obibUrl = "http://192.168.100.101:8081";
+    private String obibUrl = "https://192.168.100.101";
+
     private String clinicId = "cdxpostprod-otca";
+
+    private String certFile = "clinic.pfx";
+    private String certPass = "password";
 
     private IOscarInformation restClient;
 
@@ -38,11 +42,21 @@ public class TestRestClient {
         public String getClinicId() {
             return clinicId;
         }
+
+        @Override
+        public String getKeystore() {
+            return null;
+        }
+
+        @Override
+        public String getKeystorePassword() {
+            return null;
+        }
     };
 
     @Before
-    public void setup() {
-        restClient = new RestClient(obibUrl, clinicId);
+    public void setup() throws Exception {
+        restClient = new RestClient(obibUrl, clinicId, certFile, certPass);
     }
 
     @Test
@@ -170,7 +184,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testConnectionError() throws Exception {
-        RestClient restClientError = new RestClient("http://192.168.0.0:80", "");
+        RestClient restClientError = new RestClient("http://192.168.0.0:80", "", certFile, certPass);
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));

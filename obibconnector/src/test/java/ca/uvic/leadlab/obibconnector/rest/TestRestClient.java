@@ -24,7 +24,8 @@ public class TestRestClient {
 
     private String obibUrl = "https://192.168.100.101";
 
-    private String clinicId = "cdxpostprod-otca";
+    private String clinicUsername = "cdxpostprod-otca";
+    private String clinicPassword = "VMK31";
 
     private String certFile = "clinic.pfx";
     private String certPass = "password";
@@ -39,8 +40,13 @@ public class TestRestClient {
         }
 
         @Override
-        public String getClinicId() {
-            return clinicId;
+        public String getClinicUsername() {
+            return clinicUsername;
+        }
+
+        @Override
+        public String getClinicPassword() {
+            return null;
         }
 
         @Override
@@ -56,7 +62,7 @@ public class TestRestClient {
 
     @Before
     public void setup() throws Exception {
-        restClient = new RestClient(obibUrl, clinicId, certFile, certPass);
+        restClient = new RestClient(obibUrl, clinicUsername, clinicPassword, certFile, certPass);
     }
 
     @Test
@@ -184,7 +190,17 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testConnectionError() throws Exception {
-        RestClient restClientError = new RestClient("http://192.168.0.0:80", "", certFile, certPass);
+        RestClient restClientError = new RestClient(obibUrl + ":81", "", "", certFile, certPass);
+        ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
+                .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
+        System.out.println(mapper.writeValueAsString(response));
+
+        Assert.assertNull(response);
+    }
+
+    @Test(expected = OBIBRequestException.class)
+    public void testInvalidCredentials() throws Exception {
+        RestClient restClientError = new RestClient(obibUrl, clinicUsername, "WRONG_PASS", certFile, certPass);
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));

@@ -32,18 +32,21 @@ public class RestClient implements IOscarInformation {
     private final Client client;
 
     private final String obibURL;
-    private final String locationId;
+
+    private final String username;
+    private final String password;
 
     public RestClient(String obibURL, String locationId) {
-        this(obibURL, locationId, null, null);
+        this(obibURL, locationId, null, null, null);
     }
 
     /**
      * Construct a RestClient with a ssl context for authentication
      */
-    public RestClient(String obibURL, String locationId, String keystorePath, String keystorePass) {
+    public RestClient(String obibURL, String username, String password, String keystorePath, String keystorePass) {
         this.obibURL = obibURL;
-        this.locationId = locationId;
+        this.username = username;
+        this.password = password;
         // build rest client
         this.client =  setupRestClient(keystorePath, keystorePass);
     }
@@ -93,7 +96,8 @@ public class RestClient implements IOscarInformation {
             Response response = client.target(getServicesURL())
                     .path(path)
                     .request(MediaType.APPLICATION_JSON)
-                    .header("locationId", locationId)
+                    .header("username", username)
+                    .header("password", password)
                     .post(Entity.json(requestEntity), Response.class);
 
             if (!Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {

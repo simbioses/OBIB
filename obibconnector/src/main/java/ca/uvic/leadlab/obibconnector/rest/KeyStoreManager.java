@@ -13,15 +13,14 @@ import java.util.UUID;
 
 class KeyStoreManager implements X509KeyManager, X509TrustManager {
 
-    private X509TrustManager trustManager;
-    private X509KeyManager keyManager;
+    private final X509KeyManager keyManager;
+    private final X509TrustManager trustManager;
 
-    public KeyStoreManager(String keyStoreFile, String keyStorePass) {
-
+    public KeyStoreManager(final String keyStoreFile, final String keyStorePass) {
         char[] password = keyStorePass.toCharArray();
         KeyStore keyStore = loadKeystore(keyStoreFile, password);
-        loadKeyManager(keyStore, password);
-        loadTrustManager(keyStore);
+        keyManager = loadKeyManager(keyStore, password);
+        trustManager = loadTrustManager(keyStore);
     }
 
     private KeyStore loadKeystore(String keyStoreFile, char[] password) {
@@ -42,15 +41,14 @@ class KeyStoreManager implements X509KeyManager, X509TrustManager {
         }
     }
 
-    private void loadKeyManager(KeyStore keyStore, char[] keystorePass) {
+    private X509KeyManager loadKeyManager(KeyStore keyStore, char[] keystorePass) {
         try {
             KeyManagerFactory factory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             factory.init(keyStore, keystorePass);
 
             for (KeyManager manager : factory.getKeyManagers()) {
                 if (manager instanceof X509KeyManager) {
-                    keyManager = (X509KeyManager) manager;
-                    return;
+                    return (X509KeyManager) manager;
                 }
             }
 
@@ -61,7 +59,7 @@ class KeyStoreManager implements X509KeyManager, X509TrustManager {
         }
     }
 
-    private void loadTrustManager(KeyStore keyStore) {
+    private X509TrustManager loadTrustManager(KeyStore keyStore) {
         try {
             // Use the certificate chain to trust the server certificate
             Enumeration<String> enumerator = keyStore.aliases();
@@ -80,8 +78,7 @@ class KeyStoreManager implements X509KeyManager, X509TrustManager {
 
             for (TrustManager manager : factory.getTrustManagers()) {
                 if (manager instanceof X509TrustManager) {
-                    trustManager = (X509TrustManager) manager;
-                    return;
+                    return (X509TrustManager) manager;
                 }
             }
 

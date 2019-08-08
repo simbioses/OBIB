@@ -57,9 +57,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -95,9 +100,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -131,9 +141,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -161,9 +176,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -195,9 +215,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -231,9 +256,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type
@@ -265,9 +295,14 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: location_id
+          name: username
           type: string
-          description: This is the clinic ID
+          description: Clinic Username
+          required: true
+        - in: header
+          name: password
+          type: string
+          description: Clinic Password
           required: true
         - in: header
           name: content_type

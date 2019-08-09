@@ -30,3 +30,11 @@ KEYS_PATH='/etc/ssl/private'
 OBIB_CA_CERT='obib_ca.crt'
 OBIB_CA_KEY='obib_ca.key'
 OBIB_CA_PASS='OBIB!123'
+
+## OBIB SSL Server credentials
+OBIB_SERVER_CERT='obib.crt'
+OBIB_SERVER_KEY='obib.key'
+
+## OBIB SSL KeyStore
+OBIB_KEYSTORE_PATH='./obibcerts.pfx'
+OBIB_KEYSTORE_PASS='obibconnector'

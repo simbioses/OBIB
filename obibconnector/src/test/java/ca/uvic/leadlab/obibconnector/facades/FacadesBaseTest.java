@@ -17,8 +17,7 @@ public class FacadesBaseTest {
     protected String clinicIdT = "cdxpostprod-ctc";
     protected String clinicPasswordT = "conformance123";
 
-    protected String certFile = "obibcerts.pfx";
-    protected String certPass = "password";
+    protected String certPass = "obibconnector";
 
     protected Config configClinicA = new Config() {
         @Override

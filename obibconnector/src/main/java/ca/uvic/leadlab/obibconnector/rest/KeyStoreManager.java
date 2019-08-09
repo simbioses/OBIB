@@ -2,15 +2,11 @@ package ca.uvic.leadlab.obibconnector.rest;
 
 import javax.net.ssl.*;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.security.*;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Enumeration;
-import java.util.UUID;
 
 class KeyStoreManager implements X509KeyManager, X509TrustManager {
 
@@ -62,18 +58,6 @@ class KeyStoreManager implements X509KeyManager, X509TrustManager {
 
     private X509TrustManager loadTrustManager(KeyStore keyStore) {
         try {
-            // Use the certificate chain to trust the server certificate
-            Enumeration<String> enumerator = keyStore.aliases();
-            while (enumerator.hasMoreElements()) {
-                String alias = enumerator.nextElement();
-                Certificate root = keyStore.getCertificate(alias);
-                for (Certificate certificate : keyStore.getCertificateChain(alias)) {
-                    if (!certificate.equals(root)) {
-                        keyStore.setCertificateEntry(UUID.randomUUID().toString(), certificate);
-                    }
-                }
-            }
-
             TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             factory.init(keyStore);
 

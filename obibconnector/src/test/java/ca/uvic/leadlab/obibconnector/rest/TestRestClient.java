@@ -27,7 +27,7 @@ public class TestRestClient {
     private String clinicId = "cdxpostprod-otca";
     private String clinicPassword = "VMK31";
 
-    private String certPass = "password";
+    private String certPass = "obibconnector";
 
     private IOscarInformation restClient;
 

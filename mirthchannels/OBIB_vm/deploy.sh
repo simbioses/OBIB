@@ -22,7 +22,7 @@ mkdir -p templates
 checkResponse() {
     printf "Response code: %s\n" "$1"
     if [ -s "output/$2" ]; then
-        printf "Response content:\n%s\n" "`head output/$2`"
+        printf "Response content:\n%s\n" "$(head "output/$2")"
     fi
 }
 
@@ -46,35 +46,35 @@ execBulkUpdate() {
 
 # Params: <group_set_file>
 extractChannels() {
-    n=$(xmllint --xpath 'count(//set/channelGroup/channels/channel)' $1)
-    for (( i=1; i<=$n; i++ )); do
-        channel_name=$(xmllint --xpath "string(//set/channelGroup/channels/channel[$i]/name)" $1)
-        xmllint --xpath "//set/channelGroup/channels/channel[$i]" $1 > "channels/${channel_name//[ |\/]/_}.xml"
+    n=$(xmllint --xpath 'count(//set/channelGroup/channels/channel)' "$1")
+    for (( i=1; i<="$n"; i++ )); do
+        channel_name=$(xmllint --xpath "string(//set/channelGroup/channels/channel[$i]/name)" "$1")
+        xmllint --xpath "//set/channelGroup/channels/channel[$i]" "$1" > "channels/${channel_name//[ |\/]/_}.xml"
     done
 }
 
 # Params: <templates_library_file>
 extractTemplates() {
-    n=$(xmllint --xpath 'count(//list/codeTemplateLibrary)' $1)
-    for (( i=1; i<=$n; i++ )); do
-        m=$(xmllint --xpath "count(//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate)" $1)
-        for (( j=1; j<=$m; j++ )); do
-            template_name=$(xmllint --xpath "string(//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate[$j]/name)" $1)
-            xmllint --xpath "//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate[$j]" $1 > "templates/${template_name//[ |\/]/_}.xml"
+    n=$(xmllint --xpath 'count(//list/codeTemplateLibrary)' "$1")
+    for (( i=1; i<="$n"; i++ )); do
+        m=$(xmllint --xpath "count(//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate)" "$1")
+        for (( j=1; j<="$m"; j++ )); do
+            template_name=$(xmllint --xpath "string(//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate[$j]/name)" "$1")
+            xmllint --xpath "//list/codeTemplateLibrary[$i]/codeTemplates/codeTemplate[$j]" "$1" > "templates/${template_name//[ |\/]/_}.xml"
         done
     done
 }
 
 ## Update OBIB Database
 printf '\nUpdating OBIB Database\n'
-mysql --user=root --password=$DB_ROOT_PASS < $CONF_ROOT/dbscripts/OBIB_DB_update.sql
+mysql --user=root --password="$DB_ROOT_PASS" < "$CONF_ROOT/dbscripts/OBIB_DB_update.sql"
 
-  ## Update Resources
+## Update Resources
 printf '\nUpdating MirthConnect Resources\n'
-sudo rm -rf $MIRTH_ROOT/custom-lib/*
-sudo cp -R $CONF_ROOT/custom-lib/ $MIRTH_ROOT/
+sudo rm -rf "$MIRTH_ROOT/custom-lib/*"
+sudo cp -R "$CONF_ROOT/custom-lib/" "$MIRTH_ROOT/"
 sudo sed -e 's,${TIMEZONE},'"$TIMEZONE"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' \
- -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i $MIRTH_ROOT/custom-lib/obib.properties
+ -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i "$MIRTH_ROOT/custom-lib/obib.properties"
 
 ## Reload Resources
 printf '\nReloading MirthConnect Resources\n'
@@ -85,9 +85,9 @@ printf '\nUpdating Global Scripts\n'
 execUpdate "/server/globalScripts" "$CONF_ROOT/obib/OBIB_global_scripts.xml" "scripts_update.out"
 
 ## Update Channels
-printf "\nUpdating Channel Group: $(xmllint --xpath 'string(//channelGroup/name)' $CONF_ROOT/obib/OBIB_channel_group.xml)\n"
+printf "\nUpdating Channel Group: %s\n" "$(xmllint --xpath 'string(//channelGroup/name)' "$CONF_ROOT/obib/OBIB_channel_group.xml")"
 # 1 - encapsulate <channelGroup/> with <set/> - required by '/channelgroups/_bulkUpdate' method
-channel_group=`cat $CONF_ROOT/obib/OBIB_channel_group.xml`
+channel_group=$(cat "$CONF_ROOT/obib/OBIB_channel_group.xml")
 echo "<set>$channel_group</set>" > "OBIB_channel_group_set.xml"
 # 2 - update the "channelGroups"
 execBulkUpdate "/channelgroups/_bulkUpdate?override=true" "channelGroups" "OBIB_channel_group_set.xml" "group_update.out"
@@ -95,7 +95,7 @@ execBulkUpdate "/channelgroups/_bulkUpdate?override=true" "channelGroups" "OBIB_
 extractChannels "OBIB_channel_group_set.xml"
 # 4 - update and enable all channels
 for file in channels/*.xml; do
-    printf "\nUpdating Channel: $(basename "$file" .xml)\n"
+    printf "\nUpdating Channel: %s\n" "$(basename "$file" .xml)"
     channel_id=$(xmllint --xpath "//channel/id/text()" "$file")
     execUpdate "/channels/$channel_id?override=true" "$file" "$(basename "$file" .xml)_update.out"
     execAction "/channels/$channel_id/enabled/true" "$(basename "$file" .xml)_enabled.out"
@@ -109,9 +109,9 @@ execUpdate "/codeTemplateLibraries?override=true" "$CONF_ROOT/obib/OBIB_code_tem
 extractTemplates "$CONF_ROOT/obib/OBIB_code_templates_library.xml"
 # 3 - update all codeTemplates
 for file in templates/*.xml; do
-    printf "\nUpdating Template: $(basename "$file" .xml)\n"
+    printf "\nUpdating Template: %s\n" "$(basename "$file" .xml)"
     template_id=$(xmllint --xpath "//codeTemplate/id/text()" "$file")
-    execUpdate "/codeTemplates/$template_id?override=true" $file "$(basename "$file" .xml)_update.out"
+    execUpdate "/codeTemplates/$template_id?override=true" "$file" "$(basename "$file" .xml)_update.out"
 done
 
 ## Redeploy All Channels

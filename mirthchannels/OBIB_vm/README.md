@@ -145,7 +145,7 @@ the operations responses are stored in the folder /home/vagrant/output of the vm
     ```
    
 2. Go to the shared folder **/vagrant**: 
-
+    
     ```bash
     $ cd /vagrant/
     ```

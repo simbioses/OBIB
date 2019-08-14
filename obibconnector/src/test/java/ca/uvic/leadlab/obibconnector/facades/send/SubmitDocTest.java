@@ -103,7 +103,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testSubmitDocWithErrors() throws Exception {
         try {
-            ISubmitDoc submitDoc = new SubmitDoc(configClinicC);
+            ISubmitDoc submitDoc = new SubmitDoc(configClinicA);
             IDocument response = submitDoc.newDoc()
 //                .documentType(DocumentType.REFERRAL_NOTE) // LOINC is required
                     .patient()

@@ -48,7 +48,7 @@ public class WSClientProvider extends WSClient {
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing providers", e);
-            throw new ConnectorException("Error listing providers", e);
+            throw new ConnectorException(WSUtil.formatException("Error listing providers.", e), e);
         }
     }
 

@@ -50,8 +50,8 @@ public class WSClientDocument extends WSClient {
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error submitting document", e);
-            throw new ConnectorException("Error submitting document", e);
+            LOGGER.log(Level.SEVERE, "Error submitting document.", e);
+            throw new ConnectorException(WSUtil.formatException("Error submitting document.", e), e);
         }
     }
 
@@ -85,8 +85,8 @@ public class WSClientDocument extends WSClient {
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error listing new documents", e);
-            throw new ConnectorException("Error listing new documents", e);
+            LOGGER.log(Level.SEVERE, "Error listing new documents.", e);
+            throw new ConnectorException(WSUtil.formatException("Error listing new documents.", e), e);
         }
     }
 
@@ -113,7 +113,7 @@ public class WSClientDocument extends WSClient {
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error searching documents", e);
-            throw new ConnectorException("Error searching documents", e);
+            throw new ConnectorException(WSUtil.formatException("Error searching documents.", e), e);
         }
     }
 
@@ -137,7 +137,7 @@ public class WSClientDocument extends WSClient {
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error getting documents", e);
-            throw new ConnectorException("Error getting documents", e);
+            throw new ConnectorException(WSUtil.formatException("Error getting documents.", e), e);
         }
     }
 
@@ -179,7 +179,7 @@ public class WSClientDocument extends WSClient {
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error searching documents", e);
-            throw new ConnectorException("Error searching documents", e);
+            throw new ConnectorException(WSUtil.formatException("Error searching documents.", e), e);
         }
     }
 

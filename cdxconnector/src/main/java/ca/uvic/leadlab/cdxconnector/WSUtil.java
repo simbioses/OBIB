@@ -1,5 +1,6 @@
 package ca.uvic.leadlab.cdxconnector;
 
+import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -15,6 +16,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class WSUtil {
+
+    public static String formatException(String message, Throwable ex) {
+        if (ex instanceof ConnectorException || ex instanceof MessageBuilderException) {
+            return message + " " + ex.getMessage();
+        }
+        return message;
+    }
 
     public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
         if (logger.isLoggable(Level.FINEST)) {
@@ -41,7 +49,7 @@ public abstract class WSUtil {
     public static void validateObjectSize(Object obj) throws ConnectorException {
         String objStr = parseObject(obj, false);
         if (objStr.length() > 3145728) { // 3 MB
-            throw new ConnectorException("Error: The total size of the message is bigger than 3 MB.");
+            throw new ConnectorException("The total size of the message is bigger than 3 MB.");
         }
     }
 

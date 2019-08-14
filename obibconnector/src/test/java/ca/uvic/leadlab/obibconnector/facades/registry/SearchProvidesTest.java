@@ -23,18 +23,24 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     @Test(expected = OBIBException.class)
     public void testFindByProviderIdError() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(configClinicA);
+        try {
+            ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
-        List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
+            List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
 
-        //Assert.assertNull(providers);
+            //Assert.assertNull(providers);
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test
     public void testFindByName() throws Exception {
         ISearchProviders searchProviders = new SearchProviders(configClinicA);
 
-        List<IProvider> providers = searchProviders.findByName("Plis");
+        List<IProvider> providers = searchProviders.findByName("Plisih");
 
         Assert.assertNotNull(providers);
 
@@ -48,6 +54,8 @@ public class SearchProvidesTest extends FacadesBaseTest {
         List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
 
         Assert.assertNotNull(providers);
+
+        System.out.println(mapper.writeValueAsString(providers));
     }
 
 }

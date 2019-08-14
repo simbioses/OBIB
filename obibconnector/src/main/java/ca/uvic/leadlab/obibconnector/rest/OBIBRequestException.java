@@ -15,12 +15,12 @@ public class OBIBRequestException extends Exception {
     }
 
     public OBIBRequestException(String message, Map<String, String> obibErrors) {
-        super(message + " " + obibErrors);
+        super(message);
         this.obibErrors = obibErrors;
     }
 
     public OBIBRequestException(String message, Map<String, String> obibErrors, Throwable cause) {
-        super(message + " " + obibErrors, cause);
+        super(message, cause);
         this.obibErrors = obibErrors;
     }
 

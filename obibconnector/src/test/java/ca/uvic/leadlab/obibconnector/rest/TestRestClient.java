@@ -176,7 +176,7 @@ public class TestRestClient {
 
     @Test
     public void testListProviders() throws Exception {
-        ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderId("93188"));
+        ListProvidersResponse response = restClient.listProviders(SearchProviderCriteria.byProviderName("Plisihd"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);

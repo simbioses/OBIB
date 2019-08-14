@@ -12,9 +12,9 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindById() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(configClinicC);
+        ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
-        List<IClinic> clinics = searchClinic.findByID(clinicIdA);
+        List<IClinic> clinics = searchClinic.findByID(clinicIdC);
 
         Assert.assertNotNull(clinics);
 
@@ -23,16 +23,22 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test(expected = OBIBException.class)
     public void testFindByIdError() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(configClinicA);
+        try {
+            ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
-        List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
+            List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
 
-        //Assert.assertNull(clinics);
+            //Assert.assertNull(clinics);
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test
     public void testFindByName() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(configClinicC);
+        ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
         List<IClinic> clinics = searchClinic.findByName("oscar");
 
@@ -43,7 +49,7 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindByAddress() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(configClinicC);
+        ISearchClinic searchClinic = new SearchClinic(configClinicA);
 
         List<IClinic> clinics = searchClinic.findByAddress("Kelowna");
 

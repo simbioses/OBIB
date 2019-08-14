@@ -30,31 +30,37 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test(expected = OBIBException.class)
     public void testPollNewDocIDsError() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(new Config() {
-            @Override
-            public String getUrl() {
-                return obibUrl;
-            }
+        try {
+            IReceiveDoc receiveDoc = new ReceiveDoc(new Config() {
+                @Override
+                public String getUrl() {
+                    return obibUrl;
+                }
 
-            @Override
-            public String getClinicId() {
-                return "__Wrong_ID";
-            }
+                @Override
+                public String getClinicId() {
+                    return "__Wrong_ID";
+                }
 
-            @Override
-            public String getClinicPassword() {
-                return "Invalid_Password    ";
-            }
+                @Override
+                public String getClinicPassword() {
+                    return "Invalid_Password";
+                }
 
-            @Override
-            public String getKeystorePassword() {
-                return certPass;
-            }
-        });
+                @Override
+                public String getKeystorePassword() {
+                    return certPass;
+                }
+            });
 
-        List<String> documentsIds = receiveDoc.pollNewDocIDs();
+            List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
-        //Assert.assertNull(documentsIds);
+            //Assert.assertNull(documentsIds);
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test
@@ -70,11 +76,17 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
+        try {
+            IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
 
-        IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
+            IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 
-        //Assert.assertNull(document);
+            //Assert.assertNull(document);
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test

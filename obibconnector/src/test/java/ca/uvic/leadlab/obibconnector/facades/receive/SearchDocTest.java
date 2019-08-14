@@ -54,7 +54,7 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testDistributionStatus() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicC);
+        ISearchDoc searchDoc = new SearchDoc(configClinicA);
 
         IDocument document = searchDoc.distributionStatus("2ffcaae0-45f8-467c-95c9-0fc91ca816dd");
 

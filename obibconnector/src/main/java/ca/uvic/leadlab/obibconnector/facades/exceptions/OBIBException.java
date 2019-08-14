@@ -9,6 +9,7 @@ public class OBIBException extends Exception {
 
     private static final Properties properties = setupProperties();
 
+    private String obibMessage;
     private Map<String, String> obibErrors;
 
     private static Properties setupProperties() {
@@ -29,6 +30,7 @@ public class OBIBException extends Exception {
         super(concatCause(message, cause), cause);
 
         if (cause instanceof OBIBRequestException) {
+            this.obibMessage = cause.getMessage();
             this.obibErrors = ((OBIBRequestException) cause).getObibErrors();
         }
     }
@@ -36,14 +38,18 @@ public class OBIBException extends Exception {
     private static String concatCause(String message, Throwable cause) {
         String causeMessage = cause.getMessage();
         if (cause instanceof OBIBRequestException && causeMessage != null && !causeMessage.isEmpty()) {
-            return message + " " + causeMessage; // concatenates cause only if it is an OBIBRequestException and has message
+            return message + " Cause: " + causeMessage; // concatenates cause only if it is an OBIBRequestException and has message
         }
         return message;
     }
 
     public String getObibMessage() {
         StringBuilder message = new StringBuilder();
+        if (obibMessage != null && !obibMessage.isEmpty()) {
+            message.append(obibMessage);
+        }
         if (obibErrors != null && !obibErrors.isEmpty()) {
+            message.append(" Details: ");
             for (String key : obibErrors.keySet()) {
                 String value = properties.getProperty(key);
                 message.append(value != null ? value : obibErrors.get(key)).append("; ");

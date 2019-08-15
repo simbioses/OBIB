@@ -40,8 +40,9 @@ public class SubmitDoc implements ISubmitDoc {
         this.document = new ClinicalDocument();
         document.setDocumentId(documentId);
         document.setVersionNumber(versionNumber);
+        document.setEffectiveTime(DateFormatter.formatDateTime(new Date()));
         // send a new serviceEvent when updating a document
-        document.addServiceEvent(new ServiceEvent(DateFormatter.formatDateTime(new Date()), DocumentStatus.UPDATED.code));
+        document.addServiceEvent(new ServiceEvent(document.getEffectiveTime(), DocumentStatus.UPDATED.code));
         return this;
     }
 

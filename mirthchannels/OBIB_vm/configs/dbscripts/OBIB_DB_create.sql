@@ -6,8 +6,7 @@ use OBIB_DB;
 /* cdx_id - table */ 
 create table cdx_id
 (
-    id        int auto_increment
-        primary key,
+    id        int auto_increment primary key,
     code      varchar(36) not null,
     name      varchar(50) null,
     category  varchar(36) null,
@@ -17,8 +16,7 @@ create table cdx_id
 /* cdx_loinc_code - table */ 
 create table cdx_loinc_code
 (
-    id            int auto_increment
-        primary key,
+    id            int auto_increment primary key,
     loinc_code    varchar(10) not null,
     loinc_name    varchar(36) null,
     template_id   varchar(36) not null,
@@ -28,8 +26,7 @@ create table cdx_loinc_code
 /* clinic_credential - table */ 
 create table clinic_credential
 (
-    clinic_id            varchar(36)  not null
-        primary key,
+    clinic_id            varchar(36)  not null primary key,
     clinic_name          varchar(200) null,
     clinic_username      varchar(100) not null,
     clinic_password      varchar(100) not null,
@@ -40,56 +37,51 @@ create table clinic_credential
 /* document - table */ 
 create table document
 (
-    document_id      varchar(36) not null,
-    document_date    datetime    not null,
-    document_content mediumtext  not null,
-    location_id      varchar(36) not null,
-    destination_id   varchar(36) not null,
-    constraint document_document_id_uindex
-        unique (document_id),
-    primary key (document_id)
+    id                int auto_increment primary key,
+    document_id       varchar(36) not null,
+    document_date     datetime    not null,
+    document_content  mediumtext  null,
+    location_id       varchar(36) not null,
+    obib_version      varchar(36) null,
+    connector_version varchar(36) null
 );
 
 /* document_attachment - table */ 
 create table document_attachment
 (
-    document_id    varchar(36) not null,
-    media_type     varchar(50) not null,
-    reference_name varchar(50) not null,
-    content        mediumtext  not null,
-    hash_value     varchar(64) not null,
-    primary key (document_id, media_type, reference_name),
-    constraint document_attachment_document_document_id_fk
-        foreign key (document_id) references document (document_id)
+    id                int auto_increment primary key,
+    document_id       varchar(36) not null,
+    media_type        varchar(50) not null,
+    reference_name    varchar(50) not null,
+    content           mediumtext  null,
+    hash_value        varchar(64) not null,
+    obib_version      varchar(36) null,
+    connector_version varchar(36) null
 );
 
-create index document_attachment_document_id_media_type_reference_name_index
-    on document_attachment (document_id, media_type, reference_name);
-
-/* document_response - table */ 
+/* document_response - table */
 create table document_response
 (
-    response_id      varchar(36) not null,
-    response_date    datetime    not null,
-    response_status  varchar(3)  null,
-    response_content text        null,
-    document_id      varchar(36) not null,
-    constraint document_response_response_id_uindex
-        unique (response_id),
-    constraint document_response_document_document_id_fk
-        foreign key (document_id) references document (document_id),
-    primary key (response_id)
+    id                int auto_increment primary key,
+    response_id       varchar(36) not null,
+    response_date     datetime    not null,
+    response_status   varchar(3)  null,
+    response_content  text        null,
+    document_id       varchar(36) not null,
+    obib_version      varchar(36) null,
+    connector_version varchar(36) null
 );
 
 /* error_message - table */
 create table error_message
 (
-	id int auto_increment
-		primary key,
-	date datetime null,
-	clinic_id varchar(36) null,
-	message_id varchar(36) null,
-	context varchar(255) null,
-	trace mediumtext null
+	id                int auto_increment primary key,
+	date              datetime null,
+	clinic_id         varchar(36) null,
+	message_id        varchar(36) null,
+	context           varchar(255) null,
+	trace             mediumtext null,
+    obib_version      varchar(36) null,
+    connector_version varchar(36) null
 );
 

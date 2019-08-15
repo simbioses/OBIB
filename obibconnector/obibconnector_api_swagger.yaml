@@ -67,6 +67,11 @@ paths:
           description: Clinic Password
           required: true
         - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
+          required: true
+        - in: header
           name: content_type
           type: string
           description: application/json
@@ -110,6 +115,11 @@ paths:
           description: Clinic Password
           required: true
         - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
+          required: true
+        - in: header
           name: content_type
           type: string
           description: application/json
@@ -151,6 +161,11 @@ paths:
           description: Clinic Password
           required: true
         - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
+          required: true
+        - in: header
           name: content_type
           type: string
           description: application/json
@@ -184,6 +199,11 @@ paths:
           name: password
           type: string
           description: Clinic Password
+          required: true
+        - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
           required: true
         - in: header
           name: content_type
@@ -223,6 +243,11 @@ paths:
           name: password
           type: string
           description: Clinic Password
+          required: true
+        - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
           required: true
         - in: header
           name: content_type
@@ -266,6 +291,11 @@ paths:
           description: Clinic Password
           required: true
         - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
+          required: true
+        - in: header
           name: content_type
           type: string
           description: application/json
@@ -303,6 +333,11 @@ paths:
           name: password
           type: string
           description: Clinic Password
+          required: true
+        - in: header
+          name: connectorVersion
+          type: string
+          description: OBIB Connector version
           required: true
         - in: header
           name: content_type

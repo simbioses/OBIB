@@ -12,13 +12,13 @@
     <distributionManagement>
         <repository>
             <id>myMavenRepoWrite</id>
-            <!--<url>${myMavenRepoWriteUrl}</url>-->
-            <url>file://${project.basedir}/../mvn-repo</url> <!-- temporary local mvn-repo -->
+            <url>${myMavenRepoWriteUrl}</url>
+            <!--url>file://${project.basedir}/../mvn-repo</url> <!- - temporary local mvn-repo -->
         </repository>
         <snapshotRepository>
             <id>myMavenRepoWrite</id>
-            <!--<url>${myMavenRepoWriteUrl}</url>-->
-            <url>file://${project.basedir}/../mvn-repo</url> <!-- temporary local mvn-repo -->
+            <url>${myMavenRepoWriteUrl}</url>
+            <!--url>file://${project.basedir}/../mvn-repo</url> <!- - temporary local mvn-repo -->
         </snapshotRepository>
     </distributionManagement>
 

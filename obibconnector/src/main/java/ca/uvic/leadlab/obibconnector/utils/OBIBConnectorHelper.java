@@ -84,4 +84,10 @@ public abstract class OBIBConnectorHelper {
         }
         return types[0];
     }
+
+    public static String getOBIBConnectorVersion() {
+        Package objPackage = OBIBConnectorHelper.class.getPackage();
+        //String name = objPackage.getSpecificationTitle();
+        return objPackage.getImplementationVersion();
+    }
 }

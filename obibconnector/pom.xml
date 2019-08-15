@@ -12,31 +12,27 @@
     <distributionManagement>
         <repository>
             <id>myMavenRepoWrite</id>
-            <url>${myMavenRepoWriteUrl}</url>
-            <!--<url>file://${project.basedir}/../mvn-repo</url> <!- - temporary local mvn-repo -->
+            <!--<url>${myMavenRepoWriteUrl}</url>-->
+            <url>file://${project.basedir}/../mvn-repo</url> <!-- temporary local mvn-repo -->
         </repository>
         <snapshotRepository>
             <id>myMavenRepoWrite</id>
-            <url>${myMavenRepoWriteUrl}</url>
-            <!-- url>file://${project.basedir}/../mvn-repo</url> <!- - temporary local mvn-repo -->
+            <!--<url>${myMavenRepoWriteUrl}</url>-->
+            <url>file://${project.basedir}/../mvn-repo</url> <!-- temporary local mvn-repo -->
         </snapshotRepository>
     </distributionManagement>
 
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <finalName>OBIBRestClientConnector</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <!--archive>
+                    <archive>
                         <manifest>
-                            <mainClass>ca.uvic.leadlab.obibconnector.rest.ProcessRestClient</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
-                    </archive-->
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>

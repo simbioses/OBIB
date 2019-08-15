@@ -97,6 +97,7 @@ public class RestClient implements IOscarInformation {
                     .request(MediaType.APPLICATION_JSON)
                     .header("clinicId", clinicId)
                     .header("password", clinicPassword)
+                    .header("connectorVersion", OBIBConnectorHelper.getOBIBConnectorVersion())
                     .post(Entity.json(requestEntity), Response.class);
 
             if (!Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {

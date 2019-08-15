@@ -6,11 +6,9 @@ import java.util.Date;
 
 public class ErrorMessage {
 
-    String date;
-
-    String context;
-
-    String trace;
+    private String date;
+    private String context;
+    private String trace;
 
     public ErrorMessage() {
     }

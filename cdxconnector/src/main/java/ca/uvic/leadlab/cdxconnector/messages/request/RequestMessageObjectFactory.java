@@ -1,13 +1,11 @@
 package ca.uvic.leadlab.cdxconnector.messages.request;
 
+import ca.uvic.leadlab.cdxconnector.WSUtil;
 import cdasubmitrequest.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RequestMessageObjectFactory extends ObjectFactory {
-
-    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
     public II createII(NullFlavor nullFlavor) {
         II id = new II();
@@ -38,7 +36,7 @@ public class RequestMessageObjectFactory extends ObjectFactory {
 
     public TS createTS(Date value) {
         TS ts = new TS();
-        ts.setValue(DATE_TIME_FORMAT.format(value));
+        ts.setValue(WSUtil.DATE_TIME_FORMAT.format(value));
         return ts;
     }
 
@@ -107,7 +105,7 @@ public class RequestMessageObjectFactory extends ObjectFactory {
     public IVXBTS createIVXBTS(boolean inclusive, Date value) {
         IVXBTS ivxbts = new IVXBTS();
         ivxbts.setInclusive(inclusive);
-        ivxbts.setValue(DATE_TIME_FORMAT.format(value));
+        ivxbts.setValue(WSUtil.DATE_TIME_FORMAT.format(value));
         return ivxbts;
     }
 }

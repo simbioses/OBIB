@@ -12,10 +12,13 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.StringWriter;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class WSUtil {
+
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
     public static String formatException(String message, Throwable ex) {
         if (ex instanceof ConnectorException || ex instanceof MessageBuilderException) {

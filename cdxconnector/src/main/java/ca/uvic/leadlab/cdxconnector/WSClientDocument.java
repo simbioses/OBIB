@@ -41,12 +41,12 @@ public class WSClientDocument extends WSClient {
 
             WSUtil.validateObjectSize(request);
 
-            WSUtil.logObject(LOGGER, "\nSubmit Document Request:\n", request);
+            WSUtil.logObject(LOGGER, "Submit Document Request:", request);
 
             CDASubmit documentService = createCDASubmitService();
             MCCIIN000002UV01 response = documentService.submitCDA(request);
 
-            WSUtil.logObject(LOGGER, "\nSubmit Document Response:\n", response);
+            WSUtil.logObject(LOGGER, "Submit Document Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
@@ -76,12 +76,12 @@ public class WSClientDocument extends WSClient {
                     .sender(locationId) // ID Of requestor
                     .build();
 
-            WSUtil.logObject(LOGGER, "\nList New Documents Request:\n", request);
+            WSUtil.logObject(LOGGER, "List New Documents Request:", request);
 
             RCMRAR000003UV01 documentService = createCDARequestService();
             RCMRIN000030UV01 response = documentService.mcciIN100001UV01(request);
 
-            WSUtil.logObject(LOGGER, "\nList New Documents Response:\n", response);
+            WSUtil.logObject(LOGGER, "List New Documents Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
@@ -103,12 +103,12 @@ public class WSClientDocument extends WSClient {
                             .eventEffectiveTime(eventTime)) // query parameters
                     .build();
 
-            WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
+            WSUtil.logObject(LOGGER, "Search Document Request:", request);
 
             RCMRAR000003UV01 documentService = createCDARequestService();
             RCMRIN000030UV01 response = documentService.rcmrIN000029UV01(request);
 
-            WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
+            WSUtil.logObject(LOGGER, "Search Document Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
@@ -127,12 +127,12 @@ public class WSClientDocument extends WSClient {
                             .messageId(messageId)) // query parameters
                     .build();
 
-            WSUtil.logObject(LOGGER, "\nGet Document Request:\n", request);
+            WSUtil.logObject(LOGGER, "Get Document Request:", request);
 
             RCMRAR000003UV01 documentService = createCDARequestService();
             RCMRIN000032UV01 response = documentService.rcmrIN000031UV01(request);
 
-            WSUtil.logObject(LOGGER, "\nGet Document Response:\n", response);
+            WSUtil.logObject(LOGGER, "Get Document Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
@@ -169,12 +169,12 @@ public class WSClientDocument extends WSClient {
                             .eventEffectiveTime(eventTime)) // query parameters
                     .build();
 
-            WSUtil.logObject(LOGGER, "\nSearch Document Request:\n", request);
+            WSUtil.logObject(LOGGER, "Search Document Request:", request);
 
             distributionstatus.RCMRAR000003UV01 documentService = createDistributionStatusService();
             distributionstatus.RCMRIN000030UV01 response = documentService.getStatus(request);
 
-            WSUtil.logObject(LOGGER, "\nSearch Document Response:\n", response);
+            WSUtil.logObject(LOGGER, "Search Document Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {

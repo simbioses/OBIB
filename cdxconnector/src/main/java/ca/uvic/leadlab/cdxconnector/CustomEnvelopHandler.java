@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class CustomEnvelopHandler implements SOAPHandler<SOAPMessageContext> {
 
-    private final Logger LOGGER = Logger.getLogger(CustomEnvelopHandler.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CustomEnvelopHandler.class.getName());
 
     private final QName action;
 

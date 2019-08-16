@@ -38,12 +38,12 @@ public class WSClientProvider extends WSClient {
 
             PRPMIN306010UV request = builder.build();
 
-            WSUtil.logObject(LOGGER, "\nList Provider Request:\n", request);
+            WSUtil.logObject(LOGGER, "List Provider Request: ", request);
 
             PRPMAR300013UV service = createProviderService();
             PRPMIN306011UV response = service.prpmIN306010UV(request);
 
-            WSUtil.logObject(LOGGER, "\nList Provider Response:\n", response);
+            WSUtil.logObject(LOGGER, "List Provider Response: ", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {

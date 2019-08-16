@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
 
-    private final Logger LOGGER = Logger.getLogger(LoggingHandler.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoggingHandler.class.getName());
 
     public Set<QName> getHeaders() {
         return Collections.EMPTY_SET;

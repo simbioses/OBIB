@@ -22,6 +22,12 @@ public abstract class WSClient {
 
     final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
+//    static {
+//        String path = WSClient.class.getClassLoader().getResource("logging.properties").getFile();
+//        System.setProperty("java.util.logging.config.file", path);
+//        Logger.getLogger(WSClient.class.getName()).info("Loaded logging.properties from " + path);
+//    }
+
     // Base URL
     String baseUrl;
 
@@ -35,6 +41,8 @@ public abstract class WSClient {
 
     WSClient(String baseUrl, String username, String password,
              String certPath, String certPass) throws ConnectorException {
+        LOGGER.log(Level.INFO, "Initializing WSClient for base URL: " + baseUrl);
+
         this.baseUrl = baseUrl;
         this.username = username;
         this.password = password;
@@ -86,8 +94,8 @@ public abstract class WSClient {
         Map<String, Object> requestCtx = ((BindingProvider) service).getRequestContext();
 
         requestCtx.put("com.sun.xml.internal.ws.connect.timeout",
-                Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout")));
+                Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout", "5000")));
         requestCtx.put("com.sun.xml.internal.ws.request.timeout",
-                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout")));
+                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout", "5000")));
     }
 }

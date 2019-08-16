@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 
-    private final Logger LOGGER = Logger.getLogger(AuthenticationHandler.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationHandler.class.getName());
 
     private final String username;
     private final String password;

@@ -28,9 +28,8 @@ public abstract class WSUtil {
     }
 
     public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
-        if (logger.isLoggable(Level.FINEST)) {
-            logger.finest(message);
-            logger.finest(parseObject(obj, true));
+        if (logger.isLoggable(Level.FINE)) {
+            logger.log(Level.FINE, message + " \n" + parseObject(obj, true));
         }
     }
 

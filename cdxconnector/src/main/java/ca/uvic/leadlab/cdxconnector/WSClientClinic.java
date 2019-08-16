@@ -39,12 +39,12 @@ public class WSClientClinic extends WSClient {
 
             PRPMIN406010UV01 request = builder.build();
 
-            WSUtil.logObject(LOGGER, "\nList Clinics Request:\n", request);
+            WSUtil.logObject(LOGGER, "List Clinics Request:", request);
 
             PRPMAR400013UV port = createClinicService();
             PRPMIN406110UV01 response = port.prpmIN406010UV01(request);
 
-            WSUtil.logObject(LOGGER, "\nList Clinics Response:\n", response);
+            WSUtil.logObject(LOGGER, "List Clinics Response:", response);
 
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {

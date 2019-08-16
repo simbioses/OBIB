@@ -4,8 +4,12 @@ import ca.uvic.leadlab.obibconnector.models.common.Id;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class OBIBConnectorHelper {
+
+    private static final Logger LOGGER = Logger.getLogger(OBIBConnectorHelper.class.getName());
 
     private static final Properties properties = setupProperties();
 
@@ -18,7 +22,7 @@ public abstract class OBIBConnectorHelper {
         try {
             properties.load(OBIBConnectorHelper.class.getResourceAsStream("/obibconnector.properties"));
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this exception
+            LOGGER.log(Level.SEVERE, "Error loading obibconnector.properties.");
         }
         return properties;
     }

@@ -17,8 +17,11 @@ import ca.uvic.leadlab.obibconnector.models.document.*;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Document implements IDocument {
+
+    private static final Logger LOGGER = Logger.getLogger(Document.class.getName());
 
     private final ClinicalDocument document;
 
@@ -105,7 +108,7 @@ public class Document implements IDocument {
             if (event != null) {
                 try { // try to get the statusCode name from the DocumentStatus enum.
                     statusCode = DocumentStatus.fromCode(event.getStatusCode());
-                } catch (Exception ignored) { } // TODO Ignore this exception?
+                } catch (Exception ignored) { }
             }
         }
         if (statusCode == null) {
@@ -161,7 +164,7 @@ public class Document implements IDocument {
         if (document.getAttachments() != null) { // attachments
             for (ca.uvic.leadlab.obibconnector.models.document.Attachment attachment : document.getAttachments()) {
                 if (!AttachmentUtils.checkAttachment(attachment.getContent(), attachment.getHash())) {
-                    // TODO log check error
+                    LOGGER.warning("Error validating attachment hash code.");
                 }
                 attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),
                         DatatypeConverter.parseBase64Binary(attachment.getContent())));

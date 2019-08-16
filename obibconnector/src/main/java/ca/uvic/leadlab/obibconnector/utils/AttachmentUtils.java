@@ -19,8 +19,7 @@ public class AttachmentUtils {
 
             return Arrays.equals(contentHash, DatatypeConverter.parseBase64Binary(hash));
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace(); // TODO log this exception
-            return true; // does not fails the process on error
+            return false; // does not fails the process on error
         }
     }
 

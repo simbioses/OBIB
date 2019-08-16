@@ -4,8 +4,12 @@ import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OBIBException extends Exception {
+
+    private static final Logger LOGGER = Logger.getLogger(OBIBException.class.getName());
 
     private static final Properties properties = setupProperties();
 
@@ -17,7 +21,7 @@ public class OBIBException extends Exception {
         try {
             properties.load(OBIBException.class.getResourceAsStream("/obibmessages.properties"));
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this exception
+            LOGGER.log(Level.SEVERE, "Error loading obibmessages.properties", e);
         }
         return properties;
     }

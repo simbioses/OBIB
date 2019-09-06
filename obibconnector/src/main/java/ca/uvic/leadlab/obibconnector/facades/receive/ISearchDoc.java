@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ISearchDoc {
 
-    List<IDocument> searchDocumentsByClinic(String clinicId) throws OBIBException;
+    List<IDocument> searchDocuments() throws OBIBException;
 
-    List<IDocument> searchDocumentsByClinic(String clinicId, Date startDate, Date endDate) throws OBIBException;
+    List<IDocument> searchDocumentsByPeriod(Date startDate, Date endDate) throws OBIBException;
 
-    IDocument searchDocumentById(String clinicId, String documentId) throws OBIBException;
+    IDocument searchDocumentById(String documentId) throws OBIBException;
 
     IDocument distributionStatus(String documentId) throws OBIBException;
 

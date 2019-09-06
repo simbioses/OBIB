@@ -130,6 +130,7 @@ public class RestClient implements IOscarInformation {
 
     @Override
     public ListDocumentsResponse searchDocument(SearchDocumentCriteria searchCriteria) throws OBIBRequestException {
+        searchCriteria.setClinicId(CDX_CLINIC_ID); // using clinic id from properties
         return doRequest(SEARCH_DOCUMENT_PATH, searchCriteria, ListDocumentsResponse.class);
     }
 

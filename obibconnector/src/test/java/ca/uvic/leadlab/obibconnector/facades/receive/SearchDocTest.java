@@ -15,7 +15,7 @@ public class SearchDocTest extends FacadesBaseTest {
     public void testSearchDocumentsByClinic() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(config);
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA);
+        List<IDocument> documents = searchDoc.searchDocuments();
 
         Assert.assertNotNull(documents);
 
@@ -33,7 +33,7 @@ public class SearchDocTest extends FacadesBaseTest {
         cal.set(2019, Calendar.APRIL, 1);
         Date end = cal.getTime();
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA, start, end);
+        List<IDocument> documents = searchDoc.searchDocumentsByPeriod(start, end);
 
         Assert.assertNotNull(documents);
 
@@ -45,7 +45,7 @@ public class SearchDocTest extends FacadesBaseTest {
     public void testSearchDocumentById() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(config);
 
-        IDocument document = searchDoc.searchDocumentById(clinicIdA, "006b83bc-be96-46bb-beb1-472dcb12c56a");
+        IDocument document = searchDoc.searchDocumentById("006b83bc-be96-46bb-beb1-472dcb12c56a");
 
         Assert.assertNotNull(document);
         System.out.println(mapper.writeValueAsString(document));

@@ -27,8 +27,6 @@ public class TestRestClient {
     private String clinicId = "cdxpostprod-otca";
     private String clinicPassword = "VMK31";
 
-    private String certPass = "obibconnector";
-
     private IOscarInformation restClient;
 
     private ObjectMapper mapper = new ObjectMapper(); // to visualize the objects
@@ -48,15 +46,11 @@ public class TestRestClient {
             return null;
         }
 
-        @Override
-        public String getKeystorePassword() {
-            return null;
-        }
     };
 
     @Before
     public void setup() throws Exception {
-        restClient = new RestClient(obibUrl, clinicId, clinicPassword, certPass);
+        restClient = new RestClient(obibUrl, clinicId, clinicPassword);
     }
 
     @Test
@@ -184,7 +178,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testConnectionError() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl + ":81", "", "", certPass);
+        RestClient restClientError = new RestClient(obibUrl + ":81", "", "");
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));
@@ -194,7 +188,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testInvalidCredentials() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl, clinicId, "WRONG_PASS", certPass);
+        RestClient restClientError = new RestClient(obibUrl, clinicId, "WRONG_PASS");
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));

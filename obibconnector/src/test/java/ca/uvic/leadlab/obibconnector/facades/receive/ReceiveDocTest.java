@@ -47,10 +47,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
                     return "Invalid_Password";
                 }
 
-                @Override
-                public String getKeystorePassword() {
-                    return certPass;
-                }
             });
 
             List<String> documentsIds = receiveDoc.pollNewDocIDs();

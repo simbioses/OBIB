@@ -5,6 +5,4 @@ public interface Config {
 
     String getClinicId();
     String getClinicPassword();
-
-    String getKeystorePassword();
 }

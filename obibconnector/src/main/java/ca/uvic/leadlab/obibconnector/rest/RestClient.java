@@ -30,7 +30,8 @@ public class RestClient implements IOscarInformation {
     private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
     private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
 
-    private static final String OBIB_KEYSTORE = OBIBConnectorHelper.getProperty("obib.keystore.path");
+    private static final String OBIB_KEYSTORE_PATH = OBIBConnectorHelper.getProperty("obib.keystore.path");
+    private static final String OBIB_KEYSTORE_PASS = OBIBConnectorHelper.getProperty("obib.keystore.pass");
 
     private final Client client;
 
@@ -42,29 +43,28 @@ public class RestClient implements IOscarInformation {
     /**
      * Construct a RestClient with a ssl context for authentication
      */
-    public RestClient(String obibURL, String clinicId, String clinicPassword, String keystorePass) {
+    public RestClient(String obibURL, String clinicId, String clinicPassword) {
         this.obibURL = obibURL;
         this.clinicId = clinicId;
         this.clinicPassword = clinicPassword;
         // build rest client
-        this.client =  setupRestClient(keystorePass);
+        this.client =  setupRestClient();
     }
 
-    private Client setupRestClient(String keyStorePass) {
+    private Client setupRestClient() {
         ClientConfig config = new ClientConfig()
                 //.register(new JacksonJsonProvider())
                 .property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT)
                 .property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT);
-        ClientBuilder builder = ClientBuilder.newBuilder().withConfig(config);
-        if (keyStorePass != null) {
-            builder.sslContext(setupSSLContext(keyStorePass));
-        }
-        return builder.build();
+        return ClientBuilder.newBuilder()
+                .withConfig(config)
+                .sslContext(setupSSLContext())
+                .build();
     }
 
-    private SSLContext setupSSLContext(String keyStorePass) {
+    private SSLContext setupSSLContext() {
         try {
-            KeyStoreManager keyStoreManager = new KeyStoreManager(OBIB_KEYSTORE, keyStorePass);
+            KeyStoreManager keyStoreManager = new KeyStoreManager(OBIB_KEYSTORE_PATH, OBIB_KEYSTORE_PASS);
 
             SSLContext context = SSLContext.getInstance("TLSv1.2");
             context.init(new KeyManager[]{keyStoreManager}, new TrustManager[]{keyStoreManager}, null);

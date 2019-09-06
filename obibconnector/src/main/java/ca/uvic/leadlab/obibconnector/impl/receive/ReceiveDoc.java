@@ -17,8 +17,7 @@ public class ReceiveDoc implements IReceiveDoc {
     private final IOscarInformation services;
 
     public ReceiveDoc(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId(),
-                conf.getClinicPassword(), conf.getKeystorePassword());
+        this.services = new RestClient(conf.getUrl(), conf.getClinicId(), conf.getClinicPassword());
     }
 
     @Override

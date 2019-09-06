@@ -17,8 +17,6 @@ public class FacadesBaseTest {
     protected String clinicIdT = "cdxpostprod-ctc";
     protected String clinicPasswordT = "conformance123";
 
-    protected String certPass = "obibconnector";
-
     protected Config configClinicA = new Config() {
         @Override
         public String getUrl() {
@@ -35,10 +33,6 @@ public class FacadesBaseTest {
             return clinicPasswordA;
         }
 
-        @Override
-        public String getKeystorePassword() {
-            return certPass;
-        }
     };
 
     protected Config configClinicC = new Config() {
@@ -57,10 +51,6 @@ public class FacadesBaseTest {
             return clinicPasswordC;
         }
 
-        @Override
-        public String getKeystorePassword() {
-            return certPass;
-        }
     };
 
     protected Config configClinicT = new Config() {
@@ -79,10 +69,6 @@ public class FacadesBaseTest {
             return clinicPasswordT;
         }
 
-        @Override
-        public String getKeystorePassword() {
-            return certPass;
-        }
     };
 
 }

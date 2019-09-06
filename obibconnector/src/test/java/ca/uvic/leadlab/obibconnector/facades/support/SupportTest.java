@@ -10,7 +10,7 @@ public class SupportTest extends FacadesBaseTest {
 
     @Test
     public void testNotifyError() throws Exception {
-        ISupport support = new Support(configClinicA);
+        ISupport support = new Support(config);
 
         support.notifyError("Error message at " + new Date(), new Exception("Exception").toString());
     }

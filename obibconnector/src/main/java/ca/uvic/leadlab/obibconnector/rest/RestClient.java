@@ -33,20 +33,17 @@ public class RestClient implements IOscarInformation {
     private static final String OBIB_KEYSTORE_PATH = OBIBConnectorHelper.getProperty("obib.keystore.path");
     private static final String OBIB_KEYSTORE_PASS = OBIBConnectorHelper.getProperty("obib.keystore.pass");
 
+    private static final String CDX_CLINIC_ID = OBIBConnectorHelper.getProperty("cdx.clinic.id");
+    private static final String CDX_CLINIC_PASS = OBIBConnectorHelper.getProperty("cdx.clinic.password");
+
     private final Client client;
-
     private final String obibURL;
-
-    private final String clinicId;
-    private final String clinicPassword;
 
     /**
      * Construct a RestClient with a ssl context for authentication
      */
-    public RestClient(String obibURL, String clinicId, String clinicPassword) {
+    public RestClient(String obibURL) {
         this.obibURL = obibURL;
-        this.clinicId = clinicId;
-        this.clinicPassword = clinicPassword;
         // build rest client
         this.client =  setupRestClient();
     }
@@ -95,8 +92,8 @@ public class RestClient implements IOscarInformation {
             Response response = client.target(getServicesURL())
                     .path(path)
                     .request(MediaType.APPLICATION_JSON)
-                    .header("clinicId", clinicId)
-                    .header("password", clinicPassword)
+                    .header("clinicId", CDX_CLINIC_ID)
+                    .header("password", CDX_CLINIC_PASS)
                     .header("connectorVersion", OBIBConnectorHelper.getOBIBConnectorVersion())
                     .post(Entity.json(requestEntity), Response.class);
 

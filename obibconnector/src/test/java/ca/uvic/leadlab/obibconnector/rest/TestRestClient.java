@@ -24,9 +24,6 @@ public class TestRestClient {
 
     private String obibUrl = "https://192.168.100.101";
 
-    private String clinicId = "cdxpostprod-otca";
-    private String clinicPassword = "VMK31";
-
     private IOscarInformation restClient;
 
     private ObjectMapper mapper = new ObjectMapper(); // to visualize the objects
@@ -35,22 +32,11 @@ public class TestRestClient {
         public String getUrl() {
             return obibUrl;
         }
-
-        @Override
-        public String getClinicId() {
-            return clinicId;
-        }
-
-        @Override
-        public String getClinicPassword() {
-            return null;
-        }
-
     };
 
     @Before
     public void setup() throws Exception {
-        restClient = new RestClient(obibUrl, clinicId, clinicPassword);
+        restClient = new RestClient(obibUrl);
     }
 
     @Test
@@ -178,17 +164,7 @@ public class TestRestClient {
 
     @Test(expected = OBIBRequestException.class)
     public void testConnectionError() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl + ":81", "", "");
-        ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
-                .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
-        System.out.println(mapper.writeValueAsString(response));
-
-        Assert.assertNull(response);
-    }
-
-    @Test(expected = OBIBRequestException.class)
-    public void testInvalidCredentials() throws Exception {
-        RestClient restClientError = new RestClient(obibUrl, clinicId, "WRONG_PASS");
+        RestClient restClientError = new RestClient(obibUrl + ":81");
         ListDocumentsResponse response = restClientError.distributionStatus(SearchDocumentCriteria
                 .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
         System.out.println(mapper.writeValueAsString(response));

@@ -20,7 +20,7 @@ public class SearchProviders implements ISearchProviders {
     private final IOscarInformation services;
 
     public SearchProviders(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId(), conf.getClinicPassword());
+        this.services = new RestClient(conf.getUrl());
     }
 
     @Override

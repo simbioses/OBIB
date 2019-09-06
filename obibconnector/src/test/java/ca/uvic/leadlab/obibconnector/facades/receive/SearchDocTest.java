@@ -13,9 +13,9 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testSearchDocumentsByClinic() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicA);
+        ISearchDoc searchDoc = new SearchDoc(config);
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinicA.getClinicId());
+        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA);
 
         Assert.assertNotNull(documents);
 
@@ -25,7 +25,7 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testSearchDocumentsByClinicWithDate() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicA);
+        ISearchDoc searchDoc = new SearchDoc(config);
 
         Calendar cal = Calendar.getInstance();
         cal.set(2019, Calendar.MARCH, 1);
@@ -33,7 +33,7 @@ public class SearchDocTest extends FacadesBaseTest {
         cal.set(2019, Calendar.APRIL, 1);
         Date end = cal.getTime();
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinicA.getClinicId(), start, end);
+        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA, start, end);
 
         Assert.assertNotNull(documents);
 
@@ -43,10 +43,9 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testSearchDocumentById() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicA);
+        ISearchDoc searchDoc = new SearchDoc(config);
 
-        IDocument document = searchDoc.searchDocumentById(configClinicA.getClinicId(),
-                "006b83bc-be96-46bb-beb1-472dcb12c56a");
+        IDocument document = searchDoc.searchDocumentById(clinicIdA, "006b83bc-be96-46bb-beb1-472dcb12c56a");
 
         Assert.assertNotNull(document);
         System.out.println(mapper.writeValueAsString(document));
@@ -54,7 +53,7 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testDistributionStatus() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(configClinicA);
+        ISearchDoc searchDoc = new SearchDoc(config);
 
         IDocument document = searchDoc.distributionStatus("2ffcaae0-45f8-467c-95c9-0fc91ca816dd");
 

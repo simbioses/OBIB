@@ -18,7 +18,7 @@ public class SearchClinic implements ISearchClinic {
     private final IOscarInformation services;
 
     public SearchClinic(Config conf) {
-        this.services = new RestClient(conf.getUrl(), conf.getClinicId(), conf.getClinicPassword());
+        this.services = new RestClient(conf.getUrl());
     }
 
     @Override

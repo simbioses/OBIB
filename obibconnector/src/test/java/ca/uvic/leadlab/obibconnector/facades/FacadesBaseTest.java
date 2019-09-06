@@ -17,58 +17,10 @@ public class FacadesBaseTest {
     protected String clinicIdT = "cdxpostprod-ctc";
     protected String clinicPasswordT = "conformance123";
 
-    protected Config configClinicA = new Config() {
+    protected Config config = new Config() {
         @Override
         public String getUrl() {
             return obibUrl;
         }
-
-        @Override
-        public String getClinicId() {
-            return clinicIdA;
-        }
-
-        @Override
-        public String getClinicPassword() {
-            return clinicPasswordA;
-        }
-
     };
-
-    protected Config configClinicC = new Config() {
-        @Override
-        public String getUrl() {
-            return obibUrl;
-        }
-
-        @Override
-        public String getClinicId() {
-            return clinicIdC;
-        }
-
-        @Override
-        public String getClinicPassword() {
-            return clinicPasswordC;
-        }
-
-    };
-
-    protected Config configClinicT = new Config() {
-        @Override
-        public String getUrl() {
-            return obibUrl;
-        }
-
-        @Override
-        public String getClinicId() {
-            return clinicIdT;
-        }
-
-        @Override
-        public String getClinicPassword() {
-            return clinicPasswordT;
-        }
-
-    };
-
 }

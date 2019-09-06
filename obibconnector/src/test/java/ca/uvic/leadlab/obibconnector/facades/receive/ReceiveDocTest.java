@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.obibconnector.facades.receive;
 
-import ca.uvic.leadlab.obibconnector.facades.Config;
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.facades.support.ISupport;
@@ -16,7 +15,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testPollNewDocIDs() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
+        IReceiveDoc receiveDoc = new ReceiveDoc(config);
 
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
@@ -28,40 +27,9 @@ public class ReceiveDocTest extends FacadesBaseTest {
         }
     }
 
-    @Test(expected = OBIBException.class)
-    public void testPollNewDocIDsError() throws Exception {
-        try {
-            IReceiveDoc receiveDoc = new ReceiveDoc(new Config() {
-                @Override
-                public String getUrl() {
-                    return obibUrl;
-                }
-
-                @Override
-                public String getClinicId() {
-                    return "__Wrong_ID";
-                }
-
-                @Override
-                public String getClinicPassword() {
-                    return "Invalid_Password";
-                }
-
-            });
-
-            List<String> documentsIds = receiveDoc.pollNewDocIDs();
-
-            //Assert.assertNull(documentsIds);
-        } catch (OBIBException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("OBIB Message: " + ex.getObibMessage());
-            throw ex;
-        }
-    }
-
     @Test
     public void testRetrieveDocument() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
+        IReceiveDoc receiveDoc = new ReceiveDoc(config);
 
         IDocument document = receiveDoc.retrieveDocument("7744d591-b0b4-e911-a96d-0050568c55a6");
 
@@ -73,7 +41,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
         try {
-            IReceiveDoc receiveDoc = new ReceiveDoc(configClinicA);
+            IReceiveDoc receiveDoc = new ReceiveDoc(config);
 
             IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 
@@ -87,12 +55,11 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveAllDocuments() throws Exception {
-        Config configClinic = configClinicA;
-        ISearchDoc searchDoc = new SearchDoc(configClinic);
-        IReceiveDoc receiveDoc = new ReceiveDoc(configClinic);
-        ISupport support = new Support(configClinic);
+        ISearchDoc searchDoc = new SearchDoc(config);
+        IReceiveDoc receiveDoc = new ReceiveDoc(config);
+        ISupport support = new Support(config);
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(configClinic.getClinicId());
+        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA);
 
         Assert.assertNotNull(documents);
         System.out.println("Total documents: " + documents.size());

@@ -20,7 +20,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     @Test
     public void testSubmitNewDoc() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(configClinicA);
+        ISubmitDoc submitDoc = new SubmitDoc(config);
 
             IDocument response = submitDoc.newDoc()
                     .documentType(DocumentType.REFERRAL_NOTE)
@@ -62,7 +62,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     @Test
     public void testSubmitUpdatedDocument() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(configClinicT);
+        ISubmitDoc submitDoc = new SubmitDoc(config);
 
         // TODO get document and update it
 
@@ -103,7 +103,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testSubmitDocWithErrors() throws Exception {
         try {
-            ISubmitDoc submitDoc = new SubmitDoc(configClinicA);
+            ISubmitDoc submitDoc = new SubmitDoc(config);
             IDocument response = submitDoc.newDoc()
 //                .documentType(DocumentType.REFERRAL_NOTE) // LOINC is required
                     .patient()
@@ -148,7 +148,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     @Test
     public void testSubmitDocWithAttachment() throws Exception {
-        ISubmitDoc submitDoc = new SubmitDoc(configClinicA);
+        ISubmitDoc submitDoc = new SubmitDoc(config);
 
         IDocument response = submitDoc.newDoc()
                 .documentType(DocumentType.REFERRAL_NOTE)
@@ -186,7 +186,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testSubmitDocWithBigAttachment() throws Exception {
         try {
-            ISubmitDoc submitDoc = new SubmitDoc(configClinicA);
+            ISubmitDoc submitDoc = new SubmitDoc(config);
 
             IDocument response = submitDoc.newDoc()
                     .documentType(DocumentType.REFERRAL_NOTE)

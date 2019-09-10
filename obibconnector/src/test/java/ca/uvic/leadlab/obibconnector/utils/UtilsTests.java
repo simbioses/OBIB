@@ -14,4 +14,9 @@ public class UtilsTests {
     public void testOBIBConnectorVersion() throws Exception {
         Assert.assertNotNull(OBIBConnectorHelper.getOBIBConnectorVersion());
     }
+
+    //@Test
+    public void testReadOBIBConnectorProperties() throws Exception {
+        Assert.assertNotNull(OBIBConnectorHelper.getProperty("obib.keystore.path"));
+    }
 }

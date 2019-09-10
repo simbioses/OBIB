@@ -2,10 +2,16 @@ package ca.uvic.leadlab.obibconnector.utils;
 
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class OBIBConnectorHelper {
 
@@ -18,11 +24,34 @@ public abstract class OBIBConnectorHelper {
     private static final String DEFAULT_PATIENT_ID_TYPES = properties.getProperty("obib.default.patient.id.type");
 
     private static Properties setupProperties() {
+        String obibPath = null;
         Properties properties = new Properties();
         try {
-            properties.load(OBIBConnectorHelper.class.getResourceAsStream("/obibconnector.properties"));
+            // get the properties file location from the JAR Manifest file
+            final URL jarUrl = OBIBConnectorHelper.class.getProtectionDomain().getCodeSource().getLocation();
+            final JarFile jarFile = new JarFile(jarUrl.getPath());
+            obibPath = jarFile.getManifest().getMainAttributes().getValue("Obib-Properties-Path");
+            // convert any environment variable
+            Pattern p = Pattern.compile("\\$([a-zA-Z_][a-zA-Z0-9_]*)"); // pattern for a valid env. variable name
+            Matcher m = p.matcher(obibPath);
+            StringBuffer sb = new StringBuffer();
+            while (m.find()) {
+                String envValue = System.getenv(m.group(1)); // get the value from the env. variable
+                if (envValue != null) {
+                    m.appendReplacement(sb, envValue); // replace the env. variable for its value
+                }
+            }
+            m.appendTail(sb);
+            obibPath = sb.toString();
+            // load the properties file
+            try (InputStream inputStream = new FileInputStream(obibPath)) {
+                properties.load(inputStream);
+            }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error loading obibconnector.properties.");
+            LOGGER.log(Level.SEVERE, "Error: could not load properties from file " + obibPath, e);
+            try {
+                properties.load(OBIBConnectorHelper.class.getResourceAsStream("/obibconnector.properties")); // used on tests
+            } catch (Exception ignore) { /* ignored */ }
         }
         return properties;
     }

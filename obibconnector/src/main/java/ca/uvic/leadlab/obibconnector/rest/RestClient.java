@@ -30,8 +30,8 @@ public class RestClient implements IOscarInformation {
     private static final String CONNECT_TIMEOUT = OBIBConnectorHelper.getProperty("obib.connect.timeout");
     private static final String READ_TIMEOUT = OBIBConnectorHelper.getProperty("obib.read.timeout");
 
-    private static final String OBIB_KEYSTORE_PATH = OBIBConnectorHelper.getProperty("obib.keystore.path");
-    private static final String OBIB_KEYSTORE_PASS = OBIBConnectorHelper.getProperty("obib.keystore.pass");
+    private static final String OBIB_KEYSTORE_PATH = OBIBConnectorHelper.getPropertyExpanded("obib.keystore.path");
+    private static final String OBIB_KEYSTORE_PASS = OBIBConnectorHelper.getPropertyExpanded("obib.keystore.pass");
 
     private static final String CDX_CLINIC_ID = OBIBConnectorHelper.getProperty("cdx.clinic.id");
     private static final String CDX_CLINIC_PASS = OBIBConnectorHelper.getProperty("cdx.clinic.password");

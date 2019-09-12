@@ -105,8 +105,7 @@ public class TestRestClient {
 
     @Test
     public void testSearchDocument() throws Exception {
-        ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
-                .byClinicId("cdxpostprod-otca"));
+        ListDocumentsResponse response = restClient.searchDocument(new SearchDocumentCriteria());
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -114,7 +113,7 @@ public class TestRestClient {
 
     @Test
     public void testSearchDocumentWithDate() throws Exception {
-        SearchDocumentCriteria criteria = SearchDocumentCriteria.byClinicId("cdxpostprod-otca");
+        SearchDocumentCriteria criteria = new SearchDocumentCriteria();
         Calendar cal = Calendar.getInstance();
         cal.set(2019, Calendar.MARCH, 1);
         Date start = cal.getTime();

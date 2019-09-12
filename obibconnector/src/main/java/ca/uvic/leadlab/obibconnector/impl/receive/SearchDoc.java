@@ -25,17 +25,21 @@ public class SearchDoc implements ISearchDoc {
     }
 
     @Override
-    public List<IDocument> searchDocumentsByClinic(String clinicId) throws OBIBException {
-        return searchDocumentsByClinic(clinicId, null, null);
+    public List<IDocument> searchDocuments() throws OBIBException {
+        return searchDocuments(new SearchDocumentCriteria());
     }
 
     @Override
-    public List<IDocument> searchDocumentsByClinic(String clinicId, Date startDate, Date endDate) throws OBIBException {
+    public List<IDocument> searchDocumentsByPeriod(Date startDate, Date endDate) throws OBIBException {
+        SearchDocumentCriteria criteria = new SearchDocumentCriteria();
+        if (startDate != null && endDate != null) {
+            criteria.setEffectiveTime(new DateRange(startDate, endDate));
+        }
+        return searchDocuments(criteria);
+    }
+
+    private List<IDocument> searchDocuments(SearchDocumentCriteria criteria) throws OBIBException {
         try {
-            SearchDocumentCriteria criteria = SearchDocumentCriteria.byClinicId(clinicId);
-            if (startDate != null && endDate != null) {
-                criteria.setEffectiveTime(new DateRange(startDate, endDate));
-            }
             ListDocumentsResponse response = services.searchDocument(criteria);
 
             if (!response.isOK()) {
@@ -48,15 +52,14 @@ public class SearchDoc implements ISearchDoc {
             }
             return documents;
         } catch (OBIBRequestException e) {
-            throw new OBIBException("Error searching for document by clinic.", e);
+            throw new OBIBException("Error searching for documents.", e);
         }
     }
 
     @Override
-    public IDocument searchDocumentById(String clinicId, String documentId) throws OBIBException {
+    public IDocument searchDocumentById(String documentId) throws OBIBException {
         try {
-            ListDocumentsResponse response = services.searchDocument(
-                    SearchDocumentCriteria.byClinicIdAndDocumentId(clinicId, documentId));
+            ListDocumentsResponse response = services.searchDocument(SearchDocumentCriteria.byDocumentId(documentId));
 
             if (!response.isOK()) {
                 throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
@@ -71,8 +74,7 @@ public class SearchDoc implements ISearchDoc {
     @Override
     public IDocument distributionStatus(String documentId) throws OBIBException {
         try {
-            ListDocumentsResponse response = services.distributionStatus(
-                    SearchDocumentCriteria.byDocumentId(documentId));
+            ListDocumentsResponse response = services.distributionStatus(SearchDocumentCriteria.byDocumentId(documentId));
 
             if (!response.isOK()) {
                 throw new OBIBRequestException(response.getMessage(), response.getObibErrors());

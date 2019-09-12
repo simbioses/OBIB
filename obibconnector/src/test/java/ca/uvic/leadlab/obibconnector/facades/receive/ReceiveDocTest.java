@@ -59,7 +59,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
         IReceiveDoc receiveDoc = new ReceiveDoc(config);
         ISupport support = new Support(config);
 
-        List<IDocument> documents = searchDoc.searchDocumentsByClinic(clinicIdA);
+        List<IDocument> documents = searchDoc.searchDocuments();
 
         Assert.assertNotNull(documents);
         System.out.println("Total documents: " + documents.size());

@@ -75,8 +75,6 @@ sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-serve
 ## Execute database insertion scripts as 'user'
 mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
 mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
-# TODO move this to register
-mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_clinic_credential.sql"
 
 ## Download Mirth Connect
 wget -q http://downloads.mirthcorp.com/connect/3.8.0.b2464/mirthconnect-3.8.0.b2464-unix.tar.gz
@@ -87,9 +85,6 @@ sudo mv 'Mirth Connect' "$MIRTH_ROOT"
 
 ## Copy Mirth Connect's configuration files
 sudo cp -R "$CONF_ROOT/appdata/" "$MIRTH_ROOT/"
-# TODO move this to register
-sudo cp -R "$CONF_ROOT/certs/" "$MIRTH_ROOT/"
-sudo chmod 700 "$MIRTH_ROOT/certs/"
 sudo cp "$CONF_ROOT"/conf/* "$MIRTH_ROOT/conf/"
 sudo cp "$CONF_ROOT/mirth.service" /etc/systemd/system/
 sudo cp "$CONF_ROOT/mariadb-java-client-2.4.2.jar" "$MIRTH_ROOT/server-lib/database/"
@@ -101,6 +96,10 @@ sudo sed -e 's,${SERVER_IP},'"$SERVER_IP"',g' -e 's,${TIMEZONE},'"$TIMEZONE"',g'
 sudo sed -e 's,${ADMIN_USERNAME},'"$ADMIN_USERNAME"',g' -e 's,${ADMIN_PASSWORD},'"$ADMIN_PASSWORD"',g' \
  -i "$MIRTH_ROOT/conf/mirth-cli-config.properties"
 sudo sed -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i /etc/systemd/system/mirth.service
+
+## Create a folder to store the clinic certificates
+sudo mkdir "$MIRTH_ROOT/certs/"
+sudo chmod 700 "$MIRTH_ROOT/certs/"
 
 ## Configure Mirth Connect to start on boot
 sudo chmod +x /etc/systemd/system/mirth.service

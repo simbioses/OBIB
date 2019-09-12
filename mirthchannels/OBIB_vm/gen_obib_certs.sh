@@ -26,13 +26,3 @@ if [[ ! -f $OBIB_CA_KEY_PATH && ! -f $OBIB_CA_CERT_PATH ]]; then
   chmod 400 "$OBIB_CA_KEY_PATH"
   chmod 444 "$OBIB_CA_CERT_PATH"
 fi
-
-## Generate a new KeyStore with the CA cetificate
-if [[ -f $OBIB_KEYSTORE_PATH ]]; then
-  echo "KeyStore '" "$OBIB_KEYSTORE_PATH" \
-    "' already exist. Set another path on mirth_connect.sh or move the current file to create a new KeyStore."
-else
-  echo "Creating keystore..."
-  openssl pkcs12 -export -in "$OBIB_CA_CERT_PATH" -passin pass:password -out "$OBIB_KEYSTORE_PATH" \
-    -passout pass:"$OBIB_KEYSTORE_PASS" -name "OBIB Certs"
-fi

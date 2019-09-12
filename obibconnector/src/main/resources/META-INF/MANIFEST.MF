@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-
+Obib-Properties-Path: $CATALINA_HOME/obibconnector.properties

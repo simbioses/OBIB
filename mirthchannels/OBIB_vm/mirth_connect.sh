@@ -1,9 +1,12 @@
 #!/bin/bash
 
-## Server Settings
+## Server IP Address (change as needed)
 SERVER_IP='192.168.100.101'
 
-## Database credentials
+## Server timezone (change as needed)
+TIMEZONE='Canada/Pacific'
+
+## Mirth Connect Database credentials (change passwords for production)
 DB_ROOT_PASS='_DBrP445!'
 DB_USERNAME='mirth'
 DB_PASSWORD='Mirth!123'
@@ -12,29 +15,29 @@ DB_PASSWORD='Mirth!123'
 MIRTH_ROOT='/opt/MirthConnect'
 NGINX_ROOT='/etc/nginx'
 
-## Vagrant shared config folder
-CONF_ROOT='/vagrant/configs'
-
-## Config timezone
-TIMEZONE='Canada/Pacific'
-
-## Mirth Connect Administrator credentials
-ADMIN_USERNAME='admin'
-ADMIN_PASSWORD='admin'
-
-## SSL paths
+## Default SSL paths
 CERTS_PATH='/etc/ssl/certs'
 KEYS_PATH='/etc/ssl/private'
 
-## OBIB SSL CA credentials
+## Vagrant shared config folder
+CONF_ROOT='/vagrant/configs'
+
+## Mirth Connect Administrator credentials (change password for production)
+ADMIN_USERNAME='admin'
+ADMIN_PASSWORD='admin'
+
+## OBIB SSL CA certificate (regenerate or replace for production)
 OBIB_CA_CERT='obib_ca.crt'
 OBIB_CA_KEY='obib_ca.key'
 OBIB_CA_PASS='OBIB!123'
 
-## OBIB SSL Server credentials
+## OBIB SSL Server certificate
 OBIB_SERVER_CERT='obib.crt'
 OBIB_SERVER_KEY='obib.key'
 
-## OBIB SSL KeyStore
-OBIB_KEYSTORE_PATH='./obibcerts.pfx'
+## OBIB Connector SSL KeyStore (change password for production)
+OBIB_KEYSTORE_FILE='obibconnector.keystore'
 OBIB_KEYSTORE_PASS='obibconnector'
+
+## EMR secure directory (change as needed)
+EMR_SECURE_DIRECTORY='$CATALINA_HOME'

@@ -103,7 +103,7 @@
 
     <groupId>ca.uvic.leadlab</groupId>
     <artifactId>obibconnector</artifactId>
-    <version>1.0-48</version>
+    <version>1.0-50</version>
 
     <dependencies>
         <dependency>

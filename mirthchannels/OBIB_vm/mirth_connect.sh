@@ -26,7 +26,7 @@ CONF_ROOT='/vagrant/configs'
 ADMIN_USERNAME='admin'
 ADMIN_PASSWORD='admin'
 
-## OBIB SSL CA certificate (regenerate or replace for production)
+## OBIB SSL CA certificate (generate new one or replace it with a CA-signed for production)
 OBIB_CA_CERT='obib_ca.crt'
 OBIB_CA_KEY='obib_ca.key'
 OBIB_CA_PASS='OBIB!123'

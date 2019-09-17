@@ -94,8 +94,8 @@ public abstract class WSClient {
         Map<String, Object> requestCtx = ((BindingProvider) service).getRequestContext();
 
         requestCtx.put("com.sun.xml.internal.ws.connect.timeout",
-                Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout", "5000")));
+                Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout", "10000")));
         requestCtx.put("com.sun.xml.internal.ws.request.timeout",
-                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout", "5000")));
+                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout", "30000")));
     }
 }

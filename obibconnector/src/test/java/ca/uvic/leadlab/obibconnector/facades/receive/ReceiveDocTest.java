@@ -59,17 +59,23 @@ public class ReceiveDocTest extends FacadesBaseTest {
         IReceiveDoc receiveDoc = new ReceiveDoc(config);
         ISupport support = new Support(config);
 
+        long startSearch = System.currentTimeMillis();
         List<IDocument> documents = searchDoc.searchDocuments();
+        long endSearch = System.currentTimeMillis();
 
         Assert.assertNotNull(documents);
         System.out.println("Total documents: " + documents.size());
+        System.out.println("Time elapsed: " + (endSearch - startSearch));
         for (IDocument doc : documents) {
             try {
+                long startRetrieve = System.currentTimeMillis();
                 IDocument document = receiveDoc.retrieveDocument(doc.getDocumentID());
+                long endRetrieve = System.currentTimeMillis();
 
                 Assert.assertNotNull(document);
                 System.out.println("Retrieved Document: " + doc.getDocumentID());
-                System.out.println(mapper.writeValueAsString(document));
+                System.out.println("Time elapsed: " + (endRetrieve - startRetrieve));
+                //System.out.println(mapper.writeValueAsString(document));
             } catch (Exception e) {
                 System.out.println("Error retrieving Document: " + doc.getDocumentID());
                 support.notifyError("Error retrieving Document: " + doc.getDocumentID(), e.getMessage());

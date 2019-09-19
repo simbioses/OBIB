@@ -31,6 +31,7 @@ public class SubmitDoc implements ISubmitDoc {
     @Override
     public ISubmitDoc newDoc() {
         this.document = new ClinicalDocument();
+        document.setEffectiveTime(DateFormatter.formatDateTime(new Date()));
         return this;
     }
 

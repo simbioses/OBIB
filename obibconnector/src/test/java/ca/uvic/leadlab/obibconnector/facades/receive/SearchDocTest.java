@@ -45,19 +45,21 @@ public class SearchDocTest extends FacadesBaseTest {
     public void testSearchDocumentById() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(config);
 
-        IDocument document = searchDoc.searchDocumentById("006b83bc-be96-46bb-beb1-472dcb12c56a");
+        List<IDocument> documents = searchDoc.searchDocumentById("f9841c14-941a-4406-aa96-861775e37492");
 
-        Assert.assertNotNull(document);
-        System.out.println(mapper.writeValueAsString(document));
+        Assert.assertNotNull(documents);
+        System.out.println("Documents count: " + documents.size());
+        System.out.println(mapper.writeValueAsString(documents));
     }
 
     @Test
     public void testDistributionStatus() throws Exception {
         ISearchDoc searchDoc = new SearchDoc(config);
 
-        IDocument document = searchDoc.distributionStatus("2ffcaae0-45f8-467c-95c9-0fc91ca816dd");
+        List<IDocument> documents = searchDoc.distributionStatus("f9841c14-941a-4406-aa96-861775e37492");
 
-        Assert.assertNotNull(document);
-        System.out.println(mapper.writeValueAsString(document));
+        Assert.assertNotNull(documents);
+        System.out.println("Documents count: " + documents.size());
+        System.out.println(mapper.writeValueAsString(documents));
     }
 }

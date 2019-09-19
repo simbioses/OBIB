@@ -11,8 +11,8 @@ public interface ISearchDoc {
 
     List<IDocument> searchDocumentsByPeriod(Date startDate, Date endDate) throws OBIBException;
 
-    IDocument searchDocumentById(String documentId) throws OBIBException;
+    List<IDocument> searchDocumentById(String documentId) throws OBIBException;
 
-    IDocument distributionStatus(String documentId) throws OBIBException;
+    List<IDocument> distributionStatus(String documentId) throws OBIBException;
 
 }

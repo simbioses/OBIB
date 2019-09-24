@@ -4,25 +4,36 @@ public enum MediaType {
 
     TEXT("text/plain"),
     PDF("application/pdf"),
-    RTF("text/rtf"),
+    RTF("text/rtf", "application/rtf"),
     JPEG("image/jpeg"),
     PNG("image/png"),
     TIFF("image/tiff");
 
-    public final String mediaType;
+    public final String[] mediaTypes;
 
-    MediaType(String mediaType) {
-        this.mediaType = mediaType;
+    MediaType(String... mediaTypes) {
+        this.mediaTypes = mediaTypes;
+    }
+
+    public String getMediaType() {
+        return mediaTypes[0];
     }
 
     public static boolean isPlainText(String mediaType) {
-        return TEXT.mediaType.equalsIgnoreCase(mediaType);
+        for (String type : TEXT.mediaTypes) {
+            if (type.equalsIgnoreCase(mediaType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public MediaType fromMediaType(String mediaType) {
         for (MediaType value : MediaType.values()) {
-            if (value.mediaType.equalsIgnoreCase(mediaType)) {
-                return value;
+            for (String type : value.mediaTypes) {
+                if (type.equalsIgnoreCase(mediaType)) {
+                    return value;
+                }
             }
         }
         throw new IllegalArgumentException("No MediaType enum with mediaType = " + mediaType);

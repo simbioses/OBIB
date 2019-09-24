@@ -2,22 +2,28 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum AttachmentType {
 
-    PDF(MediaType.PDF.mediaType),
-    RTF(MediaType.RTF.mediaType),
-    JPEG(MediaType.JPEG.mediaType),
-    PNG(MediaType.PNG.mediaType),
-    TIFF(MediaType.TIFF.mediaType);
+    PDF(MediaType.PDF.mediaTypes),
+    RTF(MediaType.RTF.mediaTypes),
+    JPEG(MediaType.JPEG.mediaTypes),
+    PNG(MediaType.PNG.mediaTypes),
+    TIFF(MediaType.TIFF.mediaTypes);
 
-    public final String mediaType;
+    public final String[] mediaTypes;
 
-    AttachmentType(String mediaType) {
-        this.mediaType = mediaType;
+    AttachmentType(String... mediaTypes) {
+        this.mediaTypes = mediaTypes;
+    }
+
+    public String getMediaType() {
+        return mediaTypes[0];
     }
 
     public static AttachmentType fromMediaType(String mediaType) {
         for (AttachmentType value : AttachmentType.values()) {
-            if (value.mediaType.equalsIgnoreCase(mediaType)) {
-                return value;
+            for (String type : value.mediaTypes) {
+                if (type.equalsIgnoreCase(mediaType)) {
+                    return value;
+                }
             }
         }
         throw new IllegalArgumentException("No AttachmentType enum with mediaType = " + mediaType);

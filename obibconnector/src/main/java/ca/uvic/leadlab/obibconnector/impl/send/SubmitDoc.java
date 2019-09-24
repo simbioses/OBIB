@@ -103,14 +103,14 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc content(String text) {
-        document.setNonXMLBody(new NonXMLBody(text, MediaType.TEXT.mediaType));
+        document.setNonXMLBody(new NonXMLBody(text, MediaType.TEXT.getMediaType()));
         return this;
     }
 
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
         document.addAttachment(new Attachment(AttachmentUtils.calculateHash(data),
-                type.mediaType,
+                type.getMediaType(),
                 DatatypeConverter.printBase64Binary(data),
                 reference));
         return this;

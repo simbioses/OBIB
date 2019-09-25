@@ -38,6 +38,11 @@ public class SearchDoc implements ISearchDoc {
         return searchDocuments(criteria);
     }
 
+    @Override
+    public List<IDocument> searchDocumentById(String documentId) throws OBIBException {
+        return searchDocuments(SearchDocumentCriteria.byDocumentId(documentId));
+    }
+
     private List<IDocument> searchDocuments(SearchDocumentCriteria criteria) throws OBIBException {
         try {
             ListDocumentsResponse response = services.searchDocument(criteria);
@@ -53,25 +58,6 @@ public class SearchDoc implements ISearchDoc {
             return documents;
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error searching for documents.", e);
-        }
-    }
-
-    @Override
-    public List<IDocument> searchDocumentById(String documentId) throws OBIBException {
-        try {
-            ListDocumentsResponse response = services.searchDocument(SearchDocumentCriteria.byDocumentId(documentId));
-
-            if (!response.isOK()) {
-                throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
-            }
-
-            List<IDocument> documents = new ArrayList<>();
-            for (ClinicalDocument document : response.getDocuments()) {
-                documents.add(new Document(document));
-            }
-            return documents;
-        } catch (OBIBRequestException e) {
-            throw new OBIBException("Error searching for document by id.", e);
         }
     }
 

@@ -20,6 +20,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
         Assert.assertNotNull(documentsIds);
+        Assert.assertFalse(documentsIds.isEmpty());
 
         System.out.println("Documents count: " + documentsIds.size());
         for (String id : documentsIds) {
@@ -36,6 +37,21 @@ public class ReceiveDocTest extends FacadesBaseTest {
         Assert.assertNotNull(document);
 
         System.out.println(mapper.writeValueAsString(document));
+    }
+
+    @Test(expected = OBIBException.class)
+    public void testRetrieveNonexistentDocument() throws Exception {
+        try {
+            IReceiveDoc receiveDoc = new ReceiveDoc(config);
+
+            IDocument document = receiveDoc.retrieveDocument("12345678-aaaa-bbbb-cccc-0055566cddcc");
+
+            //Assert.assertNull(document);
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test(expected = OBIBException.class)

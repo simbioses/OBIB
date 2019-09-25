@@ -1,7 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
-import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.impl.registry.SearchProviders;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,23 +16,19 @@ public class SearchProvidesTest extends FacadesBaseTest {
         List<IProvider> providers = searchProviders.findByProviderID("93188");
 
         Assert.assertNotNull(providers);
+        Assert.assertFalse(providers.isEmpty());
 
         System.out.println(mapper.writeValueAsString(providers));
     }
 
-    @Test(expected = OBIBException.class)
-    public void testFindByProviderIdError() throws Exception {
-        try {
-            ISearchProviders searchProviders = new SearchProviders(config);
+    @Test
+    public void testFindByNonexistentId() throws Exception {
+        ISearchProviders searchProviders = new SearchProviders(config);
 
-            List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
+        List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
 
-            //Assert.assertNull(providers);
-        } catch (OBIBException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("OBIB Message: " + ex.getObibMessage());
-            throw ex;
-        }
+        Assert.assertNotNull(providers);
+        Assert.assertTrue(providers.isEmpty());
     }
 
     @Test
@@ -43,6 +38,7 @@ public class SearchProvidesTest extends FacadesBaseTest {
         List<IProvider> providers = searchProviders.findByName("Plisih");
 
         Assert.assertNotNull(providers);
+        Assert.assertFalse(providers.isEmpty());
 
         System.out.println(mapper.writeValueAsString(providers));
     }
@@ -54,6 +50,7 @@ public class SearchProvidesTest extends FacadesBaseTest {
         List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
 
         Assert.assertNotNull(providers);
+        Assert.assertFalse(providers.isEmpty());
 
         System.out.println(mapper.writeValueAsString(providers));
     }

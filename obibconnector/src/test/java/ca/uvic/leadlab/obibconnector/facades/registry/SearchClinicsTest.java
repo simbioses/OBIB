@@ -1,7 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
 import ca.uvic.leadlab.obibconnector.facades.FacadesBaseTest;
-import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 import ca.uvic.leadlab.obibconnector.impl.registry.SearchClinic;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,26 +13,22 @@ public class SearchClinicsTest extends FacadesBaseTest {
     public void testFindById() throws Exception {
         ISearchClinic searchClinic = new SearchClinic(config);
 
-        List<IClinic> clinics = searchClinic.findByID(clinicIdC);
+        List<IClinic> clinics = searchClinic.findByID(clinicIdA);
 
         Assert.assertNotNull(clinics);
+        Assert.assertFalse(clinics.isEmpty());
 
         System.out.println(mapper.writeValueAsString(clinics));
     }
 
-    @Test(expected = OBIBException.class)
-    public void testFindByIdError() throws Exception {
-        try {
-            ISearchClinic searchClinic = new SearchClinic(config);
+    @Test
+    public void testFindByNonexistentId() throws Exception {
+        ISearchClinic searchClinic = new SearchClinic(config);
 
-            List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
+        List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
 
-            //Assert.assertNull(clinics);
-        } catch (OBIBException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("OBIB Message: " + ex.getObibMessage());
-            throw ex;
-        }
+        Assert.assertNotNull(clinics);
+        Assert.assertTrue(clinics.isEmpty());
     }
 
     @Test
@@ -43,6 +38,7 @@ public class SearchClinicsTest extends FacadesBaseTest {
         List<IClinic> clinics = searchClinic.findByName("oscar");
 
         Assert.assertNotNull(clinics);
+        Assert.assertFalse(clinics.isEmpty());
 
         System.out.println(mapper.writeValueAsString(clinics));
     }
@@ -54,6 +50,7 @@ public class SearchClinicsTest extends FacadesBaseTest {
         List<IClinic> clinics = searchClinic.findByAddress("Kelowna");
 
         Assert.assertNotNull(clinics);
+        Assert.assertFalse(clinics.isEmpty());
 
         System.out.println(mapper.writeValueAsString(clinics));
     }

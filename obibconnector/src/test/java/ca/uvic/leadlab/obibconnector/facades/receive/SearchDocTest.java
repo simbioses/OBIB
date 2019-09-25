@@ -18,6 +18,7 @@ public class SearchDocTest extends FacadesBaseTest {
         List<IDocument> documents = searchDoc.searchDocuments();
 
         Assert.assertNotNull(documents);
+        Assert.assertFalse(documents.isEmpty());
 
         System.out.println("Documents count: " + documents.size());
         System.out.println(mapper.writeValueAsString(documents));
@@ -36,6 +37,7 @@ public class SearchDocTest extends FacadesBaseTest {
         List<IDocument> documents = searchDoc.searchDocumentsByPeriod(start, end);
 
         Assert.assertNotNull(documents);
+        Assert.assertFalse(documents.isEmpty());
 
         System.out.println("Documents count: " + documents.size());
         System.out.println(mapper.writeValueAsString(documents));
@@ -48,6 +50,8 @@ public class SearchDocTest extends FacadesBaseTest {
         List<IDocument> documents = searchDoc.searchDocumentById("f9841c14-941a-4406-aa96-861775e37492");
 
         Assert.assertNotNull(documents);
+        Assert.assertFalse(documents.isEmpty());
+
         System.out.println("Documents count: " + documents.size());
         System.out.println(mapper.writeValueAsString(documents));
     }
@@ -59,6 +63,8 @@ public class SearchDocTest extends FacadesBaseTest {
         List<IDocument> documents = searchDoc.distributionStatus("f9841c14-941a-4406-aa96-861775e37492");
 
         Assert.assertNotNull(documents);
+        Assert.assertFalse(documents.isEmpty());
+
         System.out.println("Documents count: " + documents.size());
         System.out.println(mapper.writeValueAsString(documents));
     }

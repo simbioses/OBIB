@@ -10,6 +10,7 @@ import ca.uvic.leadlab.obibconnector.rest.IOscarInformation;
 import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 import ca.uvic.leadlab.obibconnector.rest.RestClient;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReceiveDoc implements IReceiveDoc {
@@ -44,7 +45,10 @@ public class ReceiveDoc implements IReceiveDoc {
                 throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
-            return new Document(response.getDocument());
+            Document document = new Document(response.getDocument());
+            document.setReceivedTime(new Date());
+
+            return document;
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error retrieving document.", e);
         }

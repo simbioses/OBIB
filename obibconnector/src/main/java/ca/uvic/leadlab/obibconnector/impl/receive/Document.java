@@ -32,6 +32,8 @@ public class Document implements IDocument {
     private int version;
     private Date effectiveTime;
 
+    private Date receivedTime;
+
     private String loincCode;
     private String loincCodeDisplayName;
 
@@ -253,6 +255,15 @@ public class Document implements IDocument {
     @Override
     public Date getEffectiveTime() {
         return effectiveTime;
+    }
+
+    @Override
+    public Date getReceivedTime() {
+        return receivedTime;
+    }
+
+    void setReceivedTime(Date receivedTime) {
+        this.receivedTime = receivedTime;
     }
 
     @Override

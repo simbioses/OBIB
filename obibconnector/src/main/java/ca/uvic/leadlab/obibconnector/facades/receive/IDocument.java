@@ -25,6 +25,7 @@ public interface IDocument {
     String  getAuthorDevice();           // return name of authoring device (if present)
     Date    getAuthorDeviceTime();       // return time of device authoring (if present)
     Date    getEffectiveTime();
+    Date getReceivedTime();
 
     String getCustodianName();              // return name of custodian (that generated document)
 

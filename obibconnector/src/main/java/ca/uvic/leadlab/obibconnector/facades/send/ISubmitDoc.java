@@ -9,6 +9,8 @@ public interface ISubmitDoc extends ISubmit {
 
     ISubmitDoc updateDoc(String documentId, int versionNumber);
 
+    ISubmitDoc cancelDoc(String documentId, int versionNumber);
+
     IPatient patient();
 
     IAuthor author();

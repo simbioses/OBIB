@@ -63,7 +63,7 @@ public class SubmitDocTest extends FacadesBaseTest {
 
         // TODO get document and update it
 
-        IDocument response = submitDoc.updateDoc("2ffcaae0-45f8-467c-95c9-0fc91ca816dd", 0)
+        IDocument response = submitDoc.cancelDoc("2f7b2748-c2ec-45af-99f5-82d59fd84a1d", 0)
                 .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
                     .id("2222")
@@ -90,6 +90,42 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .and()
                     .receiverId(clinicIdA)
                     .content("Referral test 1 - text updated ")
+                .submit();
+
+        Assert.assertNotNull(response);
+
+        System.out.println("DOCUMENT ID: " + response.getDocumentID());
+    }
+
+    @Test
+    public void testSubmitCancelDoc() throws Exception {
+        ISubmitDoc submitDoc = new SubmitDoc(config);
+
+        IDocument response = submitDoc.cancelDoc("2f7b2748-c2ec-45af-99f5-82d59fd84a1d", 0)
+                .documentType(DocumentType.REFERRAL_NOTE)
+                .patient()
+                    .id("2222")
+                    .name("Joe", "Wine")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                    .birthday("1980", "01", "01")
+                    .birthday("1980",   "01", "01")
+                    .gender(Gender.MALE)
+                .and().author()
+                    .id("13245")
+                    .time(new Date())
+                    .name("Sneaky", "Provider", "Dr.", "")
+                .and().recipient()
+                    .primary()
+                    .id("11116")
+                    .name("Todd", "Kinnee", "Dr.", "")
+                .and().participant()
+                    .functionCode("PCP")
+                    .id("93193")
+                    .name("Mikel", "Plisihf", "Dr.", "")
+                .and()
+                    .receiverId(clinicIdA)
+                    .content("Referral test 1 - please, cancel this doc")
                 .submit();
 
         Assert.assertNotNull(response);

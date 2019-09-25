@@ -37,12 +37,21 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc updateDoc(String documentId, int versionNumber) {
+        return createDoc(documentId, versionNumber, DocumentStatus.UPDATED);
+    }
+
+    @Override
+    public ISubmitDoc cancelDoc(String documentId, int versionNumber) {
+        return createDoc(documentId, versionNumber, DocumentStatus.ABORTED);
+    }
+
+    private ISubmitDoc createDoc(String documentId, int versionNumber, DocumentStatus status) {
         this.document = new ClinicalDocument();
         document.setDocumentId(documentId);
         document.setVersionNumber(versionNumber);
         document.setEffectiveTime(DateFormatter.formatDateTime(new Date()));
-        // send a new serviceEvent when updating a document
-        document.addServiceEvent(new ServiceEvent(document.getEffectiveTime(), DocumentStatus.UPDATED.code));
+        // send a new serviceEvent when changing the document status
+        document.addServiceEvent(new ServiceEvent(document.getEffectiveTime(), status.code));
         return this;
     }
 

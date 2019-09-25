@@ -45,9 +45,12 @@ public class ReceiveDoc implements IReceiveDoc {
                 throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
+            if (response.getDocument() == null) {
+                throw new OBIBRequestException("Could not retrieve document with ID " + id + ".");
+            }
+
             Document document = new Document(response.getDocument());
             document.setReceivedTime(new Date());
-
             return document;
         } catch (OBIBRequestException e) {
             throw new OBIBException("Error retrieving document.", e);

@@ -2,25 +2,36 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum AttachmentType {
 
-    PDF(MediaType.PDF.mediaTypes),
-    RTF(MediaType.RTF.mediaTypes),
-    JPEG(MediaType.JPEG.mediaTypes),
-    PNG(MediaType.PNG.mediaTypes),
-    TIFF(MediaType.TIFF.mediaTypes);
+    TEXT("text/plain"),
+    PDF("application/pdf"),
+    RTF("text/rtf", "application/rtf"),
+    JPEG("image/jpeg"),
+    PNG("image/png"),
+    TIFF("image/tiff");
 
-    public final String[] mediaTypes;
+    public final String mediaType;
+    public final String[] additionalTypes; // handle additional media types
 
-    AttachmentType(String... mediaTypes) {
-        this.mediaTypes = mediaTypes;
+    AttachmentType(String mediaType) {
+        this.mediaType = mediaType;
+        this.additionalTypes = new String[]{};
     }
 
-    public String getMediaType() {
-        return mediaTypes[0];
+    AttachmentType(String mediaType, String... additionalTypes) {
+        this.mediaType = mediaType;
+        this.additionalTypes = additionalTypes;
+    }
+
+    public static boolean isPlainText(String mediaType) {
+        return TEXT.mediaType.equalsIgnoreCase(mediaType);
     }
 
     public static AttachmentType fromMediaType(String mediaType) {
         for (AttachmentType value : AttachmentType.values()) {
-            for (String type : value.mediaTypes) {
+            if (value.mediaType.equalsIgnoreCase(mediaType)) {
+                return value;
+            }
+            for (String type : value.additionalTypes) {
                 if (type.equalsIgnoreCase(mediaType)) {
                     return value;
                 }

@@ -159,7 +159,7 @@ public class Document implements IDocument {
 
 
         // TODO return document body
-        // if (document.getNonXMLBody() != null && MediaType.isPlainText(document.getNonXMLBody().getMediaType())) {
+        // if (document.getNonXMLBody() != null && AttachmentType.isPlainText(document.getNonXMLBody().getMediaType())) {
         //    contents = document.getNonXMLBody().getContent();
         // }
 

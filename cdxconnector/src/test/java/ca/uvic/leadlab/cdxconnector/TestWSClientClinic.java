@@ -8,6 +8,7 @@ public class TestWSClientClinic extends TestWSClient {
 
     static WSClientClinic wsClientClinicA;
     static WSClientClinic wsClientClinicC;
+    static WSClientClinic wsClientClinicT;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -16,11 +17,14 @@ public class TestWSClientClinic extends TestWSClient {
 
         wsClientClinicC = new WSClientClinic(cdxServerUrl, ClinicC.username, ClinicC.password,
                 ClassLoader.getSystemClassLoader().getResource(ClinicC.certificate).getFile(), ClinicC.certPassword);
+
+        wsClientClinicT = new WSClientClinic(cdxServerUrl, ClinicT.username, ClinicT.password,
+                ClassLoader.getSystemClassLoader().getResource(ClinicT.certificate).getFile(), ClinicT.certPassword);
     }
 
     @Test
     public void testListClinicsById() throws Exception {
-        String response = wsClientClinicA.listClinics(ClinicA.id, ClinicA.id, "", "");
+        String response = wsClientClinicA.listClinics(ClinicA.id, ClinicC.id, "", "");
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));

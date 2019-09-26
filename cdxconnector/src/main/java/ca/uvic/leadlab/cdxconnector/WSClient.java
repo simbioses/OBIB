@@ -96,6 +96,6 @@ public abstract class WSClient {
         requestCtx.put("com.sun.xml.internal.ws.connect.timeout",
                 Integer.valueOf(PropertyUtil.getProperty("cdx.connect.timeout", "10000")));
         requestCtx.put("com.sun.xml.internal.ws.request.timeout",
-                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout", "30000")));
+                Integer.valueOf(PropertyUtil.getProperty("cdx.request.timeout", "10000")));
     }
 }

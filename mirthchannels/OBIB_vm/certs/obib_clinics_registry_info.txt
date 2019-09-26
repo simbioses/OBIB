@@ -1,0 +1,28 @@
+---
+Clinic ID (*): cdxpostprod-otca
+Clinic Name (*): Oscar Test Clinic A                  
+Clinic Username (*): cdxpostprod-otca
+Clinic Password (*): VMK31
+CDX Certificate Path (+): /vagrant/certs/LEADlab_IHA_cert.pfx
+CDX Certificate Password (+): LEADlab
+New OBIB Certificate Password (!): obibconnector
+
+---
+Clinic ID (*): cdxpostprod-obctc
+Clinic Name (*): Oscar British Columbia Test Clinic
+Clinic Username (*): cdxpostprod-obctc
+Clinic Password (*): 2LsTebRe
+CDX Certificate Path (+): /vagrant/certs/OscarTestClinic.pfx
+CDX Certificate Password (+): LEADlab
+New OBIB Certificate Password (!): obibconnector
+
+---
+Clinic ID (*): cdxpostprod-ctc
+Clinic Name (*): Conformance Test Clinic
+Clinic Username (*): cdxpostprod-ctc
+Clinic Password (*): conformance123
+CDX Certificate Path (+): /vagrant/certs/Conformance_Test.pfx
+CDX Certificate Password (+): LEADlab!
+New OBIB Certificate Password (!): obibconnector
+
+

@@ -22,8 +22,11 @@
         <fileSet>
             <directory>mirthchannels/OBIB_vm</directory>
             <includes>
-                <include>*</include>
+                <include>Vagrantfile</include>
+                <include>README.md</include>
+                <include>*.sh</include>
                 <include>configs/**</include>
+                <include>certs</include>
             </includes>
             <excludes>
                 <exclude>.*</exclude>

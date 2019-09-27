@@ -9,10 +9,10 @@ import java.util.List;
 
 public class SearchProvidesTest extends FacadesBaseTest {
 
+    private ISearchProviders searchProviders = new SearchProviders(config);
+
     @Test
     public void testFindByProviderId() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(config);
-
         List<IProvider> providers = searchProviders.findByProviderID("93188");
 
         Assert.assertNotNull(providers);
@@ -23,8 +23,6 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     @Test
     public void testFindByNonexistentId() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(config);
-
         List<IProvider> providers = searchProviders.findByProviderID("__Wrong_ID");
 
         Assert.assertNotNull(providers);
@@ -33,8 +31,6 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     @Test
     public void testFindByName() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(config);
-
         List<IProvider> providers = searchProviders.findByName("Plisih");
 
         Assert.assertNotNull(providers);
@@ -45,8 +41,6 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     @Test
     public void testFindByClinicID() throws Exception {
-        ISearchProviders searchProviders = new SearchProviders(config);
-
         List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
 
         Assert.assertNotNull(providers);
@@ -54,5 +48,4 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
         System.out.println(mapper.writeValueAsString(providers));
     }
-
 }

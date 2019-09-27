@@ -5,6 +5,9 @@ import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.models.document.ReceivedOrganization;
 import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Clinic implements IClinic {
 
     private String ID;
@@ -15,6 +18,7 @@ public class Clinic implements IClinic {
     private String province;
 
     private IProvider provider;
+    private List<IProvider> providers;
 
     public Clinic(ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic) {
         ID = OBIBConnectorHelper.getDefaultClinicId(clinic.getIds());
@@ -26,8 +30,12 @@ public class Clinic implements IClinic {
             province = clinic.getAddress().getProvince();
         }
 
+        providers = new ArrayList<>();
         if (!clinic.getProviders().isEmpty()) {
             provider = new Provider(clinic.getProviders().get(0));
+            for (ca.uvic.leadlab.obibconnector.models.registry.Provider provider : clinic.getProviders()) {
+                providers.add(new Provider(provider));
+            }
         }
     }
 
@@ -69,5 +77,10 @@ public class Clinic implements IClinic {
     @Override
     public IProvider getProvider() {
         return provider;
+    }
+
+    @Override
+    public List<IProvider> getProviders() {
+        return providers;
     }
 }

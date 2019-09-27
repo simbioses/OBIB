@@ -9,11 +9,11 @@ import java.util.List;
 
 public class SearchClinicsTest extends FacadesBaseTest {
 
+    private ISearchClinic searchClinic = new SearchClinic(config);
+
     @Test
     public void testFindById() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
-
-        List<IClinic> clinics = searchClinic.findByID("cdxpostprod-ctc");
+        List<IClinic> clinics = searchClinic.findByID(clinicIdA);
 
         Assert.assertNotNull(clinics);
         Assert.assertFalse(clinics.isEmpty());
@@ -23,8 +23,6 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindByNonexistentId() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
-
         List<IClinic> clinics = searchClinic.findByID("__Wrong_ID");
 
         Assert.assertNotNull(clinics);
@@ -33,8 +31,6 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindByName() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
-
         List<IClinic> clinics = searchClinic.findByName("oscar");
 
         Assert.assertNotNull(clinics);
@@ -45,8 +41,6 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindByAddress() throws Exception {
-        ISearchClinic searchClinic = new SearchClinic(config);
-
         List<IClinic> clinics = searchClinic.findByAddress("Kelowna");
 
         Assert.assertNotNull(clinics);

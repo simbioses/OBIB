@@ -1,5 +1,7 @@
 package ca.uvic.leadlab.obibconnector.facades.registry;
 
+import java.util.List;
+
 public interface IClinic {
 
     String getID();
@@ -11,4 +13,6 @@ public interface IClinic {
     String getProvince();
 
     IProvider getProvider();
+
+    List<IProvider> getProviders();
 }

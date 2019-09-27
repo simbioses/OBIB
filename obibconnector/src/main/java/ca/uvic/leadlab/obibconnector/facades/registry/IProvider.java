@@ -24,4 +24,6 @@ public interface IProvider {
 
     String getClinicID();
     String getClinicName();
+
+    List<IClinic> getClinics();
 }

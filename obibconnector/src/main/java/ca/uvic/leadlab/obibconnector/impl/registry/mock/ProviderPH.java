@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.impl.registry.mock;
 
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
+import ca.uvic.leadlab.obibconnector.facades.registry.IClinic;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 
 import java.util.List;
@@ -70,5 +71,10 @@ public class ProviderPH implements IProvider {
     @Override
     public String getClinicName() {
         return "Oscar Test Clinic A";
+    }
+
+    @Override
+    public List<IClinic> getClinics() {
+        return null;
     }
 }

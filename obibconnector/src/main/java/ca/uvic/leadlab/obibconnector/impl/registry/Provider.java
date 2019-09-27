@@ -1,12 +1,12 @@
 package ca.uvic.leadlab.obibconnector.impl.registry;
 
+import ca.uvic.leadlab.obibconnector.facades.registry.IClinic;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.facades.receive.ITelco;
 import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import ca.uvic.leadlab.obibconnector.impl.receive.Telco;
 import ca.uvic.leadlab.obibconnector.models.common.Address;
 import ca.uvic.leadlab.obibconnector.models.common.Telecom;
-import ca.uvic.leadlab.obibconnector.models.registry.Clinic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,8 @@ public class Provider implements IProvider {
 
     private String clinicID;
     private String clinicName;
+
+    private List<IClinic> clinics;
 
     public Provider(ca.uvic.leadlab.obibconnector.models.registry.Provider provider) {
         ID = OBIBConnectorHelper.getDefaultProviderId(provider.getIds());
@@ -57,12 +59,16 @@ public class Provider implements IProvider {
             }
         }
 
+        clinics = new ArrayList<>();
         if (!provider.getClinics().isEmpty()) {
-            Clinic providerClinic = provider.getClinics().get(0); // Get the first clinic
+            ca.uvic.leadlab.obibconnector.models.registry.Clinic providerClinic = provider.getClinics().get(0); // Get the first clinic
             if (!providerClinic.getIds().isEmpty()) {
                 clinicID = providerClinic.getIds().get(0).getCode();
             }
             clinicName = providerClinic.getName();
+            for (ca.uvic.leadlab.obibconnector.models.registry.Clinic clinic : provider.getClinics()) {
+                clinics.add(new Clinic(clinic));
+            }
         }
     }
 
@@ -129,5 +135,10 @@ public class Provider implements IProvider {
     @Override
     public String getClinicName() {
         return clinicName;
+    }
+
+    @Override
+    public List<IClinic> getClinics() {
+        return clinics;
     }
 }

@@ -30,12 +30,11 @@ public class SubmitDocTest extends FacadesBaseTest {
                         .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
                         .phone(TelcoType.HOME, "250-111-1234")
                         .birthday("1980", "01", "01")
-                        .birthday("1980",   "01", "01")
                         .gender(Gender.MALE)
                     .and().author()
-                        .id("13245")
                         .time(new Date())
-                        .name("Sneaky", "Provider", "Dr.", "")
+                        .id("93188")
+                        .name("Lucius", "Plisihb", "Dr.", "")
                     .and().recipient()
                         .primary()
                         .id("11116")
@@ -44,15 +43,46 @@ public class SubmitDocTest extends FacadesBaseTest {
                         .functionCode("PCP")
                         .id("93193")
                         .name("Mikel", "Plisihf", "Dr.", "")
-                    .and().documentationOf()
-                        .statusCode(DocumentStatus.COMPLETED)
-                       .effectiveTime(new Date())
                     .and()
-                        .receiverId(clinicIdA)
-                        .content("Referral test 1")
+                        .receiverId(clinicIdB)
+                        .content("Referral test.")
                     .submit();
 
             Assert.assertNotNull(response);
+
+        System.out.println("DOCUMENT ID: " + response.getDocumentID());
+    }
+
+    @Test
+    public void testSubmitNewDocForSpecificClinic() throws Exception {
+        ISubmitDoc submitDoc = new SubmitDoc(config);
+
+        IDocument response = submitDoc.newDoc()
+                .documentType(DocumentType.REFERRAL_NOTE)
+                .patient()
+                    .id("2222")
+                    .name("Joe", "Wine")
+                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
+                    .phone(TelcoType.HOME, "250-111-1234")
+                    .birthday("1980", "01", "01")
+                    .gender(Gender.MALE)
+                .and().author()
+                    .time(new Date())
+                    .id("93193")
+                    .name("Mikel", "Plisihf", "Dr.", "")
+                .and().recipient()
+                    .primary()
+                    .recipientOrganization("cdxpostprod-ctc", "Conformance Test Clinic")
+                .and().participant()
+                    .functionCode("PCP")
+                    .id("93188")
+                    .name("Lucius", "Plisihb", "Dr.", "")
+                .and()
+                    .receiverId(clinicIdT)
+                    .content("Referral test addressed to a clinic.")
+                .submit();
+
+        Assert.assertNotNull(response);
 
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
     }

@@ -11,6 +11,8 @@ public class FacadesBaseTest {
     protected String clinicIdA = "cdxpostprod-otca";
     protected String clinicPasswordA = "VMK31";
 
+    protected String clinicIdB = "cdxpostprod-otcb";
+
     protected String clinicIdC = "cdxpostprod-obctc";
     protected String clinicPasswordC = "2LsTebRe";
 

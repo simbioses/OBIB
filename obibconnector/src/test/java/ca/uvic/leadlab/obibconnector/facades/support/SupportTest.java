@@ -8,10 +8,10 @@ import java.util.Date;
 
 public class SupportTest extends FacadesBaseTest {
 
+    private ISupport support = new Support(config);
+
     @Test
     public void testNotifyError() throws Exception {
-        ISupport support = new Support(config);
-
         support.notifyError("Error message at " + new Date(), new Exception("Exception").toString());
     }
 }

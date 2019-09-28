@@ -13,10 +13,12 @@ import java.util.List;
 
 public class ReceiveDocTest extends FacadesBaseTest {
 
+    private IReceiveDoc receiveDoc = new ReceiveDoc(config);
+    private ISearchDoc searchDoc = new SearchDoc(config);
+    private ISupport support = new Support(config);
+
     @Test
     public void testPollNewDocIDs() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
-
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
         Assert.assertNotNull(documentsIds);
@@ -30,8 +32,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveDocument() throws Exception {
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
-
         IDocument document = receiveDoc.retrieveDocument("7744d591-b0b4-e911-a96d-0050568c55a6");
 
         Assert.assertNotNull(document);
@@ -42,8 +42,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testRetrieveNonexistentDocument() throws Exception {
         try {
-            IReceiveDoc receiveDoc = new ReceiveDoc(config);
-
             IDocument document = receiveDoc.retrieveDocument("12345678-aaaa-bbbb-cccc-0055566cddcc");
 
             //Assert.assertNull(document);
@@ -57,8 +55,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
     @Test(expected = OBIBException.class)
     public void testRetrieveDocumentError() throws Exception {
         try {
-            IReceiveDoc receiveDoc = new ReceiveDoc(config);
-
             IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 
             //Assert.assertNull(document);
@@ -71,10 +67,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveAllDocuments() throws Exception {
-        ISearchDoc searchDoc = new SearchDoc(config);
-        IReceiveDoc receiveDoc = new ReceiveDoc(config);
-        ISupport support = new Support(config);
-
         long startSearch = System.currentTimeMillis();
         List<IDocument> documents = searchDoc.searchDocuments();
         long endSearch = System.currentTimeMillis();

@@ -107,10 +107,12 @@ public class Document implements IDocument {
 
         if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {
             ServiceEvent event = document.getLastServiceEvent();
-            if (event != null) {
+            if (event != null && event.getStatusCode() != null && !event.getStatusCode().isEmpty()) {
                 try { // try to get the statusCode name from the DocumentStatus enum.
                     statusCode = DocumentStatus.fromCode(event.getStatusCode());
-                } catch (Exception ignored) { }
+                } catch (Exception ignored) {
+                    statusCode = DocumentStatus.UNRECOGNIZED;
+                }
             }
         }
         if (statusCode == null) {

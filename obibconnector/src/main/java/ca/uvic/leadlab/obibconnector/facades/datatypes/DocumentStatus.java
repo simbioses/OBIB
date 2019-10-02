@@ -3,9 +3,12 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 public enum DocumentStatus {
     COMPLETED("completed"),
     ACTIVE("active"),
-    ABORTED("aborted"),
+    APPENDED("appended"),
     CORRECTED("corrected"),
-    UPDATED("updated");
+    UPDATED("updated"),
+    ABORTED("aborted"),
+    CANCELLED("cancelled"),
+    UNRECOGNIZED("unrecognized");
 
     public final String code;
 

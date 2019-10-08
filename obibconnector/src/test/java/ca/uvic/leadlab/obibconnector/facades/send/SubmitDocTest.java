@@ -264,6 +264,21 @@ public class SubmitDocTest extends FacadesBaseTest {
         }
     }
 
+    //@Test
+    public void testDistributionStatus() throws Exception {
+        try {
+            List<IDocument> documents = searchDoc.distributionStatus("7d9658db-d56e-439a-acce-1eb9303c7928");
+
+            Assert.assertNotNull(documents);
+            Assert.assertFalse(documents.isEmpty());
+            System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
+    }
+
     private static byte[] loadFile(String filePath) throws Exception {
         Path path = Paths.get(SubmitDocTest.class.getResource(filePath).toURI());
         byte[] bytes = Files.readAllBytes(path);

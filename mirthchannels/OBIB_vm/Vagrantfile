@@ -85,6 +85,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "deploy", type: "shell", path: "deploy.sh", run: "never"
 
   # Register a clinic within obib - execute manually: $ vagrant provision --provision-with register
-  config.vm.provision "register", type: "shell", path: "register.sh", run: "never"
+  #config.vm.provision "register", type: "shell", path: "register.sh", run: "never"
   
 end

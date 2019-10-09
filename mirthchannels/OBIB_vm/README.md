@@ -92,6 +92,17 @@
     3. Select the **OBIB_channel_group.xml** file from */mirthchannels/OBIB_vm/configs/obib/* folder.
     4. Answer **Yes** to import the Code Template Libraries as well.
     5. Select the **OBIB** group on main screen and clic on **Redeploy all** in the Channel Tasks menus.
+    
+- *(Optional) Email delivery for development and test environments:*
+
+    To test the email delivery it is necessary initialize FakeSMTP (https://github.com/Nilhcem/FakeSMTP) manually. 
+    Inside the VM execute the following command:
+    
+    ```
+    java -jar /vagrant/fakeSMTP-2.0.jar -o emails -s -b -p 2525 -a 127.0.0.1 &
+    ```
+    
+    All emails sent by OBIB in this environment are stored in files inside the folder /vagrant/emails/.
 
 ## Updating the OBIB VM for Development
 

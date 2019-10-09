@@ -50,8 +50,8 @@ sudo ln -s "$NGINX_ROOT/sites-available/obib" "$NGINX_ROOT/sites-enabled/"
 sudo nginx -t
 #sudo systemctl restart nginx
 
-## Install xmllint (used by the deploy.sh script)
-sudo apt-get -y install libxml2-utils
+## Install xmllint and xmlstarlet (used by the deploy.sh script)
+sudo apt-get -y install libxml2-utils xmlstarlet
 
 ## Install MariaDB
 echo 'mysql-server mysql-server/root_password password' "$DB_ROOT_PASS" | sudo debconf-set-selections
@@ -85,7 +85,7 @@ sudo mv 'Mirth Connect' "$MIRTH_ROOT"
 
 ## Copy Mirth Connect's configuration files
 sudo cp -R "$CONF_ROOT/appdata/" "$MIRTH_ROOT/"
-sudo cp "$CONF_ROOT"/conf/* "$MIRTH_ROOT/conf/"
+sudo cp "$CONF_ROOT/conf/*" "$MIRTH_ROOT/conf/"
 sudo cp "$CONF_ROOT/mirth.service" /etc/systemd/system/
 sudo cp "$CONF_ROOT/mariadb-java-client-2.4.2.jar" "$MIRTH_ROOT/server-lib/database/"
 

@@ -41,3 +41,15 @@ OBIB_KEYSTORE_PASS='obibconnector'
 
 ## EMR secure directory (change as needed)
 EMR_SECURE_DIRECTORY='$CATALINA_HOME'
+
+## SMTP Configuration
+SMTP_HOST='localhost'
+SMTP_PORT='2525'
+# options: none, TLS or SSL
+SMTP_ENCRYPTION=none
+# options: true or false (if true, username and password are required)
+SMTP_AUTHENTICATION=false
+SMTP_USERNAME=
+SMTP_PASSWORD=
+SMTP_FROM='obib@localhost'
+SMTP_TO='osp@localhost'

@@ -25,7 +25,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     private ISearchDoc searchDoc = new SearchDoc(config);
 
     @Before
-    public void createBaseDoc() {
+    public void createBaseDoc() throws Exception {
         // create a base document without recipient
         submitDoc = submitDoc.newDoc()
             .documentType(DocumentType.REFERRAL_NOTE)
@@ -43,8 +43,7 @@ public class SubmitDocTest extends FacadesBaseTest {
             .and().inFulfillmentOf()
                 .id("123")
                 .statusCode(OrderStatus.ACTIVE)
-            .and()
-                .content("e-Referral obib connector automated test.");
+            .and();
     }
 
     private static ISubmitDoc cloneBaseDoc(ISubmitDoc submitDoc, ClinicalDocument document) throws Exception {
@@ -77,9 +76,10 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test
     public void testSubmitNewDoc() throws Exception {
         // add recipient (provider) and submit the document
-        IDocument response = submitDoc.recipient()
-                .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+        IDocument response = submitDoc
+                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
+                .content("e-Referral obib connector automated test.")
                 .submit();
 
         Assert.assertNotNull(response);
@@ -123,6 +123,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         IDocument response = submitDoc.recipient()
                 .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
+                .content("e-Referral obib connector automated test.")
                 .submit();
 
         Assert.assertNotNull(response);
@@ -155,6 +156,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         IDocument response = submitDoc.recipient()
                 .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
+                .content("e-Referral obib connector automated test.")
                 .submit();
 
         Assert.assertNotNull(response);
@@ -227,7 +229,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         IDocument response = submitDoc.recipient()
                 .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
-                .content("e-Referral obib connector automated test - with multiple attachments")
                 .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
                 .attach(AttachmentType.PDF, "logo2.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
                 .submit();
@@ -243,6 +244,46 @@ public class SubmitDocTest extends FacadesBaseTest {
         Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
+    }
+
+    @Test(expected = OBIBException.class)
+    public void testSubmitDocWithTextBodyAndAttachment() throws Exception {
+        try {
+            // add recipient (provider), attachments and submit the document
+            IDocument response = submitDoc.recipient()
+                    .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                    .and().receiverId(clinicIdA)
+                    .content("e-Referral obib connector automated test - with multiple attachments")
+                    .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
+                    .submit();
+
+            Assert.assertNotNull(response);
+            System.out.println("DOCUMENT ID: " + response.getDocumentID());
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
+    }
+
+    @Test(expected = OBIBException.class)
+    public void testSubmitDocWithAttachmentAndTextBody() throws Exception {
+        try {
+            // add recipient (provider), attachments and submit the document
+            IDocument response = submitDoc.recipient()
+                    .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                    .and().receiverId(clinicIdA)
+                    .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
+                    .content("e-Referral obib connector automated test - with multiple attachments")
+                    .submit();
+
+            Assert.assertNotNull(response);
+            System.out.println("DOCUMENT ID: " + response.getDocumentID());
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test(expected = OBIBException.class)

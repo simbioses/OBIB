@@ -13,7 +13,7 @@ public class AttachmentUtils {
     public static boolean checkAttachment(byte[] content, String hash) {
         try {
             String contentHash = calculateHash(content);
-            return contentHash.equals(hash);
+            return contentHash.equalsIgnoreCase(hash);
         } catch (OBIBException e) {
             return false; // does not fails the process on error
         }

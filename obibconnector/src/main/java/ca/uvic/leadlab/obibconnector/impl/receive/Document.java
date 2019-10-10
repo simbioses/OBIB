@@ -15,7 +15,6 @@ import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.impl.registry.Provider;
 import ca.uvic.leadlab.obibconnector.models.document.*;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -170,8 +169,7 @@ public class Document implements IDocument {
                 if (!AttachmentUtils.checkAttachment(attachment.getContent(), attachment.getHash())) {
                     LOGGER.warning("Error validating attachment hash code.");
                 }
-                attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),
-                        DatatypeConverter.parseBase64Binary(attachment.getContent())));
+                attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(), attachment.getContent()));
             }
         }
 

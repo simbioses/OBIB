@@ -15,7 +15,6 @@ import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 import ca.uvic.leadlab.obibconnector.rest.RestClient;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 public class SubmitDoc implements ISubmitDoc {
@@ -120,7 +119,7 @@ public class SubmitDoc implements ISubmitDoc {
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
         document.addAttachment(new Attachment(AttachmentUtils.calculateHash(data),
                 type.mediaType,
-                DatatypeConverter.printBase64Binary(data),
+                data,
                 reference));
         return this;
     }

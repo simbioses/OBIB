@@ -4,13 +4,13 @@ public class Attachment {
 
     private String hash;
     private String mediaType;
-    private String content;
+    private byte[] content;
     private String reference;
 
     public Attachment() {
     }
 
-    public Attachment(String hash, String mediaType, String content, String reference) {
+    public Attachment(String hash, String mediaType, byte[] content, String reference) {
         this.hash = hash;
         this.mediaType = mediaType;
         this.content = content;
@@ -33,11 +33,11 @@ public class Attachment {
         this.mediaType = mediaType;
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
 

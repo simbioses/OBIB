@@ -32,7 +32,7 @@ public class SubmitDocTest extends FacadesBaseTest {
             .patient()
                 .id("8888999904")
                 .name("JUNE", "ELDER")
-                .address(AddressType.HOME, "456 Main Streets", "Toronto", "OT", "M6P 4J4", "CA")
+                .address(AddressType.HOME, "456 Main Street", "Toronto", "OT", "M6P 4J4", "CA")
                 .phone(TelcoType.HOME, "416-555-6789")
                 .birthday("1942", "06", "06")
                 .gender(Gender.FEMALE)
@@ -41,7 +41,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .id("93188")
                 .name("Lucius", "Plisihb", "Dr.", "")
             .and().inFulfillmentOf()
-                .id("123")
+                .id("1")
                 .statusCode(OrderStatus.ACTIVE)
             .and();
     }
@@ -52,24 +52,32 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .id(document.getPatient().getIds().get(0).getCode())
                 .name(document.getPatient().getNames().get(0).getGiven().get(0),
                         document.getPatient().getNames().get(0).getFamily())
+                .address(AddressType.fromLabel(document.getPatient().getAddresses().get(0).getUse()),
+                        document.getPatient().getAddresses().get(0).getStreetAddress(),
+                        document.getPatient().getAddresses().get(0).getCity(),
+                        document.getPatient().getAddresses().get(0).getProvince(),
+                        document.getPatient().getAddresses().get(0).getPostalCode(),
+                        document.getPatient().getAddresses().get(0).getCountry())
+                .phone(TelcoType.fromLabel(document.getPatient().getTelecoms().get(0).getUse()),
+                        document.getPatient().getTelecoms().get(0).getValue())
                 .birthday(DateFormatter.parseDateTime(document.getPatient().getBirthday()))
                 .gender(Gender.fromLabel(document.getPatient().getGenderCode()))
             .and().author()
-                .id(document.getAuthors().get(0).getIds().get(0).getCode())
                 .time(new Date())
+                .id(document.getAuthors().get(0).getIds().get(0).getCode())
                 .name(document.getAuthors().get(0).getName().getGiven().get(0),
                         document.getAuthors().get(0).getName().getFamily(),
                         document.getAuthors().get(0).getName().getPrefix(),
                         document.getAuthors().get(0).getName().getSuffix())
+            .and().inFulfillmentOf()
+                .id(document.getOrders().get(0).getIds().get(0).getCode())
+                .statusCode(OrderStatus.valueOf(document.getOrders().get(0).getStatusCode().toUpperCase()))
             .and().recipient().primary()
                 .id(document.getRecipients().get(0).getIds().get(0).getCode())
                 .name(document.getRecipients().get(0).getName().getGiven().get(0),
                         document.getRecipients().get(0).getName().getFamily(),
                         document.getRecipients().get(0).getName().getPrefix(),
                         document.getRecipients().get(0).getName().getSuffix())
-            .and().inFulfillmentOf()
-                .id(document.getOrders().get(0).getIds().get(0).getCode())
-                .statusCode(OrderStatus.valueOf(document.getOrders().get(0).getStatusCode().toUpperCase()))
             .and().receiverId(document.getReceivers().get(0));
     }
 
@@ -82,7 +90,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .content("e-Referral obib connector automated test.")
                 .submit();
 
-        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getDocumentID());
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -90,7 +98,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         // check the document status
         List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
@@ -98,13 +105,13 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test
     public void testSubmitNewDocForSpecificClinic() throws Exception {
         // add recipient (clinic) and submit the document
-        IDocument response = submitDoc.recipient()
-                .primary().recipientOrganization("cdxpostprod-ctc", "Conformance Test Clinic")
+        IDocument response = submitDoc
+                .recipient().primary().recipientOrganization("cdxpostprod-ctc", "Conformance Test Clinic")
                 .and().receiverId(clinicIdT)
                 .content("e-Referral obib connector automated test addressed to a clinic.")
                 .submit();
 
-        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getDocumentID());
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -112,7 +119,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         // check the document status
         List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
@@ -120,13 +126,13 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test
     public void testSubmitUpdatedDocument() throws Exception {
         // add recipient (provider) and submit the document
-        IDocument response = submitDoc.recipient()
-                .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+        IDocument response = submitDoc
+                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
                 .content("e-Referral obib connector automated test.")
                 .submit();
 
-        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getDocumentID());
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -137,7 +143,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .content(document.getNonXMLBody().getContent() + " - updating content of this document.")
                 .submit();
 
-        Assert.assertNotNull(response2);
+        Assert.assertNotNull(response2.getDocumentID());
         System.out.println("DOCUMENT ID: " + response2.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -145,7 +151,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         // check the document status
         List<IDocument> documents = searchDoc.distributionStatus(response2.getDocumentID());
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
@@ -159,7 +164,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .content("e-Referral obib connector automated test.")
                 .submit();
 
-        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getDocumentID());
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -170,7 +175,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                 .content("Please, cancel this document; obib connector automated test.")
                 .submit();
 
-        Assert.assertNotNull(response2);
+        Assert.assertNotNull(response2.getDocumentID());
         System.out.println("DOCUMENT ID: " + response2.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -178,7 +183,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         // check the document status
         List<IDocument> documents = searchDoc.distributionStatus(response2.getDocumentID());
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
@@ -229,11 +233,10 @@ public class SubmitDocTest extends FacadesBaseTest {
         IDocument response = submitDoc.recipient()
                 .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
-                .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
-                .attach(AttachmentType.PDF, "logo2.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
+                .attach(AttachmentType.PDF, "doc.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
                 .submit();
 
-        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getDocumentID());
         System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
         Thread.sleep(5000); // wait for a few seconds
@@ -241,7 +244,6 @@ public class SubmitDocTest extends FacadesBaseTest {
         // check the document status
         List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
@@ -257,8 +259,6 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
                     .submit();
 
-            Assert.assertNotNull(response);
-            System.out.println("DOCUMENT ID: " + response.getDocumentID());
         } catch (OBIBException ex) {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("OBIB Message: " + ex.getObibMessage());
@@ -277,8 +277,6 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .content("e-Referral obib connector automated test - with multiple attachments")
                     .submit();
 
-            Assert.assertNotNull(response);
-            System.out.println("DOCUMENT ID: " + response.getDocumentID());
         } catch (OBIBException ex) {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("OBIB Message: " + ex.getObibMessage());
@@ -295,6 +293,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .and().receiverId(clinicIdA)
                     .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
                     .submit();
+
         } catch (OBIBException ex) {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("OBIB Message: " + ex.getObibMessage());
@@ -305,9 +304,8 @@ public class SubmitDocTest extends FacadesBaseTest {
     //@Test
     public void testDistributionStatus() throws Exception {
         try {
-            List<IDocument> documents = searchDoc.distributionStatus("7d9658db-d56e-439a-acce-1eb9303c7928");
+            List<IDocument> documents = searchDoc.distributionStatus("91df4186-010e-493a-8de5-d3b69a12dd99");
 
-            Assert.assertNotNull(documents);
             Assert.assertFalse(documents.isEmpty());
             System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
         } catch (OBIBException ex) {
@@ -315,6 +313,13 @@ public class SubmitDocTest extends FacadesBaseTest {
             System.out.println("OBIB Message: " + ex.getObibMessage());
             throw ex;
         }
+    }
+
+    @Test
+    public void testDistributionStatusError() throws Exception {
+        List<IDocument> documents = searchDoc.distributionStatus("43143214-1111-aaaa-bbbb-123412341234");
+
+        Assert.assertTrue(documents.isEmpty());
     }
 
     private static byte[] loadFile(String filePath) throws Exception {

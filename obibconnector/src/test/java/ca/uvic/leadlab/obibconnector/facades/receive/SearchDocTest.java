@@ -17,7 +17,6 @@ public class SearchDocTest extends FacadesBaseTest {
     public void testSearchDocumentsByClinic() throws Exception {
         List<IDocument> documents = searchDoc.searchDocuments();
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
 
         System.out.println("Documents count: " + documents.size());
@@ -34,7 +33,6 @@ public class SearchDocTest extends FacadesBaseTest {
 
         List<IDocument> documents = searchDoc.searchDocumentsByPeriod(start, end);
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
 
         System.out.println("Documents count: " + documents.size());
@@ -43,9 +41,8 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testSearchDocumentById() throws Exception {
-        List<IDocument> documents = searchDoc.searchDocumentById("f9841c14-941a-4406-aa96-861775e37492");
+        List<IDocument> documents = searchDoc.searchDocumentById("b93216a1-1b78-45da-a13a-b1d2924761c6");
 
-        Assert.assertNotNull(documents);
         Assert.assertFalse(documents.isEmpty());
 
         System.out.println("Documents count: " + documents.size());

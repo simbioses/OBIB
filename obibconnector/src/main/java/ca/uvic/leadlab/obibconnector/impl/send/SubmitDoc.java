@@ -112,7 +112,7 @@ public class SubmitDoc implements ISubmitDoc {
     @Override
     public ISubmitDoc content(String text) throws OBIBException {
         if (document.getAttachments() != null && !document.getAttachments().isEmpty()) { // CDX permits either a TXT body or an attachment
-            throw new OBIBException("Content not allowed. Document already has attachments.");
+            throw new OBIBException("Text content is not allowed for document with attachments.");
         }
         document.setNonXMLBody(new NonXMLBody(text, AttachmentType.TEXT.mediaType));
         return this;
@@ -121,15 +121,10 @@ public class SubmitDoc implements ISubmitDoc {
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
         if (document.getNonXMLBody() != null) { // CDX permits either a TXT body or an attachment
-            throw new OBIBException("Attachment not allowed. Document already has a text content.");
+            throw new OBIBException("Attachment is not allowed for document with text content.");
         }
-        document.addAttachment(new Attachment(AttachmentUtils.calculateHash(data),
-                type.mediaType,
-                data,
-                reference));
-        if (document.getAttachments().size() == 1) { // add the reference for the first attachment
-            document.setNonXMLBody(new NonXMLBody(reference, type.mediaType));
-        }
+        document.addAttachment(
+                new Attachment(AttachmentUtils.calculateHash(data), AttachmentUtils.HASH_ALGORITHM, type.mediaType, data, reference));
         return this;
     }
 

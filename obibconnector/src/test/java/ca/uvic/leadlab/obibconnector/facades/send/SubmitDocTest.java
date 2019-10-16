@@ -158,8 +158,8 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test
     public void testSubmitCancelDoc() throws Exception {
         // add recipient (provider) and submit the document
-        IDocument response = submitDoc.recipient()
-                .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+        IDocument response = submitDoc
+                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                 .and().receiverId(clinicIdA)
                 .content("e-Referral obib connector automated test.")
                 .submit();
@@ -230,10 +230,11 @@ public class SubmitDocTest extends FacadesBaseTest {
     @Test
     public void testSubmitDocWithAttachment() throws Exception {
         // add recipient (provider), attachments and submit the document
-        IDocument response = submitDoc.recipient()
-                .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+        IDocument response = submitDoc
+                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                .recipientOrganization("cdxpostprod-otca", "Oscar Test Clinc A")
                 .and().receiverId(clinicIdA)
-                .attach(AttachmentType.PDF, "doc.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
+                .attach(AttachmentType.PDF, "document1.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
                 .submit();
 
         Assert.assertNotNull(response.getDocumentID());
@@ -252,10 +253,10 @@ public class SubmitDocTest extends FacadesBaseTest {
     public void testSubmitDocWithTextBodyAndAttachment() throws Exception {
         try {
             // add recipient (provider), attachments and submit the document
-            IDocument response = submitDoc.recipient()
-                    .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+            IDocument response = submitDoc
+                    .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
-                    .content("e-Referral obib connector automated test - with multiple attachments")
+                    .content("e-Referral obib connector automated test with attachment")
                     .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
                     .submit();
 
@@ -270,11 +271,11 @@ public class SubmitDocTest extends FacadesBaseTest {
     public void testSubmitDocWithAttachmentAndTextBody() throws Exception {
         try {
             // add recipient (provider), attachments and submit the document
-            IDocument response = submitDoc.recipient()
-                    .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+            IDocument response = submitDoc
+                    .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
                     .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
-                    .content("e-Referral obib connector automated test - with multiple attachments")
+                    .content("e-Referral obib connector automated test with attachment")
                     .submit();
 
         } catch (OBIBException ex) {
@@ -288,8 +289,8 @@ public class SubmitDocTest extends FacadesBaseTest {
     public void testSubmitDocWithBigAttachment() throws Exception {
         try {
             // add recipient (provider), big attachment and submit the document
-            IDocument response = submitDoc.recipient()
-                    .primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+            IDocument response = submitDoc
+                    .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
                     .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
                     .submit();
@@ -301,10 +302,10 @@ public class SubmitDocTest extends FacadesBaseTest {
         }
     }
 
-    //@Test
+    @Test
     public void testDistributionStatus() throws Exception {
         try {
-            List<IDocument> documents = searchDoc.distributionStatus("91df4186-010e-493a-8de5-d3b69a12dd99");
+            List<IDocument> documents = searchDoc.distributionStatus("d153cdbb-adda-4241-be44-9b34358378c1");
 
             Assert.assertFalse(documents.isEmpty());
             System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));

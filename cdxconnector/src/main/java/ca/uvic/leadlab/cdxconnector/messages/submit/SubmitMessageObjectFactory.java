@@ -1,7 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages.submit;
 
 import ca.uvic.leadlab.cdxconnector.WSUtil;
-import cdasubmitrequest.*;
+import cdasubmit.*;
 
 import java.util.Date;
 

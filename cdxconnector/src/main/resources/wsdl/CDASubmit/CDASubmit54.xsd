@@ -1,6 +1,5 @@
 <xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"
-           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:sch="http://www.ascc.net/xml/schematron"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+           xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:include schemaLocation="CDASubmit55.xsd"/>
     <xs:annotation>
         <xs:documentation>
@@ -138,6 +137,7 @@
         </xs:annotation>
         <xs:complexContent mixed="true">
             <xs:extension base="q6:ANY" xmlns:q6="urn:hl7-org:v3">
+                <xs:sequence><xs:any maxOccurs="1" minOccurs="0"/></xs:sequence> <!-- HACK: workaround to jaxb bug https://github.com/eclipse-ee4j/jaxb-ri/issues/792 -->
                 <xs:attribute default="TXT" name="representation" type="q6:BinaryDataEncoding" use="optional">
                     <xs:annotation>
                         <xs:documentation>
@@ -291,9 +291,8 @@
                 <sch:pattern name="validate ST">
                     <sch:rule abstract="true" id="rule-ST">
                         <sch:report test="(@nullFlavor or text()) and not(@nullFlavor and text())">
-                            <p xmlns:gsd="http://aurora.regenstrief.org/GenericXMLSchema"
-                               xmlns:xlink="http://www.w3.org/TR/WD-xlink">Text content is only allowed in non-NULL
-                                values.
+                            <p
+                            >Text content is only allowed in non-NULL values.
                             </p>
                         </sch:report>
                     </sch:rule>
@@ -600,8 +599,8 @@
                 <sch:pattern name="validate CR">
                     <sch:rule abstract="true" id="rule-CR">
                         <sch:report test="(value or @nullFlavor) and not(@nullFlavor and node())">
-                            <p xmlns:gsd="http://aurora.regenstrief.org/GenericXMLSchema"
-                               xmlns:xlink="http://www.w3.org/TR/WD-xlink">
+                            <p
+                            >
                                 A value component is required or else the
                                 code role is NULL.
                             </p>

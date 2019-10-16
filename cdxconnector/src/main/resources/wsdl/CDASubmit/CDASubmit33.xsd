@@ -1,8 +1,7 @@
 <xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
            xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:ex="urn:hl7-org/v3-example"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:include schemaLocation="CDASubmit3.xsd"/>
-    <!--xs:include schemaLocation="CDASubmit57.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+    <xs:include schemaLocation="CDASubmit57.xsd"/> <!-- HACK: Commented to generate the Java classes correctly -->
     <xs:include schemaLocation="CDASubmit30.xsd"/>
     <xs:include schemaLocation="CDASubmit34.xsd"/>
     <xs:include schemaLocation="CDASubmit35.xsd"/>

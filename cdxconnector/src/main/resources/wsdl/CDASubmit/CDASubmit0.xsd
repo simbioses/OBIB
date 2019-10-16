@@ -1,7 +1,6 @@
 <xs:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3" xmlns="urn:hl7-org:v3"
-           xmlns:b="http://schemas.microsoft.com/BizTalk/2003" xmlns:sch="http://www.ascc.net/xml/schematron"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--xs:include schemaLocation="CDASubmit1.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+           xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="CDASubmit1.xsd"/>
     <xs:complexType abstract="true" name="ANY">
         <xs:annotation>
             <xs:documentation>
@@ -255,9 +254,8 @@
                 <sch:pattern name="validate ST">
                     <sch:rule abstract="true" id="rule-ST">
                         <sch:report test="(@nullFlavor or text()) and not(@nullFlavor and text())">
-                            <p xmlns:gsd="http://aurora.regenstrief.org/GenericXMLSchema"
-                               xmlns:xlink="http://www.w3.org/TR/WD-xlink">Text content is only allowed in non-NULL
-                                values.
+                            <p
+                            >Text content is only allowed in non-NULL values.
                             </p>
                         </sch:report>
                     </sch:rule>
@@ -564,8 +562,8 @@
                 <sch:pattern name="validate CR">
                     <sch:rule abstract="true" id="rule-CR">
                         <sch:report test="(value or @nullFlavor) and not(@nullFlavor and node())">
-                            <p xmlns:gsd="http://aurora.regenstrief.org/GenericXMLSchema"
-                               xmlns:xlink="http://www.w3.org/TR/WD-xlink">
+                            <p
+                            >
                                 A value component is required or else the
                                 code role is NULL.
                             </p>

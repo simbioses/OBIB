@@ -12,6 +12,10 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
 
 public abstract class TestUtils {
 
@@ -33,5 +37,26 @@ public abstract class TestUtils {
         } catch (Exception ignored) {
         }
         return xml;
+    }
+
+  public static String loadTextFile(String filePath) throws Exception {
+        Path path = Paths.get(TestUtils.class.getResource(filePath).toURI());
+        StringBuilder content = new StringBuilder();
+        for (String line : Files.readAllLines(path)) {
+            content.append(line);
+        }
+        return content.toString();
+    }
+
+    public static byte[] loadBinaryFile(String filePath) throws Exception {
+        Path path = Paths.get(TestUtils.class.getResource(filePath).toURI());
+        return Files.readAllBytes(path);
+    }
+
+    public static byte[] calculateHash(byte[] content) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        return md.digest(content);
+        //return DatatypeConverter.printHexBinary(hash);
+        //return DatatypeConverter.printBase64Binary(hash);
     }
 }

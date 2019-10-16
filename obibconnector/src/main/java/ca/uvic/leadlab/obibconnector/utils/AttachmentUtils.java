@@ -2,7 +2,7 @@ package ca.uvic.leadlab.obibconnector.utils;
 
 import ca.uvic.leadlab.obibconnector.facades.exceptions.OBIBException;
 
-import java.math.BigInteger;
+import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -22,7 +22,8 @@ public class AttachmentUtils {
     public static String calculateHash(byte[] content) throws OBIBException {
         try {
             MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
-            return String.format("%040x", new BigInteger(1, md.digest(content)));
+            byte[] hash = md.digest(content);
+            return DatatypeConverter.printHexBinary(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new OBIBException("Error calculating attachment hash.", e);
         }

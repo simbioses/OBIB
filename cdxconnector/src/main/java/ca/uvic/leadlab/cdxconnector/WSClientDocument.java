@@ -8,7 +8,8 @@ import ca.uvic.leadlab.cdxconnector.messages.request.ListNewDocumentsBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.request.SearchDocumentBuilder;
 import ca.uvic.leadlab.cdxconnector.messages.submit.DocumentAttachment;
 import ca.uvic.leadlab.cdxconnector.messages.submit.SubmitDocumentBuilder;
-import cdasubmitrequest.*;
+import cdasubmit.*;
+import cdarequest.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;

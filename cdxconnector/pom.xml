@@ -281,8 +281,7 @@
                                         <extraarg>-impl</extraarg>
                                         <extraarg>-verbose</extraarg>
                                         <extraarg>-p</extraarg>
-                                        <!--extraarg>cdasubmit</extraarg-->
-                                        <extraarg>cdasubmitrequest</extraarg> <!-- HACK: Joined submit and request classes to be able to set content in ED -->
+                                        <extraarg>cdasubmit</extraarg>
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/jaxwsBindings.xjb</bindingFile>
@@ -308,8 +307,7 @@
                                         <extraarg>-impl</extraarg>
                                         <extraarg>-verbose</extraarg>
                                         <extraarg>-p</extraarg>
-                                        <!--extraarg>cdarequest</extraarg-->
-                                        <extraarg>cdasubmitrequest</extraarg> <!-- HACK: Joined submit and request classes to be able to set content in ED -->
+                                        <extraarg>cdarequest</extraarg>
                                     </extraargs>
                                     <bindingFiles>
                                         <bindingFile>${project.basedir}/src/main/resources/wsdl/CDARequest_jaxbBindings.xjb</bindingFile>

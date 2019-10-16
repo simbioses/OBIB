@@ -1,7 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages.submit;
 
 import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
-import cdasubmitrequest.*;
+import cdasubmit.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,7 +61,8 @@ public class SubmitDocumentBuilder {
         if (attachments == null) {
             attachments = new ArrayList<>();
         }
-        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(), attachment.getHash().getBytes()));
+        attachments.add(createAttachmentText(attachment.getMediaType(), attachment.getContent(),
+                attachment.getHashBinary(), attachment.getIntegrityCheckAlgorithm()));
         return this;
     }
 
@@ -108,12 +109,12 @@ public class SubmitDocumentBuilder {
         return ed;
     }
 
-    private ED createAttachmentText(MediaType mediaType, String content, byte[] hash) {
+    private ED createAttachmentText(String mediaType, String content, byte[] hash, IntegrityCheckAlgorithm checkAlgorithm) {
         ED ed = new ED();
-        //ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
+        ed.setRepresentation(BinaryDataEncoding.B_64); // CONF-CDXOD021
         ed.setIntegrityCheck(hash); // CONF-CDXOD066
-        ed.setIntegrityCheckAlgorithm(IntegrityCheckAlgorithm.SHA_1); // CONF-CDXOD067
-        ed.setMediaType(mediaType.value()); // CONF-CDXOD068
+        ed.setIntegrityCheckAlgorithm(checkAlgorithm); // CONF-CDXOD067
+        ed.setMediaType(mediaType); // CONF-CDXOD068
         ed.getContent().add(content); // CONF-CDXOD069
         return ed;
     }

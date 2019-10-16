@@ -1,30 +1,34 @@
 package ca.uvic.leadlab.cdxconnector.messages.submit;
 
-import cdasubmitrequest.*;
+import cdasubmit.IntegrityCheckAlgorithm;
+
+import javax.xml.bind.DatatypeConverter;
 
 public class DocumentAttachment {
 
-    private String type;
+    private String mediaType;
     private String content;
     private String hash;
+    private String hashAlgorithm;
     private String reference;
 
     public DocumentAttachment() {
     }
 
-    public DocumentAttachment(String type, String content, String hash, String reference) {
-        this.type = type;
+    public DocumentAttachment(String mediaType, String content, String hash, String hashAlgorithm, String reference) {
+        this.mediaType = mediaType;
         this.content = content;
         this.hash = hash;
+        this.hashAlgorithm = hashAlgorithm;
         this.reference = reference;
     }
 
-    public String getType() {
-        return type;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 
     public String getContent() {
@@ -39,8 +43,25 @@ public class DocumentAttachment {
         return hash;
     }
 
+    public byte[] getHashBinary() {
+        return DatatypeConverter.parseBase64Binary(hash);
+    }
+
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public String getHashAlgorithm() {
+        return hashAlgorithm;
+    }
+
+    public void setHashAlgorithm(String hashAlgorithm) {
+        this.hashAlgorithm = hashAlgorithm;
+    }
+
+    public IntegrityCheckAlgorithm getIntegrityCheckAlgorithm() {
+        String checkAlgorithm = hashAlgorithm.replace("-", ""); // HACK: WS does not accept "SHA-1"
+        return hashAlgorithm != null ? IntegrityCheckAlgorithm.fromValue(checkAlgorithm) : null;
     }
 
     public String getReference() {
@@ -49,9 +70,5 @@ public class DocumentAttachment {
 
     public void setReference(String reference) {
         this.reference = reference;
-    }
-
-    public MediaType getMediaType() {
-        return MediaType.fromValue(type);
     }
 }

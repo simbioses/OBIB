@@ -60,8 +60,11 @@ public class DocumentAttachment {
     }
 
     public IntegrityCheckAlgorithm getIntegrityCheckAlgorithm() {
+        if (hashAlgorithm == null) {
+            return null;
+        }
         String checkAlgorithm = hashAlgorithm.replace("-", ""); // HACK: WS does not accept "SHA-1"
-        return hashAlgorithm != null ? IntegrityCheckAlgorithm.fromValue(checkAlgorithm) : null;
+        return IntegrityCheckAlgorithm.fromValue(checkAlgorithm);
     }
 
     public String getReference() {

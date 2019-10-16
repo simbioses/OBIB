@@ -2,6 +2,7 @@ package ca.uvic.leadlab.obibconnector.facades.datatypes;
 
 public enum DocumentStatus {
     COMPLETED("completed"),
+    SIGNED("signed"),
     ACTIVE("active"),
     APPENDED("appended"),
     CORRECTED("corrected"),

@@ -249,6 +249,29 @@ public class SubmitDocTest extends FacadesBaseTest {
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
 
+    @Test
+    public void testSubmitDocWithMultipleAttachment() throws Exception {
+        // add recipient (provider), attachments and submit the document
+        IDocument response = submitDoc
+                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                .recipientOrganization("cdxpostprod-otca", "Oscar Test Clinc A")
+                .and().receiverId(clinicIdA)
+                .attach(AttachmentType.PDF, "document1.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
+                .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
+                .submit();
+
+        Assert.assertNotNull(response.getDocumentID());
+        System.out.println("DOCUMENT ID: " + response.getDocumentID());
+
+        Thread.sleep(5000); // wait for a few seconds
+
+        // check the document status
+        List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
+
+        Assert.assertFalse(documents.isEmpty());
+        System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
+    }
+
     @Test(expected = OBIBException.class)
     public void testSubmitDocWithTextBodyAndAttachment() throws Exception {
         try {

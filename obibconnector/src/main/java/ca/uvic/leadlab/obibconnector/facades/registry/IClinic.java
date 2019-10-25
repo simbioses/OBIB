@@ -15,4 +15,6 @@ public interface IClinic {
     IProvider getProvider();
 
     List<IProvider> getProviders();
+    List<ITemplate> getTemplates();
+
 }

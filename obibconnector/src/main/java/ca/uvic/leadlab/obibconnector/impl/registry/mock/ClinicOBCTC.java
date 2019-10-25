@@ -2,6 +2,7 @@ package ca.uvic.leadlab.obibconnector.impl.registry.mock;
 
 import ca.uvic.leadlab.obibconnector.facades.registry.IClinic;
 import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
+import ca.uvic.leadlab.obibconnector.facades.registry.ITemplate;
 
 import java.util.List;
 
@@ -44,6 +45,11 @@ public class ClinicOBCTC implements IClinic {
 
     @Override
     public List<IProvider> getProviders() {
+        return null;
+    }
+
+    @Override
+    public List<ITemplate> getTemplates() {
         return null;
     }
 }

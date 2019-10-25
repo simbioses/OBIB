@@ -86,6 +86,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         // add recipient (provider) and submit the document
         IDocument response = submitDoc
                 .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                .recipientOrganization(clinicIdA, "Oscar Test Clinic A")
                 .and().receiverId(clinicIdA)
                 .content("e-Referral obib connector automated test.")
                 .submit();
@@ -107,6 +108,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         // add recipient (clinic) and submit the document
         IDocument response = submitDoc
                 .recipient().primary().recipientOrganization("cdxpostprod-ctc", "Conformance Test Clinic")
+                .recipientOrganization(clinicIdT, "Oscar Clint Test Conformance")
                 .and().receiverId(clinicIdT)
                 .content("e-Referral obib connector automated test addressed to a clinic.")
                 .submit();
@@ -280,7 +282,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
                     .content("e-Referral obib connector automated test with attachment")
-                    .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
+                    //.attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
                     .submit();
 
         } catch (OBIBException ex) {

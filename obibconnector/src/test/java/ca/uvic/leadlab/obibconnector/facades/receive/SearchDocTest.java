@@ -41,7 +41,7 @@ public class SearchDocTest extends FacadesBaseTest {
 
     @Test
     public void testSearchDocumentById() throws Exception {
-        List<IDocument> documents = searchDoc.searchDocumentById("b93216a1-1b78-45da-a13a-b1d2924761c6");
+        List<IDocument> documents = searchDoc.searchDocumentById("b69f1bfc-42ba-e911-a96d-0050568c55a6");
 
         Assert.assertFalse(documents.isEmpty());
 

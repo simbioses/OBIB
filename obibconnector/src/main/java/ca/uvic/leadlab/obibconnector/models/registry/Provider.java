@@ -2,7 +2,6 @@ package ca.uvic.leadlab.obibconnector.models.registry;
 
 import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 import ca.uvic.leadlab.obibconnector.models.common.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,6 @@ public class Provider extends Person {
         this.telecoms.add(telecom);
     }
 
-    @JsonIgnore
     public List<Clinic> getClinics() {
         return clinics;
     }

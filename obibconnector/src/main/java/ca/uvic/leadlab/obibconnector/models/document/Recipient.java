@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
 import ca.uvic.leadlab.obibconnector.models.registry.Provider;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Recipient extends Provider {
 
@@ -23,6 +24,7 @@ public class Recipient extends Provider {
         this.receivedOrganization = receivedOrganization;
     }
 
+    @JsonIgnore
     public boolean isOrganizationOnly() {
         return getReceivedOrganization() != null && (getName() == null || getName().isEmpty());
     }

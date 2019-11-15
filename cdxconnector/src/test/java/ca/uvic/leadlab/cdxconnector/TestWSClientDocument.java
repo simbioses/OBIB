@@ -4,9 +4,16 @@ import ca.uvic.leadlab.cdxconnector.messages.submit.DocumentAttachment;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import javax.xml.bind.DatatypeConverter;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,11 +22,30 @@ public class TestWSClientDocument extends TestWSClient {
     static WSClientDocument wsClientDocumentA;
     static WSClientDocument wsClientDocumentC;
 
-    private static String replaceDocumentId(String document) {
+    private static String updateDocument(String document) throws Exception {
         UUID documentId = UUID.randomUUID();
+        String currentTime = new SimpleDateFormat("yyyyMMddHHmmZZZ").format(new Date());
+
         System.out.println("DocumentId = " + documentId);
-        return document.replaceFirst("<id assigningAuthorityName=\"CDX Clinical Document ID\" extension=\".*\" root=\"2.16.840.1.113883.3.277.100.3\"/>",
-                "<id assigningAuthorityName=\"CDX Clinical Document ID\" extension=\"" + documentId + "\" root=\"2.16.840.1.113883.3.277.100.3\"/>");
+        System.out.println("Time       = " + currentTime);
+
+        Document doc = TestUtils.parseXml(document);
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        // modify id and setId
+        NodeList nodes = (NodeList) xpath.compile("(//id|//setId)[@root='2.16.840.1.113883.3.277.100.3']")
+                .evaluate(doc, XPathConstants.NODESET);
+        for (int i = 0; i < nodes.getLength(); i++) {
+            nodes.item(i).getAttributes().getNamedItem("extension").setNodeValue(documentId.toString());
+        }
+
+        // modify effetiveTime and time
+        nodes = (NodeList) xpath.compile("//effectiveTime|//time")
+                .evaluate(doc, XPathConstants.NODESET);
+        for (int i = 0; i < nodes.getLength(); i++) {
+            nodes.item(i).getAttributes().getNamedItem("value").setNodeValue(currentTime);
+        }
+
+        return TestUtils.writeXml(doc);
     }
 
     @BeforeClass
@@ -33,8 +59,7 @@ public class TestWSClientDocument extends TestWSClient {
 
     @Test
     public void testSubmitDocument() throws Exception {
-        String document = TestUtils.loadTextFile("/documentTest.xml");
-        document = replaceDocumentId(document);
+        String document = updateDocument(TestUtils.loadTextFile("/documentTest.xml"));
 
         String response = wsClientDocumentA.submitDocument(ClinicA.id, document, null, ClinicA.id);
 
@@ -44,8 +69,7 @@ public class TestWSClientDocument extends TestWSClient {
 
     @Test
     public void testSubmitDocumentWithAttachments() throws Exception {
-        String document = TestUtils.loadTextFile("/documentTest.xml");
-        document = replaceDocumentId(document);
+        String document = updateDocument(TestUtils.loadTextFile("/documentTest.xml"));
 
         List<DocumentAttachment> attachments = new ArrayList<>();
         byte[] attach = TestUtils.loadBinaryFile("/attachmentTest.pdf");
@@ -105,7 +129,7 @@ public class TestWSClientDocument extends TestWSClient {
     public void testGetDistributionStatusByDocumentId() throws Exception {
         String response = wsClientDocumentA
                 .getDistributionStatus(ClinicA.id, null,
-                        "b284441b-cdfa-4642-b202-e8c5941df34d",
+                        "bc2d2059-f646-440b-880d-7f204aaf8321",
                         null, null);
 
         Assert.assertNotNull(response);

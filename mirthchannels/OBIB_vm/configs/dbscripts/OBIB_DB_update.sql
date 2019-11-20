@@ -12,3 +12,21 @@ create table if not exists error_message
     obib_version      varchar(36) null,
     connector_version varchar(36) null
 );
+
+/* add unique constraint for cdx_id.code */
+ALTER TABLE cdx_id ADD CONSTRAINT cdx_id_code_unique UNIQUE (code);
+
+/* add clinic_credential.location_id column */
+ALTER TABLE clinic_credential ADD COLUMN IF NOT EXISTS location_id varchar(36) null;
+
+/* add unique constraint for clinic_credential.location_id */
+ALTER TABLE clinic_credential ADD CONSTRAINT clinic_credential_location_id_unique UNIQUE (location_id);
+
+/* insert OSCAR Ids */
+INSERT IGNORE INTO cdx_id (code, name, category, type)
+VALUES ('​2.16.840.1.113883.3.277.126', 'OSCAR EMR Root OID', 'Default', 'Software'),
+       ('​2.16.840.1.113883.3.277.126.1', 'OSCAR EMR Document ID', 'OSCAR', 'Document'),
+       ('​2.16.840.1.113883.3.277.126.2', 'OSCAR EMR Patient ID', 'OSCAR', 'Patient'),
+       ('​2.16.840.1.113883.3.277.126.3', 'OSCAR EMR Personnel ID', 'OSCAR', 'Personnel'),
+       ('​2.16.840.1.113883.3.277.126.4', 'OSCAR EMR Location ID', 'OSCAR', 'Location'),
+       ('​2.16.840.1.113883.3.277.126.5', 'OSCAR EMR Organization ID', 'OSCAR', 'Organization');

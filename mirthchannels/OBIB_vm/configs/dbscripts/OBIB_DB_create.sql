@@ -10,7 +10,8 @@ create table cdx_id
     code      varchar(36) not null,
     name      varchar(50) null,
     category  varchar(36) null,
-    type      varchar(36) null
+    type      varchar(36) null,
+    constraint cdx_id_code_unique unique (code)
 );
 
 /* cdx_loinc_code - table */ 
@@ -31,7 +32,9 @@ create table clinic_credential
     clinic_username      varchar(100) not null,
     clinic_password      varchar(100) not null,
     certificate_file     varchar(100) null,
-    certificate_password varchar(100) null
+    certificate_password varchar(100) null,
+    location_id          varchar(36)  null,
+    constraint clinic_credential_location_id_unique unique (location_id)
 );
 
 /* document - table */ 

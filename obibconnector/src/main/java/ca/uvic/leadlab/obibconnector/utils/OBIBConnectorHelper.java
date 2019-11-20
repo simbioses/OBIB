@@ -23,6 +23,8 @@ public abstract class OBIBConnectorHelper {
     private static final String DEFAULT_PROVIDER_ID_TYPES = properties.getProperty("obib.default.provider.id.type");
     private static final String DEFAULT_PATIENT_ID_TYPES = properties.getProperty("obib.default.patient.id.type");
 
+    private static final String CLINIC_LOCATION_ID = properties.getProperty("cdx.clinic.location.id");
+
     private static Properties setupProperties() {
         String obibPath = null;
         Properties properties = new Properties();
@@ -136,6 +138,10 @@ public abstract class OBIBConnectorHelper {
             throw new IllegalArgumentException("No 'Patient ID Type' found in obib.properties.");
         }
         return types[0];
+    }
+
+    public static String getClinicLocationId() {
+        return CLINIC_LOCATION_ID;
     }
 
     public static String getOBIBConnectorVersion() {

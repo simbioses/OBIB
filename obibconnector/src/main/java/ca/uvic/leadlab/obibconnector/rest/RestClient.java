@@ -102,7 +102,11 @@ public class RestClient implements IOscarInformation {
                         response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase()));
             }
 
-            return response.readEntity(responseEntity);
+            R entity = response.readEntity(responseEntity);
+            if (entity == null) {
+                throw new OBIBRequestException("Response Error: Entity is null.");
+            }
+            return entity;
         } catch (Exception e) {
             if (e instanceof OBIBRequestException) {
                 throw e;

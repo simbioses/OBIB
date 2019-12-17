@@ -93,15 +93,15 @@ public class Document implements IDocument {
         title = document.getTitle();
 
         if (document.getSetId() != null) {
-            setId = document.getSetId().getCode();
+            setId = document.getSetId().getConcatenatedID();
         }
 
-        if (document.getOrders() != null && !document.getOrders().isEmpty()) {
-            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getCode(); // TODO improve this
+        if (document.getOrders() != null && !document.getOrders().isEmpty() && !document.getOrders().get(0).getIds().isEmpty()) {
+            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getConcatenatedID(); // TODO improve this
         }
 
-        if (document.getParentDocuments() != null && !document.getParentDocuments().isEmpty()) {
-            parentDocumentId = document.getParentDocuments().get(0).getId().getCode(); // TODO improve this
+        if (document.getParentDocuments() != null && !document.getParentDocuments().isEmpty() && document.getParentDocuments().get(0).getId() != null) {
+            parentDocumentId = document.getParentDocuments().get(0).getId().getConcatenatedID(); // TODO improve this
         }
 
         if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {

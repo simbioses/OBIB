@@ -282,7 +282,7 @@ public class SubmitDocTest extends FacadesBaseTest {
                     .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
                     .content("e-Referral obib connector automated test with attachment")
-                    //.attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
+                    .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
                     .submit();
 
         } catch (OBIBException ex) {

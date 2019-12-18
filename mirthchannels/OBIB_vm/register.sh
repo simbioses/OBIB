@@ -10,6 +10,7 @@ OBIB_CA_CERT_PATH=$CERTS_PATH/$OBIB_CA_CERT
 OBIB_CA_KEY_PATH=$KEYS_PATH/$OBIB_CA_KEY
 
 OSCAR_LOCATION_ID='2.16.840.1.113883.3.277.126.4'
+OSCAR_PERSONNEL_ID='2.16.840.1.113883.3.277.126.3'
 
 # check if a clinic is registered - params <clinic_id>
 checkClinic() {
@@ -138,6 +139,7 @@ customizeProperties() {
     sudo sed -e 's,${CLINIC_ID},'"$1"',g' -i "$properties_path"
     sudo sed -e 's,${CLINIC_PASS},'"$2"',g' -i "$properties_path"
     sudo sed -e 's,${CLINIC_LOCATION_ID},'"$OSCAR_LOCATION_ID.$3"',g' -i "$properties_path"
+    sudo sed -e 's,${CLINIC_PERSONNEL_ID},'"$OSCAR_PERSONNEL_ID.$3"',g' -i "$properties_path"
 
     echo -e "\e[1;92mPlease, copy '$OBIB_KEYSTORE_FILE' and 'obibconnector.properties' to the EMR secure directory '$EMR_SECURE_DIRECTORY'.\e[0m"
 }

@@ -6,5 +6,7 @@ public interface IOrder extends IAnd {
 
     IOrder id(String id);
 
+    IOrder id(String id, String type);
+
     IOrder statusCode(OrderStatus orderStatus);
 }

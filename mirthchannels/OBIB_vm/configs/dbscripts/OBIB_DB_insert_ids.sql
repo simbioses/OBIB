@@ -49,3 +49,10 @@ INSERT INTO cdx_id (code, name, category, type) VALUES ('2.16.840.1.113883.3.277
 INSERT INTO cdx_id (code, name, category, type) VALUES ('2.16.840.1.113883.3.277.1.81', 'IHA Message Number', 'Default', 'Message');
 INSERT INTO cdx_id (code, name, category, type) VALUES ('2.16.840.1.113883.3.277.1.12', 'IHA Software Code', 'Default', 'Software');
 
+/* OSCAR Ids */
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126', 'OSCAR EMR Root OID', 'Default', 'Software');
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126.1', 'OSCAR EMR Document ID', 'OSCAR', 'Document');
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126.2', 'OSCAR EMR Patient ID', 'OSCAR', 'Patient');
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126.3', 'OSCAR EMR Personnel ID', 'OSCAR', 'Personnel');
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126.4', 'OSCAR EMR Location ID', 'OSCAR', 'Location');
+INSERT INTO cdx_id (code, name, category, type) VALUES ('​2.16.840.1.113883.3.277.126.5', 'OSCAR EMR Organization ID', 'OSCAR', 'Organization');

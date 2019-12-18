@@ -51,19 +51,25 @@ public abstract class PersonBuilder<P extends Person, R extends IPerson> extends
 
     @Override
     public R address(AddressType type, String streetAddress, String city, String province, String postalCode, String country) {
-        person.setAddress(new Address(type.label, streetAddress, city, province, postalCode, country));
+        if (streetAddress != null && !streetAddress.isEmpty() ) {
+            person.setAddress(new Address(type.label, streetAddress, city, province, postalCode, country));
+        }
         return (R) this;
     }
 
     @Override
     public R phone(TelcoType type, String number) {
-        person.setTelecom(new Telecom(type.label, "tel", number));
+        if (number != null && !number.isEmpty()) {
+            person.setTelecom(new Telecom(type.label, "tel", number));
+        }
         return (R) this;
     }
 
     @Override
     public R email(TelcoType type, String email) {
-        person.setTelecom(new Telecom(type.label, "email", email));
+        if (email != null && !email.isEmpty()) {
+            person.setTelecom(new Telecom(type.label, "email", email));
+        }
         return (R) this;
     }
 }

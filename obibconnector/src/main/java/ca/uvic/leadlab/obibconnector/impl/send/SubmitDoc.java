@@ -36,7 +36,7 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc updateDoc(String documentId, int versionNumber) {
-        return createDoc(documentId, versionNumber, DocumentStatus.UPDATED);
+        return createDoc(documentId, versionNumber, DocumentStatus.NORMAL);
     }
 
     @Override

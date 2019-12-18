@@ -19,6 +19,20 @@ import java.security.MessageDigest;
 
 public abstract class TestUtils {
 
+    public static Document parseXml(final String xml) throws Exception {
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .parse(new InputSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    public static String writeXml(final Document doc) throws Exception {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(doc), new StreamResult(writer));
+        return writer.getBuffer().toString();
+    }
+
     public static String prettyXML(final String xml) {
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -34,7 +48,8 @@ public abstract class TestUtils {
 
             transformer.transform(new DOMSource(document), streamResult);
             return stringWriter.toString();
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return xml;
     }

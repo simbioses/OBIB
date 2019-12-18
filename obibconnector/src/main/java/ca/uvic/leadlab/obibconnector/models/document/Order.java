@@ -1,6 +1,7 @@
 package ca.uvic.leadlab.obibconnector.models.document;
 
 import ca.uvic.leadlab.obibconnector.models.common.Id;
+import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,15 @@ public class Order {
         this.ids = ids;
     }
 
-    public void setId(String id) {
+    public void setId(String id, String type) {
         if (this.ids == null) {
             this.ids = new ArrayList<>();
         }
-        this.ids.add(new Id(id, null));
+        this.ids.add(new Id(id, type));
+    }
+
+    public void setId(String id) {
+        this.setId(id, OBIBConnectorHelper.getClinicLocationId());
     }
 
     public String getStatusCode() {

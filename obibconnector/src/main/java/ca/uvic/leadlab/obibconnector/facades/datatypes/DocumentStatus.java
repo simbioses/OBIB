@@ -9,6 +9,12 @@ public enum DocumentStatus {
     UPDATED("updated"),
     ABORTED("aborted"),
     CANCELLED("cancelled"),
+    NEW("new"),
+    NORMAL("normal"),
+    HELD("held"),
+    SUSPENDED("suspended"),
+    NULLIFIED("nullified"),
+    OBSOLETE("obsolete"),
     UNRECOGNIZED("unrecognized");
 
     public final String code;

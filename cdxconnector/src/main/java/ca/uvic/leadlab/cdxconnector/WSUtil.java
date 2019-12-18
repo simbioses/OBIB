@@ -1,6 +1,5 @@
 package ca.uvic.leadlab.cdxconnector;
 
-import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -19,13 +18,6 @@ import java.util.logging.Logger;
 public abstract class WSUtil {
 
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
-
-    public static String formatException(String message, Throwable ex) {
-        if (ex instanceof ConnectorException || ex instanceof MessageBuilderException) {
-            return message + " " + ex.getMessage();
-        }
-        return message;
-    }
 
     public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
         if (logger.isLoggable(Level.FINE)) {

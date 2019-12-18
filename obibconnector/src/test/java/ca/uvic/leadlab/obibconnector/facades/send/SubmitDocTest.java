@@ -83,24 +83,31 @@ public class SubmitDocTest extends FacadesBaseTest {
 
     @Test
     public void testSubmitNewDoc() throws Exception {
-        // add recipient (provider) and submit the document
-        IDocument response = submitDoc
-                .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
-                .recipientOrganization(clinicIdA, "Oscar Test Clinic A")
-                .and().receiverId(clinicIdA)
-                .content("e-Referral obib connector automated test.")
-                .submit();
+        try {
+            // add recipient (provider) and submit the document
+            IDocument response = submitDoc
+                    .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
+                    .recipientOrganization(clinicIdA, "Oscar Test Clinic A")
+                    //.and().dataEnterer().time(new Date()).id("123").name("Joe", "Kinnee")
+                    .and().receiverId(clinicIdA)
+                    .content("e-Referral obib connector automated test.")
+                    .submit();
 
-        Assert.assertNotNull(response.getDocumentID());
-        System.out.println("DOCUMENT ID: " + response.getDocumentID());
+            Assert.assertNotNull(response.getDocumentID());
+            System.out.println("DOCUMENT ID: " + response.getDocumentID());
 
-        Thread.sleep(5000); // wait for a few seconds
+            Thread.sleep(5000); // wait for a few seconds
 
-        // check the document status
-        List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
+            // check the document status
+            List<IDocument> documents = searchDoc.distributionStatus(response.getDocumentID());
 
-        Assert.assertFalse(documents.isEmpty());
-        System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
+            Assert.assertFalse(documents.isEmpty());
+            System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
+        } catch (OBIBException ex) {
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("OBIB Message: " + ex.getObibMessage());
+            throw ex;
+        }
     }
 
     @Test

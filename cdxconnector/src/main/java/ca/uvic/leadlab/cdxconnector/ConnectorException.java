@@ -5,11 +5,11 @@ import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
 public class ConnectorException extends Exception {
 
     public ConnectorException(String message) {
-        super(message);
+        super("CDXConnector - " + message);
     }
 
     public ConnectorException(String message, Throwable cause) {
-        super(concatCause(message, cause), cause);
+        super("CDXConnector - " + concatCause(message, cause), cause);
     }
 
     private static String concatCause(String message, Throwable cause) {

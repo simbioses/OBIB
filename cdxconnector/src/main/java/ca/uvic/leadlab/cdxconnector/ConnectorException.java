@@ -13,11 +13,6 @@ public class ConnectorException extends Exception {
     }
 
     private static String concatCause(String message, Throwable cause) {
-        if (cause instanceof ConnectorException
-                || cause instanceof MessageBuilderException
-                || cause instanceof RuntimeException) {
-            return message + " Cause: " + cause.getMessage().replaceAll("[\\t\\n\\r]+"," ");
-        }
-        return message;
+        return message + " Cause: " + cause.getMessage().replaceAll("[\\t\\n\\r]+"," ");
     }
 }

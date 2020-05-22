@@ -2364,7 +2364,7 @@ responseMap.put(&apos;responseMessage&apos;, connectorMessage.getTransformedData
 				clinic[&apos;ids&apos;].push(clinicId);
 			}
 		}
-		
+
 		// Clinic address, CONF-CDXPR039, CDXPR040
 		clinic[&apos;address&apos;] = parseCDAAddress(entity[&apos;addr&apos;]);
 

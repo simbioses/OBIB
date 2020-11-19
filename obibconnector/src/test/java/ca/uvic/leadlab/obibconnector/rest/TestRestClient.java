@@ -12,7 +12,7 @@ import ca.uvic.leadlab.obibconnector.models.response.ListClinicsResponse;
 import ca.uvic.leadlab.obibconnector.models.response.ListDocumentsResponse;
 import ca.uvic.leadlab.obibconnector.models.response.ListProvidersResponse;
 import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

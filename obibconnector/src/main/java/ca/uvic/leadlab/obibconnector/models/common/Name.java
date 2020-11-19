@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.obibconnector.models.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;

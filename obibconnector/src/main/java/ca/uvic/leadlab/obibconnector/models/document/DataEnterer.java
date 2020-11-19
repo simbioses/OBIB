@@ -3,8 +3,8 @@ package ca.uvic.leadlab.obibconnector.models.document;
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.registry.Provider;
 import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class DataEnterer extends Provider {
 

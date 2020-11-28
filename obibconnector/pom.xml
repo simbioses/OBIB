@@ -32,9 +32,9 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
-                        <manifestEntries>
-                            <Obib-Properties-Path>$CATALINA_HOME/obibconnector.properties</Obib-Properties-Path>
-                        </manifestEntries>
+<!--                        <manifestEntries>-->
+<!--                            <Obib-Properties-Path>$CATALINA_HOME/obibconnector.properties</Obib-Properties-Path>-->
+<!--                        </manifestEntries>-->
                     </archive>
                 </configuration>
             </plugin>
@@ -117,7 +117,7 @@
 
     <groupId>ca.uvic.leadlab</groupId>
     <artifactId>obibconnector</artifactId>
-    <version>1.0-61a</version>
+    <version>1.0-62a</version>
 
     <dependencies>
         <dependency>

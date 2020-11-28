@@ -4,10 +4,8 @@ import ca.uvic.leadlab.obibconnector.models.common.Id;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
-import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -27,29 +25,26 @@ public abstract class OBIBConnectorHelper {
     private static final String CLINIC_PERSONNEL_ID = properties.getProperty("cdx.clinic.personnel.id");
 
     private static Properties setupProperties() {
-        String obibPath = null;
+        String obibPath = "classpath"; // Initialized for logging purposes
         Properties properties = new Properties();
 
-        try { // try to get the properties file location from the JAR Manifest
-            final URL jarUrl = OBIBConnectorHelper.class.getProtectionDomain().getCodeSource().getLocation();
-            final JarFile jarFile = new JarFile(jarUrl.getPath());
-            obibPath = jarFile.getManifest().getMainAttributes().getValue("Obib-Properties-Path");
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Could not load obibconnector.properties path from META-INF/MANIFEST.MF", e);
-        }
-
         try {
-            if (obibPath != null) { // path found? load from it
+            LOGGER.log(Level.INFO, "Loading obibconnector.properties from {0}.", obibPath);
+            try (InputStream inputStream = OBIBConnectorHelper.class
+                    .getResourceAsStream("/obibconnector.properties")) {
+                properties.load(inputStream);
+            }
+
+            obibPath = properties.getProperty("obib.override.properties");
+            if (obibPath != null) {
+                LOGGER.log(Level.INFO, "Loading obibconnector.properties from {0}.", obibPath);
                 obibPath = expandEnvironmentVariable(obibPath);
-                try (InputStream inputStream = new FileInputStream(obibPath)) { // load the properties file
+                try (InputStream inputStream = new FileInputStream(obibPath)) {
                     properties.load(inputStream);
                 }
-            } else { // otherwise, load from classpath
-                LOGGER.log(Level.WARNING, "Trying to load obibconnector.properties from classpath.");
-                properties.load(OBIBConnectorHelper.class.getResourceAsStream("/obibconnector.properties"));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Could not load obibconnector.properties", e);
+            LOGGER.log(Level.SEVERE, "Could not load obibconnector.properties from " + obibPath, e);
         }
 
         return properties;

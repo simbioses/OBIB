@@ -32,9 +32,6 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
-<!--                        <manifestEntries>-->
-<!--                            <Obib-Properties-Path>$CATALINA_HOME/obibconnector.properties</Obib-Properties-Path>-->
-<!--                        </manifestEntries>-->
                     </archive>
                 </configuration>
             </plugin>

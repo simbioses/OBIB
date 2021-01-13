@@ -14,7 +14,7 @@ import ca.uvic.leadlab.obibconnector.models.response.ListProvidersResponse;
 import ca.uvic.leadlab.obibconnector.models.response.SubmitDocumentResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -22,9 +22,9 @@ import java.util.Date;
 
 public class TestRestClient {
 
-    private String obibUrl = "https://192.168.100.101";
+    private static String obibUrl = "https://192.168.100.101";
 
-    private IOscarInformation restClient;
+    private static IOscarInformation restClient;
 
     private ObjectMapper mapper = new ObjectMapper(); // to visualize the objects
     private Config config = new Config() { // to create a document on submit tests
@@ -34,8 +34,8 @@ public class TestRestClient {
         }
     };
 
-    @Before
-    public void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         restClient = new RestClient(obibUrl);
     }
 
@@ -44,36 +44,23 @@ public class TestRestClient {
         ClinicalDocument document = ((SubmitDoc) new SubmitDoc(config).newDoc()
                 .documentType(DocumentType.REFERRAL_NOTE)
                 .patient()
-                    .id("2222")
-                    .name(NameType.LEGAL, "Joe", "Wine")
-                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                    .phone(TelcoType.HOME, "250-111-1234")
-                    .gender(Gender.MALE)
-                    .birthday("1980", "08", "19")
+                    .id("8888999904")
+                    .name(NameType.LEGAL, "JUNE", "ELDER")
+                    .address(AddressType.HOME, "456 Main Street", "Toronto", "OT", "M6P 4J4", "CA")
+                    .phone(TelcoType.HOME, "416-555-6789")
+                    .gender(Gender.FEMALE)
+                    .birthday("1942", "06", "06")
                 .and().author()
-                    .id("3333")
+                    .id("93188")
                     .time(new Date())
-                    .name(NameType.LEGAL, "Joseph", "Cloud")
-                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                    .phone(TelcoType.HOME, "250-111-1234")
+                    .name("Lucius", "Plisihb", "Dr.", null)
                 .and().recipient()
                     .primary()
-                    .id("4444")
-                    .name(NameType.LEGAL, "Joseph", "Cloud")
-                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                    .phone(TelcoType.HOME, "250-111-1234")
-                .and().recipient()
-                    .id("6666")
-                    .name(NameType.LEGAL, "Joseph", "Cloud")
-                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                    .phone(TelcoType.HOME, "250-111-1234")
-                .and().participant()
-                    .id("5555")
-                    .name(NameType.LEGAL, "Joseph", "Cloud")
-                    .address(AddressType.HOME, "111 Main St", "Victoria", "BC", "V8V Z9Z", "CA")
-                    .phone(TelcoType.HOME, "250-111-1234")
+                    .id("11116")
+                    .name("Todd", "Kinnee", "Dr.", null)
                 .and().inFulfillmentOf()
-                    .id("1111")
+                    .id("1")
+                    .statusCode(OrderStatus.ACTIVE)
                 .and()
                     .receiverId("cdxpostprod-obctc")
                     .content("Plain text document content"))
@@ -89,7 +76,7 @@ public class TestRestClient {
     @Test
     public void testDistributionStatus() throws Exception {
         ListDocumentsResponse response = restClient.distributionStatus(SearchDocumentCriteria
-                .byDocumentId("006b83bc-be96-46bb-beb1-472dcb12c56a"));
+                .byDocumentId("84082904-4f92-4d20-8014-9789b26afdfa"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -115,9 +102,9 @@ public class TestRestClient {
     public void testSearchDocumentWithDate() throws Exception {
         SearchDocumentCriteria criteria = new SearchDocumentCriteria();
         Calendar cal = Calendar.getInstance();
-        cal.set(2019, Calendar.MARCH, 1);
+        cal.set(2020, Calendar.JANUARY, 1);
         Date start = cal.getTime();
-        cal.set(2019, Calendar.APRIL, 1);
+        cal.set(2020, Calendar.DECEMBER, 31);
         Date end = cal.getTime();
         criteria.setEffectiveTime(new DateRange(start, end));
 
@@ -130,7 +117,7 @@ public class TestRestClient {
     @Test
     public void testSearchDocumentById() throws Exception {
         ListDocumentsResponse response = restClient.searchDocument(SearchDocumentCriteria
-                .byDocumentId("61a1a387-408b-4e5c-be24-1976ace1c280"));
+                .byDocumentId("9a01b514-0955-eb11-a97d-0050568c55a6"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
@@ -139,10 +126,22 @@ public class TestRestClient {
     @Test
     public void testGetDocument() throws Exception {
         ListDocumentsResponse response = restClient.getDocument(SearchDocumentCriteria
-                .byDocumentId("db0e5fb8-c946-e911-a96a-0050568c55a6"));
+                .byDocumentId("a670a569-2355-eb11-a97d-0050568c55a6"));
         System.out.println(mapper.writeValueAsString(response));
 
         Assert.assertNotNull(response);
+
+        ListDocumentsResponse response2 = restClient.getDocument(SearchDocumentCriteria
+                .byDocumentId("a670a569-2355-eb11-a97d-0050568c55a6"));
+        System.out.println(mapper.writeValueAsString(response2));
+
+        Assert.assertNotNull(response2);
+
+        ListDocumentsResponse response3 = restClient.getDocument(SearchDocumentCriteria
+                .byDocumentId("a670a569-2355-eb11-a97d-0050568c55a6"));
+        System.out.println(mapper.writeValueAsString(response3));
+
+        Assert.assertNotNull(response3);
     }
 
     @Test

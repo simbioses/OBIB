@@ -12,13 +12,13 @@
     <distributionManagement>
         <repository>
             <id>myMavenRepoWrite</id>
-<!--            <url>${myMavenRepoWriteUrl}</url>-->
-            <url>file://${project.basedir}/../../OSCAR/git/oscar/local_repo</url> <!-- temporary local mvn-repo -->
+            <url>${myMavenRepoWriteUrl}</url>
+<!--            <url>file://${project.basedir}/../../OSCAR/git/oscar/local_repo</url> &lt;!&ndash; temporary local mvn-repo &ndash;&gt;-->
         </repository>
         <snapshotRepository>
             <id>myMavenRepoWrite</id>
-<!--            <url>${myMavenRepoWriteUrl}</url>-->
-            <url>file://${project.basedir}/../../OSCAR/git/oscar/local_repo</url> <!-- temporary local mvn-repo -->
+            <url>${myMavenRepoWriteUrl}</url>
+<!--            <url>file://${project.basedir}/../../OSCAR/git/oscar/local_repo</url> &lt;!&ndash; temporary local mvn-repo &ndash;&gt;-->
         </snapshotRepository>
     </distributionManagement>
 
@@ -114,7 +114,7 @@
 
     <groupId>ca.uvic.leadlab</groupId>
     <artifactId>obibconnector</artifactId>
-    <version>1.0-62a</version>
+    <version>1.0-64</version>
 
     <dependencies>
         <dependency>

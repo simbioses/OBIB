@@ -14,7 +14,6 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
 import javax.net.ssl.*;
-import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.GeneralSecurityException;
@@ -112,11 +111,11 @@ public class RestClient implements IOscarInformation {
                                                     Class<R> responseEntity) throws OBIBRequestException {
         try {
             Response response = client
-                    .path(path)
+                    .replacePath(path)
                     .header("clinicId", CDX_CLINIC_ID)
                     .header("password", CDX_CLINIC_PASS)
                     .header("connectorVersion", OBIBConnectorHelper.getOBIBConnectorVersion())
-                    .post(Entity.json(requestEntity), Response.class);
+                    .post(requestEntity, Response.class);
 
             if (!Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
                 throw new OBIBRequestException(String.format("Response Error: %d - %s",

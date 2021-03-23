@@ -92,7 +92,7 @@ mysql --user=root --password="$DB_ROOT_PASS" < "$CONF_ROOT/dbscripts/OBIB_DB_upd
 
 ## Update Resources
 printf '\nUpdating MirthConnect Resources\n'
-sudo rm -rf "$MIRTH_ROOT/custom-lib/*"
+sudo rm -rf "$MIRTH_ROOT/custom-lib"
 sudo cp -R "$CONF_ROOT/custom-lib/" "$MIRTH_ROOT/"
 sudo sed -e 's,${TIMEZONE},'"$TIMEZONE"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' \
  -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i "$MIRTH_ROOT/custom-lib/obib.properties"

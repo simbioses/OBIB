@@ -5,7 +5,7 @@ server {
     listen [::]:443;
 
     # Increase body size limit to let OBIB validate it
-    client_max_body_size 10M;
+    client_max_body_size 100M;
 
     include snippets/obib.conf;
 

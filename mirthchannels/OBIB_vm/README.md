@@ -19,7 +19,6 @@
     If the VM IP address was ajusted in the Vagrantfile on Step 3, it is necessary to adjust it here as well:
 
     ```bash
-    ## Server Settings
     SERVER_IP='192.168.100.101'
     ```
 

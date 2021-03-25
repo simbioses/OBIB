@@ -114,8 +114,7 @@ public class SubmitDocTest extends FacadesBaseTest {
     public void testSubmitNewDocForSpecificClinic() throws Exception {
         // add recipient (clinic) and submit the document
         IDocument response = submitDoc
-                .recipient().primary().recipientOrganization("cdxpostprod-ctc", "Conformance Test Clinic")
-                .recipientOrganization(clinicIdT, "Oscar Clint Test Conformance")
+                .recipient().primary().recipientOrganization(clinicIdT, "Conformance Test Clinic")
                 .and().receiverId(clinicIdT)
                 .content("e-Referral obib connector automated test addressed to a clinic.")
                 .submit();
@@ -241,9 +240,10 @@ public class SubmitDocTest extends FacadesBaseTest {
         // add recipient (provider), attachments and submit the document
         IDocument response = submitDoc
                 .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
-                .recipientOrganization("cdxpostprod-otca", "Oscar Test Clinc A")
+                .recipientOrganization(clinicIdA, "Oscar Test Clinc A")
                 .and().receiverId(clinicIdA)
-                .attach(AttachmentType.PDF, "document1.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
+                //.attach(AttachmentType.PDF, "document1.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
+                .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
                 .submit();
 
         Assert.assertNotNull(response.getDocumentID());
@@ -263,7 +263,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         // add recipient (provider), attachments and submit the document
         IDocument response = submitDoc
                 .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
-                .recipientOrganization("cdxpostprod-otca", "Oscar Test Clinc A")
+                .recipientOrganization(clinicIdA, "Oscar Test Clinc A")
                 .and().receiverId(clinicIdA)
                 .attach(AttachmentType.PDF, "document1.pdf", loadFile("/CDXDocument-eReferral_att01.pdf"))
                 .attach(AttachmentType.PDF, "logo.pdf", loadFile("/leadlab.pdf"))
@@ -281,7 +281,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         System.out.println("DIST. STATUS: " + mapper.writeValueAsString(documents));
     }
 
-    @Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class) // TODO change test because this is now allowed
     public void testSubmitDocWithTextBodyAndAttachment() throws Exception {
         try {
             // add recipient (provider), attachments and submit the document
@@ -299,7 +299,7 @@ public class SubmitDocTest extends FacadesBaseTest {
         }
     }
 
-    @Test(expected = OBIBException.class)
+    @Test(expected = OBIBException.class) // TODO change test because this is now allowed
     public void testSubmitDocWithAttachmentAndTextBody() throws Exception {
         try {
             // add recipient (provider), attachments and submit the document
@@ -324,7 +324,8 @@ public class SubmitDocTest extends FacadesBaseTest {
             IDocument response = submitDoc
                     .recipient().primary().id("11116").name("Todd", "Kinnee", "Dr.", "")
                     .and().receiverId(clinicIdA)
-                    .attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
+                    //.attach(AttachmentType.PDF, "document.pdf", loadFile("/bc-ehr-cda-implementation-guide.pdf"))
+                    .attach(AttachmentType.PDF, "document2.pdf", loadFile("/NextGen Connect 38 User Guide.pdf"))
                     .submit();
 
         } catch (OBIBException ex) {

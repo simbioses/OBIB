@@ -13,7 +13,7 @@ public class SearchClinicsTest extends FacadesBaseTest {
 
     @Test
     public void testFindById() throws Exception {
-        List<IClinic> clinics = searchClinic.findByID(clinicIdA);
+        List<IClinic> clinics = searchClinic.findByID(clinicIdC);
 
         Assert.assertNotNull(clinics);
         Assert.assertFalse(clinics.isEmpty());

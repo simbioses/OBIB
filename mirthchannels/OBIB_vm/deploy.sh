@@ -86,6 +86,10 @@ extractTemplates() {
 printf '\nUpdating OBIB Database\n'
 mysql --user=root --password="$DB_ROOT_PASS" < "$CONF_ROOT/dbscripts/OBIB_DB_update.sql"
 
+## Execute database insertion scripts as 'user'
+mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
+mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
+
 ## Update Settings
 #printf '\nUpdating MirthConnect Settings\n'
 # TODO configure global the smtp credentials

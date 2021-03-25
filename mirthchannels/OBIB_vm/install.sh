@@ -77,10 +77,6 @@ sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-serve
 ## Increase mysql innodb log size
 sudo sed -e '/# InnoDB/a innodb_log_file_size=512M' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
-## Execute database insertion scripts as 'user'
-mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
-mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
-
 ## Download Mirth Connect
 wget -q http://downloads.mirthcorp.com/connect/3.8.0.b2464/mirthconnect-3.8.0.b2464-unix.tar.gz
 

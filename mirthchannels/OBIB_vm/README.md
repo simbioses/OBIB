@@ -126,7 +126,7 @@ the operations responses are stored in the folder /home/vagrant/output of the vm
  
 2. Uncompress the zip file and enter in the generated folder.
 
-3. Change the configurations in **Vagrantfile** and **mirth_connect.sh** as needed.   
+3. Change the configurations in **Vagrantfile** and **mirth_connect.sh** as needed.
 
 4. Create a new Vagrant machine: 
 

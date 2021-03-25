@@ -74,6 +74,9 @@ mysql --user=root --password="$DB_ROOT_PASS" -e "GRANT ALL ON OBIB_DB.* to '$DB_
 ## Enable mariadb remote access
 sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
+## Increase mysql innodb log size
+sudo sed -e '/# InnoDB/a innodb_log_file_size=512M' -i /etc/mysql/mariadb.conf.d/50-server.cnf
+
 ## Execute database insertion scripts as 'user'
 mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
 mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
@@ -86,8 +89,8 @@ sudo tar -xzf mirthconnect-3.8.0.b2464-unix.tar.gz
 sudo mv 'Mirth Connect' "$MIRTH_ROOT"
 
 ## Copy Mirth Connect's configuration files
-sudo cp -R "$CONF_ROOT/appdata/" "$MIRTH_ROOT/"
-sudo cp -R "$CONF_ROOT/conf/" "$MIRTH_ROOT/conf/"
+sudo cp -R "$CONF_ROOT/appdata" "$MIRTH_ROOT/"
+sudo cp -R "$CONF_ROOT/conf" "$MIRTH_ROOT/"
 sudo cp "$CONF_ROOT/mirth.service" /etc/systemd/system/
 sudo cp "$CONF_ROOT/mariadb-java-client-2.4.2.jar" "$MIRTH_ROOT/server-lib/database/"
 

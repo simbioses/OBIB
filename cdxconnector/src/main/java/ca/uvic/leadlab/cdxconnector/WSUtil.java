@@ -20,7 +20,8 @@ public abstract class WSUtil {
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmZZZ");
 
     private static final long MESSAGE_SIZE_IN_MB = Long.parseLong(PropertyUtil.getProperty("cdx.message.size", "50"));
-    private static final long MESSAGE_SIZE_IN_B = MESSAGE_SIZE_IN_MB * 1024 * 1024; // get Bytes by MiB
+    private static final long MULTIPLIER = 1024 * 1024;
+    private static final long MESSAGE_SIZE_IN_B = MESSAGE_SIZE_IN_MB * MULTIPLIER; // get Bytes by MiB
 
     public static void logObject(final Logger logger, String message, Object obj) throws ConnectorException {
         if (logger.isLoggable(Level.FINE)) {
@@ -46,7 +47,8 @@ public abstract class WSUtil {
     public static void validateObjectSize(Object obj) throws ConnectorException {
         String objStr = parseObject(obj, false);
         if (objStr.length() > MESSAGE_SIZE_IN_B) {
-            throw new ConnectorException("The total size of the message is bigger than " + MESSAGE_SIZE_IN_MB + " MB.");
+            long sizeInMB = objStr.length() / MULTIPLIER;
+            throw new ConnectorException("The message size ( ~" + sizeInMB + "MB ) exceeds " + MESSAGE_SIZE_IN_MB + "MB.");
         }
     }
 

@@ -61,7 +61,7 @@ public class TestWSClientDocument extends TestWSClient {
     public void testSubmitDocument() throws Exception {
         String document = updateDocument(TestUtils.loadTextFile("/documentTest.xml"));
 
-        String response = wsClientDocumentA.submitDocument(ClinicA.id, document, null, ClinicA.id);
+        String response = wsClientDocumentA.submitDocument(ClinicA.id, document, null, ClinicC.id);
 
         Assert.assertNotNull(response);
         System.out.println(TestUtils.prettyXML(response));
@@ -96,7 +96,7 @@ public class TestWSClientDocument extends TestWSClient {
 
     @Test
     public void testGetDocument() throws Exception {
-        String response = wsClientDocumentA.getDocument(ClinicA.id,"b468475a-adb4-e911-a96d-0050568c55a6");
+        String response = wsClientDocumentA.getDocument(ClinicA.id,"9a01b514-0955-eb11-a97d-0050568c55a6");
 
         // "a163901e-6173-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
         // "f01a004a-5673-e911-a96a-0050568c55a6" - Documents returning message: Could not retrieve messages: Requested value 'SHA-1' was not found.
@@ -129,7 +129,7 @@ public class TestWSClientDocument extends TestWSClient {
     public void testGetDistributionStatusByDocumentId() throws Exception {
         String response = wsClientDocumentA
                 .getDistributionStatus(ClinicA.id, null,
-                        "bc2d2059-f646-440b-880d-7f204aaf8321",
+                        "0c483ed8-6470-4706-9a07-cc4cb3760514",
                         null, null);
 
         Assert.assertNotNull(response);

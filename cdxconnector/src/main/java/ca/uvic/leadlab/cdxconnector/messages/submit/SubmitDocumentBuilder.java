@@ -128,7 +128,7 @@ public class SubmitDocumentBuilder {
             sb.append("- It is required that one sender be present in a message.\n");
         }
         if (controlActProcess == null) {
-            sb.append("- It is required that one sender be present in a message.\n");
+            sb.append("- It is required that one document be present in a message.\n");
         }
         if (sb.length() > 0) {
             sb.insert(0, "Error building the SubmitDocument message (RCMR_IN000002UV01):\n");

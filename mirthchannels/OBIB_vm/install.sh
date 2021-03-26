@@ -74,6 +74,9 @@ mysql --user=root --password="$DB_ROOT_PASS" -e "GRANT ALL ON OBIB_DB.* to '$DB_
 ## Enable mariadb remote access
 sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
+## Increase max package size
+sudo sed -e 's/^max_allowed_packet.*$/max_allowed_packet = 128M/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
+
 ## Increase mysql innodb log size
 sudo sed -e '/# InnoDB/a innodb_log_file_size=512M' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 

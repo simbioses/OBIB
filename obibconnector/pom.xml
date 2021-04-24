@@ -114,7 +114,7 @@
 
     <groupId>ca.uvic.leadlab</groupId>
     <artifactId>obibconnector</artifactId>
-    <version>1.0-64</version>
+    <version>1.0-65</version>
 
     <dependencies>
         <dependency>

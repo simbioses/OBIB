@@ -39,6 +39,7 @@ public class RestClient implements IOscarInformation {
     private static final String CDX_CLINIC_ID = OBIBConnectorHelper.getProperty("cdx.clinic.id");
     private static final String CDX_CLINIC_PASS = OBIBConnectorHelper.getProperty("cdx.clinic.password");
 
+    private static final String OBIB_CONFIG = "obib-cxf.xml"; // Use custom configuration
     private final WebClient client;
 
     /**
@@ -50,7 +51,7 @@ public class RestClient implements IOscarInformation {
     }
 
     private WebClient setupRestClient(String obibURL) {
-        WebClient client = WebClient.create(obibURL, Collections.singletonList(new JacksonJsonProvider()))
+        WebClient client = WebClient.create(obibURL, Collections.singletonList(new JacksonJsonProvider()), OBIB_CONFIG)
                 .type(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
         HTTPConduit httpConduit = WebClient.getConfig(client).getHttpConduit();

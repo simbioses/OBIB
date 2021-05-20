@@ -54,7 +54,7 @@ public abstract class WSClient {
 
     void setupSSLContext() throws ConnectorException {
         try {
-            SSLContext context = SSLContext.getInstance("SSLv3");
+            SSLContext context = SSLContext.getInstance(PropertyUtil.getProperty("cdx.ssl.protocol", "TLSv1.2"));
 
             KeyManagerFactory factory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 

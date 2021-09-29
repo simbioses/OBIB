@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/OBIB.iml" filepath="$PROJECT_DIR$/.idea/OBIB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cdxconnector/cdxconnector.iml" filepath="$PROJECT_DIR$/cdxconnector/cdxconnector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/obibconnector/obibconnector.iml" filepath="$PROJECT_DIR$/obibconnector/obibconnector.iml" />
+    </modules>
+  </component>
+</project>

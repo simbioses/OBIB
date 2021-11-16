@@ -1,19 +1,31 @@
 # OBIB Architecture Overview
 
+OBIB is a bi-directional interoperability system for transmitting CDA Documents through the CDX System.
+OBIB is formed by a set of messaging channels within Mirth Connect, Java libraries for message transmission and
+a few other pieces of software. The following Figure illustrates who the various components interact.
+
 ![obib architecture](OBIB_architecture.png "OBIB Architecture")
+
+* OBIB Connector (JAR File) - OBIB REST client. 
+* nginx - HTTPS reverse proxy to secure the connections between clients and OBIB.
+* OBIB_DB - Database used by OBIB channels to store clinics' info, documents and error messages.
+* mirthdb - Database used by Mirth Connect.
+* SMTP Server - Used by OBIB's "/NotifyError" endpoint to send error notifications via email.
+* CDX Connector (JAR File) - CDX WS client.
 
 ## OBIB channels
 
-![obib channels](OBIB_channels.png "OBIB Channels")
+OBIB consists of 5 Mirth Connect channels, which are described below. Each channel has one _Source Connector_ and 
+multiple _Destination Connectors_, and each connector can have multiple filters and transformers.
 
-OBIB consists of 5 Mirth Connect channels. 
-Each channel has one Source Connector and multiple Destination Connectors.
+![obib channels](OBIB_channels.png "OBIB Channels")
 
 ### OBIB Services channel
 
-![obib services channel](OBIB_Services_channel.png "OBIB Services channel")
+**OBIB Services channel** is the main channel of OBIB. This channel acts as a REST server API and translates the 
+messages from the OBIB JSON format to the CDX XML format.
 
-**OBIB Services channel** is the main component of OBIB.
+![obib services channel](OBIB_Services_channel.png "OBIB Services channel")
 
 #### Source Connector
 
@@ -55,17 +67,49 @@ converts the CDX acknowledgement XML message to an OBIB JSON message.
 
 ##### Service List New Documents
 
+The **Service List New Documents** connector calls the CDX method to list new documents for the current clinic. It has 
+only one response transformer that translates the CDX response into JSON.
+
 ##### Service Search Document
+
+The **Service Search Document** connector calls the CDX method to search for documents. It can filter documents by 
+clinic id, document id, effective time or event time. These search criteria are retrieved from the requests by 
+transformers of type _Mapper_. Moreover, this connector has only one response transformer that translates the 
+CDX response into JSON.
 
 ##### Service Get Document
 
+The **Service Get Document** connector calls the CDX method to get a document by its id. This connector has only one 
+transformer to get the document id from the request, and a few response transformers to convert the CDA document (XML)
+into JSON, retrieve attachments, and get response data. The document conversion is made by the **CDA Document Parser** 
+channel.
+
 ##### Service List Clinics
+
+The **Service List Clinics** connector calls the CDX method to list clinics. The clinics can be filtered by id, name, 
+or address. These list criteria are retrieved from the requests by transformers of type _Mapper_. Moreover, this 
+connector has only one response transformer that calls the **CDA Registry Parser** channel to translate the 
+CDX response into JSON.
 
 ##### Service List Providers
 
+The **Service List Providers** connector calls the CDX method to list providers. The providers can be filtered by id, 
+name, or clinic id. These list criteria are retrieved from the requests by transformers of type _Mapper_. Moreover, this
+connector has only one response transformer that calls the **CDA Registry Parser** channel to translate the
+CDX response into JSON.
+
 ##### Service Distribution Status
 
+The **Service Distribution Status** connector calls the CDX method to get the distribution status of a sent document.
+It can filter documents by clinic id, document id, effective time or event time. These search criteria are retrieved 
+from the requests by transformers of type _Mapper_. Moreover, this connector has only one response transformer that 
+translates the CDX response into JSON.
+
 ##### Service OSP Support
+
+The **Service OSP Support** connector stores and notifies by email error reports sent by the OBIB clients. The 
+notifications are processed by the **OSP Support** channel. Moreover, this connector has one transformer to get 
+some request metadata, and a response transformer to return a response status for the caller. 
 
 ### CDA Document Parser channel
 

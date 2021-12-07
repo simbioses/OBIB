@@ -36,7 +36,7 @@ CLASS_PATH='target/cdxconnector-0.0.1-SNAPSHOT-tests.jar:target/cdxconnector-0.0
 # parameters: 1 = location_id, 2 = receivers_id, 3 = cda_file_path
 call_submit_document() {
     echo "Executing submit document for CDA:" $3
-    ${JAVA} ${DEBUG} -cp ${CLASS_PATH} ca.uvic.leadlab.cdxconnector.SubmitDocumentClient $1 $2 "$3"
+    ${JAVA} ${DEBUG} -cp ${CLASS_PATH} ca.uvic.leadlab.cdxconnector.CDXTestClient $1 submit $2 "$3"
 }
 
 if [[ -d ${CDA_PATH} ]]; then

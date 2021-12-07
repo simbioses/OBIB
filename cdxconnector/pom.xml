@@ -102,7 +102,7 @@
                 <plugin>
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-codegen-plugin</artifactId>
-                    <version>3.3.2</version>
+                    <version>3.4.4</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -116,6 +116,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -126,6 +127,27 @@
                         </manifest>
                     </archive>
                 </configuration>
+                <executions>
+                    <!-- Build a test jar file with main class to submit documents -->
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>ca/**</include>
+                                <include>CDXTestClient.properties</include>
+                            </includes>
+                            <archive>
+                                <manifest>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <mainClass>ca.uvic.leadlab.cdxconnector.CDXTestClient</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Import the CDX certificates into a PFX keystore -->
@@ -449,33 +471,6 @@
                                     <directory>CDA_Test_Messages/</directory>
                                 </resource>
                             </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Build a test jar file with main class to submit documents -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>*.xml</exclude>
-                                <exclude>*.pfx</exclude>
-                                <exclude>*.txt</exclude>
-                            </excludes>
-                            <archive>
-                                <manifest>
-                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                    <mainClass>ca.uvic.leadlab.cdxconnector.SubmitDocumentClient</mainClass>
-                                </manifest>
-                            </archive>
                         </configuration>
                     </execution>
                 </executions>

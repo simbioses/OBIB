@@ -6,7 +6,7 @@ Library responsible for connecting to CDX Web Services.
 
 * Importing the CDX certificates into a PFX keystore.
 
-  By default the certificates are not imported. If necessary, use the ```<skip.generate.certificate>``` property 
+  By default, the certificates are not imported. If necessary, use the ```<skip.generate.certificate>``` property 
   to configure this execution on the phase ```generate-sources``` for example.
      
 * Downloading the WSDL and XSD into resources folder.
@@ -37,26 +37,26 @@ Library responsible for connecting to CDX Web Services.
 
 * Building the **jar-test** file. 
 
-  A jar-test is generate at the ```deploy``` phase. This jar contains a java client for submitting documents.
+  A jar-test is generated at the ```deploy``` phase. This jar contains a java client for executing the CDX operations.
 
-### Submit Document Client:
+### CDX Test Client:
 
-The Submit Document Client is a cdxconnector client that permit submit CDX documents directly from command line
-using CDA XML files.
+The CDX Test Client is a cdxconnector client that permit executing the cdxconnector operations directly from command line.
 
-To execute the Submit Document Client the following files are necessary: 
+To execute the CDX Test Client the following files are necessary: 
 1. cdxconnector-\<version>.jar
 2. cdxconnector-\<version>-test.jar
-3. commons-codec-1.11.jar
-4. commons-lang3-3.8.1.jar
-5. submit_documents.sh \[optional]
-6. \<clinic-certificate>.pfx
-7. \<CDA.XML> or \<directory containing CDA xmls>
+3. CDXTestClient.properties configured with the location's info
+4. commons-codec-1.11.jar
+5. commons-lang3-3.8.1.jar
+6. submit_documents.sh \[optional]
+7. \<clinic-certificate>.pfx
+8. \<CDA.XML> or \<directory containing CDA xmls> for document submission
 
 #### Registering a clinic
 
 To register a clinic to submit documents using this client it is necessary configure the following data 
-in the **SubmitDocumentClient.properties** inside the *cdxconnector-\<version>-test.jar*:
+in the **CDXTestClient.properties** inside the *cdxconnector-\<version>-test.jar*:
 ```
 obib.clinic.<location_id>.username = <cdx clinic username>
 obib.clinic.<location_id>.password = <cdx clinic password>
@@ -68,32 +68,40 @@ where a clinic is identify by the portion of the keys: **<location_id>**
 
 #### Executing the java client
 
-To execute the Submit Document Client call the **jar-test** file as following:
+To execute the CDX Test Client to submit a document call the **jar-test** file as following:
 
 ```
-$ java -cp .:* -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar ca.uvic.leadlab.cdxconnector.SubmitDocumentClient location_id receivers_ids cda_file_path [attachment_files_paths]
+$ java -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar location_id submit receivers_ids cda_file_path [attachment_files_paths]
 ```
 
-where:
-- *location_id*: is the clinic 'location id' registered in the **SubmitDocumentClient.properties** file;
+where: 
+- *location_id*: is the clinic 'location id' registered in the **CDXTestClient.properties** file;
 - *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
 - *cda_file_path*: is the relative path for the cda file to be submitted;
 - *attachment_files_paths*: (optional) are the document's attachment file separated by comma ','.
 
+Other operations are *status*, *list*, *search*, *get*, *providers* and *clinics*. For the complete list of options, 
+see the CDX Test Client help calling it with no arguments, for example:
+
+```
+$ java -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar ca.uvic.leadlab.cdxconnector.CDXTestClient
+```
+
 #### Alternative: Executing via shell script
 
-To execute the Submit Document Client call the shell script **submit_documents.sh** as following:
+To execute the CDX Test Client to submit a document call the shell script **submit_documents.sh** as following:
 
 ```
 $ ./submit_documents.sh location_id receivers_id cda_path
 ```
 
 where:
-- *location_id*: is the clinic 'location id' registered in the **SubmitDocumentClient.properties** file;
+- *location_id*: is the clinic 'location id' registered in the **CDXTestClient.properties** file;
 - *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
 - *cda_path*: is the path of a CDA XML file or a directory that contains more than one CDA XML.
 In this case all files inside the directory will be submitted.
 
 *Notes:*
 1. If the CDA files are not located relative to the current directory, it is necessary adjust the classpath in the script.
-2. By default the classpath is configured to the current project structure.
+2. By default, the classpath is configured to the current project structure.
+3. 

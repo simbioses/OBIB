@@ -34,6 +34,27 @@
                         </manifest>
                     </archive>
                 </configuration>
+                <executions>
+                    <!-- Build a test jar file with client class -->
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>ca/**</include>
+                                <include>OBIBTestClient.properties</include>
+                            </includes>
+                            <archive>
+                                <manifest>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <mainClass>ca.uvic.leadlab.obibconnector.OBIBTestClient</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

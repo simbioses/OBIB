@@ -44,14 +44,12 @@ Library responsible for connecting to CDX Web Services.
 The CDX Test Client is a cdxconnector client that permit executing the cdxconnector operations directly from command line.
 
 To execute the CDX Test Client the following files are necessary: 
-1. cdxconnector-\<version>.jar
-2. cdxconnector-\<version>-test.jar
-3. CDXTestClient.properties configured with the location's info
-4. commons-codec-1.11.jar
-5. commons-lang3-3.8.1.jar
-6. submit_documents.sh \[optional]
-7. \<clinic-certificate>.pfx
-8. \<CDA.XML> or \<directory containing CDA xmls> for document submission
+1. cdxconnector-\<version>-test.jar
+2. cdxconnector-\<version>.jar
+3. folder /cdxconnector/target/dependencies (it is generated in maven deploy phase)
+4. cdx_client.sh
+5. CDXTestClient.properties
+6. clinic keystore file (e.g.: OSCAR_test_clinic.pfx)
 
 #### Registering a clinic
 
@@ -66,42 +64,24 @@ obib.clinic.<location_id>.certpassword = <clinic certificate password>
 
 where a clinic is identify by the portion of the keys: **<location_id>** 
 
-#### Executing the java client
+#### Executing via shell script
 
-To execute the CDX Test Client to submit a document call the **jar-test** file as following:
+Copy the required jar files, shell script, properties file, and clinic keystore files.
 
-```
-$ java -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar location_id submit receivers_ids cda_file_path [attachment_files_paths]
-```
-
-where: 
-- *location_id*: is the clinic 'location id' registered in the **CDXTestClient.properties** file;
-- *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
-- *cda_file_path*: is the relative path for the cda file to be submitted;
-- *attachment_files_paths*: (optional) are the document's attachment file separated by comma ','.
-
-Other operations are *status*, *list*, *search*, *get*, *providers* and *clinics*. For the complete list of options, 
-see the CDX Test Client help calling it with no arguments, for example:
+Configure the cdxconnector version (if needed) in **cdx_client.sh** file.
 
 ```
-$ java -jar cdxconnector-0.0.1-SNAPSHOT-tests.jar ca.uvic.leadlab.cdxconnector.CDXTestClient
+# Set the cdxconnector version
+CDX_VERSION="1.1.2"
 ```
 
-#### Alternative: Executing via shell script
-
-To execute the CDX Test Client to submit a document call the shell script **submit_documents.sh** as following:
+To execute the CDX Test Client call the shell script **cdx_client.sh** as following:
 
 ```
-$ ./submit_documents.sh location_id receivers_id cda_path
+$ ./cdx_client.sh location_id operation <operation args>
 ```
 
 where:
-- *location_id*: is the clinic 'location id' registered in the **CDXTestClient.properties** file;
-- *receivers_ids*: are the receiver clinics 'location id' separated by comma ',';
-- *cda_path*: is the path of a CDA XML file or a directory that contains more than one CDA XML.
-In this case all files inside the directory will be submitted.
-
-*Notes:*
-1. If the CDA files are not located relative to the current directory, it is necessary adjust the classpath in the script.
-2. By default, the classpath is configured to the current project structure.
-3. 
+- *location_id*: is the 'location id' configured in the CDXTestClient.properties file.
+- *operation*: is the CDX method that will be called (see ca.uvic.leadlab.cdxconnector.CDXTestClient).
+- *operation args*: are the method's arguments;

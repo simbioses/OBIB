@@ -9,8 +9,8 @@ The OBIB Test Client implements the obibconnector methods, allowing the executio
 To execute the OBIB Test Client the following files are necessary:
 1. obibconnector-\<version>-test.jar
 2. obibconnector-\<version>.jar
-3. content of the folder /target/dependencies
-4. obib_client.sh \[optional]
+3. folder /obibconnector/target/dependencies (it is generated in maven deploy phase)
+4. obib_client.sh
 5. obibconnector.properties
 6. obibconnector.keystore
 
@@ -27,6 +27,7 @@ obib.keystore.pass=keystore_password
 cdx.clinic.id=CLINIC_ID
 cdx.clinic.password=CLINIC_PASS
 ```
+
 ### Executing via shell script
 
 Copy the required jar files, shell script, and obibconnector properties and keystore files (if needed).

@@ -117,9 +117,12 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
-
-        document.addAttachment(
-                new Attachment(AttachmentUtils.calculateHash(data), AttachmentUtils.HASH_ALGORITHM, type.mediaType, data, reference));
+        Attachment attachment = new Attachment(AttachmentUtils.calculateHash(data), AttachmentUtils.HASH_ALGORITHM, type.mediaType, data, reference);
+        document.addAttachment(attachment);
+        // Add first PDF or RTF attachment as a body if document body is empty
+        if (document.getNonXMLBody() == null && (AttachmentType.PDF.equals(type) || AttachmentType.RTF.equals(type))) {
+            document.setNonXMLBody(new NonXMLBody(reference, type.mediaType, attachment.getHash(), attachment.getHashAlgorithm()));
+        }
         return this;
     }
 

@@ -37,16 +37,16 @@ public class ReceiveDoc implements IReceiveDoc {
     }
 
     @Override
-    public IDocument retrieveDocument(String id) throws OBIBException {
+    public IDocument retrieveDocument(String messageId) throws OBIBException {
         try {
-            ListDocumentsResponse response = services.getDocument(SearchDocumentCriteria.byDocumentId(id));
+            ListDocumentsResponse response = services.getDocument(SearchDocumentCriteria.byDocumentId(messageId));
 
             if (!response.isOK()) {
                 throw new OBIBRequestException(response.getMessage(), response.getObibErrors());
             }
 
             if (response.getDocument() == null) {
-                throw new OBIBRequestException("Could not retrieve document with ID " + id + ".");
+                throw new OBIBRequestException("Could not retrieve document with Message ID " + messageId + ".");
             }
 
             Document document = new Document(response.getDocument());

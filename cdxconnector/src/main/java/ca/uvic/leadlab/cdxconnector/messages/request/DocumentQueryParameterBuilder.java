@@ -1,7 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages.request;
 
 import ca.uvic.leadlab.cdxconnector.DateRange;
-import cdasubmitrequest.*;
+import cdarequest.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;

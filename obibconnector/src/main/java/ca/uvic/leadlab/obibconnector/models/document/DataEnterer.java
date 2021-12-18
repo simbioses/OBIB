@@ -2,10 +2,13 @@ package ca.uvic.leadlab.obibconnector.models.document;
 
 import ca.uvic.leadlab.obibconnector.models.common.Id;
 import ca.uvic.leadlab.obibconnector.models.registry.Provider;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ca.uvic.leadlab.obibconnector.utils.OBIBConnectorHelper;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class DataEnterer extends Provider {
 
+    @JsonProperty // force jackson to use this field
     private Id id;
     private String time;
 
@@ -17,10 +20,10 @@ public class DataEnterer extends Provider {
         this.id = id;
     }
 
-    @JsonIgnore
+    @JsonIgnore // to avoid conflict with the other setter
     @Override
     public void setId(String id) {
-        this.id = new Id(id, null);
+        this.id = new Id(id, OBIBConnectorHelper.getClinicPersonnelId());
     }
 
     public String getTime() {

@@ -8,5 +8,5 @@ public interface IReceiveDoc {
 
     List<String> pollNewDocIDs() throws OBIBException;
 
-    IDocument retrieveDocument(String id) throws OBIBException;
+    IDocument retrieveDocument(String messageId) throws OBIBException;
 }

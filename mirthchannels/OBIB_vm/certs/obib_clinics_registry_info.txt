@@ -6,6 +6,7 @@ Clinic Password (*): VMK31
 CDX Certificate Path (+): /vagrant/certs/LEADlab_IHA_cert.pfx
 CDX Certificate Password (+): LEADlab
 New OBIB Certificate Password (!): obibconnector
+New Clinic Location ID (i): 1
 
 ---
 Clinic ID (*): cdxpostprod-obctc
@@ -15,6 +16,7 @@ Clinic Password (*): 2LsTebRe
 CDX Certificate Path (+): /vagrant/certs/OscarTestClinic.pfx
 CDX Certificate Password (+): LEADlab
 New OBIB Certificate Password (!): obibconnector
+New Clinic Location ID (i): 2
 
 ---
 Clinic ID (*): cdxpostprod-ctc
@@ -24,5 +26,5 @@ Clinic Password (*): conformance123
 CDX Certificate Path (+): /vagrant/certs/Conformance_Test.pfx
 CDX Certificate Password (+): LEADlab!
 New OBIB Certificate Password (!): obibconnector
-
+New Clinic Location ID (i): 3
 

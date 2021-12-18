@@ -12,8 +12,26 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
 
 public abstract class TestUtils {
+
+    public static Document parseXml(final String xml) throws Exception {
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .parse(new InputSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    public static String writeXml(final Document doc) throws Exception {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(doc), new StreamResult(writer));
+        return writer.getBuffer().toString();
+    }
 
     public static String prettyXML(final String xml) {
         try {
@@ -30,8 +48,30 @@ public abstract class TestUtils {
 
             transformer.transform(new DOMSource(document), streamResult);
             return stringWriter.toString();
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return xml;
+    }
+
+  public static String loadTextFile(String filePath) throws Exception {
+        Path path = Paths.get(TestUtils.class.getResource(filePath).toURI());
+        StringBuilder content = new StringBuilder();
+        for (String line : Files.readAllLines(path)) {
+            content.append(line);
+        }
+        return content.toString();
+    }
+
+    public static byte[] loadBinaryFile(String filePath) throws Exception {
+        Path path = Paths.get(TestUtils.class.getResource(filePath).toURI());
+        return Files.readAllBytes(path);
+    }
+
+    public static byte[] calculateHash(byte[] content) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        return md.digest(content);
+        //return DatatypeConverter.printHexBinary(hash);
+        //return DatatypeConverter.printBase64Binary(hash);
     }
 }

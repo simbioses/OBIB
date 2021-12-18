@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="BizTalkServiceInstance" targetNamespace="http://interiorhealth.ca" xmlns:q1="urn:hl7-org:v3"
-                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
-                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
-                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
-                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
-                  xmlns:tns="http://interiorhealth.ca"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:tns="http://interiorhealth.ca"
                   xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
-                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
-                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
-                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <wsdl:documentation>
-        <CreationInfo Created="2019-02-05 11:26:42Z"/>
+        <CreationInfo Created="2019-10-15 15:02:53Z"/>
     </wsdl:documentation>
     <wsdl:types>
         <xsd:schema targetNamespace="http://interiorhealth.ca/Imports">
             <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit0.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
             <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit2.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
             <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit1.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
-            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit3.xsd"/>
-            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit4.xsd"/>
-            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit5.xsd"/>
-            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit6.xsd"/>
+            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit3.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit4.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit5.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit6.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit7.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit8.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit9.xsd"/>
@@ -75,10 +66,10 @@
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit54.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit56.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit55.xsd"/>
-            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit57.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
-            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit58.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
-            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit59.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
-            <!--xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit60.xsd"/--> <!-- HACK: Commented to generate the Java classes correctly -->
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit57.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit58.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit59.xsd"/>
+            <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit60.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit61.xsd"/>
             <xsd:import namespace="urn:hl7-org:v3" schemaLocation="CDASubmit62.xsd"/>
         </xsd:schema>

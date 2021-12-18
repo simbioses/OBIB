@@ -31,7 +31,7 @@ public interface ISubmitDoc extends ISubmit {
 
     IServiceEvent documentationOf();
 
-    ISubmitDoc content(String text);
+    ISubmitDoc content(String text) throws OBIBException;
 
     ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException;
 

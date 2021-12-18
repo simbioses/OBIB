@@ -1,0 +1,86 @@
+<ClinicalDocument xmlns="urn:hl7-org:v3" classCode="DOCCLIN" moodCode="EVN">
+    <realmCode code="CA-BC"/>
+    <typeId assigningAuthorityName="HL7 CDA R2" extension="POCD_HD000040" root="2.16.840.1.113883.1.3"/>
+    <templateId assigningAuthorityName="e2e Referral (Unstructured)" root="2.16.840.1.113883.3.1818.10.1.5"/>
+    <id assigningAuthorityName="CDX Clinical Document ID" extension="9cf1c88e-a6d9-423f-80e4-2af8d1cd3a2a" root="2.16.840.1.113883.3.277.100.3"/>
+    <code code="57133-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC Code" displayName="eReferral Note"/>
+    <title>eReferral Note</title>
+    <effectiveTime value="201910111423-0700"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="Confidentiality"/>
+    <languageCode code="en-CA"/>
+    <setId assigningAuthorityName="CDX Clinical Document ID" extension="9cf1c88e-a6d9-423f-80e4-2af8d1cd3a2a" root="2.16.840.1.113883.3.277.100.3"/>
+    <versionNumber value="1"/>
+    <recordTarget contextControlCode="OP" typeCode="RCT">
+        <patientRole classCode="PAT">
+            <id assigningAuthorityName="BC Patient Health Number" extension="8888999904" root="2.16.840.1.113883.4.50"/>
+            <addr use="H">456 Main Street<delimiter/>
+                <city>Toronto</city>
+                <state>OT</state>
+                <postalCode>M6P 4J4</postalCode>
+            </addr>
+            <telecom use="H" value="tel:416-555-6789"/>
+            <patient classCode="PSN">
+                <name use="L">
+                    <family>ELDER</family>
+                    <given>JUNE</given>
+                </name>
+                <administrativeGenderCode code="F"/>
+                <birthTime value="19420606"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author contextControlCode="OP" typeCode="AUT">
+        <time value="201910111423-0700"/>
+        <assignedAuthor classCode="ASSIGNED">
+            <id nullFlavor="NA"/>
+            <assignedAuthoringDevice>
+                <softwareName code="OSCARSP" codeSystem="2.16.840.1.113883.3.277.1.12" codeSystemName="Oscar Service Provider" displayName="Oscar Service Provider"/>
+            </assignedAuthoringDevice>
+        </assignedAuthor>
+    </author>
+    <author contextControlCode="OP" typeCode="AUT">
+        <time value="201910111423-0700"/>
+        <assignedAuthor classCode="ASSIGNED">
+            <id assigningAuthorityName="BC Ministry Practitioner ID" extension="93188" root="2.16.840.1.113883.3.40.2.11"/>
+            <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+                <name use="L">
+                    <family>Plisihb</family>
+                    <given>Lucius</given>
+                    <prefix>Dr.</prefix>
+                </name>
+            </assignedPerson>
+        </assignedAuthor>
+    </author>
+    <custodian typeCode="CST">
+        <assignedCustodian classCode="ASSIGNED">
+            <representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
+                <id assigningAuthorityName="CDX Clinic Registry ID" extension="cdxpostprod-otca" root="2.16.840.1.113883.3.277.100.2"/>
+                <name>Oscar Test Clinic A</name>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <informationRecipient typeCode="PRCP">
+        <intendedRecipient classCode="ASSIGNED">
+            <id assigningAuthorityName="BC Ministry Practitioner ID" extension="11116" root="2.16.840.1.113883.3.40.2.11"/>
+            <informationRecipient classCode="PSN" determinerCode="INSTANCE">
+                <name use="L">
+                    <family>Kinnee</family>
+                    <given>Todd</given>
+                    <prefix>Dr.</prefix>
+                </name>
+            </informationRecipient>
+        </intendedRecipient>
+    </informationRecipient>
+    <inFulfillmentOf typeCode="FLFS">
+        <order classCode="ENC" moodCode="RQO">
+            <id extension="1"/>
+            <code code="active" codeSystem="statusCode"/>
+        </order>
+    </inFulfillmentOf>
+    <component typeCode="COMP">
+        <nonXMLBody classCode="DOCBODY" moodCode="EVN">
+            <text mediaType="text/plain" representation="TXT">This document has 1 attachment(s).
+                (Sent at: Fri Oct 11 2019 14:23:01 GMT-0700 (PDT))</text>
+        </nonXMLBody>
+    </component>
+</ClinicalDocument>

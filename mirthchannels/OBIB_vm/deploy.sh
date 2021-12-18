@@ -44,6 +44,23 @@ execBulkUpdate() {
     checkResponse $response $4
 }
 
+# Params: <channel_file>
+configureSMTPSenderConnector() {
+    # check if the channel has any smtp sender connector
+    smtp_path="//*/connector/properties[contains(@class, 'SmtpDispatcherProperties')]"
+    if [ "$(xmllint --xpath "count($smtp_path)" "$1")" -gt 0 ]; then
+        # update the smtp properties
+        xmlstarlet ed --inplace --update "$smtp_path/smtpHost" --value "$SMTP_HOST" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/smtpPort" --value "$SMTP_PORT" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/encryption" --value "$SMTP_ENCRYPTION" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/authentication" --value "$SMTP_AUTHENTICATION" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/username" --value "$SMTP_USERNAME" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/password" --value "$SMTP_PASSWORD" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/from" --value "$SMTP_FROM" "$1"
+        xmlstarlet ed --inplace --update "$smtp_path/to" --value "$SMTP_TO" "$1"
+    fi
+}
+
 # Params: <group_set_file>
 extractChannels() {
     n=$(xmllint --xpath 'count(//set/channelGroup/channels/channel)' "$1")
@@ -69,9 +86,17 @@ extractTemplates() {
 printf '\nUpdating OBIB Database\n'
 mysql --user=root --password="$DB_ROOT_PASS" < "$CONF_ROOT/dbscripts/OBIB_DB_update.sql"
 
+## Execute database insertion scripts as 'user'
+mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
+mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
+
+## Update Settings
+#printf '\nUpdating MirthConnect Settings\n'
+# TODO configure global the smtp credentials
+
 ## Update Resources
 printf '\nUpdating MirthConnect Resources\n'
-sudo rm -rf "$MIRTH_ROOT/custom-lib/*"
+sudo rm -rf "$MIRTH_ROOT/custom-lib"
 sudo cp -R "$CONF_ROOT/custom-lib/" "$MIRTH_ROOT/"
 sudo sed -e 's,${TIMEZONE},'"$TIMEZONE"',g' -e 's,${DB_USERNAME},'"$DB_USERNAME"',g' \
  -e 's,${DB_PASSWORD},'"$DB_PASSWORD"',g' -e 's,${MIRTH_ROOT},'"$MIRTH_ROOT"',g' -i "$MIRTH_ROOT/custom-lib/obib.properties"
@@ -91,11 +116,12 @@ channel_group=$(cat "$CONF_ROOT/obib/OBIB_channel_group.xml")
 echo "<set>$channel_group</set>" > "OBIB_channel_group_set.xml"
 # 2 - update the "channelGroups"
 execBulkUpdate "/channelgroups/_bulkUpdate?override=true" "channelGroups" "OBIB_channel_group_set.xml" "group_update.out"
-# 3 - extract <channel/> from <channelGroup/>
+# 3 - extract all <channel/> from <channelGroup/>
 extractChannels "OBIB_channel_group_set.xml"
 # 4 - update and enable all channels
 for file in channels/*.xml; do
     printf "\nUpdating Channel: %s\n" "$(basename "$file" .xml)"
+    configureSMTPSenderConnector "$file"
     channel_id=$(xmllint --xpath "//channel/id/text()" "$file")
     execUpdate "/channels/$channel_id?override=true" "$file" "$(basename "$file" .xml)_update.out"
     execAction "/channels/$channel_id/enabled/true" "$(basename "$file" .xml)_enabled.out"

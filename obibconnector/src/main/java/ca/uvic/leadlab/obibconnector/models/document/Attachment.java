@@ -3,15 +3,17 @@ package ca.uvic.leadlab.obibconnector.models.document;
 public class Attachment {
 
     private String hash;
+    private String hashAlgorithm;
     private String mediaType;
-    private String content;
+    private byte[] content;
     private String reference;
 
     public Attachment() {
     }
 
-    public Attachment(String hash, String mediaType, String content, String reference) {
+    public Attachment(String hash, String hashAlgorithm, String mediaType, byte[] content, String reference) {
         this.hash = hash;
+        this.hashAlgorithm = hashAlgorithm;
         this.mediaType = mediaType;
         this.content = content;
         this.reference = reference;
@@ -25,6 +27,14 @@ public class Attachment {
         this.hash = hash;
     }
 
+    public String getHashAlgorithm() {
+        return hashAlgorithm;
+    }
+
+    public void setHashAlgorithm(String hashAlgorithm) {
+        this.hashAlgorithm = hashAlgorithm;
+    }
+
     public String getMediaType() {
         return mediaType;
     }
@@ -33,11 +43,11 @@ public class Attachment {
         this.mediaType = mediaType;
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
 

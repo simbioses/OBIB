@@ -11,6 +11,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="cdxconnector" target="1.8" />
+      <module name="OBIB" target="1.5" />
       <module name="obibconnector" target="1.7" />
     </bytecodeTargetLevel>
   </component>

@@ -49,7 +49,7 @@ public class WSClientClinic extends WSClient {
             return WSUtil.parseObject(response, false);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error listing clinics", e);
-            throw new ConnectorException(WSUtil.formatException("Error listing clinics.", e), e);
+            throw new ConnectorException("Error listing clinics.", e);
         }
     }
 

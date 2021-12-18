@@ -1,6 +1,6 @@
 package ca.uvic.leadlab.obibconnector.facades;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class FacadesBaseTest {
 

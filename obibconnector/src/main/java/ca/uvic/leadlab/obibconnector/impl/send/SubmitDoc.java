@@ -15,7 +15,6 @@ import ca.uvic.leadlab.obibconnector.rest.OBIBRequestException;
 import ca.uvic.leadlab.obibconnector.rest.RestClient;
 import ca.uvic.leadlab.obibconnector.utils.DateFormatter;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 public class SubmitDoc implements ISubmitDoc {
@@ -37,7 +36,7 @@ public class SubmitDoc implements ISubmitDoc {
 
     @Override
     public ISubmitDoc updateDoc(String documentId, int versionNumber) {
-        return createDoc(documentId, versionNumber, DocumentStatus.UPDATED);
+        return createDoc(documentId, versionNumber, DocumentStatus.NORMAL);
     }
 
     @Override
@@ -111,17 +110,19 @@ public class SubmitDoc implements ISubmitDoc {
     }
 
     @Override
-    public ISubmitDoc content(String text) {
+    public ISubmitDoc content(String text) throws OBIBException {
         document.setNonXMLBody(new NonXMLBody(text, AttachmentType.TEXT.mediaType));
         return this;
     }
 
     @Override
     public ISubmitDoc attach(AttachmentType type, String reference, byte[] data) throws OBIBException {
-        document.addAttachment(new Attachment(AttachmentUtils.calculateHash(data),
-                type.mediaType,
-                DatatypeConverter.printBase64Binary(data),
-                reference));
+        Attachment attachment = new Attachment(AttachmentUtils.calculateHash(data), AttachmentUtils.HASH_ALGORITHM, type.mediaType, data, reference);
+        document.addAttachment(attachment);
+        // Add first PDF or RTF attachment as a body if document body is empty
+        if (document.getNonXMLBody() == null && (AttachmentType.PDF.equals(type) || AttachmentType.RTF.equals(type))) {
+            document.setNonXMLBody(new NonXMLBody(reference, type.mediaType, attachment.getHash(), attachment.getHashAlgorithm()));
+        }
         return this;
     }
 

@@ -21,7 +21,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
     public void testPollNewDocIDs() throws Exception {
         List<String> documentsIds = receiveDoc.pollNewDocIDs();
 
-        Assert.assertNotNull(documentsIds);
         Assert.assertFalse(documentsIds.isEmpty());
 
         System.out.println("Documents count: " + documentsIds.size());
@@ -32,7 +31,7 @@ public class ReceiveDocTest extends FacadesBaseTest {
 
     @Test
     public void testRetrieveDocument() throws Exception {
-        IDocument document = receiveDoc.retrieveDocument("7744d591-b0b4-e911-a96d-0050568c55a6");
+        IDocument document = receiveDoc.retrieveDocument("b69f1bfc-42ba-e911-a96d-0050568c55a6");
 
         Assert.assertNotNull(document);
 
@@ -44,7 +43,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
         try {
             IDocument document = receiveDoc.retrieveDocument("12345678-aaaa-bbbb-cccc-0055566cddcc");
 
-            //Assert.assertNull(document);
         } catch (OBIBException ex) {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("OBIB Message: " + ex.getObibMessage());
@@ -57,7 +55,6 @@ public class ReceiveDocTest extends FacadesBaseTest {
         try {
             IDocument document = receiveDoc.retrieveDocument("__Wrong_ID");
 
-            //Assert.assertNull(document);
         } catch (OBIBException ex) {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("OBIB Message: " + ex.getObibMessage());

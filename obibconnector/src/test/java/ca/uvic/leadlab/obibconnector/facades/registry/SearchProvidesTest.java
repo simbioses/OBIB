@@ -41,7 +41,7 @@ public class SearchProvidesTest extends FacadesBaseTest {
 
     @Test
     public void testFindByClinicID() throws Exception {
-        List<IProvider> providers = searchProviders.findByClinicID(clinicIdA);
+        List<IProvider> providers = searchProviders.findByClinicID(clinicIdC);
 
         Assert.assertNotNull(providers);
         Assert.assertFalse(providers.isEmpty());

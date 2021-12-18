@@ -1,7 +1,7 @@
 package ca.uvic.leadlab.cdxconnector.messages.request;
 
 import ca.uvic.leadlab.cdxconnector.messages.exception.MessageBuilderException;
-import cdasubmitrequest.*;
+import cdarequest.*;
 
 import java.util.ArrayList;
 import java.util.Date;

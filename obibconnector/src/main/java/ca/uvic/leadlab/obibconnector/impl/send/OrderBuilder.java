@@ -21,6 +21,12 @@ public class OrderBuilder extends DocElement implements IOrder {
     }
 
     @Override
+    public IOrder id(String id, String type) {
+        order.setId(id, type);
+        return this;
+    }
+
+    @Override
     public IOrder statusCode(OrderStatus orderStatus) {
         order.setStatusCode(orderStatus.name().toLowerCase());
         return this;

@@ -15,7 +15,6 @@ import ca.uvic.leadlab.obibconnector.facades.registry.IProvider;
 import ca.uvic.leadlab.obibconnector.impl.registry.Provider;
 import ca.uvic.leadlab.obibconnector.models.document.*;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -94,15 +93,15 @@ public class Document implements IDocument {
         title = document.getTitle();
 
         if (document.getSetId() != null) {
-            setId = document.getSetId().getCode();
+            setId = document.getSetId().getConcatenatedID();
         }
 
-        if (document.getOrders() != null && !document.getOrders().isEmpty()) {
-            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getCode(); // TODO improve this
+        if (document.getOrders() != null && !document.getOrders().isEmpty() && !document.getOrders().get(0).getIds().isEmpty()) {
+            inFulFillmentOfId = document.getOrders().get(0).getIds().get(0).getConcatenatedID(); // TODO improve this
         }
 
-        if (document.getParentDocuments() != null && !document.getParentDocuments().isEmpty()) {
-            parentDocumentId = document.getParentDocuments().get(0).getId().getCode(); // TODO improve this
+        if (document.getParentDocuments() != null && !document.getParentDocuments().isEmpty() && document.getParentDocuments().get(0).getId() != null) {
+            parentDocumentId = document.getParentDocuments().get(0).getId().getConcatenatedID(); // TODO improve this
         }
 
         if (document.getServiceEvents() != null && !document.getServiceEvents().isEmpty()) {
@@ -170,8 +169,7 @@ public class Document implements IDocument {
                 if (!AttachmentUtils.checkAttachment(attachment.getContent(), attachment.getHash())) {
                     LOGGER.warning("Error validating attachment hash code.");
                 }
-                attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(),
-                        DatatypeConverter.parseBase64Binary(attachment.getContent())));
+                attachments.add(new Attachment(attachment.getMediaType(), attachment.getReference(), attachment.getContent()));
             }
         }
 

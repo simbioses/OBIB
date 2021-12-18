@@ -1,5 +1,7 @@
 package ca.uvic.leadlab.obibconnector.models.common;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +71,7 @@ public class Name {
         this.suffix = suffix;
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
         return (family == null || family.isEmpty()) && (given == null || given.isEmpty());
     }

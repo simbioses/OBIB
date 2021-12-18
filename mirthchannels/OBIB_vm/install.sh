@@ -28,6 +28,8 @@ sudo apt-get -y install nginx
 sudo cp "$CONF_ROOT/ssl/$OBIB_CA_KEY" "$CA_KEY_PATH"
 sudo cp "$CONF_ROOT/ssl/$OBIB_CA_CERT" "$CA_CERT_PATH"
 
+sudo sed -E "s/^(IP\.1.*=)(.*)$/\1 $SERVER_IP/" -i "$CONF_ROOT/nginx/openssl.cnf"
+
 ## Generate nginx certificate and key from the CA certificate
 sudo openssl req -new -newkey rsa:2048 -keyout "$OBIB_KEY_PATH" -out obib.csr -nodes \
   -subj "/C=CA/O=OSP/OU=OBIB/CN=OBIB Server" -extensions v3_req -config "$CONF_ROOT/nginx/openssl.cnf"
@@ -50,8 +52,8 @@ sudo ln -s "$NGINX_ROOT/sites-available/obib" "$NGINX_ROOT/sites-enabled/"
 sudo nginx -t
 #sudo systemctl restart nginx
 
-## Install xmllint (used by the deploy.sh script)
-sudo apt-get -y install libxml2-utils
+## Install xmllint and xmlstarlet (used by the deploy.sh script)
+sudo apt-get -y install libxml2-utils xmlstarlet
 
 ## Install MariaDB
 echo 'mysql-server mysql-server/root_password password' "$DB_ROOT_PASS" | sudo debconf-set-selections
@@ -72,9 +74,11 @@ mysql --user=root --password="$DB_ROOT_PASS" -e "GRANT ALL ON OBIB_DB.* to '$DB_
 ## Enable mariadb remote access
 sudo sed 's/^bind-address/#bind-address/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
-## Execute database insertion scripts as 'user'
-mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_ids.sql"
-mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" < "$CONF_ROOT/dbscripts/OBIB_DB_insert_loinc.sql"
+## Increase max package size
+sudo sed -e 's/^max_allowed_packet.*$/max_allowed_packet = 128M/g' -i /etc/mysql/mariadb.conf.d/50-server.cnf
+
+## Increase mysql innodb log size
+sudo sed -e '/# InnoDB/a innodb_log_file_size=512M' -i /etc/mysql/mariadb.conf.d/50-server.cnf
 
 ## Download Mirth Connect
 wget -q http://downloads.mirthcorp.com/connect/3.8.0.b2464/mirthconnect-3.8.0.b2464-unix.tar.gz
@@ -84,8 +88,8 @@ sudo tar -xzf mirthconnect-3.8.0.b2464-unix.tar.gz
 sudo mv 'Mirth Connect' "$MIRTH_ROOT"
 
 ## Copy Mirth Connect's configuration files
-sudo cp -R "$CONF_ROOT/appdata/" "$MIRTH_ROOT/"
-sudo cp "$CONF_ROOT"/conf/* "$MIRTH_ROOT/conf/"
+sudo cp -R "$CONF_ROOT/appdata" "$MIRTH_ROOT/"
+sudo cp -R "$CONF_ROOT/conf" "$MIRTH_ROOT/"
 sudo cp "$CONF_ROOT/mirth.service" /etc/systemd/system/
 sudo cp "$CONF_ROOT/mariadb-java-client-2.4.2.jar" "$MIRTH_ROOT/server-lib/database/"
 

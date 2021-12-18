@@ -26,6 +26,9 @@ CLASS_PATH="cdxconnector-$CDX_VERSION-tests.jar:cdxconnector-$CDX_VERSION.jar:de
 # Optional remote debug configuration
 #DEBUG=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
 
+# Other optional JVM and debug parameters
+#OPTIONS=-Djavax.net.debug=ssl:handshake:verbose
+
 # Calling the java client CDXTestClient
-echo "Calling CDXTestClient with: " "$@"
-${JAVA} ${DEBUG} -cp ${CLASS_PATH} ca.uvic.leadlab.cdxconnector.CDXTestClient "$@"
+echo "Calling CDXTestClient with: $@"
+${JAVA} ${DEBUG} ${OPTIONS} -cp ${CLASS_PATH} ca.uvic.leadlab.cdxconnector.CDXTestClient "$@"
